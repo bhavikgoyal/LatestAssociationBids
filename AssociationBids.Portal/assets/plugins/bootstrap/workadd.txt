@@ -1,0 +1,1646 @@
+@model AssociationBids.Portal.Model.BidRequestModel
+@{
+    ViewBag.Title = "PMBidRequestAdd";
+    Layout = "~/Views/Shared/_PropertyManagerLayout.cshtml";
+}
+
+<h2>PMBidRequestAdd</h2>
+
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="~/PMWorkorders/PMWorkorderslist">Work Orders</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add WorkOrders</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+     
+
+        <div class="alert alert-danger" id="Error" style="display:block; margin-top: 20px;">
+            <strong><span class="errormessage"></span></strong>
+        </div>
+
+        <!-- End page-header -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="cust-wizard">
+                            <!--multisteps-form-->
+                            <div class="multisteps-form">
+                                <!--progress bar-->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="multisteps-form__progress">
+                                            <button class="multisteps-form__progress-btn js-active" id="btnbid" type="button" title="Bid Requests">Bid Requests</button>
+                                            <button class="multisteps-form__progress-btn" type="button" id="btnDocument" title="Document">Documents</button>
+                                            <button class="multisteps-form__progress-btn" type="button" id="btnVendor" title="Vendors">Vendors</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--form panels-->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="multisteps-form__form">
+
+                                            <!--single form panel-->
+                                            <div class="multisteps-form__panel p-4 rounded bg-white js-active" data-animation="scaleIn">
+                                                <div class="multisteps-form__content">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">
+                                                                                    Property
+                                                                                    @Html.ValidationMessageFor(model => model.Property, "*", new { @class = "text-danger" })
+                                                                                </label>
+                                                                                <div class="input-group">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <div class="input-group-text">
+                                                                                            <i class="fa fa-search tx-16 lh-0 op-6"></i>
+                                                                                        </div>
+                                                                                    </div>@*<input class="form-control" placeholder="Seaech property..." type="text">*@
+
+                                                                                    @if (Model.PropertyKey == "0")
+                                                                                    {
+                                                                                        @Html.DropDownList("Property", new SelectList(ViewBag.lstProperty, "Value", "Text"), new { @tabindex = "1", @data_rel = "Choose_one", @class = "form-control", placeholder = "Select property..." })
+
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        @Html.DropDownListFor(model => model.PropertyKey, new SelectList(ViewBag.lstProperty, "Value", "Text"), new { @tabindex = "2", @data_rel = "Choose_one", @class = "form-control", placeholder = "Select property..." })
+
+                                                                                    }
+                                                                                    
+                                                                                </div>
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">
+                                                                                    Service
+                                                                                    @Html.ValidationMessageFor(model => model.Service, "*", new { @class = "text-danger" })
+                                                                                </label>
+                                                                                <div class="input-group">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <div class="input-group-text">
+                                                                                            <i class="fa fa-search tx-16 lh-0 op-6"></i>
+                                                                                        </div>
+                                                                                    </div>@*<input class="form-control" placeholder="Seaech service..." type="text">*@
+                                                                                    @Html.DropDownList("Service", new SelectList(ViewBag.lstService, "Value", "Text"), new { @tabindex = "2", @data_rel = "Choose_one", @class = "form-control", placeholder = "Select Service..." })
+                                                                                </div>
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">
+                                                                                    Title
+                                                                                    @Html.ValidationMessageFor(model => model.Title, "*", new { @class = "text-danger" })
+                                                                                </label>
+                                                                                @*<input type="text" class="form-control" name="input" placeholder="Title">*@
+                                                                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @tabindex = "3", autocomplete = "off", placeholder = "Title" } })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                    </div>
+                                                                    <hr />
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Description</label>
+                                                                                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Description", @tabindex = "4" })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                    </div><!-- end of row -->
+                                                                    <hr />
+                                                                    <div class="row">
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Response due date @Html.ValidationMessageFor(model => model.Title, "*", new { @class = "text-danger" }) <i class="fa fa-question-circle"></i></label>
+                                                                                <div class="input-group">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <div class="input-group-text">
+                                                                                            <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    @*<input class="form-control fc-datepicker" placeholder="MM/DD/YYYY" type="text">*@
+                                                                                    @Html.TextBoxFor(model => model.ResponseDueDate, "{0:MM/dd/yyyy}", new { @class = "form-control fc-datepicker", @tabindex = "5", autocomplete = "off", placeholder = "MM/DD/YYYY" })
+                                                                                    
+                                                                                </div>
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Work Order Due Date @Html.ValidationMessageFor(model => model.Title, "*", new { @class = "text-danger" }) <i class="fa fa-question-circle"></i></label>
+                                                                                <div class="input-group">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <div class="input-group-text">
+                                                                                            <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                                                                        </div>
+                                                                                    </div>@*<input class="form-control fc-datepicker" placeholder="MM/DD/YYYY" type="text">*@
+                                                                                    @Html.TextBoxFor(model => model.BidDueDate, "{0:MM/dd/yyyy}", new { @class = "form-control fc-datepicker", @tabindex = "6", autocomplete = "off", placeholder = "MM/DD/YYYY" })
+                                                                                    
+                                                                                </div>
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                    </div>
+                                                                </div><!-- end of card body -->
+                                                                <div class="card-footer">
+                                                                    <div class="button-row d-flex">
+                                                                        <button class="btn btn-info ml-auto js-btn-next" id="btnBidRequestNext" type="button" title="Next">Next <i class="fe fe-chevron-right"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- end of card -->
+                                                        </div><!-- end of col -->
+                                                    </div><!-- end of row -->
+                                                </div>
+                                            </div>
+                                            <!--single form panel-->
+                                            <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                                                <div class="multisteps-form__content">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="button-row d-flex">
+                                                                        <button class="btn btn-primary ml-auto" type="button" data-toggle="modal" data-target="#uploadmodal" title="Upload">+ Add <i class="fe fe-upload"></i></button>
+                                                                    </div>
+                                                                    <hr />
+                                                                    <div class="table-responsive" id="divFileUploader">
+                                                                        <table id="dataTableExample" class="table table-striped table-bordered w-100 dataTable no-footer">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Document</th>
+                                                                                    <th width="5%"></th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td><span class="upd-fl"></span></td>
+                                                                                    <td align="center">
+
+                                                                                        <a title="Delete" onclick="removeDoc(this);"><i class="fe fe-trash redtxt font18"></i></a>
+                                                                                    </td>
+                                                                                    @*<td>Document name goes here</td>
+                                                                                    <td align="center"><a href="#" title="Delete"><i class="fe fe-trash redtxt font18"></i></a></td>*@
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+
+                                                                    </div><!-- end of table responsive -->
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="uploadmodal" tabindex="-1" role="dialog" aria-labelledby="uploadmodalLabel" aria-hidden="true">
+                                                                        <div class="modal-dialog" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="uploadmodalLabel">Upload</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">×</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            <div class="form-group">
+                                                                                                @Html.TextBoxFor(model => model.Files, "", new { @type = "file", @multiple = "true", @class = "dropify" })
+                                                                                                @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger" })
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Upload</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div><!-- end Modal -->
+                                                                </div><!-- end of card body -->
+                                                                <div class="card-footer">
+                                                                    <div class="button-row d-flex">
+                                                                        <button class="btn btn-warning js-btn-prev" type="button" title="Prev"><i class="fe fe-chevron-left"></i> Prev</button>
+                                                                        <button class="btn btn-info ml-auto js-btn-next" id="btnDocumentNext" type="button" title="Next">Next <i class="fe fe-chevron-right"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- end of card -->
+                                                        </div><!-- end of col -->
+                                                    </div><!-- end of row -->
+                                                </div>
+                                                <div style="clear:both;"></div>
+                                            </div>
+                                            <!--single form panel-->
+                                            <div style="clear:both;"></div>
+
+                                            <div class="multisteps-form__panel p-4 rounded bg-white">
+                                                <div class="multisteps-form__content clearfix">
+
+
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="card">
+
+                                                                <div class="card-body">
+
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="addvendor" tabindex="-1" role="dialog" aria-labelledby="addvendor" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-lg " role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="addvendor1">Add Vendor</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">×</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+
+                                                                                    <div id="vendor_add">
+
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-3">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="form-label">Vendor Name</label>
+                                                                                                    <input type="text" id="txtSearchVendorName" class="form-control" name="input" placeholder="Vendor Name">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-3">
+
+                                                                                                <div class="form-group">
+                                                                                                    <label class="form-label">Company Name</label>
+                                                                                                    <input type="text" id="txtSearchCompanyName" class="form-control" name="input" placeholder="Company Name">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-2">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="form-label">Is Stared Vendor</label>
+                                                                                                    <select class="form-control select2 custom-select " id="ddlIsStaredVendor" data-placeholder="Choose one">
+                                                                                                        <option value="0">All</option>
+                                                                                                        <option value="1">Yes</option>
+                                                                                                        <option value="2">No</option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-2">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="form-label">Last Worked Before</label>
+                                                                                                    <select id="ddlLastWorkedBefore" class="form-control select2 custom-select " disable="disable" data-placeholder="Choose one">
+                                                                                                        <option value="0" label="Choose one"></option>
+                                                                                                        <option value="1">1 month</option>
+                                                                                                        <option value="2">2 month</option>
+                                                                                                        <option value="3">3 month</option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                        </div><!-- end of row -->
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-6">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="form-label">Service</label>
+                                                                                                    <input type="text" disabled="disabled" id="txtvservice" class="form-control" name="input">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <hr />
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-6">
+                                                                                                <a href="#" class="btn btn-default" data-dismiss="modal" title="Cancel">Cancel</a>
+
+                                                                                            </div><!-- end of col -->
+                                                                                            <div class="col-md-6">
+                                                                                                <a href="#" id="btnVendorSearch" class="btn btn-primary pull-right" title="Select Vendors"><i class="fe fe-search"></i> Search</a>
+
+                                                                                            </div><!-- end of col -->
+                                                                                        </div>
+                                                                                        <br />
+
+                                                                                        <div class="table-responsive" id="DivAllVendor">
+                                                                                            <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                                                                                <thead>
+                                                                                                    <tr>
+                                                                                                        <th width="15%" onclick="SortingFun('VendorName');" style="cursor: pointer;">
+                                                                                                            Vendor Name
+                                                                                                        </th>
+                                                                                                        <th width="20%" onclick="SortingFun('CompanyName');" style="cursor: pointer;">
+                                                                                                            Company Name
+                                                                                                        </th>
+                                                                                                        <th width="30%" onclick="SortingFun('LastWorkedDate');" style="cursor: pointer;">
+                                                                                                            Last Worked Date
+                                                                                                        </th>
+                                                                                                        <th width="15%"></th>
+                                                                                                        @*<th>Vendor Name</th>
+                        <th>Company Name</th>
+                        <th>Last Worked Date</th>
+                        <th>&nbsp;</th>*@
+                                                                                                    </tr>
+                                                                                                </thead>
+                                                                                                <tbody>
+                                                                                                    <tr>
+
+                                                                                                        <td><span class="vendorName"></span></td>
+                                                                                                        <td><span class="companyName"></span></td>
+                                                                                                        <td><span class="lastWorkedDate"></span></td>
+                                                                                                        <td hidden="hidden"><span class="vendorKey"></span></td>
+                                                                                                        @*<td align="center"><a id="AddVendorKey"  onclick="FuctionName(this);"  role="button"><i class="fa fa-circle"></i></a></td>*@@*<td align="center"><a id="AddVendorKey"  onclick="FuctionName(this);"  role="button"><i class="fa fa-circle"></i></a></td>*@
+                                                                                                        <td align="center">
+                                                                                                            <a title="Add" onclick="VendorAddForService(this);" id="btnVendorAdd" data-dismiss="modal" class="btn btn-sm btn-primary">+ Add</a>
+                                                                                                        </td>
+                                                                                                        @*<td align="center"><a id="AddVendorKey" onclick="FuctionName(this);" data-dismiss="modal" class="badge badge-primary">+ Add</a></td>*@
+                                                                                                        @*<td><span><i class="fa fa-star greentxt"></i></span> Vendor name goes here</td>
+                        <td>Company name goes here</td>
+                        <td>2 month to 3 month</td>
+                        <td align="center"><a href="#" data-dismiss="modal" class="badge badge-primary btn_add">+ Add</a></td>*@
+                                                                                                    </tr>
+
+                                                                                                </tbody>
+                                                                                            </table>
+                                                                                        </div>
+                                                                                    </div><!-- end of vendor add id-->
+                                                                                </div><!-- end of modal body -->
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--end Modal-->
+
+                                                                    <div class="button-row d-flex">
+                                                                        <button class="btn btn-primary ml-auto" type="button" id="addvender_btn" title="Add Vendor" data-toggle="modal" data-target="#addvendor">+ Add Vendor</button>
+                                                                    </div>
+                                                                    <hr />
+                                                                    @Html.HiddenFor(model => model.BidRequestKey)
+                                                                    <div class="table-responsive" id="vendorlist">
+                                                                        <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                                                            <thead>
+                                                                                <tr>
+
+                                                                                    <th width="15%" onclick="SortingFun('VendorName');" style="cursor: pointer;">
+                                                                                        Vendor Name
+                                                                                    </th>
+                                                                                    <th width="20%" onclick="SortingFun('ContactPerson');" style="cursor: pointer;">
+                                                                                        Contact Person
+                                                                                    </th>
+                                                                                    <th width="20%" onclick="SortingFun('Service');" style="cursor: pointer;">
+                                                                                        Service
+                                                                                    </th>
+                                                                                    @*<th>Vendor Name</th>
+                                                                                    <th>Contact Person</th>
+                                                                                    <th>Service</th>*@
+                                                                                    <th width="15%">&nbsp;</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td><span class="vendorNames"></span></td>
+                                                                                    <td><span class="contactPerson"></span></td>
+                                                                                    <td><span class="service"></span></td>
+                                                                                    <td hidden="hidden"><span class="vendorKeyView"></span></td>
+                                                                                    <td align="center"><a id="viewvendor" onclick="VendorView(this);" role="button" data-toggle="modal" data-target="#viewvendorForStatic"><i class="fe fe-eye font18"></i></a></td>
+                                                                                    @*<td><span><i class="fa fa-star greentxt"></i></span> Vendor name goes here</td>
+                                                                                    <td>(W) 111-122-1234, (M) 111-122-1234</td>
+                                                                                    <td>Service 1</td>
+                                                                                    <td align="center"><a href="../vendormang/view-vendor.html" role="button" data-toggle="modal" data-target="#viewvendor"><i class="fe fe-eye font18"></i></a></td>*@
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+
+                                                                    <!-- Modal -->
+                                                                    <div class="modal fade" id="viewvendorForStatic" tabindex="-1" role="dialog" aria-labelledby="viewvendor" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-lg " role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="viewvendor1">Vendor Detail</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">×</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+
+                                                                                    <div class="form-div">
+
+                                                                                        <div class="row">
+                                                                                            <div class="col-12">
+                                                                                                <div class="card">
+                                                                                                    <div class="card-header">
+                                                                                                        <h3 class="card-title">Company Information</h3>
+                                                                                                        <div class="card-options">
+                                                                                                            <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="card-body border-top">
+                                                                                                        @*</h4>*@
+                                                                                                        <div class="row">
+                                                                                                            <div class="col-md-3">
+                                                                                                                <div class="form-group">
+                                                                                                                    <label class="form-label">Company Name</label>
+                                                                                                                    <p id="vCompanyName"></p>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <div class="col-md-3">
+                                                                                                                <div class="form-group">
+                                                                                                                    <label class="form-label">Work Phone 1</label>
+                                                                                                                    <p id="vWorkPhone1"></p>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <div class="col-md-3">
+                                                                                                                <div class="form-group">
+                                                                                                                    <label class="form-label">Work Phone 2</label>
+                                                                                                                    <p id="vWorkPhone2"></p>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <div class="col-md-3">
+                                                                                                                <div class="form-group">
+                                                                                                                    <label class="form-label">Fax</label>
+                                                                                                                    <p id="vFax"></p>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <div class="col-md-4">
+                                                                                                                <div class="form-group">
+                                                                                                                    <label class="form-label">Website</label>
+                                                                                                                    <p id="vWebsite"></p>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <div class="col-md-4">
+                                                                                                                <div class="form-group">
+                                                                                                                    <label class="form-label">Address 1</label>
+                                                                                                                    <p id="vAddress1"></p>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <div class="col-md-4">
+                                                                                                                <div class="form-group">
+                                                                                                                    <label class="form-label">Address 2</label>
+                                                                                                                    <p id="vAddress2"></p>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <div class="col-md-4">
+                                                                                                                <div class="form-group">
+                                                                                                                    <label class="form-label">City</label>
+                                                                                                                    <p id="vCity"></p>
+                                                                                                                </div>
+                                                                                                            </div><!-- end of col -->
+                                                                                                            <div class="col-md-4">
+                                                                                                                <div class="form-group">
+                                                                                                                    <label class="form-label">State</label>
+                                                                                                                    <p id="vState"></p>
+                                                                                                                </div>
+                                                                                                            </div><!-- end of col -->
+
+                                                                                                            <div class="col-md-4">
+                                                                                                                <div class="form-group">
+                                                                                                                    <label class="form-label">Zip</label>
+                                                                                                                    <p id="vZip"></p>
+                                                                                                                </div>
+                                                                                                            </div><!-- end of col -->
+
+                                                                                                        </div><!-- end of row -->
+
+                                                                                                    </div><!-- card body end -->
+                                                                                                </div><!-- card end -->
+                                                                                            </div><!-- col end -->
+                                                                                        </div><!-- row end -->
+
+                                                                                        <div class="row">
+                                                                                            <div class="col-12">
+                                                                                                <div class="card">
+
+                                                                                                    <div class="card-header">
+                                                                                                        <h3 class="card-title">Contact Information</h3>
+                                                                                                        <div class="card-options">
+                                                                                                            <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="card-body border-top">
+                                                                                                        <div class="row">
+                                                                                                            <div class="col-md-3">
+                                                                                                                <div class="form-group">
+                                                                                                                    <label class="form-label">Name</label>
+                                                                                                                    <p id="vName"></p>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <div class="col-md-3">
+                                                                                                                <div class="form-group">
+                                                                                                                    <label class="form-label">Work Phone 1</label>
+                                                                                                                    <p id="vWorkPhone11"></p>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <div class="col-md-3">
+                                                                                                                <div class="form-group">
+                                                                                                                    <label class="form-label">Work Phone 2</label>
+                                                                                                                    <p id="vWorkPhone22"></p>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <div class="col-md-3">
+                                                                                                                <div class="form-group">
+                                                                                                                    <label class="form-label">Cell Phone</label>
+                                                                                                                    <p id="vCellPhone"></p>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <div class="col-md-4">
+                                                                                                                <div class="form-group">
+                                                                                                                    <label class="form-label">Email</label>
+                                                                                                                    <p id="vEmail"></p>
+                                                                                                                </div>
+                                                                                                            </div>
+
+                                                                                                        </div><!-- end of row -->
+
+                                                                                                    </div><!-- card body end -->
+                                                                                                </div><!-- card end -->
+                                                                                            </div><!-- col end -->
+                                                                                        </div><!-- row end -->
+
+                                                                                        <div class="row">
+                                                                                            <div class="col-12">
+                                                                                                <div class="card">
+                                                                                                    <div class="card-header">
+                                                                                                        <h3 class="card-title">Services</h3>
+                                                                                                        <div class="card-options">
+                                                                                                            <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="card-body border-top">
+                                                                                                        <p></p>
+                                                                                                        <div class="table-responsive" id="ServiceVendorView">
+                                                                                                            <table id="dataTableExample" class="table table-striped table-bordered w-100 dataTable no-footer">
+                                                                                                                <thead>
+                                                                                                                    <tr>
+                                                                                                                        <th>Title</th>
+                                                                                                                    </tr>
+                                                                                                                </thead>
+                                                                                                                <tbody>
+                                                                                                                    <tr>
+                                                                                                                        @*<td>Service goes here</td>*@
+                                                                                                                        <td><span class="vServices-fl"></span></td>
+                                                                                                                        @*<td align="center">
+                                                                                                                            <a title="Delete" onclick="removeDoc(this);"><i class="fe fe-trash redtxt font18"></i></a>
+                                                                                                                        </td>*@
+                                                                                                                        @*<td align="center"><a id="viewdata" role="button"><i class="fe fe-eye font18"></i></a></td>*@
+
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+
+                                                                                                        </div><!-- end of table responsive -->
+
+                                                                                                    </div><!-- card body end -->
+                                                                                                </div><!-- card end -->
+                                                                                            </div><!-- col end -->
+                                                                                        </div><!-- row end -->
+
+                                                                                        <div class="row">
+                                                                                            <div class="col-12">
+                                                                                                <div class="card">
+                                                                                                    <div class="card-header">
+                                                                                                        <h3 class="card-title">Insurance</h3>
+                                                                                                        <div class="card-options">
+                                                                                                            <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="card-body border-top">
+                                                                                                        <div class="table-responsive" id="InsuranceVendorView">
+                                                                                                            <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                                                                                                <thead>
+                                                                                                                    <tr>
+                                                                                                                        <th>Policy Number</th>
+                                                                                                                        <th>Amount</th>
+                                                                                                                        <th>Expiration</th>
+                                                                                                                        <th width="15%">&nbsp;</th>
+                                                                                                                    </tr>
+                                                                                                                </thead>
+                                                                                                                <tbody>
+                                                                                                                    <tr>
+                                                                                                                        <td><span class="policyNumber"></span></td>
+                                                                                                                        <td><span class="amount"></span></td>
+                                                                                                                        <td><span class="expiration"></span></td>
+                                                                                                                        <td align="center"><a id="insuranceViewData" role="button" class="badge badge-primary pull-right" data-dismiss="modal" data-toggle="modal" data-target="#viewinsurance"><i class="fe fe-eye font18"></i></a></td>
+                                                                                                                    </tr>
+                                                                                                                    @*<tr>
+                                                                                                                        <td>SD89900</td>
+                                                                                                                        <td>$2322.00</td>
+                                                                                                                        <td>11/2020</td>
+                                                                                                                        <td align="center">
+                                                                                                                            <a href="#" class="badge badge-primary pull-right" data-dismiss="modal" data-toggle="modal" data-target="#viewinsurance"><i class="fa fa-certificate"></i> View Insurance</a>
+                                                                                                                        </td>
+                                                                                                                    </tr>*@
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                        </div>
+                                                                                                    </div><!-- card body end -->
+                                                                                                </div><!-- card end -->
+                                                                                            </div><!-- col end -->
+                                                                                        </div><!-- row end -->
+                                                                                    </div><!-- end of form-div  -->
+                                                                                </div><!-- end of modal body -->
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--end Modal-->
+                                                                    <!-- Message Modal -->
+                                                                    <div class="modal fade" id="viewinsurance" tabindex="-1" role="dialog" aria-hidden="true">
+                                                                        <div class="modal-dialog" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="example-Modal3">Vendor Name</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-6">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="form-label">Policy Number</label>
+                                                                                                    <p id="vPolicyNumber"></p>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="form-label">Amount</label>
+                                                                                                    <p id="vAmount"></p>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="form-label">Start Date</label>
+                                                                                                    <p id="vStartDate"></p>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="form-label">End Date</label>
+                                                                                                    <p id="vEndDate"></p>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="form-label">Renewal Date</label>
+                                                                                                    <p id="vRenewalDate"></p>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <hr />
+
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-12">
+                                                                                                <div class="table-responsive">
+                                                                                                    <table id="dataTableExample" class="table table-striped table-bordered w-100 dataTable no-footer">
+                                                                                                        <thead>
+                                                                                                            <tr>
+                                                                                                                <th>Description</th>
+                                                                                                                <th width="5%"></th>
+                                                                                                            </tr>
+                                                                                                        </thead>
+                                                                                                        <tbody>
+                                                                                                            <tr>
+                                                                                                                <td>Document name goes here</td>
+                                                                                                                <td align="center"><a href="#" title="View"><i class="fe fe-eye font18"></i></a></td>
+                                                                                                            </tr>
+                                                                                                        </tbody>
+                                                                                                    </table>
+
+                                                                                                </div><!-- end of table responsive -->
+                                                                                            </div><!-- end of col -->
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div><!-- end of modal-->
+
+                                                                </div><!-- end of card body -->
+                                                                <div class="card-footer">
+                                                                    <div class="button-row d-flex">
+                                                                        <button class="btn btn-warning js-btn-prev" id="btnprev" type="button" title="Prev"><i class="fe fe-chevron-left"></i> Prev</button>
+                                                                        <button class="btn btn-info ml-auto js-btn-next" id="btnVendorNext" type="button" title="Next">Review Work Order <i class="fe fe-chevron-right"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- end of card -->
+                                                        </div><!-- end of col -->
+                                                    </div><!-- end of row -->
+                                                </div>
+                                            </div>
+                                            <!--single form panel-->
+
+                                            <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+
+                                                <div>
+
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="card">
+
+                                                                <div class="card-header">
+                                                                    <div class="card-options">
+                                                                        <a href="view-bidrequest.html" class="btn btn-primary ml-auto " title="Submit Request"><i class="fa fa-paper-plane-o"></i> Submit Request</a>
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="card-body border-top">
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            <div class="card">
+                                                                                <div class="card-header">
+                                                                                    <h3 class="card-title">Bid Requests</h3>
+                                                                                    <div class="card-options">
+                                                                                        <a href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                <div class="card-body border-top">
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-4">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Property</label>
+                                                                                                <p id="vProperty"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                        <div class="col-md-4">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Service</label>
+                                                                                                <p id="vService"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                        <div class="col-md-4">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Title</label>
+                                                                                                <p id="vTitle"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                    </div>
+                                                                                    <hr />
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Description</label>
+                                                                                                <p id="vDescription"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                    </div><!-- end of row -->
+                                                                                    <hr />
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-4">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Response Due Date</label>
+                                                                                                <p id="vResponseDueDate"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                        <div class="col-md-4">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Bid Due Date</label>
+                                                                                                <p id="vBidDueDate"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                    </div>
+                                                                                </div><!--end of card body -->
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            <div class="card">
+                                                                                <div class="card-header">
+                                                                                    <h3 class="card-title">Document</h3>
+                                                                                    <div class="card-options">
+                                                                                        <a href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="card-body border-top">
+
+                                                                                    <div class="table-responsive" id="vdivFileUploader">
+                                                                                        <table id="dataTableExample" class="table table-striped table-bordered w-100 dataTable no-footer">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th>Document</th>
+                                                                                                    <th width="5%"></th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td><span class="vupd-fl"></span></td>
+                                                                                                    <td align="center">
+                                                                                                        <a title="Delete" onclick="removeDoc(this);"><i class="fe fe-trash redtxt font18"></i></a>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+
+                                                                                    </div><!-- end of table responsive -->
+
+                                                                                </div><!--end of card body -->
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            <div class="card">
+                                                                                <div class="card-header">
+                                                                                    <h3 class="card-title">Vendors</h3>
+                                                                                    <div class="card-options">
+                                                                                        <a href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                                <div class="card-body border-top">
+                                                                                    <div class="table-responsive" id="ConfirmVendorList">
+                                                                                        <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                                                                            <thead>
+                                                                                                <tr>
+                                                                                                    <th>Vendor Name</th>
+                                                                                                    <th>Resonse Due date</th>
+                                                                                                    <th>Status</th>
+                                                                                                </tr>
+                                                                                            </thead>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td><span class="vendorName"></span></td>
+                                                                                                    <td><span class="responseDueDate"></span></td>
+                                                                                                    <td><span class="badge badge-primary  mr-1 mb-1 mt-1">Pending</span></td>
+                                                                                                </tr>
+
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>
+
+                                                                                </div><!--end of card body -->
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div><!-- end of card body -->
+
+                                                            </div><!-- end of card -->
+                                                        </div><!-- end of col -->
+                                                    </div><!-- end of row -->
+                                                </div>
+                                            </div>
+                                            <!--single form panel-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end of cust-wizard-->
+                    </div><!--end of card body -->
+                </div>
+            </div>
+        </div>
+    </div><!--End side app-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+<!-- End app-content-->
+
+<script>
+
+    $(document).ready(function ()
+    {
+        
+        //$("#ResponseDueDate").val("");
+        //$("#BidDueDate").val("");
+        $('#loader').show();
+        $('.errormessage').html('');
+        $('#Error').hide();
+
+        $('#loader').hide();
+        if ($("#Property").val() != '0')
+        {
+            $("#Property").prop("disabled", true);
+        }
+        var me = "";
+        removeDoc(me); 
+        removeVendor(me);
+        removeAllVendor(me);
+        $("#PMWor").closest('li').addClass('active');
+        $("#PMWor1").addClass('active');
+        document.getElementById("btnVendorAdd").style.color = "White";
+        checkPoratl()
+        $("#btnVendorNext").attr('disabled', true);
+        $("#btnVendorNext").css("cursor", "not-allowed")
+    });
+
+    // Search Vendor
+    $("#btnVendorSearch").click(function () {
+        var status = false;
+        status = AllVendorList();
+        return status;
+    });
+    // Search Vendor Over
+    function AllVendorList()
+    {
+        var formData = new FormData();
+
+        //alert("AllVendorList BidRequestKey = " + $("#BidRequestKey").val());
+        formData.append("BidRequestKey", $("#BidRequestKey").val());
+        formData.append("SearchVendorName", $("#txtSearchVendorName").val());
+        formData.append("SearchCompanyName", $("#txtSearchCompanyName").val());
+        formData.append("IsStaredVendor", $("#ddlIsStaredVendor").val());
+        formData.append("LastWorkedBefore", $("#ddlLastWorkedBefore").val());
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("SearchAllVendor", "PMBidRequests")',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (respo) {
+
+                //alert("response.length " + respo.length);
+                    $("#DivAllVendor table tbody tr:not(:first)").remove();
+                    $("#DivAllVendor table tbody tr:eq(0)").show();
+
+                for (var i = 0; i < respo.length; i++) {
+                    //alert("VendorName" + respo[i].VendorName);
+                    //alert("CompanyName" + respo[i].CompanyName);
+
+                    var table = $("#DivAllVendor table tbody tr:eq(0)").clone(true);
+
+                    $(".vendorName", table).html(respo[i].VendorName);
+                    $(".companyName", table).html(respo[i].CompanyName);
+                    $(".lastWorkedDate", table).html(respo[i].LastWorkDate);
+                    $(".vendorKey", table).html(respo[i].VendorKey);
+                    //$("#AddVendorKey", table).html(FunctionName(respo[i].VendorKey));
+                    $("#DivAllVendor table").append(table);
+                    }
+                    $("#DivAllVendor table tbody tr:eq(0)").hide();
+            },
+        })
+        removeVendor(me);
+    }
+
+
+
+     function checkPoratl() {
+        $.ajax({
+            url: '@Url.Action("checkPortal", "PMProperties")',
+            cache: false,
+            data:
+            {
+                PropertyKey: $('#PropertyKey').val()
+            },
+            success: function (response) {
+                debugger;
+
+                if (response == false) {
+                    window.location.href = '@Url.Action("Index", "Login")';
+                }
+
+                else {
+
+                }
+
+            }
+        });
+    }
+
+
+
+    function VendorAddForService(me) {
+        debugger;
+
+        var a = $(me).parent("td").parent("tr").find('.vendorKey').text();
+        var b = $("#Service").val();
+        var c = $("#BidRequestKey").val();
+        var formData = new FormData();
+        formData.append("VendorKey", a);
+        formData.append("ServiceKey", b);
+        formData.append("BidRequestKey", c);
+        formData.append("Modulekey", 106);
+        formData.append("ResponseDueDate", $("#ResponseDueDate").val());
+
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("VendorAddForService", "PMBidRequests")',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (respo) {
+
+                $("#vendorlist table tbody tr:not(:first)").remove();
+                $("#vendorlist table tbody tr:eq(0)").show();
+
+                for (var i = 0; i < respo.length; i++) {
+                    var table = $("#vendorlist table tbody tr:eq(0)").clone(true);
+
+                    $(".vendorNames", table).html(respo[i].Name);
+                    $(".contactPerson", table).html(respo[i].ContactPerson);
+                    $(".service", table).html(respo[i].Service);
+                    $(".vendorKeyView", table).html(respo[i].CompanyKey);
+                    $("#vendorlist table").append(table);
+                    $("#btnVendorNext").attr('disabled',false);
+                    $("#btnVendorAdd").html('<i class="fa fa-exchange"></i> Replace');
+                    $("#addvender_btn").html('<i class="fa fa-exchange"></i> Replace Vendor');
+                    $("#btnVendorNext").css("cursor", "pointer")
+                }
+                $("#vendorlist table tbody tr:eq(0)").hide();
+                AllVendorList();                        
+            },
+        })
+    }   
+    $("#Files").change(function () {
+
+        readURL(this);
+    });
+
+
+
+    function readURL(input) {
+        debugger;
+        $('#loader').show();
+
+        $("#divFileUploader table tbody tr:eq(0)").show();
+        for (var i = 0; i < input.files.length; i++) {
+            var cln = $("#divFileUploader table tbody tr:eq(0)").clone(true);
+            $(".upd-fl", cln).html(input.files[i].name);
+            $("#divFileUploader table").append(cln);
+        }
+        $("#divFileUploader table tbody tr:eq(0)").hide();
+
+        $("#vdivFileUploader table tbody tr:eq(0)").show();
+        for (var i = 0; i < input.files.length; i++) {
+            var cln = $("#vdivFileUploader table tbody tr:eq(0)").clone(true);
+            $(".vupd-fl", cln).html(input.files[i].name);
+            $("#vdivFileUploader table").append(cln);
+        }
+        $("#vdivFileUploader table tbody tr:eq(0)").hide();
+
+        var formData = new FormData();
+        var totalFiles = document.getElementById("Files").files.length;
+        for (var i = 0; i < totalFiles; i++) {
+            var file = document.getElementById("Files").files[i];
+            formData.append("Files", file);
+        }
+
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("BidRequestAddDocumentsPost", "PMBidRequests")',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (respo) {
+                debugger;
+                $('#loader').hide();
+            }
+        });
+
+    }
+
+    function clearFiles() {
+        $('#Files').parent('div').find('.dropify-clear').click();
+        $('#Files').parent('div').find('.dropify-clear').trigger('click');
+        return true;
+    }
+
+    function removeVendor(me) {
+        debugger;
+        if ($(".vendorNames").html() == "") {
+            $("#vendorlist table tbody tr:eq(0)").hide();
+        }
+        else {
+            $(me).closest("tr").remove();
+        }
+   }
+
+    function removeDoc(me) {
+        //debugger;
+        if ($(".upd-fl").text() == "") {
+            $("#divFileUploader table tbody tr:eq(0)").hide();
+        }
+        else {
+            $(me).closest("tr").remove();
+        }
+
+          $.ajax({
+            type: 'GET',
+            datatype: 'json',
+            url: '@Url.Action("BidReqRemoveAddedDocument", "PMBidRequests")',
+            data: { fileName: $(me).closest("tr").find('td:eq(0)').find('.upd-fl').html()},
+            success: function (respo) {
+                debugger;
+                $('#loader').hide();
+            }
+          });
+
+    }
+
+
+    function removeAllVendor(me) {
+        debugger;
+        if ($(".vendorName").html() == "") {
+            $("#DivAllVendor table tbody tr:eq(0)").hide();
+        }
+        else {
+            $(me).closest("tr").remove();
+        }
+    }
+
+    function fillserivces() {
+        $("#Servicediv table tbody tr:not(:first)").remove();
+        $("#Servicediv table tbody tr:eq(0)").show();
+        var SelectedManager = $("#ServiceChoosen option:selected").map(function () {
+            var cln = $("#Servicediv table tbody tr:eq(0)").clone(true);
+            $(".Servicespan", cln).html($(this).text());
+            $("#Servicediv table").append(cln);
+            event.preventDefault();
+            return $(this).val();
+        }).get().join(',');
+        $('#ServiceTitle1').val(SelectedManager);
+        $("#Servicediv table tbody tr:eq(0)").hide();
+
+    }
+
+    $("#btnBidRequestNext").click(function () {
+        var status = false;
+        status = BidRequestValidation();
+        return status;
+    });
+
+    $("#btnDocument").click(function () {
+        deleteRecord();
+        var status = false;
+        status = BidRequestValidation();
+        return status;
+    });
+    $("#btnbid").click(function () {
+        deleteRecord();
+        
+    });
+
+    $("#btnVendor").click(function () {
+        var status = false;
+        status = BidRequestValidation();
+        if (status == true) {
+            //alert("BidRequestKey " +$("#BidRequestKey").val());
+            if ($("#BidRequestKey").val() == 0) {
+                //alert("BidRequestKey on if");
+                status = InsertBidRequest();
+            }
+            return status;
+        }
+        return status;
+    });
+
+    $("#btnBidRequestNext").click(function () {
+        var status = false;
+        status = BidRequestValidation();
+        return status;
+    });
+    $("#btnVendorNext").click(function () {     
+        $("#global-loader").show();
+        document.location = '@Url.Action("PMWorkOrdersView", "PMWorkOrders")?BidRequestKey=' + $("#BidRequestKey").val();
+    });
+    $("#btnprev").click(function ()
+    {     
+        deleteRecord();
+    });
+    function deleteRecord() {
+        var status = false;
+        if ($("#BidRequestKey").val() != 0) {
+            status = DeleteRecord();
+        }
+        else {
+            $('#Error').hide();
+            status = true;
+        }
+        return status;
+    }
+    
+    $("#btnConfirm").click(function () {
+
+        Fillvalueview();
+        fillserivces();
+    });
+
+    $("#addvender_btn").click(function ()
+    {
+        $("#txtvservice").val($("#Service option:selected").text()); 
+        $("#txtSearchVendorName").val('');
+        $("#txtSearchCompanyName").val('');
+        $('#ddlIsStaredVendor option:selected').val(0);
+        //$("#ddlIsStaredVendor").val('0');
+        $("#ddlLastWorkedBefore").val(0);
+        var formData = new FormData();        
+        formData.append("BidRequestKey", $("#BidRequestKey").val());
+        formData.append("SearchVendorName", $("#txtSearchVendorName").val());
+        formData.append("SearchCompanyName", $("#txtSearchCompanyName").val());
+        formData.append("IsStaredVendor", $("#ddlIsStaredVendor").val());
+        formData.append("LastWorkedBefore", $("#ddlLastWorkedBefore").val());
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("SearchAllVendor", "PMBidRequests")',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (respo)
+            {                
+                    $("#DivAllVendor table tbody tr:not(:first)").remove();
+                    $("#DivAllVendor table tbody tr:eq(0)").show();
+                for (var i = 0; i < respo.length; i++)
+                {
+                    var table = $("#DivAllVendor table tbody tr:eq(0)").clone(true);
+                    $(".vendorName", table).html(respo[i].VendorName);
+                    $(".companyName", table).html(respo[i].CompanyName);
+                    $(".lastWorkedDate", table).html(respo[i].LastWorkDate);
+                    $(".vendorKey", table).html(respo[i].VendorKey);                    
+                    $("#DivAllVendor table").append(table);
+                }
+                $("#DivAllVendor table tbody tr:eq(0)").hide();
+                if (respo == 0) {
+                    $('.errormessage').html('No vendors exists for this service.');
+                    $('#Error').show();
+                    return false;
+
+                }
+                else
+                {
+                    $("#addvendor").modal("show");
+                }
+            },
+        })
+        removeVendor(me);
+    });
+
+        
+
+    function Fillvalueview() {
+
+        $('#vProperty').html($('#Property option:selected').text());
+        $('#vService').html($('#Service option:selected').text());
+
+        $('#vTitle').html($('#Title').val());
+        $('#vDescription').html($('#Description').val());
+        $('#vResponseDueDate').html($('#ResponseDueDate').val());
+        $('#vBidDueDate').html($('#BidDueDate').val());
+    }
+
+
+    function BidRequestValidation()
+    {
+        $('#loader').show();
+        $('.errormessage').html('');
+        var a = $('#Propertykey').val();
+        debugger;
+        if ($('#Property').val() == "0" && $('#Property').val()) {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+            $('#Property').focus();
+
+            return false;
+        }
+        else if ($('#Propertykey').val() != "0" || $('#Property').val() == "0") {
+
+                $('#Property').val(a);
+
+        }
+        else if ($('#Service').val() == "0") {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+            $('#Service').focus();
+
+            return false;
+        }
+        else if ($('#Title').val() == "") {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+            $('#Title').focus();
+
+            return false;
+        }
+        else if ($("#ResponseDueDate") == null || $("#ResponseDueDate").val().trim() == '') {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+            $('#ResponseDueDate').focus();
+            return false;
+        }
+        else if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test($('#ResponseDueDate').val())) {
+            $('.errormessage').html('Response Due Date not valid.');
+            $('#Error').show();
+            $('#ResponseDueDate').focus();
+            return false;
+        }
+        else if ($("#BidDueDate") == null || $("#BidDueDate").val().trim() == '') {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+            $('#BidDueDate').focus();
+            return false;
+        }
+        else if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test($('#BidDueDate').val())) {
+            $('.errormessage').html('Bid Due Date not valid.');
+            $('#Error').show();
+            $('#BidDueDate').focus();
+            return false;
+        }
+        else {
+            $('#Error').hide();
+            return true;
+        }
+    }
+    $("#btnDocumentNext").click(function () {
+        debugger;
+        var status = false;
+        var a = $("#PropertyKey").val();
+     
+        if ($("#BidRequestKey").val() == 0) {
+          status = InsertBidRequest(a);
+        }
+        else {
+            $('#Error').hide();
+            status = true;
+        }
+        return status;
+    });
+
+    // Save BidRequest And File
+    //-----------------------------------------------------------------
+    function InsertBidRequest(a)
+    {
+        debugger;
+        $('#loader').show();
+        var formData = new FormData();
+        var totalFiles = document.getElementById("Files").files.length;
+        for (var i = 0; i < totalFiles; i++) {
+            var file = document.getElementById("Files").files[i];
+            formData.append("Files", file);
+        }
+        if (a == "0") {
+            formData.append("Property", $("#Property").val());
+        }
+        else {
+            formData.append("Property", a);
+        }
+
+
+      
+        formData.append("Service", $("#Service").val());
+        formData.append("Title", $("#Title").val());
+        formData.append("Description", $("#Description").val());
+        formData.append("ResponseDueDate", $("#ResponseDueDate").val());
+        formData.append("BidDueDate", $("#BidDueDate").val());
+        formData.append("ModuleKey", 106);
+
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("DocUpload", "PMBidRequests")',
+            data: formData,
+             contentType:false,
+             processData: false,
+             success: function (respo)
+             {                 
+                 $("#BidRequestKey").val(respo);  
+                 AllVendorList();
+             },
+        });
+    }
+    function BindVendor()
+    {        
+        var formData = new FormData();
+        var a = $("#BidRequestKey").val();
+        formData.append("BidRequestKey", a);          
+        formData.append("Modulekey", 106);          
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("SearchVendorByBidRequest", "PMBidRequests")',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (respo)
+            {
+               
+                $("#vendorlist table tbody tr:not(:first)").remove();
+                $("#vendorlist table tbody tr:eq(0)").show();
+                for (var i = 0; i < respo.length; i++)
+                {
+                    var table = $("#vendorlist table tbody tr:eq(0)").clone(true);
+                    $(".vendorNames", table).html(respo[i].Name);
+                    $(".contactPerson", table).html(respo[i].ContactPerson);
+                    $(".service", table).html(respo[i].Service);
+                    $(".vendorKeyView", table).html(respo[i].CompanyKey);
+                    $("#vendorlist table").append(table);
+                }
+                $("#vendorlist table tbody tr:eq(0)").hide();  
+            }
+        });
+ 
+
+
+       
+    }
+
+
+   // View Vendor
+   //-------------------------------------------------------------------------------
+    function VendorView(me) {
+        debugger;
+
+        var a = $(me).parent("td").parent("tr").find('.vendorKeyView').text();
+        
+        //var b = $("#Service").val();
+        GetDataView(a);
+        bindservice(a);
+        bindDocument(a);
+        insurancetableFill(a);
+    }
+    function GetDataView(a) {
+        //alert("VendorKey " + a);
+        var formData = new FormData();
+        formData.append("VendorKey", a);
+
+
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("GetDataView", "PMBidRequests")',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (respo) {
+
+                $('#vCompanyName').html(respo.Name);
+
+                $('#vWorkPhone1').html(respo.Work);
+                $('#vWorkPhone2').html(respo.Work2);
+                $('#vFax').html(respo.Fax);
+                $('#vWebsite').html(respo.Website);
+                $('#vAddress1').html(respo.Address);
+                $('#vAddress2').html(respo.Address2);
+                $('#vCity').html(respo.City);
+                $('#vState').html(respo.State);
+                $('#vZip').html(respo.Zip);
+
+                $('#vName').html(respo.Name);
+                $('#vWorkPhone11').html(respo.Work);
+                $('#vWorkPhone22').html(respo.Work2);
+                $('#vCellPhone').html(respo.CellPhone);
+                $('#vEmail').html(respo.Email);
+            },
+        })
+    }
+
+
+    function bindservice(a)
+    {
+        //alert("bindserviceVendorKey " + a);
+        var formData = new FormData();
+        formData.append("VendorKey", a);
+        //alert("Bind Service After FormData");
+       debugger;
+
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("bindservice", "PMBidRequests")',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                //alert("on Service Success");
+                $("#ServiceVendorView table tbody tr:not(:first)").remove();
+                $("#ServiceVendorView table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++) {
+                    var cln = $("#ServiceVendorView table tbody tr:eq(0)").clone(true);
+                    //alert("title = " + response[i].ServiceTitle);
+                    $(".vServices-fl", cln).html(response[i].ServiceTitle);
+
+                    $("#ServiceVendorView table").append(cln);
+                }
+                $("#ServiceVendorView table tbody tr:eq(0)").hide();
+            }
+        });
+    }
+
+    function bindDocument(a)
+    {
+        //alert("bindDocumentVendorKey " + a);
+        var formData = new FormData();
+        formData.append("VendorKey", a);
+        formData.append("ModuleKey", 106);
+
+        $.ajax({
+            
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("bindDocument", "PMBidRequests")',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response)
+            {
+
+                $("#divFileUploader table tbody tr:not(:first)").remove();
+                $("#divFileUploader table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    var cln = $("#divFileUploader table tbody tr:eq(0)").clone(true);
+                    $(".upd-fl", cln).html(response[i].FileName);
+                    $("#divFileUploader table").append(cln);
+                }
+                $("#divFileUploader table tbody tr:eq(0)").hide();
+            }
+        });
+    }
+
+    function insurancetableFill(a)
+    {
+        //alert(" insurancetableFillVendorKey " + a);
+        var formData = new FormData();
+        formData.append("VendorKey", a);
+        debugger;
+
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("IndexinsurancePaging", "PMBidRequests")',
+            data: formData,
+            contentType: false,
+            processData: false,
+
+
+            success: function (response)
+            {
+                
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    debugger;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt($('#PageSize').val()));
+                    curRecords = curRecords - ($('#PageSize').val() - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                } else {
+                    $("#ddlload").hide();
+                }
+                $("#InsuranceVendorView table tbody tr:not(:first)").remove();
+                $("#InsuranceVendorView table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++) {
+                    var table = $("#InsuranceVendorView table tbody tr:eq(0)").clone(true);
+                    $(".policyNumber", table).html(response[i].PolicyNumber);
+                    $(".amount", table).html(response[i].InsuranceAmount);
+                    $(".expiration", table).html(ToJavaScriptDate(response[i].StartDate));
+                    $("#viewdata", table).attr('href', '/PMVendor/VendorView?CompanyKey=' + response[i].VendorKey);
+
+                    $("#InsuranceVendorView table").append(table);
+                }
+                $("#InsuranceVendorView table tbody tr:eq(0)").hide();
+                $("#loading1").hide();
+            }
+        });
+    }
+    function ToJavaScriptDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+    }
+</script>
+
+
+<!-- Daterangepicker js-->
+<script src="../assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+<!-- Datepicker js -->
+<script src="../assets/plugins/spectrum-date-picker/spectrum.js"></script>
+<script src="../assets/plugins/spectrum-date-picker/jquery-ui.js"></script>
+<script src="../assets/plugins/input-mask/jquery.maskedinput.js"></script>
+
+<link rel="stylesheet" href="../assets/css/cust-wizard.css">
+<script src="../assets/js/cust-wizard.js"></script>
+
+<!--Select2 js -->
+<script src="../assets/plugins/select2/select2.full.min.js"></script>
+<script src="../assets/js/select2.js"></script>
+<!--Select2 css -->
+<link href="../assets/plugins/select2/select2.min.css" rel="stylesheet" />
+
+
+

@@ -1,0 +1,326 @@
+﻿@model AssociationBids.Portal.Model.BidRequestModel
+@{
+    ViewBag.Title = "PMBidRequestEdit";
+    Layout = "~/Views/Shared/_PropertyManagerLayout.cshtml";
+}
+
+<h2>PMBidRequestEdit</h2>
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item ">
+                    @Html.ActionLink("Work Orders", "PMWorkorderslist", "PMWorkorders", null, new { })
+               
+                </li>
+                <li class="breadcrumb-item" onclick="backedit();">Work Order Detail</li>
+                <li class="breadcrumb-item active text-left">Edit Work Order</li>
+
+            </ol><!-- End breadcrumb -->
+
+        </div>
+    </div> <div class="alert alert-danger" id="Error" style="display:block; margin-top: 20px;">
+        <strong><span class="errormessage"></span></strong>
+    </div>
+
+    <!-- End page-header -->
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                @using (Html.BeginForm("PMBidRequestEdit", "PMBidRequests", FormMethod.Post))
+                {
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="text-right"><a href="#" id="btndelete" class="btn btn-icon btn-danger" data-toggle="modal" data-target="#uploadmodaldelete"><i class="fe fe-trash"></i> Delete</a></div>
+                                
+                            </div>
+                        </div>
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+
+                                    <label class="form-label">Title @Html.ValidationMessageFor(model => model.Title, "*", new { @class = "text-danger" })</label>
+                                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Title" } })
+                                    @Html.HiddenFor(model => model.BidRequestKey)
+                                    @Html.HiddenFor(model => model.BidReqStatus)
+                                    @Html.HiddenFor(model => model.ModuleKey)
+                                </div>
+                            </div><!-- end of col -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">Property @Html.ValidationMessageFor(model => model.PropertyKey, "*", new { @class = "text-danger" })</label>
+                                    @Html.DropDownListFor(model => model.PropertyKey, new SelectList(ViewBag.lstProperty, "Value", "Text"), new { @tabindex = "2", @data_rel = "Choose_one", @class = "form-control", placeholder = "Select property..." })
+                                </div>
+                            </div><!-- end of col -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">Service @Html.ValidationMessageFor(model => model.ServiceKey, "*", new { @class = "text-danger" })</label>
+                                    @Html.DropDownListFor(model => model.ServiceKey, new SelectList(ViewBag.lstService, "Value", "Text"), new { @tabindex = "3", @data_rel = "Choose_one", @class = "form-control", placeholder = "Select Service..." })
+                                </div>
+                            </div><!-- end of col -->
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">Response due date</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                            </div>
+                                        </div>
+                                        @Html.TextBoxFor(model => model.ResponseDueDates, "{0:MM/dd/yyyy}", new { @class = "form-control fc-datepicker", @tabindex = "4", autocomplete = "off", placeholder = "MM/DD/YYYY" })
+
+                                    </div>
+                                </div>
+                            </div><!-- end of col -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">Bid Due date</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                            </div>
+                                        </div>
+                                        @Html.TextBoxFor(model => model.BidDueDates, "{0:MM/dd/yyyy}", new { @class = "form-control fc-datepicker", @tabindex = "5", autocomplete = "off", placeholder = "MM/DD/YYYY" })
+
+                                    </div>
+                                </div>
+                            </div><!-- end of col -->
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">Description</label>
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Description", @tabindex = "6" })
+                                </div>
+                            </div><!-- end of col -->
+                        </div><!-- end of row -->
+                        <hr />
+                        <div class="button-row d-flex">
+                            <a href="@Request.UrlReferrer" class="btn btn-default" title="Cancel">Cancel</a>
+                            <button class="btn btn-sm btn-primary ml-auto" id="btnUpdate" type="submit" onclick="return validation()" title="Update"><i class="fa fa-check-circle-o "></i> Update</button>
+
+                        </div>
+                    </div>
+                    <!--end of card body -->
+                    <div class="modal fade" id="uploadmodaldelete" tabindex="-1" role="dialog" aria-labelledby="uploadmodalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="acceptbidrequestLabel">Delete</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="form-popup">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="custom-controls-stacked">
+                                                    <h5 id="popupmsg" class="modal-title" style="color:black !important;">Are you sure you want to delete this record?</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="btncanpop" type="button" class="btn btn-sm btn-info" data-dismiss="modal">Cancel</button>
+                                    <a id="PopCancelByVender" href="#" class="btn btn-sm btn-default"><i class="fa fa-check-square"></i> Yes</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div><!--End side app-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+<!-- End app-content-->
+<!-- Back to top -->
+<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+<!-- Jquery js-->
+<script src="../assets/js/vendors/jquery-3.2.1.min.js"></script>
+
+<!--Bootstrap.min js-->
+<script src="../assets/plugins/bootstrap/popper.min.js"></script>
+<script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+<!--Jquery Sparkline js-->
+<script src="../assets/js/vendors/jquery.sparkline.min.js"></script>
+
+<!-- Chart Circle js-->
+<script src="../assets/js/vendors/circle-progress.min.js"></script>
+
+<!-- Star Rating js-->
+<script src="../assets/plugins/rating/jquery.rating-stars.js"></script>
+
+<!--Moment js-->
+<script src="../assets/plugins/moment/moment.min.js"></script>
+
+<!-- Daterangepicker js-->
+<script src="../assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+<!--Side-menu js-->
+<script src="../assets/plugins/sidemenu/sidemenu-icon.js"></script>
+
+<!-- Sidebar Accordions js -->
+<script src="../assets/plugins/sidemenu-responsive-tabs/js/easyResponsiveTabs.js"></script>
+
+<!-- Perfect scroll bar js-->
+<script src="../assets/plugins/pscrollbar/perfect-scrollbar.js"></script>
+<script src="../assets/plugins/pscrollbar/p-scroll.js"></script>
+
+<!-- Rightsidebar js -->
+<script src="../assets/plugins/sidebar/sidebar.js"></script>
+
+
+
+<!-- Daterangepicker js-->
+<script src="../assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+<!-- Datepicker js -->
+<script src="../assets/plugins/spectrum-date-picker/spectrum.js"></script>
+<script src="../assets/plugins/spectrum-date-picker/jquery-ui.js"></script>
+<script src="../assets/plugins/input-mask/jquery.maskedinput.js"></script>
+
+<!--Select2 js -->
+<script src="../assets/plugins/select2/select2.full.min.js"></script>
+<script src="../assets/js/select2.js"></script>
+<!--Select2 css -->
+<link href="../assets/plugins/select2/select2.min.css" rel="stylesheet" />
+
+
+
+<!---Accordion js-->
+<script src="../assets/plugins/accordion/accordion.min.js"></script>
+<script src="../assets/plugins/accordion/accordions.js"></script>
+
+
+<!-- Custom js-->
+<script src="../assets/js/custom.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function ()
+    {
+        $("#PropertyKey").prop("disabled", true);
+        $("#ServiceKey").prop("disabled", true);
+        $("#ModuleKey").val(106); 
+        $("#PMWor").closest('li').addClass('active');
+        $("#PMWor1").addClass('active');
+        $(".advance_search").click(function () {
+            $("#advancesearch3").toggle(500);
+        });
+        $(".overlayclose").click(function () {
+            $("#advancesearch3").hide();
+        });
+         checkPoratl()
+     
+    });
+
+
+    
+    function checkPoratl() {
+        $.ajax({
+            url: '@Url.Action("checkPortal", "PMProperties")',
+            cache: false,
+            data:
+            {
+                PropertyKey: $('#PropertyKey').val()
+            },
+            success: function (response) {
+                debugger;
+
+                if (response == false) {
+                    window.location.href = '@Url.Action("Index", "Login")';
+                }
+
+                else {
+
+                }
+
+            }
+        });
+    }
+
+
+
+
+    $(document).ready(function ()
+    {
+        $('#Error').hide();
+        $('#btndelete').hide();
+        if ($("#BidReqStatus").val() == "In Progress")
+        {
+            $('#btndelete').show();
+            
+        }
+
+       
+        $("#PopCancelByVender").click(function ()
+        {
+            window.location.href = "Delete?BidRequestKey=" + $("#BidRequestKey").val();                  
+        });
+    });
+    function backedit() {
+        
+        window.location.href = "PMWorkordersView?BidRequestKey=" + $("#BidRequestKey").val();
+    }
+    function validation()
+    {
+        debugger;
+        $('#loader').show();
+        $('.errormessage').html('');
+
+        if ($('#Title').val() == "") {
+            $('.errormessage').html('Please Enter Title.');
+            $('#Error').show();
+            $('#Title').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+
+        if ($('#PropertyKey').val() == "0") {
+            $('.errormessage').html('Please Select Property.');
+            $('#Error').show();
+            $('#PropertyKey').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+        if ($('#ServiceKey').val() == "0") {
+            $('.errormessage').html('Please Select Service.');
+            $('#Error').show();
+            $('#ServiceKey').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+    }
+
+</script>

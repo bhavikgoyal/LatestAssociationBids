@@ -1,0 +1,147 @@
+﻿@model AssociationBids.Portal.Model.VendorManagerModel
+
+@{
+    ViewBag.Title = "AddPolicyVendor";
+    Layout = "~/Views/Shared/_VendorLayout.cshtml";
+    //if (Session["PortalKey"] == null)
+    //{ Response.Redirect("~/", true); }
+    //else if (Session["PortalKey"].ToString() == "2")
+    //{ Response.Redirect("~/PMDashboard/Dashboard", true); }
+    //else if (Session["PortalKey"].ToString() == "3")
+    //{ Response.Redirect("~/VDashboard/Index", true); }
+}
+
+
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+
+<h2>Add Policy</h2>
+
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="../Dashboard/Dashboard">Home</a></li>
+                <li class="breadcrumb-item"><a href="~/VendorManager/Index">Vendors</a></li>
+                <li class="breadcrumb-item"><a href="~/VendorManager/VendorView?CompanyKey=@ViewBag.cid">Vendors Detail</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add Policy</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+
+
+        <!-- End page-header -->
+
+        @using (Html.BeginForm("AddInsuranceWithDocVendor", "VendorManager", new { CompanyKey = ViewBag.cid }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+
+                        <div class="card-body">
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="expanel expanel-default">
+                                        <div class="expanel-body">
+                                            <div>
+                                                <div class="form-group">
+                                                    <label class="form-label">Policy Number</label>
+                                                    @Html.TextBoxFor(model => model.Insurance.PolicyNumber, new { @class = "form-control", PlaceHolder = "Policy Number" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label">Amount</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <i class="fa fa-dollar tx-16 lh-0 op-6"></i>
+                                                            </div>
+                                                        </div>@Html.TextBoxFor(model => model.Insurance.InsuranceAmount, new { @class = "form-control", PlaceHolder = "Insurance Amount" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label">Start Date</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            @*<div class="input-group-text">
+                                                                <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                                            </div>*@
+                                                        </div>@Html.TextBoxFor(model => model.Insurance.StartDate, new {@type = "date", @class = "form-control fc-datepicker", placeholder = "MM/DD/YYYY", autocomplete = "off" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="form-label">End Date</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            @*<div class="input-group-text">
+                                                                <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                                            </div>*@
+                                                        </div>@Html.TextBoxFor(model => model.Insurance.EndDate, new { @class = "form-control fc-datepicker", placeholder = "MM/DD/YYYY", autocomplete = "off" , @type = "date" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label">Renewal Date</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            @*<div class="input-group-text">
+                                                                <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                                            </div>*@
+
+                                                        </div>@Html.TextBoxFor(model => model.Insurance.RenewalDate, new { @class = "form-control fc-datepicker", placeholder = "MM/DD/YYYY", autocomplete = "off" ,@type = "date" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="expanel expanel-default">
+                                        <div class="expanel-body">
+                                            <div class="form-group">
+                                                <label class="form-label">Upload New Insurance</label>
+                                                <input type="file" name="files" class="dropify" multiple="multiple" required />
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div><!-- end of card body -->
+                        <div class="card-footer">
+                            <div class="button-row d-flex">
+                                <button class="btn btn-info ml-auto" title="Add Policy"><i class="fa fa-check"></i> Add Policy</button>
+                            </div>
+                        </div>
+                    </div><!-- end of card -->
+                </div><!-- end of col -->
+            </div>
+        }
+
+
+
+
+
+
+    </div><!--End side app-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+</div>
+

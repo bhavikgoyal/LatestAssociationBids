@@ -1,0 +1,270 @@
+﻿@using AssociationBids.Portal.Common
+@using System.Web.Mvc
+@using AssociationBids.Portal.Web
+@helper RenderSortingHeader(string title, string sortField, string sortOrder)
+{
+    string style = "sort-default";
+    if (string.IsNullOrEmpty(sortOrder))
+    {
+        sortOrder = string.Empty;
+    }
+
+    if (sortOrder.ToLower().Contains(sortField.ToLower() + " desc"))
+    {
+        style = "sort-desc";
+        sortOrder = sortField;
+    }
+    else if (sortOrder.ToLower().Contains(sortField.ToLower() + " asc") || sortOrder.ToLower().Contains(sortField.ToLower()))
+    {
+        style = "sort-asc";
+        sortOrder = sortField + " DESC";
+    }
+    else
+    {
+        sortOrder = sortField;
+    }
+
+    <th scope="col" sort-order="@sortOrder">
+        <div class="@style">@title</div>
+    </th>
+}
+@helper FilterButtons()
+{
+    <button id="button-filter-apply" type="button" class="btn btn-primary" data-toggle="collapse" data-target="#content-filter">Apply Filter</button>
+    <button id="button-filter-reset" type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#content-filter">Reset Filter</button>
+}
+@helper FilterScripts(RouteHelper route)
+{
+    <script>
+        $(document).ready(function () {
+            $("#button-filter-apply").click(function() {
+                $.ajax({
+                    type: 'POST',
+                    url: '@route.GetFilterUrl()',
+                    data: $('#form-filter').serialize(),
+                    success: function (response) {
+                        $('#content-list').html(response);
+                    }
+                });
+            });
+
+            $("#button-filter-reset").click(function() {
+                $.ajax({
+                    type: 'POST',
+                    url: '@route.GetFilterResetUrl()',
+                    data: $('#form-filter').serialize(),
+                    success: function (response) {
+                        $('#content-list').html(response);
+                    }
+                });
+            });
+        });
+    </script>
+}
+@helper CreateButtons(bool hasApproval)
+{
+    if (hasApproval)
+    {
+        <button id="button-create-approve" type="button" class="btn btn-primary">Create & Approve</button>
+    }
+    <button id="button-create" type="button" class="btn btn-primary">Create</button>
+    <button id="button-cancel" type="button" class="btn btn-secondary">Cancel</button>
+}
+@helper CreateScripts(RouteHelper route, bool hasApproval)
+{
+    if (hasApproval)
+    {
+        <script>
+            $(document).ready(function () {
+                $("#button-create-approve").click(function () {
+                    $('#Status').val('2');  // Approved
+                    $("#button-create").click();
+                });
+            });
+        </script>
+    }
+    <script>
+        $(document).ready(function () {
+            $("#button-create").click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '@route.GetCreateUrl()',
+                    data: $('#form-create').serialize(),
+                    success: function (response) {
+                        if (response.success) {
+                            navigateUrl(response.redirectUrl);
+                        } else {
+                            $('#content-create').html(response);
+                        }
+                    }
+                });
+            });
+
+            $("#button-cancel").click(function () {
+                navigateUrl('@route.GetListUrl()');
+            });
+        });
+    </script>
+}
+@helper CreateStepButton(RouteHelper route, bool hasApproval)
+{
+    if (hasApproval)
+    {
+        <script>
+            $(document).ready(function () {
+                $("#button-create-approve").click(function () {
+                    $('#Status').val('2');  // Approved
+                    $("#button-create").click();
+                });
+            });
+        </script>
+    }
+
+}
+@helper DetailButtons()
+{
+    <button id="button-edit" type="button" class="btn btn-primary">Edit</button>
+    <button id="button-cancel" type="button" class="btn btn-secondary">Cancel</button>
+}
+@helper DetailScripts(RouteHelper route, int id)
+{
+    <script>
+        $(document).ready(function () {
+            $("#button-edit").click(function () {
+                navigateUrl('@route.GetEditUrl(id)');
+            });
+
+            $("#button-cancel").click(function () {
+                navigateUrl('@route.GetListUrl()');
+            });
+        });
+    </script>
+}
+@helper EditButtons()
+{
+    EditButtons(0);
+}
+@helper EditButtons(int status)
+{
+    <button id="button-update" type="button" class="btn btn-primary">Update</button>
+    if (status == 1 || status == 4)
+    {
+        <button id="button-status" type="button" class="btn btn-secondary">Approve</button>
+    }
+    else if (status == 2)
+    {
+        <button id="button-status" type="button" class="btn btn-secondary">Unapprove</button>
+    }
+    <button id="button-delete" type="button" class="btn btn-secondary">Delete</button>
+    <button id="button-cancel" type="button" class="btn btn-secondary">Cancel</button>
+}
+@helper EditScripts(RouteHelper route, int id)
+{
+    EditScripts(route, id, 0);
+}
+@helper EditScripts(RouteHelper route, int id, int status)
+{
+    if (status == 1 || status == 4)
+    {
+        <script>
+            $(document).ready(function () {
+                $("#button-status").click(function () {
+                    $('#Status').val('2');  // Approved
+                    $("#button-update").click();
+                });
+            });
+        </script>
+    }
+    else if (status == 2)
+    {
+        <script>
+            $(document).ready(function () {
+                $("#button-create-approve").click(function () {
+                    $('#Status').val('4');  // Unapproved
+                    $("#button-update").click();
+                });
+            });
+        </script>
+    }
+    <script>
+        $(document).ready(function () {
+            $("#button-update").click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '@route.GetEditUrl(id)',
+                    data: $('#form-edit').serialize(),
+                    success: function (response) {
+                        if (response.success) {
+                            navigateUrl('@route.GetDetailsUrl(id)');
+                        } else {
+                            $('#content-edit').html(response);
+                        }
+                    }
+                });
+            });
+
+            $("#button-cancel").click(function () {
+                navigateUrl('@route.GetDetailsUrl(id)');
+            });
+        });
+    </script>
+}
+@helper StatusList(int status)
+{
+}
+@helper SelectList(string id, SelectList items)
+{
+    @SelectList(id, items, false);
+}
+@helper SelectList(string id, SelectList items, bool insertBlank)
+{
+    @SelectList(id, items, insertBlank, "");
+}
+@helper SelectList(string id, SelectList items, bool insertBlank, string blankText)
+{
+    @SelectList(id, items, insertBlank, blankText, "");
+}
+@helper SelectList(string id, SelectList items, bool insertBlank, string blankText, string blankValue)
+{
+    <select class="form-control" name="@id" id="@id">
+        @if (insertBlank)
+        {
+            <option value="@blankValue">@blankText</option>
+        }
+        @if (items != null)
+        {
+            foreach (System.Web.Mvc.SelectListItem item in items)
+            {
+                <option value="@item.Value" @(item.Selected ? "selected" : "")>@item.Text</option>
+            }
+        }
+    </select>
+}
+@helper Date(string id, DateTime value)
+{
+    <input type="text" class="form-control" name="@id" id="@id" value="@Util.FormatDate(value)">
+}
+@helper DisplayStatusFor(int data)
+{
+    <label>@data</label>
+}
+@helper DisplayDateFor(string data)
+{
+    <label>@String.Format("MM/dd/yyyy", data)</label>
+}
+@helper DisplayDateFor(DateTime data)
+{
+    <label>@Util.FormatDate(data)</label>
+}
+@helper DisplayDescriptionFor(string data)
+{
+    <label>@data</label>
+}
+@helper DisplayFor(string data)
+{
+    <label>@data</label>
+}
+@helper DisplayFor(int data)
+{
+    <label>@data</label>
+}

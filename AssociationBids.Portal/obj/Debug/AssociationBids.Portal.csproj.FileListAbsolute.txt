@@ -1,0 +1,252 @@
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.dll.config
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.pdb
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\csc.exe
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\csc.exe.config
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\csc.rsp
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\csi.exe
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\csi.rsp
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.CSharp.Core.targets
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.VisualBasic.Core.targets
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\System.AppContext.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\System.Collections.Immutable.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\System.Diagnostics.StackTrace.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\System.IO.FileSystem.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\System.IO.FileSystem.Primitives.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\System.Reflection.Metadata.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\vbc.exe
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\vbc.exe.config
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\vbc.rsp
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\VBCSCompiler.exe
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\VBCSCompiler.exe.config
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Common.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Model.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Repository.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Service.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Web.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\ClosedXML.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\DocumentFormat.OpenXml.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\ExcelNumberFormat.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\itextsharp.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\Stripe.net.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\System.Runtime.InteropServices.RuntimeInformation.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Common.pdb
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Common.dll.config
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Model.pdb
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Repository.pdb
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Repository.dll.config
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Service.pdb
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Service.dll.config
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Web.pdb
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Web.dll.config
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\ClosedXML.pdb
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\ClosedXML.xml
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\DocumentFormat.OpenXml.xml
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\ExcelNumberFormat.xml
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\itextsharp.xml
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\Stripe.net.pdb
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\Stripe.net.xml
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.csprojAssemblyReference.cache
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.csproj.CoreCompileInputs.cache
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.csproj.CopyComplete
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.pdb
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.dll.config
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.pdb
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\csc.exe
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\csc.exe.config
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\csc.rsp
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\csi.exe
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\csi.rsp
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\System.AppContext.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\System.Collections.Immutable.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\System.IO.FileSystem.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\System.Reflection.Metadata.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\vbc.exe
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\vbc.exe.config
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\vbc.rsp
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\VBCSCompiler.exe
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\roslyn\VBCSCompiler.exe.config
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Common.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Model.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Repository.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Service.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Web.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\ClosedXML.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\DocumentFormat.OpenXml.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\ExcelNumberFormat.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\itextsharp.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\Stripe.net.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Common.pdb
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Common.dll.config
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Model.pdb
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Repository.pdb
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Repository.dll.config
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Service.pdb
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Service.dll.config
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Web.pdb
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Web.dll.config
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\ClosedXML.pdb
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\ClosedXML.xml
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\DocumentFormat.OpenXml.xml
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\ExcelNumberFormat.xml
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\itextsharp.xml
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\Stripe.net.pdb
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\bin\Stripe.net.xml
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.csprojAssemblyReference.cache
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.csproj.CoreCompileInputs.cache
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.csproj.CopyComplete
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.pdb
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.csproj.CoreCompileInputs.cache
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.csprojAssemblyReference.cache
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\AssociationBids.Portal.dll.config
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\AssociationBids.Portal.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\AssociationBids.Portal.pdb
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\csc.exe
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\csc.exe.config
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\csc.rsp
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\csi.exe
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\csi.rsp
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\System.AppContext.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\System.Collections.Immutable.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\System.IO.FileSystem.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\System.Reflection.Metadata.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\vbc.exe
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\vbc.exe.config
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\vbc.rsp
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\VBCSCompiler.exe
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\roslyn\VBCSCompiler.exe.config
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\AssociationBids.Portal.Common.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\AssociationBids.Portal.Model.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\AssociationBids.Portal.Repository.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\AssociationBids.Portal.Service.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\AssociationBids.Portal.Web.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\BouncyCastle.Crypto.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\ClosedXML.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\DocumentFormat.OpenXml.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\ExcelNumberFormat.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\itextsharp.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\Stripe.net.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\Xceed.Document.NET.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\Xceed.Words.NET.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\AssociationBids.Portal.Common.pdb
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\AssociationBids.Portal.Common.dll.config
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\AssociationBids.Portal.Model.pdb
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\AssociationBids.Portal.Repository.pdb
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\AssociationBids.Portal.Repository.dll.config
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\AssociationBids.Portal.Service.pdb
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\AssociationBids.Portal.Service.dll.config
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\AssociationBids.Portal.Web.pdb
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\AssociationBids.Portal.Web.dll.config
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\ClosedXML.pdb
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\ClosedXML.xml
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\DocumentFormat.OpenXml.xml
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\ExcelNumberFormat.xml
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\itextsharp.xml
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\Stripe.net.pdb
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\bin\Stripe.net.xml
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.csprojAssemblyReference.cache
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.csproj.CoreCompileInputs.cache
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.csproj.CopyComplete
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.pdb
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.dll.config
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.pdb
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\csc.exe
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\csc.exe.config
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\csc.rsp
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\csi.exe
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\csi.rsp
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\System.AppContext.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\System.Collections.Immutable.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\System.IO.FileSystem.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\System.Reflection.Metadata.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\vbc.exe
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\vbc.exe.config
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\vbc.rsp
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\VBCSCompiler.exe
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\roslyn\VBCSCompiler.exe.config
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Common.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Model.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Repository.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Service.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Web.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\BouncyCastle.Crypto.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\ClosedXML.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\DocumentFormat.OpenXml.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\ExcelNumberFormat.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\itextsharp.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\Stripe.net.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\Xceed.Document.NET.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\Xceed.Words.NET.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Common.pdb
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Common.dll.config
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Model.pdb
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Repository.pdb
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Repository.dll.config
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Service.pdb
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Service.dll.config
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Web.pdb
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\AssociationBids.Portal.Web.dll.config
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\ClosedXML.pdb
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\ClosedXML.xml
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\DocumentFormat.OpenXml.xml
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\ExcelNumberFormat.xml
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\itextsharp.xml
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\Stripe.net.pdb
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\bin\Stripe.net.xml
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.csprojAssemblyReference.cache
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.csproj.CoreCompileInputs.cache
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.csproj.CopyComplete
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal\obj\Debug\AssociationBids.Portal.pdb

@@ -1,0 +1,172 @@
+﻿@model AssociationBids.Portal.Model.MembershipModel
+
+@{
+    ViewBag.Title = "MemberShipFind";
+    Layout = "~/Views/Shared/_VendorLayout.cshtml";
+}
+
+<h2>MemberShipFind</h2>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<style>
+    .noticlose{
+        cursor:pointer !important;
+    }
+</style>
+<div class="app-content  my-3 my-md-5">
+   
+        <div class="side-app">
+
+            <!-- page-header -->
+            <div class="page-header">
+                <ol class="breadcrumb">
+                    <!-- breadcrumb -->
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Membership</li>
+                </ol><!-- End breadcrumb -->
+
+            </div>
+            <!-- End page-header -->
+
+    @if (Model != null)
+    {
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            @if (Model.priority == 1)
+                            {
+                            <div class="row" id="notidiv">
+                                <div class="col-md-6">
+                                    @if (Model.NotificationType == "MembershipExpiry")
+                                    {
+                                    <span class="form-control alert alert-warning">
+                                        <i class="fa fa-info-circle"></i> Your Membership is about to expire.
+                                        <i class="fe fe-x font18 pull-right noticlose" onclick=" notificationClick(@Model.NotificationId,'@Model.NotificationType')"></i>
+                                    </span>
+                                    }
+                                    else
+                                    {
+                                    <span class="form-control alert alert-danger">
+                                        <i class="fa fa-warning"></i> Your Membership is expired.
+                                        <i class="fe fe-x font18 pull-right noticlose" onclick=" notificationClick(@Model.NotificationId,'@Model.NotificationType')"></i>
+                                    </span>
+                                    }
+                                </div>
+                            </div>
+                            }
+                            <div class="form-div">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Renewal Date:</label>
+                                            <p>
+                                                @*@Html.DisplayFor(item => item.RenewalDate.ToString("MM/dd/yyyy"))*@
+                                                @if (Model != null && Model.RenewalDate != null)
+                                                {
+                                                <span>@Model.RenewalDate.ToString("MM/dd/yyyy")</span>
+                                                }
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Membership status:</label>
+                                             @ViewBag.Active
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Billing Method:</label>
+                                            <p>Credit Card - @Model.MaskedCCNumber 
+                                            @if (@Model.AutomaticRenewal == true)
+                                            {
+                                                <span>(Auto Renewal)</span>
+                                            }</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+    }
+
+
+
+        </div><!--End side app-->
+        <!--footer-->
+        <footer class="footer">
+            <div class="container">
+                <div class="row align-items-center flex-row-reverse">
+                    <div class="col-lg-12 col-sm-12   text-center">
+                        Copyright © 2020 Association Bids. All rights reserved.
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End Footer-->
+        <!-- End Page -->
+        <!-- Back to top -->
+    </div>
+
+        <script>
+
+
+            $(function () {
+                $('#SelectedDate').datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    format: "dd/mm/yyyy",
+                    language: "tr",
+                    maxDate: 0
+                });
+            });
+            $(".edit-card-info").hide();
+            $(".editcard").click(function () {
+                $(".edit-card-info").show();
+            });
+            $(".card-cancel").click(function () {
+                $(".edit-card-info").hide();
+            });
+            $(".card-save").click(function () {
+                $(".edit-card-info").hide();
+            });
+
+            function notificationClick(nid, type) {
+                debugger;
+                $.ajax({
+                    url: '/ABNotification/NotificationUpdate',
+                    cache: false,
+                    data: {
+                        NotiId: nid,
+                        Status: 'read',
+                        NotiType: type
+                    },
+                    success: function (response) {
+                        if (response == 'true' || response == true) {
+                            $("#notidiv").hide(2000, function () {
+                                $("#notidiv").remove();
+                            });
+                            $(".header-notify").load("/ABNotification/Notification");
+                        }
+                    }
+                });
+            }
+        </script>

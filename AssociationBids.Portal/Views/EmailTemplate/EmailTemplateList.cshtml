@@ -1,0 +1,877 @@
+﻿
+@{
+    ViewBag.Title = "EmailTemplateList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string Errormessage = Convert.ToString(ViewData["Errormessage"]);
+}
+
+<h2>EmailTempletList</h2>
+
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="EmailTemplateList">Email Templates</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add Email Templates</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+
+        @if (TempData["Sucessmessage"] != null)
+        {
+            <p class="alert alert-success alert-dismissible" id="successMessage">
+                @TempData["Sucessmessage"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        @if (TempData["delete"] != null)
+        {
+            <p class="alert alert-danger alert-dismissible" id="successMessage">
+                @TempData["delete"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+
+
+        @*<div role="alert">
+                <div class="alert alert-danger" id="Error" style="display: none;margin-top: 20px;">
+                    <strong><span class="errormessage"></span></strong>
+                </div>
+                @if (!string.IsNullOrEmpty(Errormessage))
+                {
+                    <div class="alert alert-danger" style="margin-top: 20px;">
+                        <strong><span>@Errormessage</span></strong>
+                    </div>
+                }
+            </div>*@
+        <!-- End page-header -->
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-4 col-xl-4 mb15">
+                                    <input type="text" class="form-control" id="txtsearch" placeholder=" Email Title">
+                                </div>
+                                <div class="col-lg-4 col-xl-4">
+                                    <a class="btn btn-secondary" href="#" id="btnsearch" role="button">Search</a>
+                                    <span class="advance_search btn_advsearch" onclick="toggle_visibility('advancesearch2');"><i class="fe fe-chevron-down"></i></span>
+                                </div>
+                                <div class="col-lg-4 col-xl-4">
+                                    <div class="btn_group_div text-right">
+                                        <a href="~/EmailTemplate/EmailTemplateAdd" class="btn btn-primary" hidden="hidden">+ Add Email Template</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end of form group -->
+
+                        <div id="advancesearch3">
+                            <div class="overlayclose"><i class="fa fa-times"></i></div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Email Title</label>
+                                        <input class="form-control" id="txtEmailTite" placeholder="Email Title" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Email Type</label>
+                                        <input class="form-control" id="txtEmailType" placeholder="Email Type" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">&nbsp;</label>
+                                        <button type="button" id="btnsearchVendor" class="btn btn-sm btn-primary btn-icon-text">
+                                            Search
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="alert alert-danger" id="Error" style="display:block; margin-top: 20px;">
+                            <strong><span class="errormessage"></span></strong>
+                        </div>
+
+
+                        <div id="RawDatas" class="table-responsive">
+                            <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                <thead>
+                                    <tr>
+                                        <th width="30%" onclick="SortingFun('EmailTitle');" style="cursor: pointer;">
+                                            <i id="Titlei" class="fa fa-sort-asc pull-right"></i>
+                                            Email Title
+                                        </th>
+                                        <th width="30%" onclick="SortingFun('Title');" style="cursor: pointer;">
+                                            <i id="EmilTypi" class="fa fa-sort-asc pull-right"></i>
+                                            Email Types
+                                        </th>
+                                        <th width="30%" onclick="SortingFun('EmailSubject');" style="cursor: pointer;">
+                                            <i id="EmailSubjecti" class="fa fa-sort-asc pull-right"></i>
+                                            Subject
+                                        </th>
+                                        @*<th width="30%" onclick="SortingFun('Body');" style="cursor: pointer;">
+                                                <i id="Bodyi" class="fa fa-sort-asc pull-right"></i>
+                                                Body
+                                            </th>*@
+
+                                        <th width="10%">
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="EmailTitle"></span></td>
+                                        <td><span class="Title"></span></td>
+                                        <td><span class="EmailSubject"></span></td>
+                                        @*<td><span class="Body"></span></td>*@
+                                        <td align="center"><a id="viewdata" title="View Details" role="button"><i class="fe fe-eye font18"></i></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="pull-left" style="margin-top:5px;">
+                                <label> <span class="spnToRecs">0</span> to <span class="spnOfRecs">0</span> out of <span class="spnTotalRecs">0</span>&nbsp; Records </label>
+                            </div>
+                            <div class="dataTables_paginate paging_simple_numbers" id="pagin">
+                                <ul class="pagination"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pagination" style="display:none;">
+                    <input type="hidden" id="HdnSortValue" value="order by EmailTitle asc" />
+                    <input type="hidden" id="HdnPageIndex" value="1" />
+                    @*<div style="float: right; line-height: 13px; padding: 1px 10px 1px 5px;">
+                        <select id="PageSize">
+                            <option selected="selected" value="10">10</option>
+                            <option value="30">30</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <span style="line-height: 25px; vertical-align: top;">Records/Page</span>
+                    </div>*@
+                    <input type="hidden" id="EmailTitlehdn" value="asc" />
+                    <input type="hidden" id="Titlehdn" value="asc" />
+                    <input type="hidden" id="Emailhdn" value="asc" />
+                    <input type="hidden" id="EmailSubjecthdn" value="asc" />
+                    <input type="hidden" id="TotalPageRecord" value='0' />
+                    <input type="hidden" id="Bodyhdn" value="asc" />
+                    <input type="hidden" id="TotalPageRecord" value='0' />
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!--End side app-->
+<!--footer-->
+<footer class="footer">
+    <div class="container">
+        <div class="row align-items-center flex-row-reverse">
+            <div class="col-lg-12 col-sm-12   text-center">
+                Copyright © 2020 Association Bids. All rights reserved.
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- End Footer-->
+</div>
+<!-- End app-content-->
+<!-- End Page -->
+<!-- Back to top -->
+<!-- Custom-charts js-->
+<script src="../assets/js/index1.js"></script>
+
+<!-- Custom js-->
+<script src="../assets/js/custom.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".advance_search").click(function () {
+            $("#advancesearch2").toggle(500);
+        });
+        $(".overlayclose").click(function () {
+            $("#advancesearch2").hide();
+        });
+        $('.errormessage').html('');
+        $('#Error').hide();
+        $("#ddlload").hide();
+
+        $('.loader-wrapper').show();
+        LoadSortTableFill();
+        var sorted = 'order by Title asc, Status asc';
+        $("#SortValuee").val(sorted);
+        $('#divSuccess').hide();
+        $.get('/EmailTemplate/IndexreUserPaging', { Search: '', Sort: sorted }, function (response) {
+            $("#RawDatas table tbody tr:eq(0)").hide();
+            $(".loader-wrapper").hide();
+        });
+
+
+    });
+
+
+      function updatePagingsearch(TotalRecs, PageIndex) {
+
+        $('ul.pagination').html('');
+        var liClone = $('ul.pagination');
+
+        debugger;
+
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        //var pageSize = $('#PageSize').val();
+        var NoPage = 1;
+        if (parseInt(TotalRecs) > parseInt(pageSize)) {
+            NoPage = parseInt(parseInt(TotalRecs) / parseInt(pageSize));
+            if (parseFloat(parseInt(parseInt(TotalRecs) / parseInt(pageSize))) < parseFloat(parseInt(TotalRecs) / parseInt(pageSize))) {
+                NoPage = (parseInt(parseInt(TotalRecs) / parseInt(pageSize)) + 1);
+            }
+        }
+
+        var lp = 0;//parseFloat(parseInt($('#HdnPageIndex').val()) / 5);
+        if (parseFloat(parseInt(PageIndex) % 5) == 0) {
+            lp = ((parseInt(parseInt(PageIndex) / 5) - 1) * 5);
+        }
+        else {
+            lp = parseInt(parseInt(PageIndex) / 5) * 5;
+        }
+
+        var ind = 0;
+        for (var i = 1; i <= NoPage; i++) {
+            if ((parseInt(lp)) < i) {
+                if (parseInt(PageIndex) > 5 && $(liClone).find('li.previous').length == 0) {
+                    $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')"><a href="#">Previous</a></li>');
+                }
+                if (ind < 5) {
+                    if (i == parseInt(PageIndex)) {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current">' + i + '</a></li>');
+                    } else {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')">' + i + '</a></li>');
+                    }
+                } else if ($(liClone).find('li.next').length == 0) {
+                    $(liClone).append('<li class="paginate_button next " aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')"><a href="#">Next</a></li>');
+                }
+                ind = ind + 1;
+            }
+        }
+
+
+
+    }
+
+
+    function LoadSortTableFillWithSearchForEmailTemplate() {
+
+        debugger;
+        var k = "10";
+        var PageIndex = "1";
+        var txtEmailTite = "";
+        var txtEmailType = "";
+      
+        $.ajax({
+            url: '@Url.Action("IndexreEmailTmpPaging", "EmailTemplate")',
+            cache: false,
+            data: {
+                PageSize: k,
+                PageIndex: PageIndex,
+                Search: $('#txtsearch').val(),
+                Sort: $("#HdnSortValue").val(),
+                EmailTite: txtEmailTite,
+                EmailType: txtEmailType
+            },
+            success: function (response) {
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+                if (parseInt(response.length) > 0) {
+                    var spnToRecs = 0;
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    //debugger;
+                    curRecords = parseInt((PageIndex) * parseInt(k));
+                    curRecords = curRecords - (k - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    //alert(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                } else {
+                    $("#ddlload").hide();
+                }
+
+                    $("#RawDatas table tbody tr:not(:first)").remove();
+                    $("#RawDatas table tbody tr:eq(0)").show();
+                    //debugger;
+
+
+                    for (var i = 0; i < response.length; i++) {
+                        var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                        $(".EmailTitle", table).html(response[i].EmailTitle);
+                        $(".Title", table).html(response[i].Title);
+                        $(".EmailSubject", table).html(response[i].EmailSubject);
+                        //$(".Body", table).html(response[i].Body);
+
+                        $("#viewdata", table).attr('href', '/EmailTemplate/EmailTemplateView?EmailTemplateKey=' + response[i].EmailTemplateKey);
+
+                        $("#RawDatas table").append(table);
+                        spnToRecs++;
+                    }
+                $("#RawDatas table tbody tr:eq(0)").hide();
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                    $("#RawDatas table thead tr:eq(0)").show();
+                    $(".pagination").show();
+                    updatePagingsearch(TotalRecs, PageIndex);
+                    $('#Error').hide();
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                    updatePagingsearch(TotalRecs, PageIndex);
+                    if (TotalRecs = 'undefined') {
+                        $('.errormessage').html('Data Not Found.');
+                        $('#Error').show();
+                        $("#RawDatas table thead tr:eq(0)").hide();
+                        $("#RawDatas table tbody tr:eq(0)").hide();
+                        $(".pagination").hide();
+                    }
+                }
+                debugger;
+
+
+
+                updatePagingsearch(TotalRecs, PageIndex);
+
+            }
+        });
+    }
+
+
+
+    function updatePaging(TotalRecs) {
+
+     $('ul.pagination').html('');
+
+     var liClone = $('ul.pagination');
+
+     //debugger;
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+
+            //var pageSize = $('#PageSize').val();
+            var NoPage = 1;
+            if (parseInt(TotalRecs) > parseInt(pageSize)) {
+                NoPage = parseInt(parseInt(TotalRecs) / parseInt(pageSize));
+                if (parseFloat(parseInt(parseInt(TotalRecs) / parseInt(pageSize))) < parseFloat(parseInt(TotalRecs) / parseInt(pageSize))) {
+                    NoPage = (parseInt(parseInt(TotalRecs) / parseInt(pageSize)) + 1);
+                }
+            }
+
+            var lp = 0;//parseFloat(parseInt($('#HdnPageIndex').val()) / 5);
+            if (parseFloat(parseInt($('#HdnPageIndex').val()) % 5) == 0) {
+                lp = ((parseInt(parseInt($('#HdnPageIndex').val()) / 5) - 1) * 5);
+            } else {
+                lp = parseInt(parseInt($('#HdnPageIndex').val()) / 5) * 5;
+            }
+
+            var ind = 0;
+            for (var i = 1; i <= NoPage; i++) {
+                if ((parseInt(lp)) < i) {
+                    if (parseInt($('#HdnPageIndex').val()) > 5 && $(liClone).find('li.previous').length == 0) {
+                        $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')"><a href="#">Previous</a></li>');
+                    }
+                    if (ind < 5) {
+                        if (i == parseInt($('#HdnPageIndex').val())) {
+                            $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current">' + i + '</a></li>');
+                        } else {
+                            $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')">' + i + '</a></li>');
+                        }
+                    } else if ($(liClone).find('li.next').length == 0) {
+                        $(liClone).append('<li class="paginate_button next " aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')"><a href="#">Next</a></li>');
+                    }
+                    ind = ind + 1;
+                }
+            }
+        }
+
+    function LoadPagingSortTableFill(pageIndex)
+    {
+
+        var k = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        var txtEmailTite = "";
+        var txtEmailType = "";
+        $('#HdnPageIndex').val(pageIndex);
+        $.ajax({
+            url: '@Url.Action("IndexreEmailTmpPaging", "EmailTemplate")',
+            cache: false,
+            data: {
+                PageSize: k,
+                PageIndex: pageIndex,
+                Search: $('#txtsearch').val(),
+                Sort: $("#HdnSortValue").val(),
+                EmailTite: txtEmailTite,
+                EmailType: txtEmailType
+            },
+            success: function (response) {
+
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+                if (parseInt(response.length) > 0) {
+                    var spnToRecs = 0;
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(k));
+                    curRecords = curRecords - (k - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    $('#TotalPageRecord').val(parseInt(response[0].TotalRecords));
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                } else {
+                    $("#ddlload").hide();
+                }
+
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+
+                for (var i = 0; i < response.length; i++) {
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $(".EmailTitle", table).html(response[i].EmailTitle);
+                    $(".Title", table).html(response[i].Title);
+                    $(".EmailSubject", table).html(response[i].EmailSubject);
+                    //$(".Body", table).html(response[i].Body);
+
+                    $("#viewdata", table).attr('href', '/EmailTemplate/EmailTemplateView?EmailTemplateKey=' + response[i].EmailTemplateKey);
+
+                    $("#RawDatas table").append(table);
+                    spnToRecs++;
+                }
+
+                    $("#RawDatas table tbody tr:eq(0)").hide();
+                    spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                }
+                    updatePaging(response[0].TotalRecords);
+
+            }
+        });
+    }
+
+
+    console.log()
+    $("#btnsearch").click(function () {
+
+        $("#ddlload").hide();
+        $("#loading1").show();
+        LoadSortTableFillWithSearchForEmailTemplate();
+    });
+
+    $("#btnsearchVendor").click(function () {
+        $("#advancesearch3").hide();
+        LoadSortTableFillWithSearch();
+    });
+
+    //debugger
+    function LoadSortTableFill() {
+
+        var txtEmailTite = "";
+        var txtEmailType = "";
+        var k = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        $.ajax({
+            url: '@Url.Action("IndexreEmailTmpPaging", "EmailTemplate")',
+            cache: false,
+            data: {
+                PageSize: k,
+                PageIndex: $('#HdnPageIndex').val(),
+                Search: $('#txtsearch').val(),
+                Sort: $("#HdnSortValue").val(),
+                EmailTite: txtEmailTite,
+                EmailType: txtEmailType
+            },
+            success: function (response) {
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+                if (parseInt(response.length) > 0) {
+                    var spnToRecs = 0;
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    //debugger;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(k));
+                    curRecords = curRecords - (k - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    //alert(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                } else {
+                    $("#ddlload").hide();
+                }
+
+                    $("#RawDatas table tbody tr:not(:first)").remove();
+                    $("#RawDatas table tbody tr:eq(0)").show();
+                    //debugger;
+
+
+                    for (var i = 0; i < response.length; i++) {
+                        var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                        $(".EmailTitle", table).html(response[i].EmailTitle);
+                        $(".Title", table).html(response[i].Title);
+                        $(".EmailSubject", table).html(response[i].EmailSubject);
+                        //$(".Body", table).html(response[i].Body);
+
+                        $("#viewdata", table).attr('href', '/EmailTemplate/EmailTemplateView?EmailTemplateKey=' + response[i].EmailTemplateKey);
+
+                        $("#RawDatas table").append(table);
+                        spnToRecs++;
+                    }
+
+                $("#RawDatas table tbody tr:eq(0)").hide();
+
+                    spnToRecs = (curRecords - spnToRecs) + 1;
+
+
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                    updatePaging(TotalRecs);
+                    if (TotalRecs = 'undefined') {
+                        $('.errormessage').html('Data Is Not Found.');
+                        $('#Error').show();
+                        $("#RawDatas table thead tr:eq(0)").hide();
+                        $("#RawDatas table tbody tr:eq(0)").hide();
+                        $(".pagination").hide();
+                    }
+
+                }
+
+                //if (spnToRecs.text="NaN" ) {
+
+                //    $('.errormessage').html('Data Is Not Found.');
+                //    $('#Error').show();
+                //    $("#RawDatas table thead tr:eq(0)").hide();
+                //    $("#RawDatas table tbody tr:eq(0)").hide();
+                //}
+                //else {
+                debugger;
+                updatePaging(TotalRecs);
+                //}
+            }
+        });
+    }
+
+    function Getdata() {
+
+        $("#divSucces").hide();
+        $("#divSucces").html('');
+        $("#divError").hide();
+        $("#divError").html('');
+        $("#loading1").show();
+        $("#hdnload").val("1");
+        $("#ddlload").hide();
+        GetRecords();
+    }
+
+    function GetRecords() {
+        var SearchVal = $('#SearchVal').val();
+
+        //SearchVal = SearchVal.replace("'", "''");
+        console.log(GetRecords)
+        $("#divSucces").hide();
+        $("#divSucces").html('');
+        $("#divError").hide();
+        $("#divError").html('');
+        var hdnPageIndex = parseInt($('#HdnPageIndex').val());
+
+        var CountVal = hdnPageIndex + 1;
+
+        var Index = (parseInt(k) * CountVal);
+
+        $('#HdnPageIndex').val(CountVal);
+        //var sort = $("#HdnSortValue").val();
+        $("#loading1").show();
+
+        $.ajax({
+            type: "Get",
+            url: "/EmailTemplate/IndexreEmailTmpPaging",
+            data: {
+                PageSize: Index,
+                PageIndex: 1,
+                Search: $('#txtsearch').val(),
+                Sort: $("#HdnSortValue").val()
+            },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: OnSuccess,
+            failure: function (response) {
+            },
+            error: function (response) {
+            }
+        });
+
+
+    }
+
+
+    function LoadSortTableFillWithSearch() {
+
+        var txtEmailTite = $('#txtEmailTite').val();
+        var txtEmailType = $('#txtEmailType').val();
+        var txtsearch = "";
+        var k = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        //if (txtEmailTite != "") {
+        //    txtsearch = txtEmailTite;
+
+        //}
+        //else if (txtEmailType != "") {
+        //    txtsearch = txtEmailType;
+        //}
+
+        $.ajax({
+            url: '@Url.Action("IndexreEmailTmpPaging", "EmailTemplate")',
+            cache: false,
+            data: {
+                PageSize: k,
+                PageIndex: $('#HdnPageIndex').val(),
+                Search: txtsearch,
+                Sort: $("#HdnSortValue").val(),
+                EmailTite: txtEmailTite,
+                EmailType: txtEmailType
+            },
+            success: function (response) {
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+                if (parseInt(response.length) > 0) {
+                    var spnToRecs = 0;
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    //debugger;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(k));
+                    curRecords = curRecords - (k - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                } else {
+                    $("#ddlload").hide();
+                }
+
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+                //debugger;
+                for (var i = 0; i < response.length; i++) {
+
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $(".EmailTitle", table).html(response[i].EmailTitle);
+                    $(".Title", table).html(response[i].Title);
+                    $(".EmailSubject", table).html(response[i].EmailSubject);
+                    //$(".Body", table).html(response[i].Body);
+
+                    $("#viewdata", table).attr('href', '/EmailTemplate/EmailTemplateView?EmailTemplateKey=' + response[i].EmailTemplateKey);
+
+                    $("#RawDatas table").append(table);
+                    spnToRecs++;
+                }
+                $("#RawDatas table tbody tr:eq(0)").hide();
+                spnToRecs = (curRecords - spnToRecs) + 1;
+
+
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                }
+                updatePaging(response[0].TotalRecords);
+
+            }
+        });
+    }
+
+    function SortingFun(val) {
+        $("#ddlload").show();
+        $('#HdnPageIndex').val('1');
+        var Sort = $('#SortValue').val();
+        //debugger;
+        var ascdesc = 'fa-sort-asc';
+        var ascdesc1 = 'fa-sort-desc';
+        var ascdesc3 = 'fa-sort-asc';
+        var ascdesc4 = 'fa-sort-desc';
+
+        $('.loader-wrapper').show();
+        var Sort = '';
+        $('#HdnPageIndex').val('1');
+        $('#Titlei').removeClass(ascdesc4);
+        $('#Titlei').addClass(ascdesc3);
+
+        $('#EmilTypi').removeClass(ascdesc4);
+        $('#EmilTypi').addClass(ascdesc3);
+
+        $('#EmailSubjecti').removeClass(ascdesc4);
+        $('#EmailSubjecti').addClass(ascdesc3);
+
+        //$('#Bodyi').removeClass(ascdesc4);
+        //$('#Bodyi').addClass(ascdesc3);
+
+        //debugger;
+
+
+        //-----------------------------------------------------------
+        if (val == 'EmailTitle') {
+            if ($('#EmailTitlehdn').val() == 'asc') {
+                Sort = 'order by Em.EmailTitle desc';
+                $('#EmailTitlehdn').val('desc');
+                $('#Titlei').removeClass(ascdesc);
+                $('#Titlei').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by Em.EmailTitle asc';
+                $('#EmailTitlehdn').val('asc');
+                $('#Titlei').removeClass(ascdesc1);
+                $('#Titlei').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------
+        if (val == 'Title') {
+            if ($('#Titlehdn').val() == 'asc') {
+                Sort = 'order by lk.Title desc';
+                $('#Titlehdn').val('desc');
+                $('#EmilTypi').removeClass(ascdesc);
+                $('#EmilTypi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by lk.Title asc';
+                $('#Titlehdn').val('asc');
+                $('#EmilTypi').removeClass(ascdesc1);
+                $('#EmilTypi').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------------
+        if (val == 'EmailSubject') {
+            if ($('#EmailSubjecthdn').val() == 'asc') {
+                Sort = 'order by Em.EmailSubject desc';
+                $('#EmailSubjecthdn').val('desc');
+                $('#EmailSubjecti').removeClass(ascdesc);
+                $('#EmailSubjecti').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by Em.EmailSubject asc';
+                $('#EmailSubjecthdn').val('asc');
+                $('#EmailSubjecti').removeClass(ascdesc1);
+                $('#EmailSubjecti').addClass(ascdesc);
+            }
+        }
+
+        //if (val == 'Body') {
+        //    if ($('#Bodyhdn').val() == 'asc') {
+        //        Sort = 'order by Em.Body desc';
+        //        $('#Bodyhdn').val('desc');
+        //        $('#Bodyi').removeClass(ascdesc);
+        //        $('#Bodyi').addClass(ascdesc1);
+        //    }
+        //    else {
+        //        Sort = 'order by Em.Body asc';
+        //        $('#Bodyhdn').val('asc');
+        //        $('#Bodyi').removeClass(ascdesc1);
+        //        $('#Bodyi').addClass(ascdesc);
+        //    }
+        //}
+        $("#ddlload").show();
+
+        $("#HdnSortValue").val(Sort);
+        $('.loader-wrapper').show();
+        LoadSortTableFill();
+    }
+    console.log("CallFuction")
+    function OnSuccess(response) {
+        var k = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        //debugger;
+
+        $('.spnOfRecs').text(0);
+        $('.spnTotalRecs').text(0);
+        $('.spnToRecs').text(0);
+
+        if (parseInt(response.length) > 0) {
+            var spnToRecs = 0;
+            var curRecords = 0;
+            var TotalRecs = 0;
+            //debugger;
+            curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(k));
+            curRecords = curRecords - (k - parseInt(response.length));
+            TotalRecs = parseInt(response[0].TotalRecords);
+            $('.spnOfRecs').text(curRecords);
+            $('.spnTotalRecs').text(TotalRecs);
+
+            if (curRecords === 0 || curRecords === TotalRecs) {
+                $("#ddlload").hide();
+            }
+            else {
+                $("#ddlload").show();
+            }
+        } else {
+            $("#ddlload").hide();
+        }
+
+            $("#RawDatas table tbody tr:not(:first)").remove();
+            $("#RawDatas table tbody tr:eq(0)").show();
+
+            for (var i = 0; i < response.length; i++) {
+                var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                $(".EmailTitle", table).html(response[i].EmailTitle);
+                $(".Title", table).html(response[i].Title);
+                $(".EmailSubject", table).html(response[i].EmailSubject);
+                //$(".Body", table).html(response[i].Body);
+
+                $("#viewdata", table).attr('href', '/EmailTemplate/EmailTemplateView?EmailTemplateKey=' + response[i].EmailTemplateKey);
+
+                $("#RawDatas table").append(table);
+
+                updatePaging(response[0].TotalRecords);
+            }
+
+            spnToRecs = (curRecords - spnToRecs) + 1;
+
+
+        if (spnToRecs > 0) {
+            $('.spnToRecs').text(spnToRecs);
+        }
+        else {
+            $('.spnToRecs').text(0);
+        }
+        $("#RawDatas table tbody tr:eq(0)").hide();
+        $("#loading1").hide();
+    }
+
+
+
+</script>

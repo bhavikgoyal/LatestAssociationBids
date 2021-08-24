@@ -1,0 +1,101 @@
+﻿<div class="card-footer">
+    <div class="msb-reply d-flex">
+        <div class="input-group">
+            <input id="txtMessageBody" type="text" class="txtMessageBody form-control  bg-white" placeholder="Typing....">
+            <div class="input-group-append ">
+                <button type="button" class="btn btn-sm btn-primary btnAddMessage" onclick="return SendMessage();">
+                    Add Message
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/JSControllers/LayOutMaster.js"></script>
+<div id="MessageRawDatas" class="card-body msg_card_body">
+    <div id="table123" class="table123" style="display:none;">
+        <div id="DivLeftSide" class="d-flex justify-content-start  mb-4" style="display:none;">
+            <div class="img_cont_msg">
+                <div class="rounded-circle user_img_msg namefirstletter" style="background-color:blue"></div>
+            </div>
+            <div class="msg_cotainer" style="min-width: 104px !important;">
+                <p id="ReceiveMesg"></p>
+                <span id="ReceiveTime" class="msg_time" style="min-width:20px;"></span>
+            </div>
+        </div>
+        <div id="DivRightSide" class="d-flex justify-content-end" style="display:none;">
+            <div class="msg_cotainer_send" style="min-width: 104px !important;">
+                <p id="SendMesg"> </p>
+                <span id="SendTime" class="msg_time_send" style="min-width:20px;"></span>
+            </div>
+            <div class="img_cont_msg">
+                <div class="rounded-circle user_img_msg namefirstletter" style="background-color:green"></div>
+            </div>
+        </div>
+    </div>    
+   
+    
+    @*<div class="d-flex justify-content-start ">
+        <div class="img_cont_msg">
+            <div class="rounded-circle user_img_msg" style="background-color:blue">S</div>
+        </div>
+        <div class="msg_cotainer">
+            Yo, Can you update Views?
+            <span class="msg_time">9:07 AM, Today</span>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end mb-4">
+        <div class="msg_cotainer_send">
+            But I must explain to you how all this mistaken  born and I will give
+            <span class="msg_time_send">9:10 AM, Today</span>
+        </div>
+        <div class="img_cont_msg">
+            <div class="rounded-circle user_img_msg" style="background-color:green">S</div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-start ">
+        <div class="img_cont_msg">
+            <div class="rounded-circle user_img_msg" style="background-color:blue">S</div>
+        </div>
+        <div class="msg_cotainer">
+            Yo, Can you update Views?
+            <span class="msg_time">9:07 AM, Today</span>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end mb-4">
+        <div class="msg_cotainer_send">
+            But I must explain to you how all this mistaken  born and I will give
+            <span class="msg_time_send">9:10 AM, Today</span>
+        </div>
+        <div class="img_cont_msg">
+            <div class="rounded-circle user_img_msg" style="background-color:green">S</div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-start ">
+        <div class="img_cont_msg">
+            <div class="rounded-circle user_img_msg" style="background-color:blue">S</div>
+        </div>
+        <div class="msg_cotainer">
+            Yo, Can you update Views?
+            <span class="msg_time">9:07 AM, Today</span>
+        </div>
+    </div>
+    <div class="d-flex justify-content-end mb-4">
+        <div class="msg_cotainer_send">
+            But I must explain to you how all this mistaken  born and I will give
+            <span class="msg_time_send">9:10 AM, Today</span>
+        </div>
+        <div class="img_cont_msg">
+            <div class="rounded-circle user_img_msg" style="background-color:green">S</div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-start">
+        <div class="img_cont_msg">
+            <div class="rounded-circle user_img_msg" style="background-color:blue">S</div>
+        </div>
+        <div class="msg_cotainer">
+            Okay Bye, text you later..
+            <span class="msg_time">9:12 AM, Today</span>
+        </div>
+    </div>*@
+</div>

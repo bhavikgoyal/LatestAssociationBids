@@ -1,0 +1,104 @@
+﻿@model AssociationBids.Portal.Model.NotificationTmpModel
+
+@{
+    ViewBag.Title = "Notificationupdates";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Notificationupdates</h2>
+
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="PMPropertiesList.html">Properties</a></li>
+                <li class="breadcrumb-item"><a href="PropertiesView.html">Property Details</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Properties</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+        <!-- End page-header -->
+        @using (Html.BeginForm("Notificationupdates", "NotificationTemplate", FormMethod.Post))
+        {
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div class="form-div">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Title</label>
+                                        <input id="txt_title" type="text" class="form-control" name="PushNotificationTitle" placeholder="Enter Title">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Notificatiaon	Type
+                                            @Html.ValidationMessageFor(model => model.PushNotificationType, "*", new { @class = "text-danger" })
+                                        </label>
+                                        @Html.DropDownListFor(model => model.PushNotificationType, new SelectList(ViewBag.lststate, "Value", "Text"), new { @data_rel = "Choose_one", @class = "form-control", placeholder = "Please Select..." })
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Subject</label>
+                                        <input id="Txt_Subject" type="text" class="form-control" name="NTSubject" placeholder="Enter Subject">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">Notification</label>
+                                    <textarea id="Txt_Body" class="form-control" name="Body" placeholder="Enter content"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+
+                                </div>
+                            </div>
+                        </div><!-- end of row -->
+                        <hr />
+
+
+                        <div class="button-row d-flex mt-4">
+                            <button class="btn btn-default" type="button" title="Clear">Clear</button>
+                            <button class="btn btn-primary ml-auto" id="btnsubmit" type="submit" title="Save" value="Save"><i class="fa fa-floppy-o"></i> Save</button>
+                        </div>
+
+                    </div><!-- end of form-div  -->
+
+                </div><!--end of card body -->
+            </div>
+        </div>
+
+
+        }
+
+    </div><!--End side app-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+

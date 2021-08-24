@@ -1,0 +1,1103 @@
+﻿
+@{
+    ViewBag.Title = "PMViewAdminWorkOrderReport";
+    Layout = "~/Views/Shared/_PropertyManagerLayout.cshtml";
+    string Errormessage = Convert.ToString(ViewData["Errormessage"]);
+}
+
+<h2>Work Order Report</h2>
+<style>
+    .dropbtn {
+        /*background-color: #4caf5000;
+        color: #0a0a0a;*/
+        padding: 5px;
+        font-size: 15px;
+        min-width: 230px;
+        /*border: black;*/
+        border: 1px solid;
+        cursor: pointer;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 200px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #4caf5000
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: #4caf5000;
+    }
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 47px;
+        height: 25px;
+    }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 15px;
+            width: 15px;
+            left: 2px;
+            top: 5px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+</style>
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+        <!-- page-header -->
+
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item">@Html.ActionLink("Home", "Dashboard", "Dashboard", null, new { })</li>
+
+
+                <li class="breadcrumb-item active text-left">Work Order</li>
+
+            </ol><!-- End breadcrumb -->
+
+        </div>
+        <!-- End page-header -->
+
+        <div class="alert alert-danger" id="Error" style="display: none;margin-top: 20px;">
+            <strong><span class="errormessages"></span></strong>
+        </div>
+        <div class="alert alert-success" id="success" style="display: none;margin-top: 20px;">
+            <strong><span class="successmessages"></span></strong>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+
+                                        @*<div class="card-options">
+                                            <a href="#" class="btn btn-sm btn-primary ml-auto" title="Add New Vendors" data-toggle="modal" data-target="#addvendor" id="btnAddVendor"><i class="fe fe-user-plus"></i> Add New Vendors</a>
+                                            <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+
+                                        </div>*@
+                                    </div>
+                                    <div class="row" style="margin-left:10px;">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="form-label">
+                                                    Property
+
+                                                </label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <i class="fa fa-search tx-16 lh-0 op-6"></i>
+                                                        </div>
+                                                    </div>@*<input class="form-control" placeholder="Seaech property..." type="text">*@
+
+
+                                                    @*@Html.DropDownList("Property", new SelectList(ViewBag.lstProperty, "Value", "Text"), new { @tabindex = "1", @data_rel = "Choose_one", @class = "form-control", placeholder = "Select property..." })*@
+                                                    <div class="dropdown">
+                                                        <button class="dropbtn form-control">--Select Property--</button>
+                                                        <div id="property" class="dropdown-content">
+                                                            @*<a href="#">Link 1</a>
+                                                            <a href="#">Link 2</a>
+                                                            <a href="#">Link 3</a>*@
+                                                        </div>
+                                                    </div>
+                                                    <input type="hidden" id="PropertyKey" />
+
+
+
+                                                </div>
+                                            </div>
+                                        </div><!-- end of col -->
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="form-label">
+                                                    Bid Status
+                                                </label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <i class="fa fa-search tx-16 lh-0 op-6"></i>
+                                                        </div>
+                                                    </div>@*<input class="form-control" placeholder="Seaech property..." type="text">*@
+
+
+                                                    @Html.DropDownList("ddlBidRequestStatus", new SelectList(ViewBag.lstBidStatus, "Value", "Text"), new { @tabindex = "1", @data_rel = "Choose_one", @class = "form-control", placeholder = "Select Bid Status..." })
+
+
+
+
+                                                </div>
+                                            </div>
+
+                                        </div><!-- end of col -->
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="form-label">
+                                                    From Date
+                                                </label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                                        </div>
+                                                    </div>
+                                                    <input class="form-control fc-datepicker" id="txtStartDate" placeholder="MM/DD/YYYY" type="text">
+                                                </div>
+                                            </div>
+                                        </div><!-- end of col -->
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="form-label">
+                                                    To Date
+
+                                                </label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                                        </div>
+                                                    </div>
+                                                    <input class="form-control fc-datepicker" id="txtBidDueDate" placeholder="MM/DD/YYYY" type="text">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    @*<a class="btn btn-secondary" id="btnsearch" href="#" role="button">Search</a>*@
+                                                </div>
+                                            </div>
+
+                                        </div><!-- end of col -->
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-label">
+
+
+                                                </label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        @*<div class="input-group-text">
+                                                            <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                                        </div>*@
+                                                    </div>
+                                                    <button class="btn btn-success ml-auto js-btn-next" style="float:right" id="btnView1" type="button" title="Next">Search</button>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                </div>
+                                            </div>
+                                        </div><!-- end of col -->
+                                    </div>
+                                    <div class="card-body border-top">
+                                        <div class="table-responsive" id="ServiceVendorView">
+                                            <div class="alert alert-danger" id="Error1" style="display:none; margin-top: 20px;">
+                                                <span class="errormessage1"></span>
+                                            </div>
+                                            <table id="dataTableExample1" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                                <thead>
+                                                    <tr>
+                                                        @*<th style="text-align:center;">Select</th>*@
+                                                        <th width="15%" style="cursor: pointer;">
+                                                            Select &nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <input type="checkbox" id="Cbl_SelectAll" checked />
+                                                        </th>
+                                                        <th>Title</th>
+                                                        <th>Vendor Name</th>
+                                                        <th>Response Due date</th>
+                                                        <th>Bid Amount</th>
+                                                        <th>Status</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="text-align:center;"><span class="Cbl"></span></td>
+                                                        @*<td style="text-align:center;"><input type="checkbox" checked /></td>*@
+                                                        <td><span class="ContactPerson">@*<i class="fa fa-star greentxt"></i>*@</span></td>
+                                                        <td>
+                                                            <span class="vVendorName">@*<i class="fa fa-star greentxt"></i>*@</span>
+                                                            <input type="hidden" class="bidvendorkey" id="bidvendorkey" value=""/>
+                                                        </td>
+                                                        <td><span class="vResponseDueDate"></span></td>
+                                                        <td><span class="vBidAmount"></span></td>
+                                                        @*<td><span class="badge badge-success   mr-1 mb-1 mt-1 bidRequestStatus">submitted</span></td>*@
+                                                        <td id="blue" style="display:block"><span class="badge badge-primary  mr-1 mb-1 mt-1 bidRequestStatus"></span></td>
+                                                        <td id="red"   style="display:none"><span class="badge badge-danger   mr-1 mb-1 mt-1 bidRequestStatus"></span></td>
+                                                        <td id="green" style="display:none"><span class="badge badge-success  mr-1 mb-1 mt-1 bidRequestStatus"></span></td>
+                                                        <td id="yellow" style="display:none"><span class="badge badge-warning  mr-1 mb-1 mt-1 bidRequestStatus"></span></td>
+                                                    </tr>
+                                                    @*<tr>
+                                                        <td style="text-align:center;"><input type="checkbox" /></td>
+                                                        <td>TestBid02</td>
+                                                        <td>
+                                                            <span class="vVendorName"><i class="fa fa-star greentxt">Test Vendor</i></span>
+                                                            <input type="hidden" class="bidvendorkey" id="bidvendorkey" value="" />
+                                                        </td>
+                                                        <td><span class="vResponseDueDate">03/05/2020</span></td>
+                                                        <td><span class="vBidAmount">$500</span></td>
+                                                        <td><span class="badge badge-success   mr-1 mb-1 mt-1 bidRequestStatus">submitted</span></td>
+                                                   </tr>*@
+                                                    @*<tr>
+                                                        <td style="text-align:center;"><input type="checkbox" checked/></td>
+                                                        <td>TestBid03</td>
+                                                        <td>
+                                                            <span class="vVendorName"><i class="fa fa-star greentxt">Test Vendor</i></span>
+                                                            <input type="hidden" class="bidvendorkey" id="bidvendorkey" value="" />
+                                                        </td>
+                                                        <td><span class="vResponseDueDate">03/05/2020</span></td>
+                                                        <td><span class="vBidAmount">$500</span></td>
+                                                        <td><span class="badge badge-success   mr-1 mb-1 mt-1 bidRequestStatus">submitted</span></td>
+                                                    </tr>*@
+                                                </tbody>
+                                            </table>
+                                            <p style="margin-top:20px; font-weight:bold"> <span style="color:red; font-size:15px;">*</span><span style="font-size:15px;color:black">COI Will Only Include In Email Report.</span></p>
+
+                                            <label> Detailed Report</label>
+                                            <label class="switch">
+
+                                                <input type="checkbox" id="Detailed_Report" checked>
+                                                <span class="slider round"></span>
+                                            </label>
+                                            <label id="txtInclude_COI"> Include COI</label>
+                                            <label id="chkInclude_COI" class="switch">
+
+                                                <input type="checkbox" id="Include_COI" checked>
+                                                <span class="slider round"></span>
+                                            </label><br />
+                                            <button class="btn btn-md btn-success" id="EmailReport">Email Report</button>
+                                            <button class="btn btn-md btn-primary" id="DownloadReport">Download Report</button>
+                                            <input type="hidden" id="popupid" />
+                                        </div>
+
+                                        <!--end Modal-->
+                                        <!-- Modal -->
+                                        <!--End Modal-->
+                                    </div><!--end of card body -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- end of form-div  -->
+                    </div><!--end of card body -->
+                </div>
+            </div>
+        </div>
+    </div><!--End side app-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+</div>
+<script type="text/javascript">
+    var CblVendor = "";
+    var PropertyList = "";
+    $(document).ready(function () {
+        BindProperty();
+    });
+   $("#btnview").click(function () {
+        debugger;
+        //alert("Delete");
+       window.location.href = 'PMViewAdminWorkOrderReport';
+
+   });
+
+    $("#btnView1").click(function () {
+        var status = validation();
+        $("#loading1").show();
+        if (status == true) {
+            BindVendorSearch();
+        }
+
+    });
+
+    function validation() {
+        debugger;
+        //$('#txtStartDate').val(Date.parse($('#txtStartDate').val()).toString('MM/dd/yyyy'));
+
+        //$('#txtBidDueDate').val(Date.parse($('#txtBidDueDate').val()).toString('MM/dd/yyyy'));
+        var StartDates = Date.parse($('#txtStartDate').val());
+        var EndDates = Date.parse($('#txtBidDueDate').val());
+        var StartDate = new Date($("#txtStartDate").val());
+        var EndDate = new Date($("#txtBidDueDate").val());
+
+        if (StartDate == EndDate) {
+            $('.errormessages').html('Start Date not Equal to End Date.');
+            $('#Error').show();
+
+            return false;
+        }
+        if (StartDate > EndDate) {
+            $('.errormessages').html('Start Date must be less than End Date.');
+            $('#Error').show();
+
+            return false;
+        }
+        //if (StartDate < EndDate) {
+        //    $('.errormessages').html('End Date must be greater than Start Date.');
+        //    $('#Error').show();
+
+        //    return false;
+        //}
+        return true;
+    }
+
+    $("#txtStartDate").change("click", function () {
+        debugger;
+        var StartDates = Date.parse($('#txtStartDate').val());
+        var EndDates = Date.parse($('#txtBidDueDate').val());
+        var StartDate = new Date($("#txtStartDate").val());
+        var EndDate = new Date($("#txtBidDueDate").val());
+
+        if (StartDate == EndDate) {
+            $('.errormessages').html('Start Date not Equal to End Date.');
+            $('#Error').show();
+
+            return false;
+        }
+        if (StartDate > EndDate) {
+            $('.errormessages').html('Start Date must be less than End Date.');
+            $('#Error').show();
+
+            return false;
+        }
+
+        $('#Error').hide();
+        return true;
+
+    }
+    );
+
+    $("#txtBidDueDate").change("click", function () {
+        var StartDates = Date.parse($('#txtStartDate').val());
+        var EndDates = Date.parse($('#txtBidDueDate').val());
+        var StartDate = new Date($("#txtStartDate").val());
+        var EndDate = new Date($("#txtBidDueDate").val());
+
+        debugger;
+        if (StartDate == EndDate) {
+            $('.errormessages').html('Start Date not Equal to End Date.');
+            $('#Error').show();
+
+            return false;
+        }
+        if (StartDate > EndDate) {
+            $('.errormessages').html('End Date must be greater than Start Date.');
+            $('#Error').show();
+
+            return false;
+        }
+        $('#Error').hide();
+        return true;
+
+    }
+    );
+
+    function BindProperty() {
+        debugger;
+
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("PMBindProperty", "BidReport")',
+            //data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+
+                debugger;
+                for (var i = 0; i < response.length; i++) {
+                    debugger;
+                    //$("#property").append('<input type="checkbox" name="name" title="name" id="Cbl_' + response[i].PropertyKey + '" checked />'
+                    $("#property").append('&nbsp;&nbsp;<input type="checkbox" name="name" id="Cbl_' + response[i].PropertyKey + '"  />'
+                        + '<label>&nbsp;&nbsp;' + response[i].Property + '</label></br>');
+
+                    PropertyList += "Cbl_" + response[i].PropertyKey + ",";
+                }
+                $("#PropertyKey").val(PropertyList);
+
+                //alert($("#PropertyKey").val());
+                BindVendor();
+
+            },
+            error: function () {
+                $("#global-loader").hide();
+            }
+        });
+    }
+
+    function BindVendor() {
+        debugger;
+        $('#Error1').hide();
+        //alert("bindserviceVendorKey " + a);
+        $("#global-loader").show();
+
+        var val = $("#PropertyKey").val();
+        var RId = val.split(',');
+        var VId = "";
+        for (var i = 0; i < RId.length - 1; i++) {
+            var count = RId[i];
+
+            var ischecked = $("#" + count + "").is(':checked');
+            if (!ischecked) {
+                //$("#txtInclude_COI").hide();
+                //$("#chkInclude_COI").hide();
+            }
+            else {
+                VId += count + ",";
+            }
+            //alert(count);
+        }
+
+
+        var formData = new FormData();
+        var a = 0;
+        formData.append("BidRequestKey", a);
+        formData.append("Modulekey", 106);
+        formData.append("BidRequestStatus", $('#ddlBidRequestStatus').val());
+        if (VId == ",") {
+            formData.append("PropertyKey", "");
+        }
+        else {
+            formData.append("PropertyKey", VId);
+        }
+        formData.append("FromDate", $('#txtStartDate').val());
+        formData.append("ToDate", $('#txtBidDueDate').val());
+        //alert("Bind Service After FormData");
+        debugger;
+
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("PMSearchVendorByWorkReport", "BidReport")',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+
+                debugger;
+                //$("#ServiceVendorViewp").show();
+                //$("#btnaccept").attr("disabled", false);
+                //$("#btnaccept").css("cursor", "pointer");
+
+                $("#ServiceVendorView table tbody tr:not(:first)").remove();
+                $("#ServiceVendorView table tbody tr:eq(0)").show();
+                //$("#dataTableExample1").find("tr:gt(0)").remove();
+
+                for (var i = 0; i < response.length; i++) {
+                    debugger;
+
+                    var cln = $("#ServiceVendorView table tbody tr:eq(0)").clone(true);
+                    //alert("title = " + response[i].ServiceTitle);
+
+                    $(".Cbl", cln).append('<input type="checkbox" id="Cbl_' + response[i].BidVendorKey + '" checked />');
+                    CblVendor += "Cbl_"+ response[i].BidVendorKey +",";
+                    //var container = document.getElementById('container');
+                    //container.appendChild(checkbox);
+
+                    $(".ContactPerson", cln).html(response[i].BidName);
+                    $(".vVendorName", cln).html(response[i].Name);
+                    var edit = '';
+                    if (response[i].BidReqStatus == 'Interested' || response[i].BidReqStatus == 'In Progress')
+                        edit = " <a class='pull-right font18' href='#' title= 'Edit Response Due Date' onclick='OpenPopupResponseDate(" + response[i].BidVendorKey + ")'>";
+                    //alert(response[i].ResponseDueDates);
+                    $(".vResponseDueDate", cln).html(response[i].DefaultResponseDueDates + edit);
+                    $(".vBidAmount", cln).html(response[i].BidAmounts);
+
+                    //$(".vStatus", cln).html(response[i].BidReqStatus);
+                    $(".bidRequestStatus", cln).html(response[i].BidReqStatus);
+                    $(".bidRequestStatus", cln).html(response[i].BidVendorStatus);
+
+                    //if (response[i].BidReqStatus == "Accepted" || response[i].BidReqStatus == "Submitted") {
+                    //    $("#blue", cln).css("display", "none");
+                    //    $("#red", cln).css("display", "none");
+                    //    $("#yellow", cln).css("display", "none");
+                    //    $("#green", cln).css("display", "block");
+
+                    //}
+                    if (response[i].BidVendorStatus == "Accepted" || response[i].BidVendorStatus == "Submitted" || response[i].BidVendorStatus == "Completed") {
+                        $("#blue", cln).css("display", "none");
+                        $("#red", cln).css("display", "none");
+                        $("#yellow", cln).css("display", "none");
+                        $("#green", cln).css("display", "block");
+
+                    }
+                    if (response[i].BidVendorStatus == "In Progress") {
+                        $("#blue", cln).css("display", "block");
+                        $("#red", cln).css("display", "none");
+                        $("#yellow", cln).css("display", "none");
+                        $("#green", cln).css("display", "none");
+
+                    }
+                    if (response[i].BidVendorStatus == "Rejected" || response[i].BidVendorStatus == "Not Interested") {
+                        $("#blue", cln).css("display", "none");
+                        $("#red", cln).css("display", "block");
+                        $("#yellow", cln).css("display", "none");
+                        $("#green", cln).css("display", "none");
+
+                    }
+
+                    if (response[i].BidVendorStatus == "Interested") {
+                        $("#blue", cln).css("display", "none");
+                        $("#red", cln).css("display", "none");
+                        $("#yellow", cln).css("display", "block");
+                        $("#green", cln).css("display", "none");
+
+                    }
+                    if (response[i].BidVendorStatus == "Closed") {
+                        $("#blue", cln).css("display", "block");
+                        $("#red", cln).css("display", "none");
+                        $("#yellow", cln).css("display", "none");
+                        $("#green", cln).css("display", "none");
+
+                    }
+
+                    if (response[i].BidVendorStatus == "Accepted" || response[i].BidVendorStatus == "Rejected") {
+
+                        $("#BidDueDateExpiredMessage").hide();
+                    }
+                    else
+                    {
+                        $("#BidDueDateExpiredMessage").show();
+                    }
+                    $(".bidvendorkey", cln).val(response[i].BidVendorKey);
+
+                    if ($("#BidReqStatus").val() == "In Progress" && response[i].IsAssigned == true) {
+                        $(".deleteVendor",cln).show();
+                       // $(".deleteVendor",cln).attr("onclick", "deletevendor(" + response[i].BidVendorKey + ")");
+                    }
+                    $("#viewreview", cln).show();
+                    if (response[i].BidReqStatus == "Submitted" || response[i].BidReqStatus == "Accepted") {
+                        $("#viewreview", cln).show();
+                    }
+
+                    if (response[i].BidReqStatus == "Accepted") {
+                        $("#btncancel").hide();
+                    }
+                    else {
+                        // $("#viewreview", cln).hide();
+
+                    }
+                    if (response[i].priority == '1' && response[i].BidVendorStatus != 'Cancelled') {
+                    //if (response[i].priority == '1') {
+                        $("#viewreview", cln).html('<i class="fa fa-bell animated faa-ring redtxt"></i>');
+                    }
+
+                    var descrip = response[i].Descrip;
+                    var descrips = "";
+                    var descripv = "";
+                    var descrip3 = "";
+                    descrips = descrip.replace(/"/g, "''");
+                    //alert(descrips);
+                    descripv = descrips.replace(/\n/g, "<br />");
+                    //alert(descripv);
+                    //descripv = descrips.replace(/,/g, " ");
+                    //descrip3 = descripv.replace(/'/g, " ");
+                    $("#viewreview", cln).attr('onclick', 'return openpopup("' + response[i].BidVendorKey + '","' + response[i].BidAmount + '","' + response[i].BidReqStatus + '","' + response[i].ResponseDueDates + '","' + descripv + '","'+response[i].NotificationType+'")');
+                    if (response[i].BidAmounts == "$0.00") {
+
+                    } else {
+                        $("#ServiceVendorView table").append(cln);
+                    }
+                   
+                }
+                $("#ServiceVendorView table tbody tr:eq(0)").hide();
+
+                $("#bidvendorkey").val(CblVendor);
+                //alert($("#bidvendorkey").val());
+
+                if (response.length == 0) {
+                    debugger;
+                    $('.errormessage1').html('No vendors exists.');
+                    $('#Error1').show();
+                    $("#btnaccept").attr("disabled", true);
+                    $("#btnaccept").css("cursor", "not-allowed");
+                    $("#ServiceVendorView table thead tr:eq(0)").hide();
+                    $("#ServiceVendorView table tbody tr:eq(0)").hide();
+                    $("#EmailReport").attr("disabled", true);
+                    $("#DownloadReport").attr("disabled", true);
+                   
+
+
+                }
+
+                else {
+                    document.getElementById("EmailReport").disabled = false;
+                    document.getElementById("DownloadReport").disabled = false;
+                }
+                $("#global-loader").hide();
+
+
+            },
+            error: function () {
+                $("#global-loader").hide();
+            }
+        });
+    }
+
+    function BindVendorSearch() {
+        debugger;
+        $('#Error1').hide();
+        //alert("bindserviceVendorKey " + a);
+        $("#global-loader").show();
+
+        var val = $("#PropertyKey").val();
+        var RId = val.split(',');
+        var VId = "";
+        for (var i = 0; i < RId.length - 1; i++) {
+            var count = RId[i];
+
+            var ischecked = $("#" + count + "").is(':checked');
+            if (!ischecked) {
+                //$("#txtInclude_COI").hide();
+                //$("#chkInclude_COI").hide();
+            }
+            else {
+                VId += count + ",";
+            }
+            //alert(count);
+        }
+
+        var formData = new FormData();
+        var a = 0;
+        formData.append("BidRequestKey", a);
+        formData.append("Modulekey", 106);
+        formData.append("BidRequestStatus", $('#ddlBidRequestStatus').val());
+        if (VId == ",") {
+            formData.append("PropertyKey", "");
+        }
+        else {
+            formData.append("PropertyKey", VId);
+        }
+        formData.append("FromDate", $('#txtStartDate').val());
+        formData.append("ToDate", $('#txtBidDueDate').val());
+        //alert("Bind Service After FormData");
+        debugger;
+
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("PMSearchVendorByWorkReport", "BidReport")',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+
+                debugger;
+                //$("#ServiceVendorViewp").show();
+                //$("#btnaccept").attr("disabled", false);
+                //$("#btnaccept").css("cursor", "pointer");
+
+                $("#ServiceVendorView table tbody tr:not(:first)").remove();
+                $("#ServiceVendorView table tbody tr:eq(0)").show();
+                //$("#dataTableExample1").find("tr:gt(0)").remove();
+                CblVendor = "";
+                for (var i = 0; i < response.length; i++) {
+                    debugger;
+
+                    var cln = $("#ServiceVendorView table tbody tr:eq(0)").clone(true);
+                    //alert("title = " + response[i].ServiceTitle);
+
+                    $(".Cbl", cln).append('<input type="checkbox" id="Cbl_' + response[i].BidVendorKey + '" checked />');
+                    CblVendor += "Cbl_"+ response[i].BidVendorKey +",";
+                    //var container = document.getElementById('container');
+                    //container.appendChild(checkbox);
+
+                    $(".ContactPerson", cln).html(response[i].BidName);
+                    $(".vVendorName", cln).html(response[i].Name);
+                    var edit = '';
+                    if (response[i].BidReqStatus == 'Interested' || response[i].BidReqStatus == 'In Progress')
+                        edit = " <a class='pull-right font18' href='#' title= 'Edit Response Due Date' onclick='OpenPopupResponseDate(" + response[i].BidVendorKey + ")'>";
+                    //alert(response[i].ResponseDueDates);
+                    $(".vResponseDueDate", cln).html(response[i].DefaultResponseDueDates + edit);
+                    $(".vBidAmount", cln).html(response[i].BidAmounts);
+
+                    //$(".vStatus", cln).html(response[i].BidReqStatus);
+                    $(".bidRequestStatus", cln).html(response[i].BidReqStatus);
+                    $(".bidRequestStatus", cln).html(response[i].BidVendorStatus);
+
+                    //if (response[i].BidReqStatus == "Accepted" || response[i].BidReqStatus == "Submitted") {
+                    //    $("#blue", cln).css("display", "none");
+                    //    $("#red", cln).css("display", "none");
+                    //    $("#yellow", cln).css("display", "none");
+                    //    $("#green", cln).css("display", "block");
+
+                    //}
+                    if (response[i].BidVendorStatus == "Accepted" || response[i].BidVendorStatus == "Submitted" || response[i].BidVendorStatus == "Completed") {
+                        $("#blue", cln).css("display", "none");
+                        $("#red", cln).css("display", "none");
+                        $("#yellow", cln).css("display", "none");
+                        $("#green", cln).css("display", "block");
+
+                    }
+                    if (response[i].BidVendorStatus == "In Progress") {
+                        $("#blue", cln).css("display", "block");
+                        $("#red", cln).css("display", "none");
+                        $("#yellow", cln).css("display", "none");
+                        $("#green", cln).css("display", "none");
+
+                    }
+                    if (response[i].BidVendorStatus == "Rejected" || response[i].BidVendorStatus == "Not Interested") {
+                        $("#blue", cln).css("display", "none");
+                        $("#red", cln).css("display", "block");
+                        $("#yellow", cln).css("display", "none");
+                        $("#green", cln).css("display", "none");
+
+                    }
+
+                    if (response[i].BidVendorStatus == "Interested") {
+                        $("#blue", cln).css("display", "none");
+                        $("#red", cln).css("display", "none");
+                        $("#yellow", cln).css("display", "block");
+                        $("#green", cln).css("display", "none");
+
+                    }
+                    if (response[i].BidVendorStatus == "Closed") {
+                        $("#blue", cln).css("display", "block");
+                        $("#red", cln).css("display", "none");
+                        $("#yellow", cln).css("display", "none");
+                        $("#green", cln).css("display", "none");
+
+                    }
+
+                    if (response[i].BidVendorStatus == "Accepted" || response[i].BidVendorStatus == "Rejected") {
+
+                        $("#BidDueDateExpiredMessage").hide();
+                    }
+                    else
+                    {
+                        $("#BidDueDateExpiredMessage").show();
+                    }
+                    $(".bidvendorkey", cln).val(response[i].BidVendorKey);
+
+                    if ($("#BidReqStatus").val() == "In Progress" && response[i].IsAssigned == true) {
+                        $(".deleteVendor",cln).show();
+                       // $(".deleteVendor",cln).attr("onclick", "deletevendor(" + response[i].BidVendorKey + ")");
+                    }
+                    $("#viewreview", cln).show();
+                    if (response[i].BidReqStatus == "Submitted" || response[i].BidReqStatus == "Accepted") {
+                        $("#viewreview", cln).show();
+                    }
+
+                    if (response[i].BidReqStatus == "Accepted") {
+                        $("#btncancel").hide();
+                    }
+                    else {
+                        // $("#viewreview", cln).hide();
+
+                    }
+                    if (response[i].priority == '1' && response[i].BidVendorStatus != 'Cancelled') {
+                    //if (response[i].priority == '1') {
+                        $("#viewreview", cln).html('<i class="fa fa-bell animated faa-ring redtxt"></i>');
+                    }
+
+                    var descrip = response[i].Descrip;
+                    var descrips = "";
+                    var descripv = "";
+                    var descrip3 = "";
+                    descrips = descrip.replace(/"/g, "''");
+                    //alert(descrips);
+                    descripv = descrips.replace(/\n/g, "<br />");
+                    //alert(descripv);
+                    //descripv = descrips.replace(/,/g, " ");
+                    //descrip3 = descripv.replace(/'/g, " ");
+                    $("#viewreview", cln).attr('onclick', 'return openpopup("' + response[i].BidVendorKey + '","' + response[i].BidAmount + '","' + response[i].BidReqStatus + '","' + response[i].ResponseDueDates + '","' + descripv + '","'+response[i].NotificationType+'")');
+
+
+                    if (response[i].BidAmounts == "$0.00") {
+
+                    } else {
+                        $("#ServiceVendorView table").append(cln);
+                    }
+                }
+                $("#ServiceVendorView table tbody tr:eq(0)").hide();
+
+                $("#bidvendorkey").val(CblVendor);
+                //alert($("#bidvendorkey").val());
+
+                if (response.length == 0) {
+                    $('.errormessage1').html('No vendors exists.');
+                    $('#Error1').show();
+                    $("#btnaccept").attr("disabled", true);
+                    $("#btnaccept").css("cursor", "not-allowed");
+                    $("#ServiceVendorView table thead tr:eq(0)").hide();
+                    $("#ServiceVendorView table tbody tr:eq(0)").hide();
+
+                    $("#EmailReport").attr("disabled", true);
+                    $("#DownloadReport").attr("disabled", true);
+
+                }
+                else
+                {
+                    document.getElementById("EmailReport").disabled = false;
+                    document.getElementById("DownloadReport").disabled = false;
+
+                    $("#ServiceVendorView table thead tr:eq(0)").show();
+                }
+                $("#global-loader").hide();
+
+
+            },
+            error: function () {
+                $("#global-loader").hide();
+            }
+        });
+    }
+
+    $("#Detailed_Report").change(function () {
+        debugger;
+        var ischecked = $(this).is(':checked');
+        if (!ischecked) {
+            $("#txtInclude_COI").hide();
+            $("#chkInclude_COI").hide();
+        }
+        else {
+            $("#txtInclude_COI").show();
+            $("#chkInclude_COI").show();
+        }
+    });
+
+    $("#EmailReport").click(function () {
+        EmailReport("EmailReport");
+        debugger;
+        //alert("Delete");
+    });
+
+    $("#DownloadReport").click(function () {
+        EmailReport("DownloadReport");
+        debugger;
+        //alert("Delete");
+    });
+
+    function EmailReport(ReportType)
+    {
+        debugger;
+        $("#global-loader").show();
+        var val = $("#bidvendorkey").val();
+        var RId = val.split(',');
+        var VId = "";
+        for (var i = 0; i < RId.length -1; i++)
+        {
+            var count = RId[i];
+
+            var ischecked = $("#" + count +"").is(':checked');
+            if (!ischecked) {
+                //$("#txtInclude_COI").hide();
+                //$("#chkInclude_COI").hide();
+            }
+            else {
+                VId += count+",";
+            }
+            //alert(count);
+        }
+
+        var formData = new FormData();
+        var val = '0';
+        //var a = BidRequestId;
+        var ischecked = $("#Detailed_Report").is(':checked');
+        var ReportType;
+        if (!ischecked) {
+            ReportTypeName = "SummaryReport";
+        }
+        else
+        {
+            ReportTypeName = "DetailReport";
+        }
+        formData.append("BidRequestKey", val);
+        formData.append("VendorSelected", VId);
+        formData.append("Modulekey", 106);
+
+        formData.append("ReportTypeName", ReportTypeName);
+        formData.append("ReportType", ReportType);
+        formData.append("BidRequestStatus", $('#ddlBidRequestStatus').val());
+
+        var val = $("#PropertyKey").val();
+        var RId = val.split(',');
+        var VId = "";
+        for (var i = 0; i < RId.length - 1; i++) {
+            var count = RId[i];
+
+            var ischecked = $("#" + count + "").is(':checked');
+            if (!ischecked) {
+                //$("#txtInclude_COI").hide();
+                //$("#chkInclude_COI").hide();
+            }
+            else {
+                VId += count + ",";
+            }
+            //alert(count);
+        }
+        formData.append("PropertyKey", VId);
+        formData.append("FromDate", $('#txtStartDate').val());
+        formData.append("ToDate", $('#txtBidDueDate').val());
+        var ischeckeds = $("#Include_COI").is(':checked');
+        if (!ischeckeds) {
+            formData.append("Include_COI", false);
+        }
+        else {
+            formData.append("Include_COI", true);
+        }
+        //alert("Bind Service After FormData");
+        debugger;
+
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("PMDownloadEmailWorkReport", "BidReport")',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                debugger;
+                //alert(response);
+                //alert(response[0]);
+                if (response.length > 0) {
+                    $(".upd-f2").attr('src', + response[0]);
+                    $(".upd-f2").attr('href', response[0]);
+                    $(".upd-f2").attr('onclick', "download('" + response[0] + "')");
+                    $(".upd-f2").html(response);
+                    /*$(".upd-f2").click();*/
+                    //$('.upd-f2')[0].click();
+                    window.location = response[0];
+                    //var url = $(".upd-f2").attr('href');
+                    //window.open(url);
+                    $("#global-loader").hide();
+                }
+                else {
+
+                    $('.successmessages').html('Email report has been sent successfully.');
+                    $('#success').show();
+
+                    $("#global-loader").hide();
+                    $(window).scrollTop(0);
+                    //}
+                }
+            },
+            error: function () {
+                $("#global-loader").hide();
+                $('.successmessages').html('Technical Error Please Contact To  Administrator.');
+                $('#success').show();
+            }
+        });
+    }
+
+    $("#Cbl_SelectAll").change(function () {
+        debugger;
+        var val = $("#bidvendorkey").val();
+        //alert(val);
+        var count = val.substring(0, val.length - 1);
+        //alert(count);
+        var RId = count.split(',');
+        var VId = "";
+
+        var ischecked = $(this).is(':checked');
+        if (!ischecked) {
+            for (var i = 0; i < RId.length; i++) {
+                var count = RId[i];
+
+                var ischecked = $("#" + count + "").is(':checked');
+                if (!ischecked) {
+                    $("#" + count + "").prop('checked', false);
+                    //$("#" + count + "").ischecked = false;
+                }
+                else {
+                    $("#" + count + "").prop('checked', false);
+                    //$("#" + count + "").ischecked = false;
+                }
+                //alert(count);
+            }
+        }
+        else {
+
+            for (var i = 0; i < RId.length; i++) {
+                var count = RId[i];
+
+                var ischecked = $("#" + count + "").is(':checked');
+                if (!ischecked) {
+                    $("#" + count + "").prop('checked', true);
+                    //$("#" + count + "").ischecked = true;
+                }
+                else {
+                    $("#" + count + "").prop('checked', true);
+                    //$("#" + count + "").ischecked = false;
+                }
+                //alert(count);
+            }
+        }
+    });
+</script>
+

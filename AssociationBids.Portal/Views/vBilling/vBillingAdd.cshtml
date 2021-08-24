@@ -1,0 +1,686 @@
+﻿@model AssociationBids.Portal.Model.vBillingModel
+@{
+    ViewBag.Title = "vBillingAdd";
+    Layout = "~/Views/Shared/_VendorLayout.cshtml";
+    string Errormessage = Convert.ToString(ViewData["Errormessage"]);
+}
+<h2>BillingAdd</h2>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="../vBilling/vBillingList">Billing</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add Payment Method</li>
+            </ol><!-- End breadcrumb -->
+
+        </div>
+        <!-- End page-header -->
+        @using (Html.BeginForm("vBillingAdd ", "vBilling", FormMethod.Post))
+        {
+
+            <div class="row">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">                                
+                                <div class="col-md-6">
+                                    <div class="expanel expanel-default">
+                                        <div class="alert alert-danger" id="Error" style="display:none; margin-top: 20px;">
+                                            <strong><span class="errormessage"></span></strong>
+                                        </div>
+
+                                        <div role="alert">
+                                            <div class="alert alert-danger" id="Error" style="display: none;margin-top: 20px;">
+                                                <strong><span class="errormessage"></span></strong>
+                                            </div>
+                                            @if (!string.IsNullOrEmpty(Errormessage))
+                                            {
+                                                <div class="alert alert-danger" style="margin-top: 20px;">
+                                                    <strong><span>@Errormessage</span></strong>
+                                                </div>
+                                            }
+                                        </div>
+
+                                        <div class="expanel-heading">Credit Card</div>
+                                        <div class="expanel-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group ">
+                                                        <label class="form-label text-left">Card Holder First Name @Html.ValidationMessageFor(model => model.CardHolderFirstName, "*", new { @class = "text-danger" }) </label>
+                                                        @Html.EditorFor(model => model.CardHolderFirstName, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "First Name" } })
+                                                        @*<input type="text" class="form-control" placeholder="Jane Doe" />*@
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group ">
+                                                        <label class="form-label text-left">Last Name</label>
+                                                        @Html.EditorFor(model => model.CardHolderLastName, new { htmlAttributes = new { @class = "form-control", @tabindex = "2", autocomplete = "off", placeholder = "Last Name" } })
+                                                        @*<input type="text" class="form-control" placeholder="Jane Doe" />*@
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group ">
+                                                        <label class="form-label text-left">Card Number @Html.ValidationMessageFor(model => model.MaskedCCNumber, "*", new { @class = "text-danger" }) </label>
+                                                        @Html.EditorFor(model => model.MaskedCCNumber, new { htmlAttributes = new { @class = "form-control", @tabindex = "3", autocomplete = "off", placeholder = "XXXX XXXX XXXX 5459", @maxlength = 19 } })
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group ">
+                                                        <label class="form-label text-left">Expiration <span class="text-danger">*</span>  </label>
+                                                        <div class="form-group ">
+                                                            <div style="float:left;width:47%;margin-right:20px;">
+                                                                @Html.EditorFor(model => model.ValidTillMM, new { htmlAttributes = new { @class = "form-control", @tabindex = "4", autocomplete = "off", placeholder = "MM", @maxlength = 2 } })
+                                                            </div>
+                                                            <div style="float:left;width:47%;">
+                                                                @Html.EditorFor(model => model.ValidTillYY, new { htmlAttributes = new { @class = "form-control", @tabindex = "5", autocomplete = "off", placeholder = "YY", @maxlength = 2 } })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group ">
+                                                        <label class="form-label text-left">CVV <span class="text-danger">*</span> </label>
+                                                        @Html.EditorFor(model => model.CVV, new { htmlAttributes = new { @class = "form-control", @tabindex = "6", autocomplete = "off", placeholder = "CVV", @maxlength = 4 } })
+
+                                                    </div>
+                                                </div>
+                                            </div><!-- end of row-->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="custom-controls-stacked">
+                                                        @Html.CheckBoxFor(model => model.PrimaryMethod, new { htmlAttributes = new { @class = "form-control", @tabindex = "7" } })
+                                                        @Html.LabelFor(model => model.PrimaryMethod)
+                                                    </div>
+                                                </div>
+                                            </div><!-- end of row-->
+                                        </div>
+                                    </div>
+                                </div><!-- end of col -->
+                            </div><!-- end of row -->
+                        </div><!-- end card body-->
+                        <div class="card-footer">
+                            <div class="button-row d-flex">
+                                <button class="btn btn-default" type="button" onclick="ClearAll()" title="Cancel">Cancel</button>
+                                <a href="#" class="btn btn-primary ml-auto" onclick="return validation()" title="Save"><i class="fa fa-check "></i> Save</a>
+                            </div>
+                        </div>
+                    </div><!-- end card-->
+                </div><!-- end col-->
+            </div><!-- end of row-->
+        }
+
+
+    </div><!--End side app-->
+    <!-- Right-sidebar-->
+    <div class="sidebar sidebar-right sidebar-animate">
+        <div class="tab-menu-heading siderbar-tabs border-0">
+            <div class="tabs-menu ">
+                <!-- Tabs -->
+                <ul class="nav panel-tabs">
+                    <li class=""><a href="#tab" class="active" data-toggle="tab">Profile</a></li>
+                    <li class=""><a href="#tab1" data-toggle="tab">Chat</a></li>
+                    <li><a href="#tab2" data-toggle="tab">Activity</a></li>
+                    <li><a href="#tab3" data-toggle="tab">Todo</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="panel-body tabs-menu-body side-tab-body p-0 border-0 ">
+            <div class="tab-content border-top">
+                <div class="tab-pane active " id="tab">
+                    <div class="card-body p-0">
+                        <div class="header-user text-center mt-4 pb-4">
+                            <span class="avatar avatar-xxl brround"><img src="../assets/images/users/avatars/19.png" alt="Profile-img" class="avatar avatar-xxl brround"></span>
+                            <div class="dropdown-item text-center font-weight-semibold user h3 mb-0">Alison</div>
+                            <small>Web Designer</small>
+                            <div class="card-body">
+                                <div class="form-group ">
+                                    <label class="form-label  text-left">Offline/Online</label>
+                                    <select class="form-control select2 " data-placeholder="Choose one">
+                                        <option label="Choose one"></option>
+                                        <option value="1">Online</option>
+                                        <option value="2">Offline</option>
+                                    </select>
+                                </div>
+                                <div class="form-group ">
+                                    <label class="form-label text-left">Website</label>
+                                    <select class="form-control select2 " data-placeholder="Choose one">
+                                        <option label="Choose one"></option>
+                                        <option value="1">Spruko.com</option>
+                                        <option value="2">sprukosoft.com</option>
+                                        <option value="3">sprukotechnologies.com</option>
+                                        <option value="4">sprukoinfo.com</option>
+                                        <option value="5">sprukotech.com</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="dropdown-item  border-top" href="#">
+                            <i class="dropdown-icon mdi mdi-account-outline "></i> Spruko technologies
+                        </a>
+                        <a class="dropdown-item border-top" href="#">
+                            <i class="dropdown-icon  mdi mdi-account-plus"></i> Add another Account
+                        </a>
+                        <div class="card-body border-top">
+                            <div class="row">
+                                <div class="col-4 text-center">
+                                    <a class="" href=""><i class="dropdown-icon mdi  mdi-message-outline fs-30 m-0 leading-tight"></i></a>
+                                    <div>Inbox</div>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <a class="" href=""><i class="dropdown-icon mdi mdi-tune fs-30 m-0 leading-tight"></i></a>
+                                    <div>Settings</div>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <a class="" href=""><i class="dropdown-icon mdi mdi-logout-variant fs-30 m-0 leading-tight"></i></a>
+                                    <div>Sign out</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab1">
+                    <div class="chat">
+                        <div class="contacts_card">
+                            <div class="input-group p-3">
+                                <input type="text" placeholder="Search..." class="form-control search">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text search_btn  "><i class="fa fa-search"></i></span>
+                                </div>
+                            </div>
+                            <ul class="contacts mb-0">
+                                <li class="active">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="../assets/images/users/male/3.jpg" class="rounded-circle user_img" alt="img">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <h6 class="mt-1 mb-0 ">Maryam Naz</h6>
+                                            <small class="text-muted">Maryam is online</small>
+                                        </div>
+                                        <div class="float-right text-right ml-auto mt-auto mb-auto"><small>01-02-2019</small></div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="../assets/images/users/female/1.jpg" class="rounded-circle user_img" alt="img">
+
+                                        </div>
+                                        <div class="user_info">
+                                            <h6 class="mt-1 mb-0 ">Sahar Darya</h6>
+                                            <small class="text-muted">Sahar left 7 mins ago</small>
+                                        </div>
+                                        <div class="float-right text-right ml-auto mt-auto mb-auto"><small>01-02-2019</small></div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="../assets/images/users/female/9.jpg" class="rounded-circle user_img" alt="img">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <h6 class="mt-1 mb-0 ">Maryam Naz</h6>
+                                            <small class="text-muted">Maryam is online</small>
+                                        </div>
+                                        <div class="float-right text-right ml-auto mt-auto mb-auto"><small>01-02-2019</small></div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="../assets/images/users/female/12.jpg" class="rounded-circle user_img" alt="img">
+
+                                        </div>
+                                        <div class="user_info">
+                                            <h6 class="mt-1 mb-0 ">Yolduz Rafi</h6>
+                                            <small class="text-muted">Yolduz is online</small>
+                                        </div>
+                                        <div class="float-right text-right ml-auto mt-auto mb-auto"><small>02-02-2019</small></div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="../assets/images/users/male/15.jpg" class="rounded-circle user_img" alt="img">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <h6 class="mt-1 mb-0 ">Nargis Hawa</h6>
+                                            <small class="text-muted">Nargis left 30 mins ago</small>
+                                        </div>
+                                        <div class="float-right text-right ml-auto mt-auto mb-auto"><small>02-02-2019</small></div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="../assets/images/users/male/17.jpg" class="rounded-circle user_img" alt="img">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <h6 class="mt-1 mb-0 ">Khadija Mehr</h6>
+                                            <small class="text-muted">Khadija left 50 mins ago</small>
+                                        </div>
+                                        <div class="float-right text-right ml-auto mt-auto mb-auto"><small>03-02-2019</small></div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="../assets/images/users/female/18.jpg" class="rounded-circle user_img" alt="img">
+
+                                        </div>
+                                        <div class="user_info">
+                                            <h6 class="mt-1 mb-0 ">Khadija Mehr</h6>
+                                            <small class="text-muted">Khadija left 50 mins ago</small>
+                                        </div>
+                                        <div class="float-right text-right ml-auto mt-auto mb-auto"><small>03-02-2019</small></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane  " id="tab2">
+                    <div class="list d-flex align-items-center border-bottom p-4">
+                        <div class="">
+                            <span class="avatar bg-primary brround avatar-md">CH</span>
+                        </div>
+                        <div class="wrapper w-100 ml-3">
+                            <p class="mb-0 d-flex">
+                                <b>New Websites is Created</b>
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <i class="mdi mdi-clock text-muted mr-1"></i>
+                                    <small class="text-muted ml-auto">30 mins ago</small>
+                                    <p class="mb-0"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list d-flex align-items-center border-bottom p-4">
+                        <div class="">
+                            <span class="avatar bg-danger brround avatar-md">N</span>
+                        </div>
+                        <div class="wrapper w-100 ml-3">
+                            <p class="mb-0 d-flex">
+                                <b>Prepare For the Next Project</b>
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <i class="mdi mdi-clock text-muted mr-1"></i>
+                                    <small class="text-muted ml-auto">2 hours ago</small>
+                                    <p class="mb-0"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list d-flex align-items-center border-bottom p-4">
+                        <div class="">
+                            <span class="avatar bg-info brround avatar-md">S</span>
+                        </div>
+                        <div class="wrapper w-100 ml-3">
+                            <p class="mb-0 d-flex">
+                                <b>Decide the live Discussion Time</b>
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <i class="mdi mdi-clock text-muted mr-1"></i>
+                                    <small class="text-muted ml-auto">3 hours ago</small>
+                                    <p class="mb-0"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list d-flex align-items-center border-bottom p-4">
+                        <div class="">
+                            <span class="avatar bg-warning brround avatar-md">K</span>
+                        </div>
+                        <div class="wrapper w-100 ml-3">
+                            <p class="mb-0 d-flex">
+                                <b>Team Review meeting at yesterday at 3:00 pm</b>
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <i class="mdi mdi-clock text-muted mr-1"></i>
+                                    <small class="text-muted ml-auto">4 hours ago</small>
+                                    <p class="mb-0"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list d-flex align-items-center border-bottom p-4">
+                        <div class="">
+                            <span class="avatar bg-success brround avatar-md">R</span>
+                        </div>
+                        <div class="wrapper w-100 ml-3">
+                            <p class="mb-0 d-flex">
+                                <b>Prepare for Presentation</b>
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <i class="mdi mdi-clock text-muted mr-1"></i>
+                                    <small class="text-muted ml-auto">1 days ago</small>
+                                    <p class="mb-0"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list d-flex align-items-center  border-bottom p-4">
+                        <div class="">
+                            <span class="avatar bg-pink brround avatar-md">MS</span>
+                        </div>
+                        <div class="wrapper w-100 ml-3">
+                            <p class="mb-0 d-flex">
+                                <b>Prepare for Presentation</b>
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <i class="mdi mdi-clock text-muted mr-1"></i>
+                                    <small class="text-muted ml-auto">1 days ago</small>
+                                    <p class="mb-0"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list d-flex align-items-center border-bottom p-4">
+                        <div class="">
+                            <span class="avatar bg-purple brround avatar-md">L</span>
+                        </div>
+                        <div class="wrapper w-100 ml-3">
+                            <p class="mb-0 d-flex">
+                                <b>Prepare for Presentation</b>
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <i class="mdi mdi-clock text-muted mr-1"></i>
+                                    <small class="text-muted ml-auto">45 mintues ago</small>
+                                    <p class="mb-0"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list d-flex align-items-center p-4">
+                        <div class="">
+                            <span class="avatar bg-blue brround avatar-md">U</span>
+                        </div>
+                        <div class="wrapper w-100 ml-3">
+                            <p class="mb-0 d-flex">
+                                <b>Prepare for Presentation</b>
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <i class="mdi mdi-clock text-muted mr-1"></i>
+                                    <small class="text-muted ml-auto">2 days ago</small>
+                                    <p class="mb-0"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="tab3">
+                    <div class="">
+                        <div class="d-flex p-3 border-top">
+                            <label class="custom-control custom-checkbox mb-0">
+                                <input type="checkbox" class="custom-control-input" name="example-checkbox1" value="option1" checked="">
+                                <span class="custom-control-label">Do Even More..</span>
+                            </label>
+                            <span class="ml-auto">
+                                <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                            </span>
+                        </div>
+                        <div class="d-flex p-3 border-top">
+                            <label class="custom-control custom-checkbox mb-0">
+                                <input type="checkbox" class="custom-control-input" name="example-checkbox2" value="option2" checked="">
+                                <span class="custom-control-label">Find an idea.</span>
+                            </label>
+                            <span class="ml-auto">
+                                <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                            </span>
+                        </div>
+                        <div class="d-flex p-3 border-top">
+                            <label class="custom-control custom-checkbox mb-0">
+                                <input type="checkbox" class="custom-control-input" name="example-checkbox3" value="option3" checked="">
+                                <span class="custom-control-label">Hangout with friends</span>
+                            </label>
+                            <span class="ml-auto">
+                                <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                            </span>
+                        </div>
+                        <div class="d-flex p-3 border-top">
+                            <label class="custom-control custom-checkbox mb-0">
+                                <input type="checkbox" class="custom-control-input" name="example-checkbox4" value="option4">
+                                <span class="custom-control-label">Do Something else</span>
+                            </label>
+                            <span class="ml-auto">
+                                <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                            </span>
+                        </div>
+                        <div class="d-flex p-3 border-top">
+                            <label class="custom-control custom-checkbox mb-0">
+                                <input type="checkbox" class="custom-control-input" name="example-checkbox5" value="option5">
+                                <span class="custom-control-label">Eat healthy, Eat Fresh..</span>
+                            </label>
+                            <span class="ml-auto">
+                                <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                            </span>
+                        </div>
+                        <div class="d-flex p-3 border-top">
+                            <label class="custom-control custom-checkbox mb-0">
+                                <input type="checkbox" class="custom-control-input" name="example-checkbox6" value="option6" checked="">
+                                <span class="custom-control-label">Finsh something more..</span>
+                            </label>
+                            <span class="ml-auto">
+                                <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                            </span>
+                        </div>
+                        <div class="d-flex p-3 border-top">
+                            <label class="custom-control custom-checkbox mb-0">
+                                <input type="checkbox" class="custom-control-input" name="example-checkbox7" value="option7" checked="">
+                                <span class="custom-control-label">Do something more</span>
+                            </label>
+                            <span class="ml-auto">
+                                <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                            </span>
+                        </div>
+                        <div class="d-flex p-3 border-top">
+                            <label class="custom-control custom-checkbox mb-0">
+                                <input type="checkbox" class="custom-control-input" name="example-checkbox8" value="option8">
+                                <span class="custom-control-label">Updated more files</span>
+                            </label>
+                            <span class="ml-auto">
+                                <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                            </span>
+                        </div>
+                        <div class="d-flex p-3 border-top">
+                            <label class="custom-control custom-checkbox mb-0">
+                                <input type="checkbox" class="custom-control-input" name="example-checkbox9" value="option9">
+                                <span class="custom-control-label">System updated</span>
+                            </label>
+                            <span class="ml-auto">
+                                <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                            </span>
+                        </div>
+                        <div class="d-flex p-3 border-top border-bottom">
+                            <label class="custom-control custom-checkbox mb-0">
+                                <input type="checkbox" class="custom-control-input" name="example-checkbox10" value="option10">
+                                <span class="custom-control-label">Settings Changings...</span>
+                            </label>
+                            <span class="ml-auto">
+                                <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                            </span>
+                        </div>
+                        <div class="text-center p-4">
+                            <a href="#" class="btn btn-sm btn-primary btn-block">Upgrade more</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- End Rightsidebar-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+<!-- End app-content-->
+<script>
+
+    $(document).ready(function () {
+
+        SetActiveMenu($("#bill"), false);
+        $("#CVV").on("keypress keyup blur", function (event) {
+
+            if ((event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#ValidTillMM").on("keypress keyup blur", function (eventfv) {
+
+            if ((event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        $("#MaskedCCNumber").on("keypress keyup blur", function (event) {
+
+            $(this).val(function (index, value) {
+                return value.replace(/[^a-z0-9]+/gi, '').replace(/(.{4})/g, '$1 ');
+            });
+
+            if ((event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+
+        });
+    });
+
+    function validation() {
+
+        if ($('#CardHolderFirstName ').val() === "") {
+            $('.errormessage').html('Please enter Card Holder First Name .');
+            $('#Error').show();
+            $('#CardHolderFirstName').focus();
+            $(window).scrollTop(0);
+            event.preventDefault();
+            return false;
+        }
+
+        if ($('#MaskedCCNumber').val() === "") {
+            $('.errormessage').html('Please enter Card Number.');
+            $('#Error').show();
+            $('#MaskedCCNumber').focus();
+            $(window).scrollTop(0);
+            event.preventDefault();
+            $("#global-loader").hide();
+            return false;
+        }
+
+        if ( $('#ValidTillMM ').val() === "") {
+            $('.errormessage').html('Please enter Expiration Month.');
+            $('#Error').show();
+            $('#ValidTillMM').focus();
+            $(window).scrollTop(0);
+            event.preventDefault();
+            $("#global-loader").hide();
+            return false;
+        }
+
+        if ($('#ValidTillYY').val() === "") {
+            $('.errormessage').html('Please enter Expiration Year.');
+            $('#Error').show();
+            $('#ValidTillYY').focus();
+            $(window).scrollTop(0);
+            event.preventDefault();
+            $("#global-loader").hide();
+            return false;
+        }
+
+        if ($('#CVV').val() === "") {
+            $('.errormessage').html('Please enter CVV Number.');
+            $('#Error').show();
+            $('#CVV').focus();
+            $(window).scrollTop(0);
+            event.preventDefault();
+            $("#global-loader").hide();
+            return false;
+        }
+        $("#global-loader").show();
+        GoForCardVarification();
+    }
+
+    function ClearAll() {
+        debugger;
+        window.location.href = 'vBillingList';
+        return true;
+    } 
+
+    function GoForCardVarification() {
+        var x = document.getElementById("PrimaryMethod").checked;
+        debugger;       
+        $.ajax({
+            url: "/vBilling/PaymentVerificationAsync",
+            type: "GET",
+            data: { CardNumber: $('#MaskedCCNumber').val(), Month: $('#ValidTillMM').val(), Year: $('#ValidTillYY').val(), CVV: $('#CVV').val(), value: 0, name: $('#CardHolderFirstName').val(), lname: $('#CardHolderLastName').val(), PrimaryMethod: x, addressline1: (''), addressline2: (''), zip: (''), city: (''), state: ('') },
+            success: function (response) {
+                debugger;
+                
+                //1 Insert Fail
+                //2 Insert Success
+                //3 Invalid Card detail
+                if (response == 1) { 
+                     $('#Error').html('Error While Inserting data.');
+                    $('#Error').show(); 
+                    $("#global-loader").hide();
+                }
+                if (response ==2) {
+                    window.location.href = '@Url.Action("vBillingList", "vBilling")';
+                }
+
+                if (response == 3) {
+                    $('#Error').html('Invalid Credit Card number.');
+                    $('#Error').show();      
+                    $("#global-loader").hide();
+                }
+            },
+            error: function () {
+                $("#global-loader").hide();
+            }
+        });
+    }
+  
+
+</script>

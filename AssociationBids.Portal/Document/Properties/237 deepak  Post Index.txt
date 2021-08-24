@@ -1,0 +1,757 @@
+﻿@model SocietyManagement.Models.PostMaintenance
+@{
+    ViewData["Title"] = "Index";
+    ViewBag.Title = "Post Maintenance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/js/jquery-3.1.1.min.js"></script>
+<script src="~/js/jquery-ui-1.12.1.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        debugger;
+        $('#loader').show();
+       
+        $('.errormessage').html('');
+        $('#Error').hide();
+        Pageload();
+        $('.chosen-select').focus();
+        $('#loader').hide();
+        $(".chosen-select").chosen({
+            placeholder_text: "--Please Select--",
+            no_results_text: "No result found"
+        });
+     document.getElementById("Screen2").style.display = "none";
+
+        $('#btnsave').click(function(){
+            Pageload();
+        });
+       
+         $("#btnsavee").click(function()
+         {
+             
+              debugger;
+        PostManitenance();
+        document.getElementById("Screen1").style.display = "none";
+         document.getElementById("Screen2").style.display = "block";
+    
+         });
+         $( "#btnsaverefresh" ).click(function() {
+          
+              debugger;
+           PostManitenanceRefresh();
+           document.getElementById("Screen1").style.display = "block";
+
+         document.getElementById("Screen2").style.display = "none";
+       
+        });
+       
+    });
+
+   
+            
+
+    $('#postpenalty').click(function () {
+              debugger;
+            if ($('#postpenalty').is(':checked')) {
+                $('#postpenalty').val() = true;
+            }
+            else {
+                $('#postpenalty').val() = false;
+            }
+    });
+
+   
+       function validation() {
+                debugger;
+                $('#loader').show();
+                var IsValid = true;
+                $('.errormessage').html('');
+                var errormessage = '';
+
+            
+                if ($('#BlockChosen_chosen').find('.chosen-choices').find('.search-choice').length == 0) {
+                    $('.errormessage').html(errormessage + '- Block  is required.<br/>');
+                    errormessage = $('.errormessage').html();
+                    IsValid = false;
+                    $('#Error').show();
+                }
+                else {
+                    var SelectedRoles = $("#BlockChosen option:selected").map(function ()
+                    {
+                    return $(this).val();
+                    }).get().join(',');
+                    $('#ProjectBlockID').val(SelectedRoles);
+
+
+
+                }
+
+                if (!IsValid)
+                    $("html, body").animate({ scrollTop: 0 }, "slow");
+
+                $('#loader').hide();
+
+                return IsValid;
+            }
+
+
+         function EntrKey(e) {
+            if (e.keyCode == 13) {
+                $('.btnSubmit').trigger('click');
+            }
+        }
+
+         function SortData(val) {
+            debugger;
+            $("#divLoader").show();
+             $('#PageIndex').val('1');
+            var Sort = $('#SortValue').val();
+            if (val == 'UnitNo') {
+                if ($('#SortingName').val() == 'Asc') {
+                    Sort = 'Order By bu.BlockUnitName Desc';
+                }
+                else {
+                    Sort = 'Order By bu.BlockUnitName Asc';
+                }
+            }
+            // if (val == 'MemberName') {
+            //    if ($('#SortingName').val() == 'Asc') {
+            //        Sort = 'Order By (select top 1 u.Firstname from Users u inner join UserBlockUnit UB on UB.UserID = U.UserID where UB.BlockUnitID = PBUM.BlockUnitID order by IsPrimaryUser desc) Desc';
+            //    }
+            //    else {
+            //        Sort = 'Order By (select top 1 u.Firstname from Users u inner join UserBlockUnit UB on UB.UserID = U.UserID where UB.BlockUnitID = PBUM.BlockUnitID order by IsPrimaryUser desc) Asc';
+            //    }   
+            //}
+            // if (val == 'Monthyear') {
+            //    if ($('#SortingName').val() == 'Asc') {
+            //        Sort = 'Order By Month Desc';
+            //    }
+            //    else {
+            //        Sort = 'Order By Month Asc';
+            //    }
+            //}
+            if (val == 'Amount') {
+                if ($('#SortingName').val() == 'Asc') {
+                    Sort = 'Order By PBUM.Amount Desc';
+                }
+                else {
+                    Sort = 'Order By PBUM.Amount Asc';
+                }
+             }
+
+
+              if (val == 'AmountDue') {
+                if ($('#SortingName').val() == 'Asc') {
+                    Sort = 'Order By PBUM.AmountDue Desc';
+                }
+                else {
+                    Sort = 'Order By PBUM.AmountDue Asc';
+                }
+             }
+
+                  if (val == 'UnitNo') {
+                if ($('#SortingName').val() == 'Asc') {
+                    $('#SortingName').val('Desc');
+                    $('#sortUnitNo').removeClass('fa-caret-down');
+                    $('#sortUnitNo').addClass('fa-caret-up');
+                }
+                else {
+                    $('#SortingName').val('Asc');
+                    $('#sortUnitNo').removeClass('fa-caret-up');
+                    $('#sortUnitNo').addClass('fa-caret-down');
+                }
+            }
+             if (val == 'MemberName') {
+                if ($('#SortingName').val() == 'Asc') {
+                    $('#SortingName').val('Desc');
+                    $('#sortMemberName').removeClass('fa-caret-down');
+                    $('#sortMemberName').addClass('fa-caret-up');
+                }
+                else {
+                    $('#SortingName').val('Asc');
+                    $('#sortMemberName').removeClass('fa-caret-up');
+                    $('#sortMemberName').addClass('fa-caret-down');
+                }
+             }
+
+                   if (val == 'Monthyear') {
+                if ($('#SortingName').val() == 'Asc') {
+                    $('#SortingName').val('Desc');
+                    $('#sortMonthyear').removeClass('fa-caret-down');
+                    $('#sortMonthyear').addClass('fa-caret-up');
+                }
+                else {
+                    $('#SortingName').val('Asc');
+                    $('#sortMonthyear').removeClass('fa-caret-up');
+                    $('#sortMonthyear').addClass('fa-caret-down');
+                }
+            }
+
+
+            if (val == 'Amount') {
+                if ($('#SortingName').val() == 'Asc') {
+                    $('#SortingName').val('Desc');
+                    $('#sortAmount').removeClass('fa-caret-down');
+                    $('#sortAmount').addClass('fa-caret-up');
+                }
+                else {
+                    $('#SortingName').val('Asc');
+                    $('#sortAmount').removeClass('fa-caret-up');
+                    $('#sortAmount').addClass('fa-caret-down');
+                }
+             }
+
+
+                 if (val == 'AmountDue') {
+                if ($('#SortingName').val() == 'Asc') {
+                    $('#SortingName').val('Desc');
+                    $('#sortAmountDue').removeClass('fa-caret-down');
+                    $('#sortAmountDue').addClass('fa-caret-up');
+                }
+                else {
+                    $('#SortingName').val('Asc');
+                    $('#sortAmountDue').removeClass('fa-caret-up');
+                    $('#sortAmountDue').addClass('fa-caret-down');
+                }
+            }
+
+
+              $('#SortValue').val(Sort);
+              Pageload();
+        }
+
+        function PostManitenance()
+        {  
+            var varBlockChosen = $('#BlockChosen').val();
+            $("#divLoader").show();
+            $.ajax({
+                 type: "Post",
+                url: '@Url.Action("MaintenanceIndexPaging", "PostMaintenance")',
+                data: { ProjectBlockID: varBlockChosen, rundate: $('#rundate_chosen').find('span').html(), postpenalty: $('#postpenalty').val() },
+                cache: false,
+                success: function (response)
+                {
+                     // showMessage();
+                      Pageload();
+                     $("divLoader").hide();
+                }
+            });
+         }
+          function  PostManitenanceRefresh()
+          {
+              document.getElementById("Screen1").style.display = "block";
+
+         document.getElementById("Screen2").style.display = "none";
+              
+            var varBlockChosen = $('#BlockChosen').val();
+            $("#divLoader").show();
+            $.ajax({
+                 type: "Post",
+                url: '@Url.Action("MaintenanceIndexPaging", "PostMaintenance")',
+                data: { ProjectBlockID: varBlockChosen, rundate: $('#rundate_chosen').find('span').html(), postpenalty: $('#postpenalty').val() },
+                cache: false,
+                success: function (response)
+                {
+                      //showMessage();
+                      Pageload();
+                     $("divLoader").hide();
+                }
+            });
+        }
+
+
+     function Pageload()
+    {
+         $("#divLoader").show();
+        $('#PageSize').val(20);
+        $('#PageIndex').val(1);
+        $.ajax({
+            url: '@Url.Action("PostMaintenanceIndexPagingForDisplay", "PostMaintenance")',
+            cache: false,
+            data: {
+                PageSize: $('#PageSize').val(),
+                PageIndex: $('#PageIndex').val(),
+                SearchUNitName: $('#SearchUNitName').val(),
+                SearchMemberName: $('#SearchMemberName').val(),
+                Sort: $("#SortValue").val()
+            },
+
+            success: function (response)
+            {
+
+                debugger;
+
+                 $("#ddlload").hide();
+                if (response.length > 0) {
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var TotalAmt = 0; 
+                    curRecords = parseInt(($('#PageIndex').val()) * parseInt($('#PageSize').val()));
+                    curRecords = curRecords - ($('#PageSize').val() - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                }
+                else
+                {
+                    $('.spnOfRecs').text(0);
+                    $('.spnTotalRecs').text(0);
+                }
+               $("#RawDatas table tbody tr:not(:first)").remove();
+               $("#RawDatas table tbody tr:eq(0)").show();
+               for (var i = 0; i < response.length; i++)
+               {
+                        var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                            $(".UnitNo", table).html(response[i].UnitNo);
+                            $(".MemberName", table).html(response[i].MemberName);
+                            $(".Monthyear", table).html(response[i].Monthyear);
+                            $(".Amount", table).html(response[i].Amount);
+                            $(".AmountDue", table).html(response[i].AmountDue);
+                
+                   TotalAmt =  response[i].TotalAmount
+                            $("#RawDatas table").append(table);
+                }
+                 $("#TotalRecord").text(TotalAmt);
+                $("#RawDatas table tbody tr:eq(0)").hide();
+                $("#divLoader").hide();
+            }
+
+        });
+
+
+    }
+
+         function Getdata()
+          {
+
+            $("#dlload").show();
+            $("#hdnload").val("1");
+            $("#ddlload").hide();
+            GetRecords();
+
+        }
+
+
+          function GetRecords()
+          {    
+            debugger;
+            var CountVal = (parseInt($('#PageIndex').val()) + 1);
+           var Sort = $("#SortValue").val();
+            $("#SortValue").val(Sort);
+            $('#PageIndex').val(CountVal);
+             $("#dlload").show();
+            $.ajax({
+                url: "/PostMaintenance/PostMaintenanceIndexPagingForDisplay",
+                cache: false,
+                data: {
+                PageSize: $('#PageSize').val(),
+                PageIndex: $('#PageIndex').val(),
+                Sort: $("#SortValue").val(),
+                Search: $('#SearchBox').val(),   
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+
+         success:   function OnSuccess(response)
+         {
+          
+          var curRecords = 0;
+          var TotalRecs = 0;
+          var TotalAmt = 0; 
+        curRecords = parseInt(($('#PageIndex').val()) * parseInt($('#PageSize').val()));
+        curRecords = curRecords - ($('#PageSize').val() - parseInt(response.length));
+        TotalRecs = parseInt(response[0].TotalRecords);
+        $('.spnOfRecs').text(curRecords);
+        $('.spnTotalRecs').text(TotalRecs);
+        if (curRecords == 0 || curRecords == TotalRecs)
+        {
+           $("#ddlload").hide();
+        }
+        else
+       {
+          $("#ddlload").show();
+        }
+
+        if (response.length > 0)
+        {
+            $("#RawDatas table tbody tr:eq(0)").show();
+          for (var i = 0; i < response.length; i++)
+                {
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);                     
+                            $(".UnitNo", table).html(response[i].UnitNo);
+                            $(".MemberName", table).html(response[i].MemberName);
+                            $(".Monthyear", table).html(response[i].Monthyear );
+                            $(".Amount", table).html(response[i].Amount);
+                            $(".AmountDue", table).html(response[i].AmountDue);
+                              TotalAmt = response[i].TotalAmount;
+                              $("#RawDatas table").append(table);
+
+                }
+                $("#TotalRecord").text(TotalAmt);
+                $("#RawDatas table tbody tr:eq(0)").hide();
+                $("#divLoader").hide();
+            $("#RawDatas table tbody tr:eq(0)").hide();
+            $("#divLoader").show();
+        }
+        else
+        {
+             $("#RawDatas table tbody tr:not(:first)").remove();
+              $("#divLoader").hide();
+             $('#success').hide();
+             $('#error').hide();
+        }
+         $("#divLoader").hide();
+        $('#success').hide();
+        $('#error').hide();
+    }
+                
+            });
+        }
+
+
+       
+
+</script>
+<style>
+    input#IsActive {
+        vertical-align: text-bottom;
+    }
+
+    input#IsActive {
+        vertical-align: text-bottom;
+    }
+
+    form {
+        width: 100% !important;
+    }
+
+    .required:after {
+        content: " *";
+        color: red;
+    }
+
+    .selector_ED {
+        width: auto !important;
+    }
+
+    .main_loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        z-index: 4;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: #00000026;
+    }
+
+    .loader-circle {
+        border-left: 3px solid #57bf65;
+        border-bottom: 3px solid #3fbb74;
+        border-radius: 50%;
+        margin-left: 10%;
+        width: 100px;
+        height: 100px;
+        animation: spin 1.5s linear infinite;
+    }
+
+    @@keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .required:after {
+        content: " *";
+        color: red;
+    }
+
+    .selector_ED {
+        width: auto !important;
+    }
+
+    .form-control:disabled, .form-control[readonly] {
+        background-color: transparent;
+    }
+
+    .chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+        background: url('~/images/cancel.png');
+    }
+
+    .chosen-container-single .chosen-single {
+        color: dimgrey !important;
+    }
+
+    .form-control {
+        color: dimgrey !important;
+        font-size: 13.8px;
+    }
+</style>
+@using (Html.BeginForm("Index", "PostMaintenance"))
+{
+    <div id="divLoader" style="display:none;">
+        <div class="main_loader">
+            <div class="loader-circle"></div>
+        </div>
+    </div>
+
+
+    <!--content starts here-->
+
+
+    <div Id="Screen1">
+        <div class=" mb-3 accordion-wrapper" style="border-bottom: none;">
+            <div class="card ">
+                <div id="headingOne" class="card-header acc-header">
+                    <div class="col-md-8">
+                        <button type="button" aria-expanded="true" aria-controls="collapseOne" class="text-left m-0 p-0 btn btn-link text-dark btn-block accordion-btn">
+                            <div class="m-0 p-0 h5-text">
+                                Calculate Post Maintenance
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-card mb-3 card">
+            <div role="alert">
+                <div class="alert alert-danger" id="Error" style="display: none;margin-top: 20px;">
+                    <strong><span class="errormessage"></span></strong>
+                </div>
+                @*@if (!string.IsNullOrEmpty(ViewBag.UnitTypeExist))
+                    {
+                        <div class="alert alert-danger" style="margin-top: 20px;">
+                            <strong><span>@ViewBag.UnitTypeExist</span></strong>
+                        </div>
+                    }*@
+            </div>
+            <div class="card-body">
+
+
+
+
+
+
+                <div class="row clearfix">
+
+                    <div class="col-lg-4 col-md-10  form-group">
+                        <label class="control-label">
+                            Select Block &nbsp; <label style="color: red;margin-bottom: 0px;">*</label>
+                        </label>
+                        @*@Html.HiddenFor(Model => Model.UnitTypeID)*@
+                        @*@Html.DropDownListFor(Model => Model.UnitTypeID, new SelectList(ViewBag.UnitTypeList, "Value", "Text"), new { @data_rel = "chosen", @class = "form-control chosen-select", @multiple = "true" })*@
+                        @Html.HiddenFor(model => model.ProjectBlockID)
+                        @Html.DropDownList("BlockChosen", new SelectList(ViewBag.BlockNameList, "Value", "Text"), new { @data_rel = "chosen", @class = "form-control chosen-select", @multiple = "true" })
+                        @*chosen-select*@
+                    </div>
+
+                    <div class=" Col-lg-8 col-md-8"></div>
+
+                    <div class="col-lg-4 col-md-10  form-group">
+                        <label class="control-label">
+                            Select Month-Year &nbsp; <label style="color: red;margin-bottom: 0px;">*</label>
+                        </label>
+                        @Html.HiddenFor(Model => Model.rundate)
+                        @Html.DropDownListFor(Model => Model.rundate, new SelectList(ViewBag.Yearmonth, "Value", "Text"), new { @class = "form-control chosen-select" })
+
+                        @*@Html.DropDownListFor(model => model.rundate, new SelectList(ViewBag.Yearmonth, "Value", "Text"), new { @class = "form-control chosen-select" })*@
+                    </div>
+                    @*chosen-select*@
+
+                    <div class=" Col-lg-8 col-md-8"></div>
+                    <div class="col-lg-5 col-md-10 form-group">
+                        <label class="control-label">Post penalty?&nbsp; </label>
+                        @Html.CheckBoxFor(model => model.postpenalty, new { @checked = "Checked" })
+                    </div>
+                    <div class=" col-lg-7 col-md-7"></div>
+                    <div class="clearfix"></div>
+                    <div class="form-group Col-lg-12, col-md-12,col-sm-12" style="margin-left:15px;">
+
+                        <input type="button" class="btn btn-primary btn-lg pull-left"  style="margin-right: 12px;" value="Post" id="btnsavee" />
+                        @*@Html.ActionLink("Cancel", "Index", "UnitTypes", null, new { @class = "btn btn-success btn-lg pull-left", @style = "margin-right:12px;" })*@
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="Screen2">
+        <div class="accordion-wrapper" style="border-bottom: none;">
+            <div class="card ">
+                <div id="headingOne" class="card-header acc-header">
+                    <div style="width:100%;">
+                        <button type="button" data-toggle="collapse" data-target="#collapseOne1" aria-expanded="true" aria-controls="collapseOne" class="  col-md-4 text-left m-0 p-0 btn btn-link text-dark btn-block accordion-btn">
+                            <div class="m-0 p-0 h5-text">
+                                <i class="fa fa-chevron-down acc-icon " id="accordion"></i>
+                                Post  Maintenance
+                            </div>
+                        </button>
+
+                    </div>
+
+                </div>
+                <div data-parent="#accordion" id="collapseOne1" aria-labelledby="headingOne" class="collapse show" style="border-bottom:none;">
+                    <div class="card-body">
+                        <div class="row clearfix">
+                            <div class=" col-xl-4 col-lg-4 col-md-10  form-group">
+                                <label class="control-label">
+                                    Block Unit Name&nbsp; <label style="color: red;margin-bottom: 0px;">*</label>
+                                </label>
+                                <input type="text" id="SearchUNitName" class="form-control p-3" style=" Height:32PX;font-size:15px;" placeholder="Search By Unit No" />
+
+
+
+                            </div>
+
+
+                            <div class="col-xl-4 col-lg-4 col-md-10  form-group">
+
+                                <label class="control-label">
+                                    Enter Member Name&nbsp; <label style="color: red;margin-bottom: 0px;">*</label>
+                                </label>
+                                <input type="text" id="SearchMemberName" class="form-control p-3" style=" Height:32PX;font-size:15px;" placeholder="Search By First Name" />
+
+
+
+                            </div>
+                            <div class="col-md-2 col-xl-4 col-lg-4"></div>
+
+                        </div>
+
+                        <div class="form-group col-sm-10 mb-3" style="margin-left:-15px;">
+                            <input type="button" class="btn btn-success btn-lg pull-left" value="Search" id="btnsave" />
+                        </div>
+
+                        <div class="form-group Col-lg-12, col-md-12,col-sm-12" style="margin-left:15px;">
+
+                            <input type="button" class="btn btn-primary btn-lg pull-left" style="margin-right: 12px;" value="Refresh" id="btnsaverefresh" />
+
+                            @*@Html.ActionLink("Cancel", "Index", "UnitTypes", null, new { @class = "btn btn-success btn-lg pull-left", @style = "margin-right:12px;" })*@
+                        </div>
+
+
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="main-card mb-2 card">
+            <div role="alert">
+                <div class="alert alert-danger" style="margin-top:20px;display:none">
+                    <strong>Error!</strong> <span class="errormessage"></span>
+                </div>
+                @if (TempData["sucess"] != null)
+                {
+                    <p class="alert alert-success alert-dismissible" id="successMessage">
+                        @TempData["sucess"]
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    </p>
+                }
+                @if (TempData["delete"] != null)
+                {
+                    <p class="alert alert-danger alert-dismissible" id="successMessage">
+                        @TempData["delete"]
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    </p>
+                }
+            </div>
+        </div>
+        <div class="card-body">
+
+            <div class="row clearfix p_l_15 p_r_15">
+                <div class="form-group table-responsive" id="RawDatas">
+
+                    <div class="pull-right" style="margin-top:5px">
+                        <label> <span class="spnOfRecs">0</span> out of <span class="spnTotalRecs">0</span>&nbsp; Records </label>
+                    </div>
+                    <table id="myTable" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th onclick="SortData('UnitNo')" style="width:100px;text-align:center; cursor:pointer">UnitNo.<i id="sortUnitNo" class="fa fa-caret-down"></i> </th>
+                                <th onclick="SortData('MemberName');" style="width:100px;text-align:center;cursor:pointer">Member Name<i id="sortMemberName" class="fa fa-caret-down"></i></th>
+                                <th onclick="SortData('AmountDue');" style="width:100px;text-align:center;cursor:pointer">Amount Due Date<i id="sortAmountDue" class="fa fa-caret-down"></i></th>
+                                <th onclick="SortData('Monthyear');" style="width:100px;text-align:center;cursor:pointer">Month-year<i id="sortMonthyear" class="fa fa-caret-down"></i></th>
+                                <th onclick="SortData('Amount');" style="width:100px;text-align:center;cursor:pointer">Amount<i id="sortAmount" class="fa fa-caret-down"></i></th>
+                              
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="width:60px;text-align:center;">
+                                    <span class="UnitNo"></span>
+                                </td>
+                                <td style="width:60px;text-align:center;">
+                                    <span class="MemberName"></span>
+                                </td>
+                                <td style="width:60px;text-align:center;">
+                                    <span class="AmountDue"></span>
+                                </td>
+                                <td style="width:60px;text-align:center;">
+                                    <span class="Monthyear"></span>
+                                </td>
+                                <td style="width:60px;text-align:center;">
+                                    <span class="Amount"></span>
+                                </td>                         
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td style="width:60px;text-align:center;">
+                                </td>
+                                <td style="width:60px;text-align:center;">
+                                </td>
+                                <td style="width:60px;text-align:center;">
+                                </td>
+                                <td style="width:60px;text-align:center; color:forestgreen; font-weight:bold;">
+                                    Total Amount
+                                </td>
+                                <td style="width:60px;text-align:center;">
+                                    <span id="TotalRecord"></span>
+                                </td>
+                          
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div class="pull-right" style="margin-top:5px">
+                        <label> <span class="spnOfRecs">0</span> out of <span class="spnTotalRecs">0</span>&nbsp; Records </label>
+                    </div>
+
+                    <div style="text-align:center;margin-top:5px;display:none" id="ddlload">
+                        <a class="btn btn-primary text-white" style="cursor:pointer" id="loaddata" onclick="Getdata();">Load more</a>
+                    </div>
+                    <input type="hidden" id="SortingName" value="Asc">
+                    <input type="hidden" id="SortValue" value="Order By PBUM.BlockUnitID Asc" />
+                    <input type="hidden" id="PageIndex" value="1" />
+                    <input type="hidden" id="PageSize" value="20" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/chosen/chosen.jquery.min.js"></script>
+    <link href="~/chosen/chosen.min.css" rel="stylesheet"/>
+    <link href="~/chosen/chosen.min.css" rel="stylesheet"/>
+    <script src="~/chosen/chosen.jquery.min.js"></script>
+}
+
+

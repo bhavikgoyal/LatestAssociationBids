@@ -1,0 +1,473 @@
+﻿@model AssociationBids.Portal.Model.StaffDirectoryModel
+@using AssociationBids.Portal.Common
+@{
+    ViewBag.Title = "StaffDirectoryView";
+    Layout = "~/Views/Shared/_PropertyManagerLayout.cshtml";
+    string Errormessage = Convert.ToString(TempData["Errormessage"]);
+    string SuccessMessage = Convert.ToString(TempData["Sucessmessage"]);
+}
+<style>
+    label {
+        display: inline-block;
+        margin-bottom: 0.5rem;
+        margin-left: 8px;
+    }
+</style>
+<h2>StaffDirectoryView</h2>
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item ">
+
+                    @Html.ActionLink("Staff Directory", "StaffDirectoryList", "StaffDirectory", null, new { })
+                </li>
+
+                <li class="breadcrumb-item active text-left">Staff Details</li>
+            </ol><!-- End breadcrumb -->
+
+        </div>
+        @if (!string.IsNullOrEmpty(Errormessage))
+        {
+            <p class="alert alert-success alert-dismissible">
+                @Errormessage
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        @if (!string.IsNullOrEmpty(SuccessMessage))
+        {
+            <p class="alert alert-success alert-dismissible">
+                @SuccessMessage
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+
+
+        <div class="alert alert-success" id="Error" style="display:block; margin-top: 20px;">
+            <strong><span class="errormessage"></span></strong>
+        </div>
+        <!-- End page-header -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-div">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Staff Detail</h3>
+                                            <div class="card-options">
+                                                <a onclick=" EditStaffPage();" id="StaffEdit" class="btn btn-primary pull-right" title="Edit"><i class="fa fa-pencil"></i> Edit</a>
+                                                <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border-top">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">First Name</label>
+                                                        @Html.Label("", Model.FirstName)
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Last Name</label>
+                                                        @Html.Label("", Model.LastName)
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Email</label>
+                                                        @Html.Label("", Model.Email)
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Secondary Email</label>
+                                                        @Html.Label("", Model.Email2)
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Work Phone 1</label>
+                                                        @*@Html.Label("", Model.Work)*@
+                                                        @Utility.FormatPhoneNumberHelper(Model.Work)
+                                                    </div>
+                                                </div><!-- end of col -->
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Work Phone 2</label>
+                                                        @*@Html.Label("", Model.Work2)*@
+                                                        @Utility.FormatPhoneNumberHelper(Model.Work2)
+                                                    </div>
+                                                </div><!-- end of col -->
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Cell Phone</label>
+                                                        @*@Html.Label("", Model.CellPhone)*@
+                                                        @Utility.FormatPhoneNumberHelper(Model.CellPhone)
+                                                    </div>
+                                                </div><!-- end of col -->
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Fax</label>
+                                                        @*@Html.Label("", Model.Fax)*@
+                                                        @Utility.FormatPhoneNumberHelper(Model.Fax)
+                                                    </div>
+                                                </div><!-- end of col -->
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Is Primary Contact</label>
+                                                        @*<label class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" checked name="example-checkbox2" value="option2">
+                                                            <span class="custom-control-label">Primary Contact</span>
+                                                        </label>*@
+                                                        @if (Model.PrimaryContact == false)
+                                                        {
+                                                            //@Html.CheckBoxFor(model => model.PrimaryContact, new { @class = "custom-control-input", @tabindex = "1" })
+                                                            //@Html.LabelFor(model => model.PrimaryContact, new { @class = "custom-control-label" })
+                                                            <label class="form-label">False</label>
+                                                        }
+                                                        @if (Model.PrimaryContact == true)
+                                                        {
+                                                            <label class="form-label">True</label>
+                                                        }
+                                                    </div>
+                                                </div><!-- end of col -->
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Status</label>
+                                                        @*<label class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" checked name="example-checkbox2" value="option2">
+                                                            <span class="custom-control-label">Primary Contact</span>
+                                                        </label>*@
+                                                        @if (Model.Statuss == false)
+                                                        {
+                                                            //@Html.CheckBoxFor(model => model.PrimaryContact, new { @class = "custom-control-input", @tabindex = "1" })
+                                                            //@Html.LabelFor(model => model.PrimaryContact, new { @class = "custom-control-label" })
+                                                            <label class="form-label">InActive</label>
+                                                        }
+                                                        @if (Model.Statuss == true)
+                                                        {
+                                                            <label class="form-label">Active</label>
+                                                        }
+                                                    </div>
+                                                </div><!-- end of col -->
+                                                <!-- end of col -->
+
+
+                                            </div>
+                                            <hr />
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Address 1</label>
+                                                        @Html.Label("", Model.Address)
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Address 2</label>
+                                                        @Html.Label("", Model.Address2)
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">City</label>
+                                                        @Html.Label("", Model.City)
+                                                    </div>
+                                                </div><!-- end of col -->
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">State</label>
+                                                        @Html.Label("", Model.State)
+                                                    </div>
+                                                </div><!-- end of col -->
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Zip</label>
+                                                        @Html.Label("", Model.Zip)
+                                                    </div>
+                                                </div><!-- end of col -->
+                                            </div>
+                                            <hr />
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Description</label>
+                                                       <p id="Description"></p>
+                                                    </div>
+                                                </div><!-- end of col -->
+                                            </div><!-- end of row -->
+                                        </div><!--end of card body -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="Grouphdd">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Groups</h3>
+                                            <div class="card-options">
+                                                <a onclick=" EditGroupPage();" id="GroupEdit" class="btn btn-primary pull-right" title="Edit"><i class="fa fa-pencil"></i> Edit</a>
+                                                <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border-top">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <div class="custom-controls-stacked">
+                                                            <div id="divid"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <div class="custom-controls-stacked">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div><!-- end of row -->
+                                        </div><!--end of card body -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="userhdd">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">User Account</h3>
+                                            <div class="card-options">
+                                                <a onclick=" EditUserPage();" id="UserEdit" class="btn btn-primary pull-right" title="Edit"><i class="fa fa-pencil"></i> Edit</a>
+                                                <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border-top">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Username</label>
+                                                        @Html.Label("", Model.UserName)
+                                                        @Html.HiddenFor(model => model.ResourceKey)
+                                                        @Html.HiddenFor(model => model.GroupResponseId)
+                                                        @Html.HiddenFor(model => model.UserKey)
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group" id="pphide">
+                                                        <label class="form-label">Password</label>
+                                                        <button class="btn btn-sm btn-primary ml-auto" id="btnResetPassword" type="submit" title="ResetPassword"> Reset Password</button>
+                                                    </div>
+                                                </div>
+                                            </div><!-- end of row -->
+                                        </div><!--end of card body -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end of form-div  -->
+                    </div><!--end of card body -->
+                </div>
+            </div>
+        </div>
+    </div><!--End side app-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+</div>
+<!-- End app-content-->
+<script type="text/javascript">
+
+    $(document).ready(function ()
+    {
+        var Description = '@Model.Description';
+        var Descriptions = Description.replace(/&lt;br&gt;/g, "<br/>");
+        $('#Description').html(Descriptions);
+
+        $("#StaffEdit").hide();
+        $("#GroupEdit").hide();
+        $("#UserEdit").hide();
+        $("#pphide").hide();
+        $("#Grouphdd").hide();
+        $("#userhdd").hide();
+        $("#CompanySetting").hide();
+        //$("#PMProReport1").hide();
+        $(".Report").hide();
+
+        checkUserRole();
+        $("#Staff").closest('li').addClass('active');
+        $("#Staff1").addClass('active');
+        $('#loader').show();
+        $('.errormessage').html('');
+        $('#Error').hide();
+
+        $('#loader').hide();
+
+        document.getElementById("UserEdit").style.color = "White";
+        document.getElementById("GroupEdit").style.color = "White";
+        document.getElementById("StaffEdit").style.color = "White";
+        LoadSortTableFill();
+        checkPoratl();
+
+    });
+
+
+
+
+      function checkPoratl() {
+        $.ajax({
+            url: '@Url.Action("checkPortal", "PMProperties")',
+            cache: false,
+            data:
+            {
+                PropertyKey: $('#PropertyKey').val()
+            },
+            success: function (response) {
+                debugger;
+
+                if (response == false) {
+                    window.location.href = '@Url.Action("Index", "Login")';
+                }
+
+                else {
+
+                }
+
+            }
+        });
+    }
+
+
+     function checkUserRole() {
+        $.ajax({
+            url: '@Url.Action("checkUserRole", "StaffDirectory")',
+            cache: false,
+            data:
+            {
+                PropertyKey: $('#PropertyKey').val()
+            },
+            success: function (response) {
+                debugger;
+
+                if (response == false) {
+
+                }
+
+                else {
+                    $("#StaffEdit").show();
+                    $("#GroupEdit").show();
+                    $("#UserEdit").show();
+                    $("#pphide").show();
+                    $("#Grouphdd").show();
+                    $("#userhdd").show();
+                    $("#CompanySetting").show();
+                    //$("#PMProReport1").show();
+                    $(".Report").show();
+                }
+
+            }
+        });
+    }
+
+    function LoadSortTableFill() {
+        $.ajax({
+            url: '@Url.Action("GetAllGroup", "StaffDirectory")',
+            cache: false,
+            data: {
+            },
+            success: function (response)
+            {
+                for (var i = 0; i < response.length; i++) {
+                    addCheckbox(' ' + response[i].GroupName);
+                }
+            }
+        });
+    }
+
+    function addCheckbox(name) {
+
+        debugger;
+        var container = $('#divid');
+        var inputs = container.find('input');
+        var id = inputs.length + 1;
+        if (id == "2") {
+            id = 3;
+        }
+        var Groupid = $("#GroupResponseId").val();
+        //alert("Groupid " + Groupid);
+        var GroupKey = Groupid.substring(0, Groupid.length - 1);
+        var array = [];
+        array = GroupKey.split(',');
+        //alert("array " + array);
+        var i = 0;
+        var ij = id;
+
+        for (i; i < array.length; i++) {
+            if (ij == id) {
+                if (array[i] == id) {
+                    $('<input />', { type: 'checkbox', id: id, value: name, name: 'chkListItem', 'class': 'chkListItem', checked: "true", disabled: 'disabled' }).appendTo(container);
+                    $('<label />', { 'for': id, text: name }).appendTo(container);
+                    $('</br>').appendTo(container);
+                    ij++;
+                }
+                else if (i == array.length - 1) {
+                    $('<input />', { type: 'checkbox', id: id, value: name, name: 'chkListItem', 'class': 'chkListItem', disabled: 'disabled', style:'display:none;' }).appendTo(container);
+                    $('<label />', { 'for': id, text: name, style: 'display:none; Position:absolute;' }).appendTo(container);
+
+                    ij++;
+                }
+            }
+            else if (ij < id) {
+                $('<input />', { type: 'Radio', id: id, value: name, name: 'chkListItem', 'class': 'chkListItem', disabled: 'disabled', style: 'display:none;'}).appendTo(container);
+                $('<label />', { 'for': id, text: name, style: 'display:none;' }).appendTo(container);
+
+                ij++;
+            }
+        }
+        //$('.'+id).find('input').addClass('custom-control-input');
+    }
+
+    function EditStaffPage()
+    {
+        window.location.href = 'StaffDirectoryEditStaff?ResourceKey=' + $("#ResourceKey").val();
+    }
+    function EditGroupPage() {
+        window.location.href = 'StaffDirectoryEditGroup?ResourceKey=' + $("#ResourceKey").val();
+    }
+    function EditUserPage() {
+        window.location.href = 'StaffDirectoryEditUser?ResourceKey=' + $("#ResourceKey").val();
+    }
+
+    $("#btnResetPassword").click(function () {
+        debugger;
+        //alert("UserKey "+$("#UserKey").val());
+        $.ajax({
+            url: '@Url.Action("ResetPassword", "StaffDirectory")',
+            cache: false,
+           data: {
+               UserKey: $("#UserKey").val(),
+           },
+            success: function (response)
+            {
+                $('.errormessage').html('Reset password link has been sent on your registered Email Address.');
+                $('#Error').show();
+                $(window).scrollTop(0);
+            }
+        });
+    });
+
+</script>

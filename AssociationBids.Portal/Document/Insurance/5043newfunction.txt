@@ -1,0 +1,27 @@
+
+    function sendemail() {
+
+
+        $.ajax({
+            type: 'GET',
+            datatype: 'json',
+            url: '@Url.Action("BidAbdWorkOrderEmailSent", "APIS")';
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                debugger;
+                //alert(response);
+                if (response == true) {
+                    $('.successmessages').html('Email report has been sent successfully');
+                    $('#success').show();
+                    $(window).scrollTop(0);
+                }
+                else {
+                    $('.successmessages').html('Try Again');
+                    $('#success').show();
+                    $(window).scrollTop(0);
+                }
+            }
+        });
+    }

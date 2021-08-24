@@ -1,0 +1,319 @@
+﻿@model AssociationBids.Portal.Model.ResourceModel
+@{
+    ViewBag.Title = "UserEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>UserEdit</h2>
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+
+    <div class="side-app">
+       
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="#" onclick="UserPage();">User Management</a></li>
+                @*<li class="breadcrumb-item"><a href="/"></a></li>*@
+                <li class="breadcrumb-item active" aria-current="page">Edit Users</li>
+            </ol><!-- End breadcrumb -->
+
+        </div>
+    </div>
+    <div class="alert alert-danger" id="Error" style="display:block; margin-top: 20px;">
+        <strong><span class="errormessage"></span></strong>
+    </div>
+
+    <!-- End page-header -->
+
+    @using (Html.BeginForm("UserEdit", "User", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-div">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">User Name</label>
+                                        @Html.HiddenFor(model => model.ResourceKey)
+                                        @Html.HiddenFor(model => model.ResourceTypeKey)
+                                        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "UserName" } })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Status</label>
+                                        @Html.DropDownListFor(model => model.Status, new SelectList(ViewBag.lststatus, "Value", "Text"), new { @data_rel = "Choose_one", @class = "form-control", placeholder = "Please Select..." })
+                                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Company Name</label>
+                                        @Html.DropDownList("CompanyKey", new SelectList(ViewBag.lstcompany, "Value", "Text"), new { @data_rel = "Choose_one", @class = "form-control", placeholder = "Please Select..." })
+                                        @Html.ValidationMessageFor(model => model.CompanyKey, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Account Locked</label>
+                                        <label class="custom-control custom-checkbox">
+                                            @Html.CheckBoxFor(model => model.AccountLocked, new { @class = "custom-control-input" })
+                                            @Html.LabelFor(model => model.AccountLocked, new { @class = "custom-control-label" })
+                                        </label>
+                                    </div>
+                                </div>
+
+                            </div><!-- end of row -->
+                            <hr />
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">First Name</label>
+                                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Enter First Name" } })
+                                        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Last Name</label>
+                                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Enter Last Name" } })
+                                        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Email</label>
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Enter email", @type = "email" } })
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Secondary Email</label>
+                                        @Html.EditorFor(model => model.Email2, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Enter secondary email", @type = "email" } })
+                                        @Html.ValidationMessageFor(model => model.Email2, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Cell Phone</label>
+                                        @Html.EditorFor(model => model.CellPhone, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Cell Phone" } })
+                                        @Html.ValidationMessageFor(model => model.CellPhone, "", new { @class = "text-danger" })@*<input type="text" class="form-control" name="input" placeholder="Cell Phone">*@
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Fax</label>
+                                        @Html.EditorFor(model => model.Fax, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Fax" } })
+                                        @Html.ValidationMessageFor(model => model.Fax, "", new { @class = "text-danger" })
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Home Phone 1</label>
+                                        @Html.EditorFor(model => model.HomePhone, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Home Phone 1" } })
+                                        @Html.ValidationMessageFor(model => model.HomePhone, "", new { @class = "text-danger" })
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Home Phone 2</label>
+                                        @Html.EditorFor(model => model.HomePhone2, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Home Phone 2" } })
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Work Phone 1</label>
+                                        @Html.EditorFor(model => model.Work, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Work Phone 1" } })
+                                        @Html.ValidationMessageFor(model => model.Work, "", new { @class = "text-danger" })
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Work Phone 2</label>
+                                        @Html.EditorFor(model => model.Work2, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Work Phone 2" } })
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Address</label>
+                                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Address 1" } })
+                                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Address 2</label>
+                                        @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Address 2" } })
+                                    </div>
+                                </div><!-- end of col -->
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">City</label>
+                                        @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "City" } })
+                                        @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">State</label>
+                                        @Html.DropDownList("State", new SelectList(ViewBag.lststate, "Value", "Text"), new { @data_rel = "Choose_one", @class = "form-control", placeholder = "Please Select..." })
+                                        @if (ViewBag.message == "State")
+                                        {
+                                            @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
+                                            <script type="text/javascript">
+                                                window.onload = function () {
+                                                    document.getElementById("State").focus();
+                                                };
+                                            </script>
+                                        }
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Zip</label>
+                                        @Html.EditorFor(model => model.Zip, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Zip" } })
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Its Primary Contact</label>
+                                        <label class="custom-control custom-checkbox">
+                                            @Html.CheckBoxFor(model => model.PrimaryContact, new { @class = "custom-control-input" })
+                                            @Html.LabelFor(model => model.PrimaryContact, new { @class = "custom-control-label" })
+                                        </label>
+                                    </div>
+                                </div><!-- end of col -->
+                            </div><!-- end of row -->
+                            <hr />
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Description</label>
+                                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Description" })
+                                    </div>
+                                </div><!-- end of col -->
+                            </div><!-- end of row -->
+                            <hr />
+                            <div class="button-row d-flex mt-4">
+                                <button class="btn btn-default" onclick="return Clear()" type="button" value="UserAdd" title="Clear">Clear</button>
+                                <input t class="btn btn-primary ml-auto" id="btnsubmit" type="submit" onclick="return validation()" title="Update" value="Update" /><i class="fa fa-loppy-o"></i>
+                            </div>
+
+                        </div><!-- end of form-div  -->
+
+                    </div><!--end of card body -->
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+</div><!--End side app-->
+<!--footer-->
+<footer class="footer">
+    <div class="container">
+        <div class="row align-items-center flex-row-reverse">
+            <div class="col-lg-12 col-sm-12   text-center">
+                Copyright © 2020 Association Bids. All rights reserved.
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- End Footer-->
+@*</div>*@
+<!-- End app-content-->
+
+<script>
+    $("#btndelete").click(function () {
+
+        window.location.href = 'Delete?ResourceKey=' + $("#ResourceKey").val();
+
+    });
+
+    $(document).ready(function ()
+    {
+        $('#Error').hide();
+    });
+    function validation() {
+        debugger;
+        $('#loader').show();
+        $('.errormessage').html('');
+
+        if ($('#Username').val() == "") {
+            $('.errormessage').html('Please Enter UserName.');
+            $('#Error').show();
+            $('#Username').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+
+        if ($('#Status').val() == "0") {
+            $('.errormessage').html('Please Select Status.');
+            $('#Error').show();
+            $('#Status').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+        if ($('#State').val() == "0") {
+            $('.errormessage').html('Please Select State.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+        }
+        if ($('#CompanyKey').val() == "0") {
+            $('.errormessage').html('Please Select Company.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+        }
+        if ($('#Email').val() == "") {
+            $('.errormessage').html('Please Enter Email.');
+            $('#Error').show();
+            $('#Email').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+
+
+        $('#loader').hide();
+
+        return true;
+    }
+    function UserPage()
+    {
+        window.location.href = '@Url.Action("Userlist", "User")';
+    }
+
+    function Clear() {
+
+        document.getElementById("Username").value = "";
+        document.getElementById("FirstName").value = "";
+        document.getElementById("LastName").value = "";
+        document.getElementById("Email").value = "";
+        document.getElementById("Email2").value = "";
+        document.getElementById("CellPhone").value = "";
+        document.getElementById("Fax").value = "";
+        document.getElementById("HomePhone").value = "";
+        document.getElementById("HomePhone2").value = "";
+        document.getElementById("Work").value = "";
+        document.getElementById("Work2").value = "";
+        document.getElementById("Address").value = "";
+        document.getElementById("Address2").value = "";
+        document.getElementById("City").value = "";
+        document.getElementById("Description").value = "";
+        document.getElementById("Zip").value = "";
+
+        $('.field-validation-error').html("");
+    }
+</script>

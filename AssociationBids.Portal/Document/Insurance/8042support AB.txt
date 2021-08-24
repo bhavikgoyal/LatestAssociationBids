@@ -1,0 +1,7 @@
+CompanyName
+PropertyName
+status
+date
+win fee
+sort description
+[site_BidRequest_SelectIndexPagingSupport] create sp

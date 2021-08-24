@@ -1,0 +1,95 @@
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\AssociationBids.Portal.Model.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\AssociationBids.Portal.Model.pdb
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\Newtonsoft.Json.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\System.Net.Http.Formatting.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.Http.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.Mvc.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.WebPages.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.WebPages.Razor.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.Razor.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\Microsoft.Web.Infrastructure.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.WebPages.Deployment.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\Newtonsoft.Json.xml
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\System.Net.Http.Formatting.xml
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.Http.xml
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.csproj.CoreCompileInputs.cache
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.csproj.CopyComplete
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.pdb
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.csprojAssemblyReference.cache
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\AssociationBids.Portal.Model.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\AssociationBids.Portal.Model.pdb
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\Newtonsoft.Json.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\System.Net.Http.Formatting.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.Http.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.Mvc.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.WebPages.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.WebPages.Razor.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.Razor.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\Newtonsoft.Json.xml
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\System.Net.Http.Formatting.xml
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.Http.xml
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.csprojAssemblyReference.cache
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.csproj.CoreCompileInputs.cache
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.csproj.CopyComplete
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.pdb
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\bin\Debug\AssociationBids.Portal.Model.dll
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\bin\Debug\AssociationBids.Portal.Model.pdb
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\bin\Debug\Newtonsoft.Json.dll
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\bin\Debug\System.Net.Http.Formatting.dll
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\bin\Debug\System.Web.Http.dll
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\bin\Debug\System.Web.Mvc.dll
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\bin\Debug\System.Web.WebPages.dll
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\bin\Debug\System.Web.WebPages.Razor.dll
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\bin\Debug\System.Web.Razor.dll
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\bin\Debug\Newtonsoft.Json.xml
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\bin\Debug\System.Net.Http.Formatting.xml
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\bin\Debug\System.Web.Http.xml
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.csprojAssemblyReference.cache
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.csproj.CoreCompileInputs.cache
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.csproj.CopyComplete
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.dll
+D:\pankaj  garg\MyAssocition\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.pdb
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\bin\Debug\AssociationBids.Portal.Model.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\bin\Debug\AssociationBids.Portal.Model.pdb
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\bin\Debug\Newtonsoft.Json.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\bin\Debug\System.Net.Http.Formatting.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\bin\Debug\System.Web.Http.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\bin\Debug\System.Web.Mvc.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\bin\Debug\System.Web.WebPages.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\bin\Debug\System.Web.WebPages.Razor.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\bin\Debug\System.Web.Razor.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\bin\Debug\Newtonsoft.Json.xml
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\bin\Debug\System.Net.Http.Formatting.xml
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\bin\Debug\System.Web.Http.xml
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.csprojAssemblyReference.cache
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.csproj.CoreCompileInputs.cache
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.csproj.CopyComplete
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.pdb
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\bin\Debug\AssociationBids.Portal.Model.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\bin\Debug\AssociationBids.Portal.Model.pdb
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\bin\Debug\Newtonsoft.Json.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\bin\Debug\System.Net.Http.Formatting.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.Http.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.Mvc.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.WebPages.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.WebPages.Razor.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.Razor.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\bin\Debug\Microsoft.Web.Infrastructure.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.WebPages.Deployment.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\bin\Debug\Newtonsoft.Json.xml
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\bin\Debug\System.Net.Http.Formatting.xml
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\bin\Debug\System.Web.Http.xml
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.csprojAssemblyReference.cache
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.csproj.CoreCompileInputs.cache
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.csproj.CopyComplete
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Portal.Model\obj\Debug\AssociationBids.Portal.Model.pdb

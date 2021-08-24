@@ -1,0 +1,452 @@
+﻿
+
+@model AssociationBids.Portal.Model.VendorInvoiceModal
+@{
+    ViewBag.Title = "Refund Request";
+    Layout = "~/Views/Shared/_VendorLayout.cshtml";
+    string Errormessage = Convert.ToString(ViewData["Errormessage"]);
+}
+<script src="../assets/js/vendors/jquery-3.2.1.min.js"></script>
+
+<script>
+    $(document).ready(function ()
+    {
+
+        debugger;
+        SetActiveMenu($("#Invoices"), false);
+        LoadSortTableFill()
+        checkPoratl()
+    });
+
+
+
+
+      function updatePaging(TotalRecs) {
+        $('ul.pagination').html('');
+        var liClone = $('ul.pagination');
+        //debugger;
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        //var pageSize = $('#PageSize').val();
+        var NoPage = 1;
+        if (parseInt(TotalRecs) > parseInt(pageSize)) {
+            NoPage = parseInt(parseInt(TotalRecs) / parseInt(pageSize));
+            if (parseFloat(parseInt(parseInt(TotalRecs) / parseInt(pageSize))) < parseFloat(parseInt(TotalRecs) / parseInt(pageSize))) {
+                NoPage = (parseInt(parseInt(TotalRecs) / parseInt(pageSize)) + 1);
+            }
+        }
+
+        var lp = 0;//parseFloat(parseInt($('#HdnPageIndex').val()) / 5);
+        if (parseFloat(parseInt($('#HdnPageIndex').val()) % 5) == 0) {
+            lp = ((parseInt(parseInt($('#HdnPageIndex').val()) / 5) - 1) * 5);
+        } else {
+            lp = parseInt(parseInt($('#HdnPageIndex').val()) / 5) * 5;
+        }
+
+        var ind = 0;
+        for (var i = 1; i <= NoPage; i++) {
+            if ((parseInt(lp)) < i) {
+                if (parseInt($('#HdnPageIndex').val()) > 5 && $(liClone).find('li.previous').length == 0) {
+                    $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')"><a href="#">Previous</a></li>');
+                }
+                if (ind < 5) {
+                    if (i == parseInt($('#HdnPageIndex').val())) {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current">' + i + '</a></li>');
+                    } else {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')">' + i + '</a></li>');
+                    }
+                } else if ($(liClone).find('li.next').length == 0) {
+                    $(liClone).append('<li class="paginate_button next " aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')"><a href="#">Next</a></li>');
+                }
+                ind = ind + 1;
+            }
+        }
+
+
+
+    }
+
+    function backedit() {
+        window.location.href = "VendorInvoiceView?InvoiceKey=" + $("#InvoiceKey").val();
+    }
+     
+    function RefundRequest() {
+        debugger;
+        $('#loader').show();
+        var b = $("#Reason").val();
+        var a = $("#Reasondrop").val();
+
+        if (a == "3") {
+
+
+            if ($("#Reason").val() != null && $("#Reason").val() != "") {
+                var c = "Other:" + b;
+
+            }
+            else {
+                var c = $("#Reasondrop").val();
+            }
+           
+        }
+        else if (a != "3") {
+
+
+            if ($("#Reason").val() != null && $("#Reason").val() != "") {
+                var c = $("#Reasondrop").val() + " : " + b;
+            }
+            else {
+                var c = $("#Reasondrop").val();
+            }
+         
+        }
+        window.location.href = "RefundRequest?InvoiceKey=" + $("#InvoiceKey").val() + "&Reason=" + c;
+    }
+    
+
+    function LoadSortTableFill() {
+
+        debugger;
+        //debugger;
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        //$.ajax({
+        //    url: '@Url.Action("InvoiceListForVendor", "VendorInvoice")',
+        //    cache: false,
+        //    data: {
+        //        PageSize: pageSize,
+        //        PageIndex: 1,
+        //        Search: $('#txtsearch').val(),
+        //        Sort: $("#HdnSortValue").val()
+        //    },
+        //    success: function (response)
+        //    {
+        //        debugger;
+
+        //        $('.spnOfRecs').text(0);
+        //        $('.spnTotalRecs').text(0);
+        //        $('.spnToRecs').text(0);
+
+        //        if (parseInt(response.length) > 0) {
+
+        //            var curRecords = 0;
+        //            var TotalRecs = 0;
+        //            var spnToRecs = 0;
+        //            //debugger;
+        //            curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+        //            curRecords = curRecords - (pageSize - parseInt(response.length));
+        //            TotalRecs = parseInt(response[0].TotalRecords);
+        //            $('.spnOfRecs').text(curRecords);
+        //            $('.spnTotalRecs').text(TotalRecs);
+
+        //        } else {
+
+        //        }
+        //        $("#RawDatas table tbody tr:not(:first)").remove();
+        //        $("#RawDatas table tbody tr:eq(0)").show();
+        //        for (var i = 0; i < response.length; i++)
+        //        {
+        //            var a = response[i].InvoiceNo;
+
+        //            debugger;
+        //            var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+
+        //            $(".DATE", table).html(response[i].Date);
+        //            if (response[i].Amount != "$") {
+        //                $(".AMOUNT", table).html(response[i].Amount);
+
+        //            }
+        //            if (response[i].Balance != "$") {
+
+        //                $(".BALANCE", table).html(response[i].Balance);
+        //            }
+        //            $(".INVOICENO", table).html(a);
+        //            $("#viewdata", table).attr('href', '/VendorInvoice/VendorInvoiceView?InvoiceKey=' + response[i].InvoiceKey);
+
+        //            $("#RawDatas table").append(table);
+        //            spnToRecs++;
+        //        }
+        //        $("#RawDatas table tbody tr:eq(0)").hide();
+
+        //        spnToRecs = (curRecords - spnToRecs) + 1;
+        //        if (spnToRecs > 0) {
+        //            $('.spnToRecs').text(spnToRecs);
+        //        }
+        //        else {
+        //            $('.spnToRecs').text(0);
+        //        }
+        //        if (curRecords.text == "NaN")
+        //        {
+
+        //            $('.errormessage').html('Data Is Not Found.');
+        //            $('#Error').show();
+        //            $("#RawDatas table thead tr:eq(0)").hide();
+        //            $("#RawDatas table tbody tr:eq(0)").hide();
+        //        }
+        //        else
+        //        {
+        //            updatePaging(response[0].TotalRecords);
+        //            //$("#loading1").hide();
+        //        }
+        //    }
+        //});
+    }
+   
+    function CheckOther() {
+        debugger;
+        var a = $("#Reasondrop").val();
+       
+            if ($("#Reasondrop").val() == "3") {
+                $("#others").focus();
+                $("#others").show();
+        }
+
+       
+
+        }
+  
+    function LoadPagingSortTableFill(pageIndex) {
+
+        debugger;
+        //debugger;
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        $('#HdnPageIndex').val(pageIndex);
+        $.ajax({
+            url: '@Url.Action("InvoiceListForVendor", "VendorInvoice")',
+            cache: false,
+            data: {
+                PageSize: pageSize,
+                PageIndex: pageIndex,
+                Search: $('#txtsearch').val(),
+                Sort: $("#HdnSortValue").val()
+            },
+            success: function (response)
+            {
+                debugger;
+
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+                    //debugger;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+
+                } else {
+
+                }
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    var a = response[i].InvoiceNo;
+
+                    debugger;
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+
+                    $(".DATE", table).html(response[i].Date);
+                    if (response[i].Amount != "$") {
+                        $(".AMOUNT", table).html(response[i].Amount);
+
+                    }
+                    if (response[i].Balance != "$") {
+
+                        $(".BALANCE", table).html(response[i].Balance);
+                    }
+                    $(".INVOICENO", table).html(a);
+                    $("#viewdata", table).attr('href', '/VendorInvoice/VendorInvoiceView?InvoiceKey=' + response[i].InvoiceKey);
+
+                    $("#RawDatas table").append(table);
+                    spnToRecs++;
+                }
+                $("#RawDatas table tbody tr:eq(0)").hide();
+
+                spnToRecs = (curRecords - spnToRecs) + 1;s
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                }
+                if (curRecords.text == "NaN")
+                {
+
+                    $('.errormessage').html('Data Is Not Found.');
+                    $('#Error').show();
+                    $("#RawDatas table thead tr:eq(0)").hide();
+                    $("#RawDatas table tbody tr:eq(0)").hide();
+                }
+                else {
+                    updatePaging(response[0].TotalRecords);
+                    //$("#loading1").hide();
+                }
+            }
+        });
+    }
+
+
+
+
+
+      function checkPoratl()
+      {
+          debugger;
+          var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+         $.ajax({
+            url: '@Url.Action("checkPortal", "PMProperties")',
+            cache: false,
+             data:
+             {
+              PropertyKey: $('#PropertyKey').val()
+            },
+            success: function (response)
+            {
+                debugger;
+
+                if (response == false) {
+                     window.location.href = '@Url.Action("Index", "Login")';
+                }
+
+                else {
+
+                }
+
+            }
+        });
+    }
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>Invoice</h2>
+
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"style="cursor:pointer;"><a href="~/VendorInvoice/Index">Invoice</a></li>
+                <li class="breadcrumb-item active" aria-current="page" onclick="backedit();" style="cursor:pointer;">InvoiceView</li>
+                <li class="breadcrumb-item active" aria-current="page">Refund Request</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+
+        @if (TempData["Errormessage"] != null)
+        {
+            <p class="alert alert-success alert-dismissible" id="successMessage">
+                @TempData["Errormessage"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        @if (TempData["delete"] != null)
+        {
+            <p class="alert alert-danger alert-dismissible" id="successMessage">
+                @TempData["delete"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+
+        <div role="alert">
+            @*<div class="alert alert-danger" id="Error" style="display: none;margin-top: 20px;">
+                    <strong><span class="errormessage"></span></strong>
+                </div>*@
+            @if (!string.IsNullOrEmpty(Errormessage))
+            {
+                <div class="alert alert-danger" style="margin-top: 20px;">
+                    <strong><span>@Errormessage</span></strong>
+                </div>
+            }
+        </div>
+        <!-- End page-header -->
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        @Html.HiddenFor(Model => Model.InvoiceKey)
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">Amount</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-dollar tx-16 lh-0 op-6"></i>
+                                            </div>
+                                        </div> @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", @disabled = "true" } })
+
+                                    </div>
+                                </div>
+                            </div><!-- end of col -->
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="form-label">Reason</label>
+                                    <select class="form-control select2 custom-select " data-placeholder="Choose one" id="Reasondrop" onchange="CheckOther();">
+                                        <option label="Choose one"></option>
+                                        <option value="Reason 1">Reason 1</option>
+                                        <option value="Reason 2">Reason 2</option>
+                                        <option value=" Reason 3">Reason 3</option>
+                                        <option value="3">Other</option>
+                                    </select>
+                                </div>
+                            </div><!-- end of col -->
+                            <div class="col-md-4" style="display:block;" id="others">
+                                <div class="form-group">
+                                    <label class="form-label">Other</label>
+                                    @Html.EditorFor(model => model.Reason, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off" } })
+                                </div>
+                            </div>
+
+                                
+                        </div>
+                        <hr />
+
+                        <div class="button-row d-flex">
+                            <button class="btn btn-sm btn-info ml-auto js-btn-next" type="button" title="Save" onclick="RefundRequest();"><i class="si si-wallet"></i> Request Refund</button>
+                        </div>
+
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div><!--End side app-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+<!-- End app-content-->

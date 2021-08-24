@@ -1,0 +1,143 @@
+﻿@{
+    ViewBag.Title = "ViewBidrequestMore";
+    Layout = "~/Views/Shared/_VendorLayout.cshtml";
+}
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<script src="~/JSControllers/VenderBidReq.js"></script>
+<script src="~/JSControllers/LayOutMaster.js"></script>
+
+
+<link href="~/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" />
+<link href="~/Content/themes/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" />
+<link href="~/assets/plugins/fileuploads/css/dropify.min.css" rel="stylesheet" />
+<script src="~/assets/plugins/fileuploads/js/dropify.js"></script>
+<script src="~/assets/plugins/fileuploads/js/dropify-demo.js"></script>
+<script src="~/assets/plugins/fileuploads/js/dropify.min.js"></script>
+<link rel="stylesheet" href="../assets/css/cust-wizard.css">
+
+<script src="../assets/js/cust-wizard.js"></script>
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+
+<link rel="stylesheet" href="../assets/css/cust-wizard.css">
+<script src="../assets/js/cust-wizard.js"></script>
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+
+<!-- Datepicker js -->
+<script src="../assets/plugins/spectrum-date-picker/spectrum.js"></script>
+<script src="../assets/plugins/spectrum-date-picker/jquery-ui.js"></script>
+<script src="../assets/plugins/input-mask/jquery.maskedinput.js"></script>
+
+<link rel="stylesheet" href="../assets/css/cust-wizard.css">
+<script src="../assets/js/cust-wizard.js"></script>
+
+<!--Select2 js -->
+<script src="../assets/plugins/select2/select2.full.min.js"></script>
+<script src="../assets/js/select2.js"></script>
+<!--Select2 css -->
+<link href="../assets/plugins/select2/select2.min.css" rel="stylesheet" />
+
+
+<!-- Favicon -->
+<link rel="icon" href="../assets/images/brand/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" type="image/x-icon" href="../assets/images/brand/favicon.ico" />
+
+
+<!--Bootstrap.min css-->
+<link rel="stylesheet" href="../assets/plugins/bootstrap/css/bootstrap.min.css">
+
+<!-- Dashboard css -->
+<link href="../assets/css/style.css" rel="stylesheet" />
+
+<!-- Perfect scroll bar css-->
+<link href="../assets/plugins/pscrollbar/perfect-scrollbar.css" rel="stylesheet" />
+
+<!--Sidemenu css-->
+<link rel="stylesheet" href="../assets/plugins/sidemenu/sidemenu-icon.css">
+
+<!--Daterangepicker css-->
+<link href="../assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+
+<!-- Sidebar Accordions css -->
+<link href="../assets/plugins/sidemenu-responsive-tabs/css/easy-responsive-tabs.css" rel="stylesheet">
+
+<!-- Rightsidebar css -->
+<link href="../assets/plugins/sidebar/sidebar.css" rel="stylesheet">
+
+<!--News ticker css -->
+<link href="../assets/plugins/newsticker/breaking-news-ticker.css" rel="stylesheet" />
+
+<!---Font icons css-->
+<link href="../assets/plugins/webfonts/plugin.css" rel="stylesheet" />
+<link href="../assets/plugins/webfonts/icons.css" rel="stylesheet" />
+<link href="../assets/fonts/fonts/font-awesome.min.css" rel="stylesheet">
+
+<!-- Color-skins css -->
+<link id="theme" rel="stylesheet" type="text/css" media="all" href="../assets/colors/color-skins/color.css" />
+<script>
+    //$(document).ready(function () {  LoadSubmitBit($("#HdnObjectKey").val(), $("#HdnLoginResourceKey").val(), $("#hdnstartdate").val()); });
+    //function LoadSubmitBit(BidVendorKey, ResourceKey, BidStartDate) {
+    //    $("#ViewBidrequestMoreClone").html("");
+    //    var pageurl = '/VenderBidrequest/ViewBidrequestMoreClone';
+    //    var mycoc = $("#ViewBidrequestMoreClone");
+    //    mycoc.show();
+    //    mycoc.load(pageurl,
+    //        {
+    //            BidVendorKey: BidVendorKey,
+    //            ResourceKey: ResourceKey,
+    //            BidStartDate: BidStartDate
+    //        }, function (data) {
+    //            $("#pdate").html(BidStartDate);
+    //        });
+    //}
+</script>
+
+<!--sidemenu end-->
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <input id="HdnObjectKey" type="hidden" value="@ViewBag.BidVendorKey">
+    <input id="HdnLoginResourceKey" type="hidden" value="@ViewBag.ResourceKey">
+
+    <input id="hdnstartdate" type="hidden" value="@ViewBag.BidStartDate" />
+
+    <div class="side-app">
+        <div id="divalert" class="alert alert-warning" role="alert" style="display:none;">
+            <span class="alert-inner--icon"><i class="fa fa-bell faa-ring animated"></i></span>
+            <span id="ErrorMsg" class="alert-inner--text"><strong></strong> </span>
+        </div>
+        <div id="divsucces" class="alert alert-success" role="alert" style="display:none;">
+            <a href="#" style="color:#316100">
+                <i class="fa fa-gavel faa-ring animated mr-2" aria-hidden="true"></i>
+                <span id="SuccessMsg" class="alert-inner--text"><strong></strong> </span>
+            </a>
+        </div>
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="~/VenderBidrequest/BidRequests">Bid Requests</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Bid Request Detail</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+        <!-- End page-header -->
+        <div id="ViewBidrequestMoreClone"></div>
+
+
+    </div>
+    <!--End side app-->
+    <!-- Right-sidebar-->
+    <!-- End Rightsidebar-->
+    <!--footer-->
+    <!-- End Footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</div>
+<!-- End app-content-->

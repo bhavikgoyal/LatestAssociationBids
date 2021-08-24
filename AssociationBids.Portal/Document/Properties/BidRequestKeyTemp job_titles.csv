@@ -1,0 +1,2 @@
+job_code,client_num,client_short_name,loc_short_name,org_lvl1,contract_num,eff_DT,job_cat,job_title,ST_bill_rate,ST_pay_rate,OT_bill_rate,OT_pay_rate,DT_bill_rate,DT_pay_rate,PD_bill_rate,PD_pay_rate,ST_service_code,OT_serv_code,DT_serv_code,PD_serv_code,cost_code,PD_desc,Local,Shift,job_desc_without_pd
+0049001AA,454545,CALL,CALL,INPP,,,1,Cycle 6000S82520 BHI core team   ,111,111,111,111,111,111,222,222,T,222,222,222,222,222,fgfgfg,HTHGDHGDHGH,

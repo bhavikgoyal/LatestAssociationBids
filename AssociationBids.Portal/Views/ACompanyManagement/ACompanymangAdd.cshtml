@@ -1,0 +1,446 @@
+﻿@model AssociationBids.Portal.Model.CompanyModel
+@{
+    ViewBag.Title = "Add Company";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/JSControllers/Commonfunction.js"></script>
+
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item">  @Html.ActionLink("Property Management", "ACompanylist", "ACompanyManagement", null, new { })</li>
+                <li class="breadcrumb-item active" aria-current="page">Add Company</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+        <div class="alert alert-danger" id="Error" style="display:block; margin-top: 20px;">
+            <span class="errormessage"></span>
+        </div>
+        <!-- End page-header -->
+        @using (Html.BeginForm("ACompanymangAdd", "ACompanyManagement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <!--multisteps-form-->
+                        <!--progress bar-->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="multisteps-form__progress">
+                                    <button class="multisteps-form__progress-btn js-active" type="button" title="User Info">Management Company</button>
+                                    <button class="multisteps-form__progress-btn " id="btnprimary" type="button" title="Primary Contact">Primary Contact</button>
+                                    <button class="multisteps-form__progress-btn " id="btncmpnydefaults" type="button" title="Company Defaults">Company Defaults</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--form panels-->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="multisteps-form__form">
+                                    <!--single form panel-->
+                                    <div class="multisteps-form__panel p-4 rounded bg-white js-active" data-animation="scaleIn">
+                                        <div class="multisteps-form__content">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Name @Html.ValidationMessageFor(model => model.Name, "*", new { @class = "text-danger" })</label>
+                                                                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Name" } })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Legal Name</label>
+                                                                        @Html.EditorFor(model => model.LegalName, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Legal Name" } })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                            </div>
+                                                            <hr />
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Address 1 </label>
+                                                                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Address 1" } })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Address 2 </label>
+                                                                        @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Address 2" } })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">City</label>
+                                                                        @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "City" } })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">State  </label>
+                                                                        @Html.DropDownList("State", new SelectList(ViewBag.lststate, "Value", "Text"), new { @tabindex = "1", @data_rel = "Choose_one", @class = "form-control", placeholder = "Please Select..." })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Zip </label>
+                                                                        @Html.EditorFor(model => model.Zip, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Zip" } })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <hr />
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Work Phone 1 </label>
+                                                                        @Html.EditorFor(model => model.Work, new { htmlAttributes = new { @class = "form-control FormatPhoneNumber", @tabindex = "1", autocomplete = "off", placeholder = "Work Phone 1" } })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Work Phone 2 </label>
+                                                                        @Html.EditorFor(model => model.Work2, new { htmlAttributes = new { @class = "form-control FormatPhoneNumber", @tabindex = "1", autocomplete = "off", placeholder = "Work Phone 2" } })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Fax Number </label>
+                                                                        @Html.EditorFor(model => model.Fax, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Fax Number" } })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Website </label>
+                                                                        @Html.EditorFor(model => model.Website, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Website" } })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                            </div>
+                                                        </div><!-- end of card body -->
+                                                        <div class="card-footer">
+                                                            <div class="button-row d-flex">
+                                                                <button class="btn btn-info ml-auto js-btn-next" id="btnNext" type="button" title="Next">Next <i class="fe fe-chevron-right"></i></button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12 pull-right">
+                                                            </div>
+                                                        </div><!-- end of card -->
+                                                    </div><!-- end of col -->
+                                                </div><!-- end of row -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--single form panel-->
+                                    <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                                        <div class="multisteps-form__content">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Is Primary Contact</label>
+                                                                        <label class="custom-control custom-checkbox">
+                                                                            @Html.CheckBox("PrimaryContact",true, new { @class = "custom-control-input", @tabindex = "1" })
+                                                                            @*@Html.CheckBoxFor(model => model.PrimaryContact, new { @class = "custom-control-input", @tabindex = "1" })*@
+                                                                            @Html.LabelFor(model => model.PrimaryContact, new { @class = "custom-control-label" })
+                                                                        </label>
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">First Name </label>
+                                                                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Name" } })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Last Name </label>
+                                                                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Name" } })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Email @Html.ValidationMessageFor(model => model.Email, "*", new { @class = "text-danger" }) </label>
+                                                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Email" } })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Work Phone 1</label>
+                                                                        @Html.EditorFor(model => model.Work, new { htmlAttributes = new { @class = "form-control FormatPhoneNumber", @tabindex = "1", autocomplete = "off", placeholder = "Work Phone 1" } })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Work Phone 2</label>
+                                                                        @Html.EditorFor(model => model.Work2, new { htmlAttributes = new { @class = "form-control FormatPhoneNumber", @tabindex = "1", autocomplete = "off", placeholder = "Work Phone 2" } })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Cell Phone</label>
+                                                                        @Html.EditorFor(model => model.CellPhone, new { htmlAttributes = new { @class = "form-control FormatPhoneNumber", @tabindex = "1", autocomplete = "off", placeholder = "Cell Phone" } })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                            </div>
+                                                        </div><!-- end of card body -->
+                                                        <div class="card-footer">
+                                                            <div class="button-row d-flex">
+                                                                <button class="btn btn-warning js-btn-prev" type="button" title="Prev"><i class="fe fe-chevron-left"></i> Prev</button>
+                                                                <button class="btn btn-info ml-auto js-btn-next" type="button" id="btnNextt" title="Next">Next <i class="fe fe-chevron-right"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- end of card -->
+                                                </div><!-- end of col -->
+                                            </div><!-- end of row -->
+                                        </div>
+                                    </div>
+                                    <!--single form panel-->
+                                    <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                                        <div class="multisteps-form__content">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Description </label>
+                                                                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Description", @tabindex = "1" })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Days to Respons to Bid Requests</label>
+                                                                        @Html.EditorFor(model => model.BidRequestResponseDays, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", @Value = ViewBag.DefaultValue,placeholder = "Days to Respons to Bid Requests" } })
+
+
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Due to Submit Days</label>
+                                                                        @Html.EditorFor(model => model.BidSubmitDays, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", @Value = ViewBag.BidSubmitValue, placeholder = "Due to Submit Days" } })
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Bid Request Amount</label>
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-prepend">
+                                                                                <div class="input-group-text">
+                                                                                    <i class="fa fa-dollar tx-16 lh-0 op-6"></i>
+                                                                                </div>
+                                                                            </div><!-- input-group-prepend -->
+                                                                            @Html.EditorFor(model => model.BidRequestAmount, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Bid Request Amount" } })
+                                                                        </div>
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                            </div><!-- end of row -->
+                                                        </div><!-- end of card body -->
+                                                        <div class="card-footer">
+                                                            <div class="button-row d-flex">
+                                                                <button class="btn btn-warning js-btn-prev" type="button" title="Prev"><i class="fe fe-chevron-left"></i> Prev</button>
+                                                                <input class="btn btn-primary ml-auto" id="btnsubmit" type="submit" title="Save" value="Save" /><i class="fa fa-loppy-o"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- end of card -->
+                                                </div><!-- end of col -->
+                                            </div><!-- end of row -->
+                                        </div>
+                                    </div>
+                                    <!--single form panel-->
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--end of card body -->
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+    <!--End side app-->
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+    <!-- End app-content-->
+
+    <link rel="stylesheet" href="../assets/css/cust-wizard.css">
+    <script src="../assets/js/cust-wizard.js"></script>
+    <!-- Custom js-->
+    <script src="../assets/js/custom.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#loader').show();
+            $('.errormessage').html('');
+            $('#Error').hide();
+            $('#Errormanager').hide();
+            $('#loader').hide();
+            $("#AComp").closest('li').addClass('active');
+            $("#AComp1").addClass('active');
+
+            $('#PrimaryContact').prop('checked', 'checked');
+            $('#PrimaryContact').attr('disabled','disabled');
+
+             var val = '@ViewBag.ErrorMessage';
+                  if (val != "") {
+            
+                $('.errormessage').html('Email already exists');
+                 $('#Error').show(); 
+                 $('#Email').focus();
+                   }
+            $(".advance_search").click(function () {
+                $("#advancesearch3").toggle(500);
+            });
+            $(".overlayclose").click(function () {
+                $("#advancesearch3").hide();
+            });
+        });
+
+
+        function validateEmail(sEmail) {
+            var filter = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            var expr = /^[a-zA-Z0-9._]+[a-zA-Z0-9]+@@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
+            if (filter.test(sEmail)) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+        function ManagementCompanyValidation()
+        {
+            $('#Error').hide();
+            $('#loader').show();
+            $('.errormessage').html('');
+
+            if ($('#Name').val() == "") {
+                $('.errormessage').html('Please Enter Mandatory Fields.');
+                $('#Error').show();
+                $('#Name').focus();
+                $(window).scrollTop(0);
+                return false;
+            }
+            //else if ($('#State').val() == "0") {
+            //    $('.errormessage').html('Please Enter Mandatory Fields.');
+            //    $('#Error').show();
+            //    $('#State').focus();
+            //    $(window).scrollTop(0);
+            //    return false;
+            //}
+            else {
+                $('#Error').hide();
+                return true;
+            }
+            return true;
+
+        }
+
+        function PrimaryContactValidation() {
+            $('#Error').hide();
+            $('#loader').show();
+            $('.errormessage').html('');
+
+            if ($('#Email').val() == "") {
+                $('.errormessage').html('Please Enter Mandatory Fields.');
+                $('#Error').show();
+                $('#Email').focus();
+                $(window).scrollTop(0);
+                return false;
+            }
+            else if (validateEmail($('#Email').val())) {
+                $('.errormessage').html('Please Enter Valid Email.');
+                //alert("Please Enter Valid Email.");
+                $('#Error').show();
+                $('#Email').focus();
+                $(window).scrollTop(0);
+                return false;
+            }
+            else {
+                $('#Error').hide();
+                return true;
+            }
+            return true;
+        }
+
+        $("#btnNext").click(function () {
+            //function ResourceValidation(){
+            //window.location.href = 'Delete?ResourceKey=' + $("#ResourceKey").val();
+            var status = false;
+            status = ManagementCompanyValidation();
+            return status;
+        });
+
+        $("#btnNextt").click(function () {
+            var status = false;
+            status = PrimaryContactValidation();
+            return status;
+        });
+
+        $("#btnprimary").click(function () {
+            return ManagementCompanyValidation();
+        });
+
+        $("#btncmpnydefaults").click(function () {
+            var Status = false;
+            Status = ManagementCompanyValidation();
+            if (Status == true)
+            {
+                Status = PrimaryContactValidation();
+                return Status;
+            }
+            return Status;
+        });
+        $("#btnsubmit").click(function () {
+            var Status = false;
+            Status = ManagementCompanyValidation();
+            if (Status == true) {
+                Status = PrimaryContactValidation();
+                if (Status) {
+                    Status = CompanyDefaultValidation();
+                    return Status;
+                }
+                
+            }
+            $("#global-loader").show();
+        });
+        function CompanyDefaultValidation() {
+            $('.errormessage').hide();
+            var bidRes = $("#BidRequestResponseDays").val();
+            var bidSubmit = $("#BidSubmitDays").val();
+            if (bidRes <= 0) {
+                $("#BidRequestResponseDays").focus();
+                $('.errormessage').html("Please Enter Valid Bid Respond Due Date.");
+                $('.errormessage').show();
+                $('#Error').show();
+                return false;
+            }
+            else if (bidSubmit <= 0) {
+                $("#BidSubmitDays").focus();
+                $('.errormessage').html("Please Enter Valid Bid Due Date.");
+                $('.errormessage').show();
+                $('#Error').show();
+                return false;
+            }
+            return true;
+        }
+    </script>

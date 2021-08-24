@@ -1,0 +1,1629 @@
+﻿a    @model AssociationBids.Portal.Model.VendorInvoiceModal
+@{
+    ViewBag.Title = "Refund List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string Errormessage = Convert.ToString(ViewData["Errormessage"]);
+    string Sucessmessage = Convert.ToString(ViewData["Sucessmessage"]);
+
+    if (Session["PortalKey"] == null)
+    { Response.Redirect("~/", true); }
+    else if (Session["PortalKey"].ToString() == "2")
+    { Response.Redirect("~/PMDashboard/Dashboard", true); }
+    else if (Session["PortalKey"].ToString() == "3")
+    { Response.Redirect("~/VDashboard/Index", true); }
+}
+<script src="../assets/js/vendors/jquery-3.2.1.min.js"></script>
+
+
+<style>
+    div#ServiceTitle1_chosen {
+        width: 100% !important;
+    }
+
+    div#Title_chosen {
+        width: 100% !important;
+    }
+
+    .selector_ED {
+        width: auto !important;
+    }
+
+    .myFile {
+        position: relative;
+        overflow: hidden;
+        clear: left;
+        padding: 3px;
+        color: white;
+        cursor: pointer;
+    }
+
+        .myFile input[type="file"] {
+            display: block;
+            position: absolute;
+            opacity: 0;
+            font-size: 30px;
+            filter: alpha(opacity=0);
+            cursor: pointer;
+        }
+
+    input[type=file], /* FF, IE7+, chrome (except button) */
+    input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
+        cursor: pointer;
+    }
+
+
+    .chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+        background: url('../../Content/themes/cancelimg.jpg');
+    }
+
+    .chosen-select placeholder_text {
+        padding: 5px;
+    }
+
+    .Error {
+        color: red;
+    }
+    #RawDatas {
+        width: 100%;
+    }
+
+        #RawDatas th, td {
+            width: auto !important;
+        }
+    .dot {
+        height: 8px;
+        width: 8px;
+        background-color: #ff8d00;
+        border-radius: 50%;
+        display: inline-block;
+        position:absolute;
+        top:0;
+        right:4px;
+    }
+        
+</style>
+
+
+
+<h2>Vendorlist</h2>
+
+
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="../Dashboard/Dashboard">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Refund List</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+        @if (TempData["Sucessmessage"] != null)
+        {
+            <p class="alert alert-success alert-dismissible" id="successMessage">
+                @TempData["Sucessmessage"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        @if (TempData["delete"] != null)
+        {
+            <p class="alert alert-danger alert-dismissible" id="successMessage">
+                @TempData["delete"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+
+        <div role="alert">
+            <div class="alert alert-danger" id="Error" style="display: none;margin-top: 20px;">
+                <strong><span class="errormessage"></span></strong>
+            </div>
+            @if (TempData["Error"] != null && TempData["Error"].ToString() != "")
+            {
+                <div class="alert alert-danger" style="margin-top: 20px;">
+                    <strong><span>@TempData["Error"]</span></strong>
+                </div>
+            }
+        </div>
+
+        <!-- End page-header -->
+
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="btn_group_div text-left">
+                                        <input type="text" id="txtsearch" class="form-control" placeholder="Search For...">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <a class="btn btn-secondary text-white" id="btnsearch" onclick="LoadSortTableFillWithSearchForVendor()" role="button">Search</a>
+                                    @*<span class="advance_search btn_advsearch" onclick="toggle_visibility('advancesearch2');"><i class="fe fe-chevron-down"></i></span>*@
+                                </div>
+                                <div class="col-lg-3 col-xl-2" style="display: none;">
+                                    <div class="btn_group_div text-right">
+                                        <a href="map_vendors.html" class="btn btn-sm btn-info"><i class="fa fa-map-marker"></i> Show Map</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    @*<a href="~/VendorManager/VendorAdd" style="cursor:pointer;padding: 5px;margin: 3px;" class="btn btn-primary pull-right" title="Invite Vendor"><i class="fe fe-plus"></i> Invite Vendor</a>
+                                        <div class="myFile pull-right" style="padding:3px;">
+
+                                            <input type="file" title="" id="VendorFile" style="cursor:pointer" onchange="uploadFile()" />
+                                            <a class="btn btn-primary pull-right" style="cursor:pointer;padding: 5px;" title="Upload Vendor"><i class="fe fe-upload"></i> Upload Vendor</a>
+                                        </div>*@
+                                    @*<label class="myLabel">
+                                            <input type="file" required />
+                                            <span>My Label</span>
+                                        </label>*@
+
+                                    @*<div class="col-lg-5 col-xl-5">
+                                            <a href="add-vendor.html" class="btn btn-primary pull-right" style="margin-left:10px;" title="Invite Vendor">+ Invite Vendor</a>
+                                            <a href="javascript:void(0);" class="btn btn-primary pull-right" title="Upload Vendor"><i class="fe fe-upload"></i> Upload Vendor</a>
+
+                                        </div>*@
+                                </div>
+
+                            </div>
+                        </div><!-- end of form group -->
+                        @*   <div id="advancesearch3">
+                                <div class="overlayclose"><i class="fa fa-times"></i></div>
+                                <div class="overlayclose"><i class="fa fa-times"></i></div>
+                                <div class="form-group">
+                                    <div class="row">
+
+
+                                        <div class="col-md-3">
+                                            <label class="form-label">Vendor Name</label>
+                                            <input class="form-control" id="txtName" placeholder="Vendor Name" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Service</label>
+
+                                            @Html.DropDownListFor(model => model.ServiceTitle1, new SelectList(ViewBag.lstservice, "Value", "Text"), new { @class = "form-control" })
+
+
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Property</label>
+
+                                            @Html.DropDownListFor(model => model.Title, new SelectList(ViewBag.lstproperty, "Value", "Text"), new { @class = "form-control" })
+
+
+                                        </div>
+
+                                        <div class="col-lg-12 col-xl-12">
+                                            <div class="custom-controls-stacked">
+                                                <label class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" name="example-checkbox1" value="option1" checked>
+                                                    <span class="custom-control-label">Show only stared vendors</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">&nbsp;</label>
+                                            <button type="button" id="btnsearchVendor" class="btn btn-sm btn-primary btn-icon-text">
+                                                Search
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        *@
+
+
+                        <hr />
+                        <div class="modal fade" id="review" tabindex="-1" role="dialog" aria-labelledby="review" aria-hidden="true">
+                            <div class="modal-dialog modal-lg " role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="review1">Message</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+
+
+
+
+                                        <div id="message1">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="col-md-12 col-lg-12 col-xl-12  chat">
+                                                                <div class="card ">
+                                                                    <!-- card-footer -->
+                                                                    <div class="card-footer">
+                                                                        <div class="msb-reply d-flex">
+                                                                            <div class="input-group">
+                                                                                <input id="txtMessageBody" type="text" class="txtMessageBody form-control  bg-white" placeholder="Typing....">
+                                                                                <div class="input-group-append ">
+                                                                                    <button type="button" class="btn btn-sm btn-primary" onclick="return SendMessage();">
+                                                                                        Add Message
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <script src="~/JSControllers/LayOutMaster.js"></script>
+                                                                    <div id="MessageRawDatas" class="card-body msg_card_body">
+                                                                        <div id="table123" class="table123" style="display:none;">
+                                                                            <div id="DivLeftSide" class="d-flex justify-content-start  mb-4" style="display:none;">
+                                                                                <div class="img_cont_msg">
+                                                                                    <div class="rounded-circle user_img_msg namefirstletter" style="background-color:blue"></div>
+                                                                                </div>
+                                                                                <div class="msg_cotainer" style="min-width: 104px !important;">
+                                                                                    <p id="ReceiveMesg"></p>
+                                                                                    <span id="ReceiveTime" class="msg_time" style="min-width:20px;"></span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div id="DivRightSide" class="d-flex justify-content-end" style="display:none;">
+                                                                                <div class="msg_cotainer_send" style="min-width: 104px !important;">
+                                                                                    <p id="SendMesg"> </p>
+                                                                                    <span id="SendTime" class="msg_time_send" style="min-width:20px;"></span>
+                                                                                </div>
+                                                                                <div class="img_cont_msg">
+                                                                                    <div class="rounded-circle user_img_msg namefirstletter" style="background-color:green"></div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <p>@Html.HiddenFor(Model => Model.InvoiceKey)</p>
+
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div><!--end of card body -->
+                                                    </div><!--end of card -->
+                                                </div><!--end of col -->
+                                            </div><!--end of row -->
+                                        </div>
+                                        <!-- end of tab -->
+
+                                        <div class="alert alert-icon alert-warning" role="alert" style="padding-left: 2.5rem;display:none;">
+                                            <i class="fa fa-bell-o mr-2" aria-hidden="true" style="top:8px;"></i>
+                                        </div>
+
+                                    </div><!-- end of modal body -->
+                                </div>
+                            </div>
+                        </div>
+
+                       
+                        <hr />
+                        <div id="RawDatas" class="table-responsive">
+                            <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                <thead>
+                                    <tr>
+                                        <th width="100%" onclick="SortingFun('VendorName');" style="cursor: pointer;width:20% !important" class="text-left">
+
+                                            Vendor Name
+
+                                            <i id="VendorNamei" class="fa fa-sort-asc pull-right"></i>
+                                        </th>
+                                        <th width="100%" onclick="SortingFun('INVOICETYPE');" style="cursor: pointer;" class="text-center">
+
+                                            INVOICE TYPE
+
+                                            <i id="INVOICETYPEi" class="fa fa-sort-asc pull-right"></i>
+                                        </th>
+
+
+                                        <th width="100%" onclick="SortingFun('INVOICENO');" style="cursor: pointer;" class="text-left">
+
+                                            INVOICE NO
+
+                                            <i id="INVOICENOi" class="fa fa-sort-asc pull-right"></i>
+                                        </th>
+                                        <th width="100%" onclick="SortingFun('DATE');" style="cursor: pointer;" class="text-left">
+
+                                            DATE
+                                            <i id="DATEi" class="fa fa-sort-asc pull-right"></i>
+                                        </th>
+                                        <th width="100%" onclick="SortingFun('AMOUNT');" style="cursor: pointer;" class="text-left">
+
+                                            AMOUNT
+                                            <i id="AMOUNTi" class="fa fa-sort-asc pull-right"></i>
+                                        </th>
+                                        <th width="100%" onclick="SortingFun('Reason');" style="cursor: pointer;" class="text-left">
+
+                                            Reason
+                                            <i id="Reasoni" class="fa fa-sort-asc pull-right"></i>
+                                        </th>
+                                        <th width="100%" onclick="SortingFun('Status');" style="cursor: pointer;" class="text-left">
+
+                                            Status
+                                            <i id="Statusi" class="fa fa-sort-asc pull-right"></i>
+                                        </th>
+
+                                        <th width="10%" style="width:10% !important">
+                                        <th width="10%" style="width:7% !important">
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td width="100%"><span class="Vendorname"></span></td>
+                                        <td width="100%" class="text-left"><span class="Invoicetype"></span></td>
+                                        <td class="text-left"><span class="INVOICENO"></span></td>
+                                        <td class="text-left"><span class="DATE"></span></td>
+                                        <td class="text-right"><span class="AMOUNT"></span></td>
+                                        <td class="text-center"><span class="Reason"></span></td>
+                                        <td class="text-center"><span class="Status"></span></td>
+                                        <td class="text-center">
+                                            <a href="" class="font18" data-toggle="modal" id="Message" data-target="#review" style="position:relative;">
+                                            <button class="btn btn-primary">Message</button></a> @*Review Vendor*@
+                                            @*openpopup*@ 
+                                        </td>
+                                        <td class="text-center"><a id="viewdata" title="View Details" role="button"></a></td>
+                                    </tr>
+
+
+                                </tbody>
+
+
+
+
+                            </table>
+                            <div class="pull-left">
+                                <label><span class="spnToRecs">0</span> to <span class="spnOfRecs">0</span> out of <span class="spnTotalRecs">0</span>&nbsp; Records </label>
+                            </div>
+                            <div class="dataTables_paginate paging_simple_numbers" id="pagin">
+                                <ul class="pagination"></ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="pagination" style="display:none;">
+                        <input type="hidden" id="HdnSortValue" value="order by Amount asc" />
+                        <input type="hidden" id="HdnPageIndex" value="1" />
+                        <input type="hidden" id="PageSize" value="10" />
+                        <input type="hidden" id="VendorNamehdn" value="asc" />
+                        <input type="hidden" id="INVOICETYPEhdn" value="asc" />
+                        <input type="hidden" id="INVOICENOhdn" value="asc" />
+                        <input type="hidden" id="DATEhdn" value="asc" />
+                        <input type="hidden" id="AMOUNThdn" value="asc" />
+                        <input type="hidden" id="Reasonhdn" value="asc" />
+                        <input type="hidden" id="Statushdn" value="asc" />
+                        <input type="hidden" id="TotalPageRecord" value='0' />
+                        <input type="hidden" id="priorityrecord" value='true' />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--footer-->
+        <footer class="footer">
+            <div class="container">
+                <div class="row align-items-center flex-row-reverse">
+                    <div class="col-lg-12 col-sm-12   text-center">
+                        Copyright © 2020 Association Bids. All rights reserved.
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End Footer-->
+    </div><!--End side app-->
+
+
+</div>
+<!-- End app-content-->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".advance_search").click(function () {
+            $("#advancesearch3").toggle(500);
+        });
+        $(".overlayclose").click(function () {
+            $("#advancesearch3").hide();
+        });
+        
+        // $(".chosen-select").chosen();
+        $("#Error").hide();
+        $('.loader-wrapper').show();
+        LoadSortTableFill();
+
+
+        $('#divSuccess').hide();
+        //debugger;
+        //if (window.location.href.toString().includes("#msg")) {
+        //    var pvalue = getUrlParameterGlobal("data", window.location.href.toString());
+        //    if (pvalue != undefined) {
+        //        InsertData(pvalue);
+        //        $('#review').modal('show',200);
+        //    }
+        //}
+
+    });
+
+
+
+
+    function updatePaging(TotalRecs) {
+        debugger;
+        $('ul.pagination').html('');
+        var liClone = $('ul.pagination');
+        //debugger;
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        //var pageSize = $('#PageSize').val();
+        var NoPage = 1;
+        if (parseInt(TotalRecs) > parseInt(pageSize)) {
+            NoPage = parseInt(parseInt(TotalRecs) / parseInt(pageSize));
+            if (parseFloat(parseInt(parseInt(TotalRecs) / parseInt(pageSize))) < parseFloat(parseInt(TotalRecs) / parseInt(pageSize))) {
+                NoPage = (parseInt(parseInt(TotalRecs) / parseInt(pageSize)) + 1);
+            }
+        }
+
+        var lp = 0;//parseFloat(parseInt($('#HdnPageIndex').val()) / 5);
+        if (parseFloat(parseInt($('#HdnPageIndex').val()) % 5) == 0) {
+            lp = ((parseInt(parseInt($('#HdnPageIndex').val()) / 5) - 1) * 5);
+        } else {
+            lp = parseInt(parseInt($('#HdnPageIndex').val()) / 5) * 5;
+        }
+
+        var ind = 0;
+        for (var i = 1; i <= NoPage; i++) {
+            if ((parseInt(lp)) < i) {
+                if (parseInt($('#HdnPageIndex').val()) > 5 && $(liClone).find('li.previous').length == 0) {
+                    $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')"><a href="#">Previous</a></li>');
+                }
+                if (ind < 5) {
+                    if (i == parseInt($('#HdnPageIndex').val())) {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current">' + i + '</a></li>');
+                    } else {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')">' + i + '</a></li>');
+                    }
+                } else if ($(liClone).find('li.next').length == 0) {
+                    $(liClone).append('<li class="paginate_button next " aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')"><a href="#">Next</a></li>');
+                }
+                ind = ind + 1;
+            }
+        }
+
+
+
+    }
+
+
+
+
+
+
+    function LoadPagingSortTableFill(pageIndex) {
+        debugger;
+
+        $('#HdnPageIndex').val(pageIndex);
+    var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        var url1 = '';
+        if ($("#priorityrecord").val() == 'true') {
+            url1 = '@Url.Action("IndexvendorPagingRefundPriority", "VendorInvoice")';
+        }
+        else {
+            url1 = '@Url.Action("IndexvendorPagingRefund", "VendorInvoice")';
+        }
+
+        $.ajax({
+            url: url1,
+            cache: false,
+            data: {
+                PageSize: pageSize,
+                PageIndex: pageIndex,
+                Search: $('#txtsearch').val(),
+                Sort: $("#HdnSortValue").val(),
+            },
+            success: function (response) {
+                debugger;
+
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+                if (parseInt(response.length) > 0)
+                {
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+                    debugger;
+                    curRecords = parseInt((pageIndex) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+
+                }
+
+                else {
+
+                }
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+
+                for (var i = 0; i < response.length; i++) {
+                    var a = response[i].InvoiceNo;
+
+                    debugger;
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $(".Invoicetype", table).html(response[i].Description);
+                    $(".Vendorname", table).html(response[i].vendorname);
+                    $(".INVOICENO", table).html(a);
+                    $(".DATE", table).html(response[i].Date);
+                    if (response[i].Amount != "$") {
+                        $(".AMOUNT", table).html(response[i].Amount);
+
+                    }
+                    if (response[i].Status == 1) {
+                        $(".Status", table).html("Refund Processed");
+                    }
+                    if (response[i].Status == 0) {
+                        $(".Status", table).html("Pending");
+                    }
+                    $(".Reason", table).html(response[i].Reason);
+                   
+                    $("#viewdata", table).attr('href', '/VendorInvoice/RefundInvoiceView?InvoiceKey=' + response[i].InvoiceKey);
+                    if (response[i].priority == '0') {
+                        $("#viewdata", table).append('<i class="fe fe-eye font18"></i>');
+                        $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ');');
+                    }
+                    else {
+                        debugger;
+                        var ismessage = false;
+                        var isforview = false;
+                        var msgcount = 0;
+                        if (response[i].NotificationId.includes(',')) {
+                            var arr = response[i].NotificationId.split(',');
+                            var arrType = response[i].NotificationType.split(',');
+                            for (var j = 0; j < arr.length; j++) {
+                                if (isforview && arrType[j] == 'RefundReq')
+                                    break;
+
+                                if (arrType[j] == 'RefundReq') {
+                                    $("#viewdata", table).attr('onclick', 'notificationClick(' + response[i].InvoiceKey + ',"RefundReq")');
+                                    $("#viewdata", table).append('<i class="fa fa-bell faa-ring animated redtxt font18"></i>');
+                                    isforview = true;
+                                } else if (arrType[j] == 'RefundReqMsg' && !ismessage) {
+                                    $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ',"RefundReqMsg",this);');
+                                    ismessage = true;
+                                }
+                                if (arrType[j] == 'RefundReqMsg')
+                                    msgcount++;
+
+                            }
+                            if (!ismessage)
+                                $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ');');
+                            else
+                                $("#Message", table).append(' <span class="badge bg-orange noti-count">' + msgcount + '</span>');
+                            if (!isforview)
+                                $("#viewdata", table).append('<i class="fe fe-eye font18"></i>');
+                        } else {
+                            if (response[i].NotificationType == 'RefundReq') {
+                                $("#viewdata", table).attr('onclick', 'notificationClick(' + response[i].InvoiceKey + ',"RefundReq")');
+                                $("#viewdata", table).append('<i class="fa fa-bell faa-ring animated redtxt font18"></i>');
+                            } else {
+                                $("#viewdata", table).append('<i class="fe fe-eye font18"></i>');
+                            }
+                            if (response[i].NotificationType == 'RefundReqMsg') {
+                                $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ',"RefundReqMsg",this);');
+                                $("#Message", table).append(' <span class="badge bg-orange noti-count">1</span>');
+                            } else {
+                                $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ');');
+                            }
+                        }
+
+                    }
+                    $("#RawDatas table").append(table);
+                    spnToRecs++;
+                }
+
+                $("#RawDatas table tbody tr:eq(0)").hide();
+                if(response.length > 0)
+                    $("#priorityrecord").val(response[0].isPriority);
+                //alert(spnToRecs);
+                //spnToRecs = 0;
+                spnToRecs = parseInt((curRecords - spnToRecs) + 1);
+
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                }
+
+                if (curRecords.text == "NaN") {
+
+                    $('.errormessage').html('Data Is Not Found.');
+                    $('#Error').show();
+                    $("#RawDatas table thead tr:eq(0)").hide();
+                    $("#RawDatas table tbody tr:eq(0)").hide();
+                }
+                else {
+
+                    updatePaging(TotalRecs);
+
+                }
+            }
+        });
+    }
+
+    //    @*function LoadPagingSortTableFill(pageIndex)
+    //    {
+    //        debugger;
+
+    //        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+    //    $('#HdnPageIndex').val(pageIndex);
+    //    $.ajax({
+    //        url: '@Url.Action("IndexvendorPagingUnapproved", "VendorManager")',
+    //        cache: false,
+    //        data: {
+    //            PageSize: pageSize,
+    //            PageIndex: pageIndex,
+    //            Search: $('#txtsearch').val(),
+    //            Sort: $("#HdnSortValue").val()
+    //        },
+    //        success: function (response)
+    //        {
+    //            debugger;
+    //            if (parseInt(response.length) > 0) {
+
+    //                var curRecords = 0;
+    //                var TotalRecs = 0;
+    //                var spnToRecs = 0;
+    //                debugger;
+    //                curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+    //                curRecords = curRecords - (pageSize - parseInt(response.length));
+    //                TotalRecs = parseInt(response[0].TotalRecords);
+    //                $('.spnOfRecs').text(curRecords);
+    //                $('.spnTotalRecs').text(TotalRecs);
+
+    //            } else {
+
+    //            }
+    //            $("#RawDatas table tbody tr:not(:first)").remove();
+    //            $("#RawDatas table tbody tr:eq(0)").show();
+
+
+    //                for (var i = 0; i < response.length; i++) {
+    //                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+    //                    $(".name", table).html(response[i].LegalName);
+    //                    $(".work", table).html(response[i].Work);
+    //                    $(".title", table).html(response[i].Title);
+    //                    $("#viewdata", table).attr('href', '/VendorManager/UnapprovedVendorView?CompanyKey=' + response[i].CompanyKey);
+
+    //                    $("#RawDatas table").append(table);
+    //                    spnToRecs++;
+    //                }
+
+    //            $("#RawDatas table tbody tr:eq(0)").hide();
+    //            spnToRecs = (curRecords - spnToRecs) + 1;
+    //            if (spnToRecs > 0) {
+    //                $('.spnToRecs').text(spnToRecs);
+    //            }
+    //            else {
+    //                $('.spnToRecs').text(0);
+    //            }
+
+    //            if (response.length > 0)
+    //                updatePaging(response[0].TotalRecord);
+    //            $("#loading1").hide();
+    //        }
+    //    });
+    //}*@
+
+
+
+
+
+           function updatePagingsearch(TotalRecs, PageIndex) {
+
+        $('ul.pagination').html('');
+        var liClone = $('ul.pagination');
+
+            debugger;
+
+            var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+            //var pageSize = $('#PageSize').val();
+            var NoPage = 1;
+            if (parseInt(TotalRecs) > parseInt(pageSize)) {
+                NoPage = parseInt(parseInt(TotalRecs) / parseInt(pageSize));
+                if (parseFloat(parseInt(parseInt(TotalRecs) / parseInt(pageSize))) < parseFloat(parseInt(TotalRecs) / parseInt(pageSize))) {
+                    NoPage = (parseInt(parseInt(TotalRecs) / parseInt(pageSize)) + 1);
+                }
+            }
+
+            var lp = 0;//parseFloat(parseInt($('#HdnPageIndex').val()) / 5);
+        if (parseFloat(parseInt(PageIndex) % 5) == 0) {
+            lp = ((parseInt(parseInt(PageIndex) / 5) - 1) * 5);
+            }
+            else {
+            lp = parseInt(parseInt(PageIndex) / 5) * 5;
+            }
+
+            var ind = 0;
+            for (var i = 1; i <= NoPage; i++) {
+                if ((parseInt(lp)) < i) {
+                    if (parseInt(PageIndex) > 5 && $(liClone).find('li.previous').length == 0) {
+                        $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')"><a href="#">Previous</a></li>');
+                    }
+                    if (ind < 5) {
+                        if (i == parseInt(PageIndex)) {
+                            $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current">' + i + '</a></li>');
+                        } else {
+                            $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')">' + i + '</a></li>');
+                        }
+                    } else if ($(liClone).find('li.next').length == 0) {
+                        $(liClone).append('<li class="paginate_button next " aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')"><a href="#">Next</a></li>');
+                    }
+                    ind = ind + 1;
+                }
+            }
+
+
+
+    }
+
+    function LoadSortTableFillWithSearchForVendor() {
+
+      var pageSize = "10";
+        var PageIndex = "1"
+        $.ajax({
+            url: '@Url.Action("IndexvendorPagingRefund", "VendorInvoice")',
+            cache: false,
+            data: {
+                PageSize: pageSize,
+                PageIndex: PageIndex,
+                Search: $('#txtsearch').val(),
+                Sort: $("#HdnSortValue").val(),
+            },
+            success: function (response) {
+                debugger;
+
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+                    debugger;
+                    curRecords = parseInt((PageIndex) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+
+                }
+
+                else {
+
+                }
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+
+                for (var i = 0; i < response.length; i++) {
+                    var a = response[i].InvoiceNo;
+
+                    debugger;
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $(".Invoicetype", table).html(response[i].Description);
+                    $(".Vendorname", table).html(response[i].vendorname);
+                    $(".INVOICENO", table).html(a);
+                    $(".DATE", table).html(response[i].Date);
+                    if (response[i].Amount != "$") {
+                        $(".AMOUNT", table).html(response[i].Amount);
+
+                    }
+                    if (response[i].Status == 1) {
+                        $(".Status", table).html("Refund Processed");
+                    }
+                    if (response[i].Status == 0) {
+                        $(".Status", table).html("Pending");
+                    }
+                    $(".Reason", table).html(response[i].Reason);
+                    
+                    $("#viewdata", table).attr('href', '/VendorInvoice/RefundInvoiceView?InvoiceKey=' + response[i].InvoiceKey);
+                    if (response[i].priority == '0') {
+                        $("#viewdata", table).append('<i class="fe fe-eye font18"></i>');
+                        $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ');');
+                    }
+                    else {
+                        debugger;
+                        var ismessage = false;
+                        var isforview = false;
+                        var msgcount = 0;
+                        if (response[i].NotificationId.includes(',')) {
+                            var arr = response[i].NotificationId.split(',');
+                            var arrType = response[i].NotificationType.split(',');
+                            for (var j = 0; j < arr.length; j++) {
+                                if (isforview && arrType[j] == 'RefundReq')
+                                    break;
+
+                                if (arrType[j] == 'RefundReq') {
+                                    $("#viewdata", table).attr('onclick', 'notificationClick(' + response[i].InvoiceKey + ',"RefundReq")');
+                                    $("#viewdata", table).append('<i class="fa fa-bell faa-ring animated redtxt font18"></i>');
+                                    isforview = true;
+                                } else if (arrType[j] == 'RefundReqMsg' && !ismessage) {
+                                    $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ',"RefundReqMsg",this);');
+                                    ismessage = true;
+                                }
+                                if (arrType[j] == 'RefundReqMsg')
+                                    msgcount++;
+
+                            }
+                            if (!ismessage)
+                                $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ');');
+                            else
+                                $("#Message", table).append(' <span class="badge bg-orange noti-count">' + msgcount + '</span>');
+                            if (!isforview)
+                                $("#viewdata", table).append('<i class="fe fe-eye font18"></i>');
+                        } else {
+                            if (response[i].NotificationType == 'RefundReq') {
+                                $("#viewdata", table).attr('onclick', 'notificationClick(' + response[i].InvoiceKey + ',"RefundReq")');
+                                $("#viewdata", table).append('<i class="fa fa-bell faa-ring animated redtxt font18"></i>');
+                            } else {
+                                $("#viewdata", table).append('<i class="fe fe-eye font18"></i>');
+                            }
+                            if (response[i].NotificationType == 'RefundReqMsg') {
+                                $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ',"RefundReqMsg",this);');
+                                $("#Message", table).append(' <span class="badge bg-orange noti-count">1</span>');
+                            } else {
+                                $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ');');
+                            }
+
+                        }
+
+                    }
+                    $("#RawDatas table").append(table);
+                    if (response.length > 0)
+                        $("#priorityrecord").val(response[0].isPriority);
+                    spnToRecs++;
+                }
+
+                $("#RawDatas table tbody tr:eq(0)").hide();
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                    $(".pagination").show();
+                    $("#RawDatas table thead tr:eq(0)").show();
+                    updatePagingsearch(TotalRecs, PageIndex);
+                    $('#Error').hide();
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                    updatePagingsearch(TotalRecs, PageIndex);
+                    if (TotalRecs = 'undefined') {
+                        $('.errormessage').html('Data Not Found.');
+                        $('#Error').show();
+                        $("#RawDatas table thead tr:eq(0)").hide();
+                        $("#RawDatas table tbody tr:eq(0)").hide();
+                        $(".pagination").hide();
+                    }
+                }
+                debugger;
+
+
+
+                updatePagingsearch(TotalRecs, PageIndex);
+
+            }
+        });
+    }
+
+
+
+
+
+
+
+    function InsertData(InvoiceKey, datafor = '', me = null) {
+
+        debugger;
+        var me1 = me;
+        $("#InvoiceKey").val(InvoiceKey);
+        LoadMessagesList(InvoiceKey)
+        if (datafor != '')
+            notificationClick(InvoiceKey, datafor, me1)
+    }
+
+
+    function SendMessage() {
+
+        debugger;
+
+        var ObjectKey = $("#InvoiceKey").val();
+        bodytext = $("#txtMessageBody").val();
+            $.ajax({
+              url: '@Url.Action("SendInsertMessage", "VendorInvoice")',
+                cache: false,
+                data: {
+                    Body: bodytext, Status: 'New', ObjectKey: ObjectKey,  ModuleKeyName: 'Invoice'
+                },
+                success: function (response) {
+
+                    debugger;
+                    var option1 = "";
+                    LoadMessagesList(ObjectKey);
+                    $("#txtMessageBody").val(option1);
+                }
+            });
+
+    }
+
+    function LoadMessagesList(ObjectKey) {
+
+        $("#commentspm").html('');
+        debugger;
+        $.ajax({
+
+           url: '@Url.Action("SendInsertMessageList", "VendorInvoice")',
+            cache: false,
+            async: false,
+            data: {
+                ObjectKey: ObjectKey,
+                ModuleKeyName: 'Invoice',
+                UpdatemsgStatus: "1",
+            },
+            success: function (response) {
+                debugger;
+                $("#MessageRawDatas div.table123:not(:first)").remove();
+                $("#MessageRawDatas div.table123:eq(0)").show();
+                response = JSON.parse(response);
+                if (parseInt(response.length) > 0) {
+                    $("[id='MsgTab']").each(function () {
+                        $(this).val(response.length);
+                    });
+
+                    $("#MsgTab").html("Message (" + response.length + ")");
+
+                    for (var i = 0; i < response.length; i++) {
+
+                        if (response[i].NewMessagecnt !== "0") {
+                            $("#BidRequestsMenu").html("Bid Requests (" + response[i].NewMessagecnt + ")");
+                        } else { $("#BidRequestsMenu").html("Bid Requests"); }
+                        var table = $("#MessageRawDatas div.table123:eq(0)").clone(true);
+
+                        if (response[i].RightLeft === 'Right') {
+                            $("#DivRightSide", table).show();
+                            $("#DivLeftSide", table).hide();
+                            $("#DivLeftSide", table).attr("style", "display:none !important;");
+
+                            $(".namefirstletter", table).html(response[i].FirstName);
+                            $("#SendMesg", table).html(response[i].Body);
+                            $("#SendTime", table).html(response[i].SendDate + ' ' + response[i].SendTime);
+                        } else {
+                            $("#DivLeftSide", table).show();
+                            $("#DivRightSide", table).hide();
+                            $("#DivRightSide", table).attr("style", "display:none !important;");
+
+                            $(".namefirstletter", table).html(response[i].FirstName);
+                            $("#ReceiveMesg", table).html(response[i].Body);
+                            $("#ReceiveTime", table).html(response[i].SendDate + ' ' + response[i].SendTime);
+                        }
+                        //$(table).show();
+                        $("#MessageRawDatas").append(table);
+                    }
+                    // $("#MessageRawDatas table tbody tr:eq(0)").hide();
+
+
+                    // $("#message1").html('');
+                }
+                $("#MessageRawDatas div.table123:eq(0)").hide();
+                $("#commentspm").html($("#message1").html());
+                $(".loader-wrapper").hide();
+            }
+        });
+    }
+
+
+
+
+
+
+
+     function LoadSortTableFill(isSort = false) {
+     debugger;
+         var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+         var url1 = '@Url.Action("IndexvendorPagingRefundPriority", "VendorInvoice")';
+         if (isSort)
+             url1 = '@Url.Action("IndexvendorPagingRefund", "VendorInvoice")';
+        $.ajax({
+            url:url1,
+            cache: false,
+            data: {
+                PageSize: pageSize,
+                PageIndex: $('#HdnPageIndex').val(),
+                Search: $('#txtsearch').val(),
+                Sort: $("#HdnSortValue").val(),
+            },
+            success: function (response) {
+                debugger;
+
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+                    debugger;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+
+                }
+
+                else {
+
+                }
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+
+                for (var i = 0; i < response.length; i++) {
+                    var a = response[i].InvoiceNo;
+
+                    debugger;
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $(".Invoicetype", table).html(response[i].Description);
+                    $(".Vendorname", table).html(response[i].vendorname);
+                    $(".INVOICENO", table).html(a);
+                    $(".DATE", table).html(response[i].Date);
+                    if (response[i].Amount != "$") {
+                        $(".AMOUNT", table).html(response[i].Amount);
+
+                    }
+                    if (response[i].Status == 1) {
+                        $(".Status", table).html("Refund Processed");
+                    }
+                    if (response[i].Status == 0) {
+                        $(".Status", table).html("Pending");
+                    }
+                    $(".Reason", table).html(response[i].Reason);
+                    
+                    $("#viewdata", table).attr('href', '/VendorInvoice/RefundInvoiceView?InvoiceKey=' + response[i].InvoiceKey);
+                    if (response[i].priority == '0') {
+                        $("#viewdata", table).append('<i class="fe fe-eye font18"></i>');
+                        $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ');');
+                    }
+                    else {
+                        debugger;
+                        var ismessage = false;
+                        var isforview = false;
+                        var msgcount = 0;
+                        if (response[i].NotificationId.includes(',')) {
+                            var arr = response[i].NotificationId.split(',');
+                            var arrType = response[i].NotificationType.split(',');
+                            for (var j = 0; j < arr.length; j++) {
+                                if (isforview && arrType[j] == 'RefundReq')
+                                    break;
+
+                                if (arrType[j] == 'RefundReq') {
+                                    $("#viewdata", table).attr('onclick', 'notificationClick(' + response[i].InvoiceKey + ',"RefundReq")');
+                                    $("#viewdata", table).append('<i class="fa fa-bell faa-ring animated redtxt font18"></i>');
+                                    isforview = true;
+                                } else if (arrType[j] == 'RefundReqMsg' && !ismessage) {
+                                    $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ',"RefundReqMsg",this);');
+                                    ismessage = true;
+                                }
+                                if (arrType[j] == 'RefundReqMsg')
+                                    msgcount++;
+
+                            }
+                            if (!ismessage)
+                                $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ');');
+                            else
+                                $("#Message", table).append(' <span class="badge bg-orange noti-count">' + msgcount + '</span>');
+                            if (!isforview)
+                                $("#viewdata", table).append('<i class="fe fe-eye font18"></i>');
+                        } else {
+                            if (response[i].NotificationType == 'RefundReq') {
+                                $("#viewdata", table).attr('onclick', 'notificationClick(' + response[i].InvoiceKey + ',"RefundReq")');
+                                $("#viewdata", table).append('<i class="fa fa-bell faa-ring animated redtxt font18"></i>');
+                            } else {
+                                $("#viewdata", table).append('<i class="fe fe-eye font18"></i>');
+                            }
+                            if (response[i].NotificationType == 'RefundReqMsg') {
+                                $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ',"RefundReqMsg",this);');
+                                $("#Message", table).append(' <span class="badge bg-orange noti-count">1</span>');
+                            } else {
+                                $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ');');
+                            }
+                        }
+
+                    }
+                    $("#RawDatas table").append(table);
+                    if (response.length > 0)
+                        $("#priorityrecord").val(response[0].isPriority);
+                    spnToRecs++;
+                }
+
+                $("#RawDatas table tbody tr:eq(0)").hide();
+                //alert(spnToRecs);
+                //spnToRecs = 0;
+                spnToRecs = parseInt((curRecords - spnToRecs) + 1);
+
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                    $(".pagination").show();
+                    $('#Error').hide();
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                    updatePaging(TotalRecs);
+                    if (TotalRecs = 'undefined') {
+                        $('.errormessage').html('Data Is Not Found.');
+                        $('#Error').show();
+                        $("#RawDatas table thead tr:eq(0)").hide();
+                        $("#RawDatas table tbody tr:eq(0)").hide();
+                        $(".pagination").hide();
+                    }
+                }
+
+
+                    updatePaging(TotalRecs);
+
+
+            }
+        });
+    }
+
+
+
+    function SortingFun(val) {
+
+        $('#HdnPageIndex').val('1');
+        var Sort = $('#SortValue').val();
+        debugger;
+        var ascdesc = 'fa-sort-asc';
+        var ascdesc1 = 'fa-sort-desc';
+        var ascdesc3 = 'fa-sort-asc';
+        var ascdesc4 = 'fa-sort-desc';
+
+        $('.loader-wrapper').show();
+        var Sort = '';
+        $('#HdnPageIndex').val('1');
+        $('#VendorNamei').removeClass(ascdesc4);
+        $('#VendorNamei').addClass(ascdesc3);
+
+        $('#INVOICETYPEi').removeClass(ascdesc4);
+        $('#INVOICETYPEi').addClass(ascdesc3);
+
+        $('#INVOICENOi').removeClass(ascdesc4);
+        $('#INVOICENOi').addClass(ascdesc3);
+
+        $('#DATEi').removeClass(ascdesc4);
+        $('#DATEi').addClass(ascdesc3);
+
+        $('#AMOUNTi').removeClass(ascdesc4);
+        $('#AMOUNTi').addClass(ascdesc3);
+
+        $('#Reasoni').removeClass(ascdesc4);
+        $('#Reasoni').addClass(ascdesc3);
+
+        $('#Statusi').removeClass(ascdesc4);
+        $('#Statusi').addClass(ascdesc3);
+        debugger;
+        //-----------------------------------------------------------
+        if (val == 'VendorName') {
+            if ($('#VendorNamehdn').val() == 'asc') {
+                Sort = 'order by r.firstname desc';
+                $('#VendorNamehdn').val('desc');
+                $('#VendorNamei').removeClass(ascdesc3);
+                $('#VendorNamei').addClass(ascdesc4);
+            }
+            else {
+                Sort = 'order by r.firstname asc';
+                $('#VendorNamehdn').val('asc');
+                $('#VendorNamei').removeClass(ascdesc4);
+                $('#VendorNamei').addClass(ascdesc3);
+            }
+        }
+        //-----------------------------------------------------------
+        if (val == 'INVOICETYPE') {
+            if ($('#INVOICETYPEhdn').val() == 'asc') {
+                Sort = 'order by ln.Description desc';
+                $('#INVOICETYPEhdn').val('desc');
+                $('#INVOICETYPEi').removeClass(ascdesc3);
+                $('#INVOICETYPEi').addClass(ascdesc4);
+            }
+            else {
+                Sort = 'order by ln.Description asc';
+                $('#INVOICETYPEhdn').val('asc');
+                $('#INVOICETYPEi').removeClass(ascdesc4);
+                $('#INVOICETYPEi').addClass(ascdesc3);
+            }
+        }
+        INVOICETYPEhdn
+        //-----------------------------------------------------------
+        if (val == 'INVOICENO') {
+            if ($('#INVOICENOhdn').val() == 'asc') {
+                Sort = 'order by n.ReferenceNumber desc';
+                $('#INVOICENOhdn').val('desc');
+                $('#INVOICENOi').removeClass(ascdesc3);
+                $('#INVOICENOi').addClass(ascdesc4);
+            }
+            else {
+                Sort = 'order by n.ReferenceNumber asc';
+                $('#INVOICENOhdn').val('asc');
+                $('#INVOICENOi').removeClass(ascdesc4);
+                $('#INVOICENOi').addClass(ascdesc3);
+            }
+        }
+
+        //-------------------------------------------------
+        if (val == 'DATE') {
+            if ($('#DATEhdn').val() == 'asc') {
+                Sort = 'order by n.TransactionDate desc';
+                $('#DATEhdn').val('desc');
+                $('#DATEi').removeClass(ascdesc);
+                $('#DATEi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by n.TransactionDate asc';
+                $('#DATEhdn').val('asc');
+                $('#DATEi').removeClass(ascdesc1);
+                $('#DATEi').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------------
+        if (val == 'AMOUNT') {
+            if ($('#AMOUNThdn').val() == 'asc') {
+                Sort = 'order by n.RefundAmount desc';
+                $('#AMOUNThdn').val('desc');
+                $('#AMOUNTi').removeClass(ascdesc);
+                $('#AMOUNTi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by n.RefundAmount asc';
+                $('#AMOUNThdn').val('asc');
+                $('#AMOUNTi').removeClass(ascdesc1);
+                $('#AMOUNTi').addClass(ascdesc);
+            }
+        }
+        if (val == 'Reason') {
+            if ($('#Reasonhdn').val() == 'asc') {
+                Sort = 'order by n.Reason desc';
+                $('#Reasonhdn').val('desc');
+                $('#Reasoni').removeClass(ascdesc);
+                $('#Reasoni').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by n.Reason asc';
+                $('#Reasonhdn').val('asc');
+                $('#Reasoni').removeClass(ascdesc1);
+                $('#Reasoni').addClass(ascdesc);
+            }
+        }
+
+        if (val == 'Status') {
+            if ($('#Statushdn').val() == 'asc') {
+                Sort = 'order by n.MarkAsRefund desc';
+                $('#Statushdn').val('desc');
+                $('#Statusi').removeClass(ascdesc);
+                $('#Statusi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by n.MarkAsRefund asc';
+                $('#Statushdn').val('asc');
+                $('#Statusi').removeClass(ascdesc1);
+                $('#Statusi').addClass(ascdesc);
+            }
+        }
+
+
+        $("#HdnSortValue").val(Sort);
+        //alert($("#HdnSortValue").val());
+        $('.loader-wrapper').show();
+        LoadSortTableFill(true);
+    }
+
+
+
+
+    function LoadSortTableFillWithSearch() {
+
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+
+        var txtName = $('#txtName').val();
+
+
+
+        $.ajax({
+            url: '/VendorInvoice/IndexvendorPagingRefund',
+            cache: false,
+            data: {
+                PageSize: pageSize,
+                PageIndex: $('#HdnPageIndex').val(),
+                Search: txtName,
+                Sort: $("#HdnSortValue").val()
+            },
+            success: function (response) {
+
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+
+                if (response.length > 0) {
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+
+                    debugger;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                }
+                else {
+                    $('.spnOfRecs').text(0);
+                    $('.spnTotalRecs').text(0);
+                }
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+
+                    for (var i = 0; i < response.length; i++) {
+                        var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                        $(".Invoicetype", table).html(response[i].Description);
+                        $(".Vendorname", table).html(response[i].vendorname);
+                        $(".INVOICENO", table).html(a);
+                        $(".DATE", table).html(response[i].Date);
+                        if (response[i].Amount != "$") {
+                            $(".AMOUNT", table).html(response[i].Amount);
+
+                        }
+                        if (response[i].Status == 1) {
+                            $(".Status", table).html("Refund Processed");
+                        }
+                        if (response[i].Status == 0) {
+                            $(".Status", table).html("Pending");
+                        }
+                        $(".Reason", table).html(response[i].Reason);
+                        
+                        $("#viewdata", table).attr('href', '/VendorInvoice/RefundInvoiceView?InvoiceKey=' + response[i].InvoiceKey);
+                        if (response[i].priority == '0') {
+                            $("#viewdata", table).append('<i class="fe fe-eye font18"></i>');
+                            $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ');');
+                        }
+                        else {
+                            debugger;
+                            var ismessage = false;
+                            var isforview = false;
+                            var msgcount = 0;
+                            if (response[i].NotificationId.includes(',')) {
+                                var arr = response[i].NotificationId.split(',');
+                                var arrType = response[i].NotificationType.split(',');
+                                for (var j = 0; j < arr.length; j++) {
+                                    if (isforview && arrType[j] == 'RefundReq')
+                                        break;
+
+                                    if (arrType[j] == 'RefundReq') {
+                                        $("#viewdata", table).attr('onclick', 'notificationClick(' + response[i].InvoiceKey + ',"RefundReq")');
+                                        $("#viewdata", table).append('<i class="fa fa-bell faa-ring animated redtxt font18"></i>');
+                                        isforview = true;
+                                    } else if (arrType[j] == 'RefundReqMsg' && !ismessage) {
+                                        $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ',"RefundReqMsg",this);');
+                                        ismessage = true;
+                                    }
+                                    if (arrType[j] == 'RefundReqMsg')
+                                        msgcount++;
+
+                                }
+                                if (!ismessage)
+                                    $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ');');
+                                else
+                                    $("#Message", table).append(' <span class="badge bg-orange noti-count">' + msgcount + '</span>');
+                                if (!isforview)
+                                    $("#viewdata", table).append('<i class="fe fe-eye font18"></i>');
+                            } else {
+                                if (response[i].NotificationType == 'RefundReq') {
+                                    $("#viewdata", table).attr('onclick', 'notificationClick(' + response[i].InvoiceKey + ',"RefundReq")');
+                                    $("#viewdata", table).append('<i class="fa fa-bell faa-ring animated redtxt font18"></i>');
+                                } else {
+                                    $("#viewdata", table).append('<i class="fe fe-eye font18"></i>');
+                                }
+                                if (response[i].NotificationType == 'RefundReqMsg') {
+                                    $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ',"RefundReqMsg",this);');
+                                    $("#Message", table).append(' <span class="badge bg-orange noti-count">1</span>');
+                                } else {
+                                    $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ');');
+                                }
+                            }
+
+                        }
+                        $("#RawDatas table").append(table);
+                        if (response.length > 0)
+                            $("#priorityrecord").val(response[0].isPriority);
+                        spnToRecs++;
+                    }
+
+                $("#RawDatas table tbody tr:eq(0)").hide();
+
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                        $('.spnToRecs').text(spnToRecs);
+                    }
+                    else {
+                        $('.spnToRecs').text(0);
+                    }
+
+
+                    if (curRecords.text == "NaN") {
+
+                        $('.errormessage').html('Data Is Not Found.');
+                        $('#Error').show();
+                        $("#RawDatas table thead tr:eq(0)").hide();
+                        $("#RawDatas table tbody tr:eq(0)").hide();
+                    }
+                    else {
+                        updatePaging(TotalRecs);
+                    }
+            }
+        });
+    }
+
+
+
+    function OnSuccess(response) {
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        debugger;
+        if (parseInt(response.length) > 0) {
+            var curRecords = 0;
+            var TotalRecs = 0;
+            var spnToRecs = 0;
+
+            debugger;
+            curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+            curRecords = curRecords - (pageSize - parseInt(response.length));
+            TotalRecs = parseInt(response[0].TotalRecords);
+            $('.spnOfRecs').text(curRecords);
+            $('.spnTotalRecs').text(TotalRecs);
+        }
+        else {
+        }
+
+        $("#RawDatas table tbody tr:not(:first)").remove();
+        $("#RawDatas table tbody tr:eq(0)").show();
+
+            for (var i = 0; i < response.length; i++) {
+                var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                $(".Invoicetype", table).html(response[i].Description);
+                $(".Vendorname", table).html(response[i].vendorname);
+                $(".INVOICENO", table).html(a);
+                $(".DATE", table).html(response[i].Date);
+                if (response[i].Amount != "$") {
+                    $(".AMOUNT", table).html(response[i].Amount);
+
+                }
+                if (response[i].Status == true) {
+                    $(".Status", table).html("Refund Processed");
+
+                }
+                if (response[i].Status == false) {
+                    $(".Status", table).html("Pending");
+                }
+                $(".Reason", table).html(response[i].Reason);
+                
+                $("#viewdata", table).attr('href', '/VendorInvoice/RefundInvoiceView?InvoiceKey=' + response[i].InvoiceKey);
+                if (response[i].priority == '0') {
+                    $("#viewdata", table).append('<i class="fe fe-eye font18"></i>');
+                    $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ');');
+                }
+                else {
+                    debugger;
+                    var ismessage = false;
+                    var isforview = false;
+                    var msgcount = 0;
+                    if (response[i].NotificationId.includes(',')) {
+                        var arr = response[i].NotificationId.split(',');
+                        var arrType = response[i].NotificationType.split(',');
+                        for (var j = 0; j < arr.length; j++) {
+                            if (isforview && arrType[j] == 'RefundReq')
+                                break;
+
+                            if (arrType[j] == 'RefundReq') {
+                                $("#viewdata", table).attr('onclick', 'notificationClick(' + response[i].InvoiceKey + ',"RefundReq")');
+                                $("#viewdata", table).append('<i class="fa fa-bell faa-ring animated redtxt font18"></i>');
+                                isforview = true;
+                            } else if (arrType[j] == 'RefundReqMsg' && !ismessage) {
+                                $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ',"RefundReqMsg",this);');
+                                ismessage = true;
+                            }
+                            if (arrType[j] == 'RefundReqMsg')
+                                msgcount++;
+
+                        }
+                        if (!ismessage)
+                            $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ');');
+                        else
+                            $("#Message", table).append(' <span class="badge bg-orange noti-count">' + msgcount + '</span>');
+                        if (!isforview)
+                            $("#viewdata", table).append('<i class="fe fe-eye font18"></i>');
+                    } else {
+                        if (response[i].NotificationType == 'RefundReq') {
+                            $("#viewdata", table).attr('onclick', 'notificationClick(' + response[i].InvoiceKey + ',"RefundReq")');
+                            $("#viewdata", table).append('<i class="fa fa-bell faa-ring animated redtxt font18"></i>');
+                        } else {
+                            $("#viewdata", table).append('<i class="fe fe-eye font18"></i>');
+                        }
+                        if (response[i].NotificationType == 'RefundReqMsg') {
+                            $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ',"RefundReqMsg",this);');
+                            $("#Message", table).append(' <span class="badge bg-orange noti-count">1</span>');
+                        } else {
+                            $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ');');
+                        }
+                    }
+
+                }
+                $("#RawDatas table").append(table);
+                if (response.length > 0)
+                    $("#priorityrecord").val(response[0].isPriority);
+                spnToRecs++;
+            }
+
+        $("#RawDatas table tbody tr:eq(0)").hide();
+
+        spnToRecs = (curRecords - spnToRecs) + 1;
+        if (spnToRecs > 0) {
+            $('.spnToRecs').text(spnToRecs);
+        }
+        else {
+            $('.spnToRecs').text(0);
+        }
+
+
+            if (curRecords.text == "NaN") {
+
+                $('.errormessage').html('Data Is Not Found.');
+                $('#Error').show();
+                $("#RawDatas table thead tr:eq(0)").hide();
+                $("#RawDatas table tbody tr:eq(0)").hide();
+            }
+            else {
+                updatePaging(TotalRecs);
+
+            }
+    }
+    function notificationClick(nid, type,me) {
+        debugger;
+        $.ajax({
+            url: '/ABNotification/NotificationUpdate',
+            cache: false,
+            data: {
+                NotiId: nid,
+                Status: 'read',
+                NotiType: type,
+                ByObj: true
+            },
+            success: function (response) {
+                if (me != null && response == true) {
+                    debugger;
+                    $(".noti-count", me).animate({ height: '0px', width: '0px',opacity:'0.0'},2000, function () {
+                        $(".noti-count", me).remove()
+                    });
+                    $(".header-notify").load("/ABNotification/Notification");
+                }
+            }
+        });
+    }
+</script>

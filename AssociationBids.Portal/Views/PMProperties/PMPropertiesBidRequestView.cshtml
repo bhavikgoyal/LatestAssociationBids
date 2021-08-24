@@ -1,0 +1,676 @@
+﻿@model AssociationBids.Portal.Model.PropertyModel
+@{
+    ViewBag.Title = "Porperty BidRequestv Details";
+    Layout = "~/Views/Shared/_PropertyManagerLayout.cshtml";
+
+    string Errormessage = Convert.ToString(ViewData["Errormessage"]);
+}
+@using System.Text.RegularExpressions;
+
+@helper StripHTML(string input)
+{
+    if (!string.IsNullOrEmpty(input))
+    {
+        input = Regex.Replace(input, "<.*?>", String.Empty);
+        <span>@input</span>
+    }
+}
+        <h2>BidRequest Details</h2>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+
+<!--sidemenu end-->
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item active" aria-current="page"><a href="PMPropertiesList">Properties</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Property Details</li>
+                <li class="breadcrumb-item active" aria-current="page">BidRequest Details</li>
+            </ol><!-- End breadcrumb -->
+
+        </div>
+        <!-- End page-header -->
+        @*<div class="row">
+            <div class="button-row d-flex mt-4">
+                <a onclick=" EditPage();" class="btn btn-primary ml-auto  pull-right" title="Edit"><i class="fa fa-pencil"></i> Edit</a>
+            </div>
+        </div>*@
+
+
+        @*<div class="button-row d-flex mt-4">
+            <a href="@Request.UrlReferrer" class="btn btn-default" title="Cancel">Cancel</a>
+        </div>*@
+        <!-- end of form-div  -->
+        <div class="row">
+            @Html.HiddenFor(Modal => Modal.PropertyKey)
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Bid Details</h3>
+                        <div class="card-options">
+                            <a href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-body border-top">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="form-label">Service:</label>
+                                    @Html.DisplayFor(item => Model.ServiceTitle)
+                                </div>
+                            </div><!-- end of col -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="form-label">Title:</label>
+                                    @Html.DisplayFor(item => Model.Title)
+                                </div>
+                            </div><!-- end of col -->
+                            <div class="col-md-3 ">
+                                <div class="form-group">
+                                    <label class="form-label">Response Date:</label>
+                                    <h3 class="mb-3 font-weight-semibold"> @Html.DisplayFor(item => item.sstartddate)</h3>
+                                </div>
+                            </div><!-- end of col -->
+                            <div class="col-md-3 ">
+                                <div class="form-group">
+                                    <label class="form-label">Bid Due Date:</label>
+                                    <h3 class="mb-3 font-weight-semibold"> @Html.DisplayFor(item => item.BidDueDate)</h3>
+                                </div>
+                            </div><!-- end of col -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">Description:</label>
+                                    @Html.DisplayFor(item => item.Description)
+                                </div>
+                            </div><!-- end of col -->
+                        </div><!-- end of row -->
+
+                    </div><!--end of card body -->
+                </div><!--end of card -->
+            </div><!--end of col -->
+        </div><!--end of row -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-header">
+                        <h3 class="card-title">Photo</h3>
+
+                        <div class="popback" style="height:auto;width:70%; background-color:whitesmoke;position:absolute;top:50px; left:170px; z-index:100;padding-bottom: 31px; ">
+                            <button type="button" class="btn btn-md btn-danger closepop pull-right" style=" font-size:10px;" onclick="myclick()" id="btnclose">&times;</button>
+                            <ul id="mycarousel" class="jcarousel-skin-tango">
+                                @foreach (string image in Model.img)
+                                {
+                                <li>
+                                    <img alt="" src='@image' />
+                                </li>
+                                }
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="card-body border-top">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+
+                                    @foreach (var images in Model.img)
+                                    {
+
+                                        if (images == null)
+
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            <a target="_blank" href="@Url.Content(images)" class="" style="cursor: pointer;text-decoration:none;">
+
+
+                                                <img src="@Url.Content(images)" alt="Hejsan" style="width:200px; padding-top:26px; padding-left:26px; cursor:pointer;" />
+
+                                            </a>
+                                        }
+
+                                    }
+
+
+                                </div><!--end of row -->
+                            </div><!-- end of col -->
+
+                        </div><!-- end of row -->
+
+                    </div><!-- card body end -->
+                </div><!-- card end -->
+            </div><!-- col end -->
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Documents</h3>
+                        <div class="card-options">
+                            
+                            <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                        </div>
+                    </div>
+                    <div class="card-body border-top">
+                        <div class="table-responsive" id="divFileUploader">
+                            <table id="dataTableExample" class="table table-striped table-bordered w-100 dataTable no-footer">
+                                <thead>
+                                    <tr>
+                                        <th> Documents</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="upd-fl"></span></td>
+                                       
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div><!-- end of table responsive -->
+                        <!-- end Modal -->
+                    </div><!--end of card body -->
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="ServiceVendorViewp" style="display:block;">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Vendors</h3>
+                        <div class="card-options">
+                            <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                            @Html.HiddenFor(model => model.BidRequestKey)
+
+                            @Html.HiddenFor(model => model.ServiceKey)
+
+                            @Html.HiddenFor(model => model.Description)
+                            @Html.HiddenFor(model => model.ResourceKey)
+                        </div>
+                    </div>
+
+                    <div class="card-body border-top">
+                        <div class="table-responsive" id="ServiceVendorView">
+                            <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                <thead>
+                                    <tr>
+                                        <th>Vendor Name</th>
+                                        <th>Response Due date</th>
+                                        <th>Bid Amount</th>
+                                        <th>Status</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <span class="vVendorName"><i class="fa fa-star greentxt"></i></span>
+                                            <input type="hidden" class="bidvendorkey" id="bidvendorkey" value="" />
+                                        </td>
+                                        <td><span class="vResponseDueDate"></span></td>
+                                        <td><span class="vBidAmount"></span></td>
+                                        <td><span class="badge badge-primary  mr-1 mb-1 mt-1 vStatus">Pending</span></td>
+                                        <td><a href="" data-toggle="modal" onclick="openpopup();" id="viewreview" style="display:none;" data-target="#review"><i class="fe fe-eye"></i> Review Vendor</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <div class="modal fade" id="review" tabindex="-1" role="dialog" aria-labelledby="review" aria-hidden="true">
+                            <div class="modal-dialog modal-lg " role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="review1">Review Bid Request Detail</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-md-12 pull-right text-right">
+                                                <button class="btn btn-primary" type="button" title="Accept" value="Acceptp" id="btnAccept" data-dismiss="modal"><i class="fe fe-check"></i> Accept</button>
+                                                <button class="btn btn-danger" type="button" title="Reject" value="Rejectp" id="btnReject" data-dismiss="modal"><i class="fa fa-times"></i> Reject</button>
+                                            </div><!-- end of col -->
+                                        </div>
+                                        <hr />
+                                        <div class="tabs-menu1 ">
+                                            <!-- Tabs -->
+                                            <ul class="nav panel-tabs">
+                                                <li class=""><a href="#biddetail" class="active" data-toggle="tab">Bid Details</a></li>
+
+                                            </ul>
+                                        </div>
+                                        <div class="tab-content">
+                                            <div class="tab-pane active " id="biddetail">
+                                                @*<div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Bid Amount</label>
+                                                                            <div class="input-group">
+                                                                                <div class="input-group-prepend">
+                                                                                    <div class="input-group-text">
+                                                                                        <i class="fa fa-dollar tx-16 lh-0 op-6"></i>
+                                                                                    </div>
+                                                                                </div><input id="vBidAmountp" class="form-control" readonly placeholder="0.00" type="text">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div><!-- end of col -->
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Added On:</label>
+                                                                            <p id="vAddedOnp"></p>
+                                                                        </div>
+                                                                    </div><!-- end of col -->
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Description:</label>
+                                                                            <p id="vDescriptionp"></p>
+                                                                        </div>
+                                                                    </div><!-- end of col -->
+                                                                </div><!-- end of row -->
+                                                            </div><!--end of card body -->
+                                                        </div><!--end of card -->
+                                                    </div><!--end of col -->
+                                                </div><!--end of row -->*@
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="card-title">Vendor Information</h3>
+                                                                <div class="card-options">
+                                                                    <a href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body border-top">
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Company:</label>
+                                                                            <p id="vCompanyp"></p>
+                                                                        </div>
+                                                                    </div><!-- end of col -->
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Contact Person:</label>
+                                                                            <p id="vContactPersonp"></p>
+                                                                        </div>
+                                                                    </div><!-- end of col -->
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Work Phone 1</label>
+                                                                            <p id="vWorkPhone1p"></p>
+                                                                        </div>
+                                                                    </div><!-- end of col -->
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Work Phone 2</label>
+                                                                            <p id="vWorkPhone2p"></p>
+                                                                        </div>
+                                                                    </div><!-- end of col -->
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Fax</label>
+                                                                            <p id="vfaxp"></p>
+                                                                        </div>
+                                                                    </div><!-- end of col -->
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Email</label>
+                                                                            <p id="vEmailp"></p>
+                                                                        </div>
+                                                                    </div><!-- end of col -->
+
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Address 1:</label>
+                                                                            <p id="vAddress1p"></p>
+                                                                        </div>
+                                                                    </div><!-- end of col -->
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Address 2:</label>
+                                                                            <p id="vAddress2p"></p>
+                                                                        </div>
+                                                                    </div><!-- end of col -->
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">City:</label>
+                                                                            <p id="vCityp"></p>
+                                                                        </div>
+                                                                    </div><!-- end of col -->
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">State:</label>
+                                                                            <p id="vStatep"></p>
+                                                                        </div>
+                                                                    </div><!-- end of col -->
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Zip:</label>
+                                                                            <p id="vZipp"></p>
+                                                                        </div>
+                                                                    </div><!-- end of col -->
+                                                                </div><!-- end of row -->
+                                                            </div><!--end of card body -->
+                                                        </div><!--end of card -->
+                                                    </div><!--end of col -->
+                                                </div><!--end of row -->
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="card">
+                                                            <div class="card-header">
+                                                                <h3 class="card-title">Insurance</h3>
+                                                                <div class="card-options">
+                                                                    <a href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body border-top">
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Insurance Expiry Date:</label>
+                                                                            <p id="vInsuranceExpiryDatep"></p>
+                                                                        </div>
+                                                                    </div><!-- end of col -->
+                                                                    <div class="col-md-4">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Insurance Amount:</label>
+                                                                            <p id="vInsuranceAmountp"></p>
+                                                                        </div>
+                                                                    </div><!-- end of col -->
+                                                                </div><!-- end of row -->
+                                                            </div><!--end of card body -->
+                                                        </div><!--end of card -->
+                                                    </div><!--end of col -->
+                                                </div><!--end of row -->
+                                            </div><!-- end of tab -->
+
+                                        </div><!-- end of tab content -->
+                                        @*<div class="alert alert-icon alert-warning" role="alert" style="padding-left: 2.5rem;">
+                                            <i class="fa fa-bell-o mr-2" aria-hidden="true" style="top:8px;"></i>NOTE: This alert needs your attention, but it's not super important.
+                                        </div>*@
+
+                                    </div><!-- end of modal body -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--end Modal-->
+                        <!-- Modal -->
+                        <!--end Modal-->
+                    </div><!--end of card body -->
+                </div>
+            </div>
+        </div>
+
+
+    </div><!--end of card body -->
+              
+  
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+<!-- Custom js-->
+<script src="../assets/js/custom.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#EmailT").closest('li').addClass('active');
+        $("#EmailT1").addClass('active');
+        $(".popback").hide();
+        $(".fullblack").hide();
+        $(".advance_search").click(function () {
+            $("#advancesearch3").toggle(500);
+        });
+        debugger;
+       
+            bindDocument();
+        
+            bindDocumentWork();
+       
+       
+        BindVendor();
+        $(".overlayclose").click(function () {
+            $("#advancesearch3").hide();
+        });
+    });
+    function EditPage() {
+
+        window.location.href = 'EmailTemplateEdit?EmailTemplateKey=' + $("#EmailTemplateKey").val();
+
+    }
+
+
+
+     function BindVendor()
+       {
+        //alert("bindserviceVendorKey " + a);
+        var formData = new FormData();
+        var a = $("#BidRequestKey").val();
+        formData.append("BidRequestKey", a);
+        formData.append("Modulekey", 100);
+        //alert("Bind Service After FormData");
+       debugger;
+
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("SearchVendorByBidRequest", "PMProperties")',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.length > 0)
+                {
+                    debugger;
+                    $("#ServiceVendorViewp").show();
+                    $("#ServiceVendorView table tbody tr:not(:first)").remove();
+                    $("#ServiceVendorView table tbody tr:eq(0)").show();
+                    for (var i = 0; i < response.length; i++) {
+                        var cln = $("#ServiceVendorView table tbody tr:eq(0)").clone(true);
+                        //alert("title = " + response[i].ServiceTitle);
+                        $(".vVendorName", cln).html(response[i].ContactPerson);
+                        $(".vResponseDueDate", cln).html(response[i].ResponseDueDates);
+                        $(".vBidAmount", cln).html(response[i].BidAmount);
+                        $(".vStatus", cln).html(response[i].BidReqStatus);
+                        $(".bidvendorkey", cln).val(response[i].BidVendorKey);
+                       
+                        if (response[i].BidReqStatus == "In Progress")
+                        {
+                            $("#viewreview").hide();
+                        }
+                        else
+                        {
+                            $("#viewreview").show();
+                        }  
+                        $("#viewreview", cln).attr('onclick', 'return openpopup("' + response[i].BidVendorKey + '","' + response[i].BidAmount + '","' + response[i].BidReqStatus + '","' + response[i].ResponseDueDates + '")');
+
+                        $("#ServiceVendorView table").append(cln);
+                    }
+                    $("#ServiceVendorView table tbody tr:eq(0)").hide();
+                }
+                else
+                {
+                    $("#ServiceVendorViewp").hide();
+                }
+                
+                
+            }
+        });
+    }
+
+
+     function openpopup(BidVendorKey, BidAmount, BidReqStatus, ResponseDueDates) {
+
+        debugger;
+       
+        $("#btnAccept").hide();
+        $("#btnReject").hide();
+        if (BidReqStatus == "Submitted" && $("#BidReqStatus").val() == "Submitted") {
+            $("#btnAccept").show();
+            $("#btnReject").show();
+        }
+        $("#vBidAmountp").val(BidAmount);
+        $("#vAddedOnp").html(ResponseDueDates);
+        $("#vDescriptionp").html($("#Description").val());
+        $("#bidvendorkey").val(BidVendorKey);
+        $("#HdnObjectKey").val(BidVendorKey);
+        $("#HdnLoginResourceKey").val($("#BidRequest_ResourceKey").val());
+
+        fillvendor(BidVendorKey);
+
+    }
+
+     function fillvendor(BidVendorKey)
+    {
+
+        debugger;
+         $.ajax({
+            url: '@Url.Action("bindvendorinformation", "PMBidRequests")',
+            cache: false,
+             data:
+             {
+                 BidVendorKey1: BidVendorKey
+
+             },
+             success: function (respo)
+             {
+
+
+                $("#vCompanyp").html(respo.CompanyName);
+                $("#vContactPersonp").html(respo.ContactPerson);
+                $("#vWorkPhone1p").html(respo.WorkPhone1);
+                $("#vWorkPhone2p").html(respo.WorkPhone2);
+                $("#vfaxp").html(respo.Fax);
+                $("#vEmailp").html(respo.Email);
+                $("#vAddress1p").html(respo.Address1);
+                $("#vAddress2p").html(respo.Address2);
+                $("#vCityp").html(respo.City);
+                $("#vStatep").html(respo.State);
+                $("#vZipp").html(respo.Zip);
+                $("#vInsuranceAmountp").html(respo.InsuranceAmount);
+                $("#vInsuranceExpiryDatep").html(respo.InsuranceExprie);
+            }
+        });
+    }
+
+    function bindDocument() {
+
+        $.ajax({
+            url: '@Url.Action("bindBidRequestDocument", "PMBidRequests")',
+            cache: false,
+            data:
+            {
+                BidRequestKey: $('#BidRequestKey').val(),
+                Modulekey: 100
+            },
+            success: function (response) {
+                debugger;
+                $("#divFileUploader table tbody tr:not(:first)").remove();
+                $("#divFileUploader table tbody tr:eq(0)").show();
+
+                for (var i = 0; i < response.length; i++) {
+
+                    //    var cln = $("#divFileUploader table tbody tr:eq(0)").clone(true);
+
+                    //    $(".upd-fl", cln).html(response[i].FileName);
+                    //    $("#divFileUploader table").append(cln);
+
+                    var datearray = response[i].split("BidRequestKeyTemp");
+                    var extension = datearray[1];
+                    //if (extension === 'jpg' || extension === 'png' || extension === 'gif') {
+                    var table = $("#divFileUploader table tbody tr:eq(0)").clone(true);
+                    $(".upd-fl", table).html(extension);
+                    $(".upd-fl", table).attr('src', '"../ Document / Properties /"' + $('#BidRequestKey').val() + extension);
+                    $(".upd-fl", table).attr('href', "../Document/Properties/" + $('#BidRequestKey').val() + extension);
+                    $(".upd-fl", table).attr('onclick', "download('../Document/Properties/" + $('#BidRequestKey').val() + extension + "')");
+                    $("#divFileUploader table").append(table);
+                }
+
+                $("#divFileUploader table tbody tr:eq(0)").hide();
+                var a = ($("#dataTableExample tr").length);
+
+                if ($("#dataTableExample tr").length == 4) {
+                    $('.errormessage').html('Data Is Not Found.');
+                    $('#Error').show();
+                    $("#divFileUploader table thead tr:eq(0)").hide();
+                    $("#divFileUploader table tbody tr:eq(0)").hide();
+                }
+            }
+        });
+    }
+
+    function bindDocumentWork() {
+        $.ajax({
+
+            url: '@Url.Action("bindBidRequestDocument", "PMProperties")',
+            cache: false,
+            data:
+            {
+                BidRequestKey: $('#BidRequestKey').val(),
+                Modulekey: 107
+            },
+            success: function (response) {
+                debugger;
+                $("#divFileUploader table tbody tr:not(:first)").remove();
+                $("#divFileUploader table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++) {
+
+                    //    var cln = $("#divFileUploader table tbody tr:eq(0)").clone(true);
+
+                    //    $(".upd-fl", cln).html(response[i].FileName);
+                    //    $("#divFileUploader table").append(cln);
+
+                    var datearray = response[i].split("BidRequestKeyTemp");
+                    var extension = datearray[1];
+                    //if (extension === 'jpg' || extension === 'png' || extension === 'gif') {
+                    var table = $("#divFileUploader table tbody tr:eq(0)").clone(true);
+                    $(".upd-fl", table).html(extension);
+                    $(".upd-fl", table).attr('src', '"../ Document / Properties /"' + $('#BidRequestKey').val() + extension);
+                    $(".upd-fl", table).attr('href', "../Document/Properties/" + $('#BidRequestKey').val() + extension);
+                    $(".upd-fl", table).attr('onclick', "download('../Document/Properties/" + $('#BidRequestKey').val() + extension + "')");
+                    $("#divFileUploader table").append(table);
+                }
+
+                $("#divFileUploader table tbody tr:eq(0)").hide();
+                var a = ($("#dataTableExample tr").length);
+
+                if ($("#dataTableExample tr").length == 4) {
+                    $('.errormessage').html('Data Is Not Found.');
+                    $('#Error').show();
+                    $("#divFileUploader table thead tr:eq(0)").hide();
+                    $("#divFileUploader table tbody tr:eq(0)").hide();
+                }
+            }
+        });
+    }
+
+
+</script>

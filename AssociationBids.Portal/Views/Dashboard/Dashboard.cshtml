@@ -1,0 +1,690 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<link href="~/Content/c3.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+<script src="~/Scripts/c3.min.js"></script>
+<script src="~/Scripts/d3.min.js"></script>
+
+
+
+<h2>Dashboard</h2>
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app col-lg-12">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+            </ol><!-- End breadcrumb -->
+
+        </div>
+        <!-- End page-header -->
+
+        <div class="row">
+            <div class="col-sm-12 col-lg-6 col-xl-6">
+                <div class="card overflow-hidden">
+                    <div class="card-header custom-header pb-0">
+                        <div>
+                            <h2 class="card-title">Bid Requests</h2>
+                            <h6 class="card-subtitle">Overview of this month</h6>
+                        </div>
+                        @*<div class="card-options">
+                            <label class="custom-switch">
+                                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input" checked>
+                                <span class="custom-switch-indicator"></span>
+                            </label>
+                        </div>*@
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <h6 class="text-body text-uppercase font-weight-semibold" style="font-size:12px">Total Amount</h6>
+                                <h2 id="totalamountbid" class="text-primary count mt-0 font-30 mb-0">$0.00</h2>
+                            </div>
+                            <div class="col-4">
+                                <div id="pieChart1" class="w-350 h-200 text-right float-right"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- col end -->
+            <div class="col-sm-12 col-lg-6 col-xl-6">
+                <div class="card overflow-hidden">
+                    <div class="card-header custom-header pb-0">
+                        <div>
+                            <h3 class="card-title">Work Orders</h3>
+                            <h6 class="card-subtitle">Overview of this month</h6>
+                        </div>
+                        @*<div class="card-options">
+                            <label class="custom-switch">
+                                <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
+                               
+                            </label>
+                        </div>*@
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <h6 class="text-body text-uppercase font-weight-semibold" style="font-size:12px">Total Amount</h6>
+                                <h2 id="totalamountw" class="text-secondary count mt-0 font-30 mb-0">$0.00</h2>
+                            </div>
+                            <div class="col-4">
+                                <div id="pieChart2" class="w-350 h-200 text-right float-right"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- col end -->
+        </div>
+
+        <div class="row">
+            <div class="col-xxl-12 col-lg-12 col-md-12">
+                <div class="card icon-iconfont">
+                    <div class="row">
+                        <div class="col-lg-4 border-right">
+                            <div class="card-body iconfont">
+                                <div class="row">
+                                    <div class="col">
+                                        <h6 class="text-uppercase">Active Vendors</h6>
+                                        <h3 id="activendorv" class="mt-2 mb-1 text-dark mainvalue font-weight-semibold">7,483</h3>
+                                        <p class="text-muted"><span class="text-body font-weight-semibold"><i class="fa fa-arrow-up text-success mr-1"> </i><p id="vactivep"></p> </span> in this year</p>
+                                    </div>
+                                    <div class="col col-auto feature">
+                                        <div class="fa-stack fa-lg fa-1x border bg-primary mb-3">
+                                            <i class="fa fa-users fa-stack-1x text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress progress-sm mb-0 mt-0">
+                                    <div class="progress-bar progress-bar-success progress-bar-striped active bg-primary " role="progressbar" aria-valuemin="0" aria-valuemax="100" id="progressbarA">
+                                      
+                                </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 border-right">
+                            <div class="card-body iconfont">
+                                <div class="row">
+                                    <div class="col">
+                                        <h6 class="text-uppercase">Renewed Vendors</h6>
+                                        <h3 id="activendorRV" class="mt-2 mb-1 text-dark mainvalue font-weight-semibold">65,457</h3>
+                                        <p class="text-muted"><span class="text-body font-weight-semibold"><i class="fa fa-arrow-up text-success mr-1"> </i><p id="vRenewedP"></p></span> in this year</p>
+                                    </div>
+                                    <div class="col col-auto feature">
+                                        <div class="fa-stack fa-lg fa-1x border bg-secondary mb-3">
+                                            <i class="fa fa-users fa-stack-1x text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress progress-sm mb-0 mt-0">
+                                    <div class="progress-bar progress-bar-success progress-bar-striped active bg-secondary " role="progressbar" aria-valuemin="0" aria-valuemax="100" id="progressbarR">
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card-body iconfont">
+                                <div class="row">
+                                    <div class="col">
+                                        <h6 class="text-uppercase">Cancelled Membership</h6>
+                                        <h3 id="activendorCV" class="mt-2 mb-1 text-dark mainvalue font-weight-semibold">6,129</h3>
+                                        <p class="text-muted"><span class="text-body font-weight-semibold"><i class="fa fa-arrow-down text-danger mr-1"> </i><p id="vcancellP"></p></span> in this year</p>
+                                    </div>
+                                    <div class="col col-auto feature">
+                                        <div class="fa-stack fa-lg fa-1x border bg-red mb-3">
+                                            <i class="fa fa-users fa-stack-1x text-white"></i>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="progress progress-sm mb-0 mt-0">
+                                    <div class="progress-bar progress-bar-success progress-bar-striped active bg-red " role="progressbar" aria-valuemin="0" aria-valuemax="100" id="progressbarC">
+                                       
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card overflow-hidden d-inline-block">
+                    <div class="card-header custom-header pb-0">
+                        <div>
+                            <h3 class="card-title">Projects</h3>
+                            <h6 class="card-subtitle">Overview of this year</h6>
+                        </div>
+                        <div class="card-options">
+                            @*<a href="" class="mr-4 text-default" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                                <span class="fa fa-ellipsis-v"></span>
+                            </a>*@
+                            @*<ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                <li><a href="#"><i class="si si-plus mr-2"></i>Add</a></li>
+                                <li><a href="#"><i class="si si-trash mr-2"></i>Remove</a></li>
+                                <li><a href="#"><i class="si si-eye mr-2"></i>View</a></li>
+                                <li><a href="#"><i class="si si-settings mr-2"></i>More</a></li>
+                            </ul>*@
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="timeline-chart1" class="h-300"></div>
+                        @*<p class="text-muted">Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example</p>*@
+                        <div class="row">
+                            <div class="col-md-4 mb-5 mb-md-0">
+                                <h6 class="mb-2 text-uppercase">Monthly</h6>
+                                <h3 class="mb-3 font-weight-semibold"><p id="Monthlyp"></p></h3>
+                                <div class="mb-0">
+                                    <h5 class="mb-2 d-block text-muted">
+                                        <span class="fs-16">Monthly</span>
+                                        <span class="float-right"><p id="Monthlypr"></p></span>
+                                    </h5>
+                                    <div class="progress progress-md h-2">
+                                        @*<div class="progress-bar progress-bar-striped progress-bar-animated bg-primary "></div>*@
+                                        <div class="progress-bar progress-bar-success progress-bar-striped active bg-primary " role="progressbar" aria-valuemin="0" aria-valuemax="100" id="progressbarMonthely">
+                                        </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="col-md-4 mb-5 mb-md-0">
+                                <h6 class="mb-2 text-uppercase">Quarterly</h6>
+                                <h3 class="mb-3 font-weight-semibold"><p id="Quarterlyp"></p></h3>
+                                <div class="mb-0">
+                                    <h5 class="mb-2 d-block text-muted">
+                                        <span class="fs-16">Quarterly</span>
+                                        <span class="float-right"><p id="Quarterlypr"></p></span>
+                                    </h5>
+                                    <div class="progress progress-md h-2">
+                                        @*<div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary "></div>*@
+                                        <div class="progress-bar progress-bar-success progress-bar-striped active bg-secondary " role="progressbar" aria-valuemin="0" aria-valuemax="100" id="progressbarQuarter">
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="col-md-4">
+                                <h6 class="mb-2 text-uppercase">Annual</h6>
+                                <h3 class="mb-3 font-weight-semibold"><p id="Annualp"></p></h3>
+                                <div class="mb-0">
+                                    <h5 class="mb-2 d-block text-muted">
+                                        <span class="fs-16">Annual</span>
+                                        <span class="float-right"><p id="Annualppr"></p></span>
+                                    </h5>
+                                    <div class="progress progress-md h-2">
+                                        <div class="progress-bar progress-bar-success progress-bar-striped active bg-warning " role="progressbar" aria-valuemin="0" aria-valuemax="100" id="progressbarAnnual">
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div><!--End side app-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+<!-- End app-content-->
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+
+            function updateProgressMonthely(count1M,count3A) {
+                var count2 = parseInt(count1M / count3A*100);
+                progressbarMonthely.style.width = count2 + "%";
+                debugger;
+                if (count2 == "0" || count2.toString() == "NaN") {
+                    $("#Monthlypr").html("0.00" + "%");
+                }
+                else {
+                    $("#Monthlypr").html(count2 + "%");
+                }
+
+
+
+            }
+            function updateProgressQuarter(count2Q,count3A) {
+                var count2 = parseInt(count2Q /count3A*100);
+                progressbarQuarter.style.width = count2 + "%";
+                debugger;
+                if (count2 == "0" || count2.toString() == "NaN") {
+                    $("#Quarterlypr").html("0.00" + "%");
+                }
+                else {
+                    $("#Quarterlypr").html(count2 + "%");
+                }
+
+
+
+            }
+            function updateProgressAnnual(count3A) {
+                var count2 = parseInt(count3A /count3A*100);
+                progressbarAnnual.style.width = count2 + "%";
+                debugger;
+                if (count2 == "0" || count2.toString() == "NaN") {
+                    $("#Annualppr").html("0.00" + "%");
+                }
+                else {
+                    $("#Annualppr").html(count2 + "%");
+                }
+
+
+
+            }
+            function updateProgressRenewed(count1A) {
+                debugger;
+                var count2 = parseInt(count1A / count1A*100);
+                progressbarA.style.width = count2 + "%";
+              
+                if (count1A == "0") {
+                    progressbarA.style.width = 0 + " %";
+                    $("#vactivep").html("0" + "%");
+                }
+                else {
+                    if (count2 == "0" ) {
+                        progressbarA.style.width = count2 + " %";
+                        $("#vactivep").html("100" + "%");
+                    }
+                    else {
+                        $("#vactivep").html(count2 + "%");
+                    }
+                }
+              
+              
+
+
+
+            }
+            function updateProgresscancell(count2R) {
+         
+                var count2 = parseInt(count2R /count1A*100);                
+                progressbarR.style.width = count2 + " %";
+
+
+                if (count2R == "0") {
+                    progressbarR.style.width = 0 + " %";
+                    $("#vRenewedP").html("0" + "%");
+                }
+                else {
+                    if (count2 == "0") {
+
+                        progressbarR.style.width = 100 + "%";
+                        $("#vRenewedP").html("100" + " %");
+                    }
+                    else {
+                        $("#vRenewedP").html(count2 + " %");
+                    }
+                }
+            
+
+            }
+            function updateProgressactive(count3C) {
+                var count2 = parseInt(count3C/count1A*100);
+                progressbarC.style.width = count2 + "%";
+                if (count3C == "0") {
+                    progressbarC.style.width = 0 + " %";
+                    $("#vcancellP").html("0" + "%");
+                }
+                else {
+
+                    if (count2 == "0") {
+
+                        progressbarC.style.width = 100 + "%";
+                        $("#vcancellP").html("100" + " %");
+                    }
+                    else {
+                        $("#vcancellP").html(count2 + " %");
+                    }
+                }
+
+
+            }
+            $.ajax({
+                url: "/Dashboard/BindTotalAmount",
+                data: {},
+                success: function (response) {
+                    //$("#totalamountbid").html("$ " + response[0].TotalAmount);
+                    //$("#totalamountw").html("$ "+ response[1].TotalAmount);
+                    $("#totalamountbid").html(response[0].TotalAmount);
+                    $("#totalamountw").html(response[1].TotalAmount);
+                }
+            });
+            var data;
+            var data1 = [];
+
+            $.ajax({
+                url: "/Dashboard/ProjectsLineChartValue",
+                data: {},
+                success: function (response) {
+                    debugger;
+                    for (i = 0; i < response.length; i++) {
+                        var datum = Date.parse(response[i].dayOfYear);
+                       
+                        data = [
+                            datum,response[i].projectcount
+                        ];
+
+                        data1.push(data);
+
+                    }
+
+                  
+                    
+                    sucess(data1);
+
+
+                }
+            });
+
+
+            $.ajax({
+                url: "/Dashboard/ProjectsValue",
+                data: {},
+                success: function (response) {
+                    $("#Monthlyp").html("$" +formatNumber(response[0].Monthly,true));
+                    $("#Quarterlyp").html("$" +formatNumber(response[0].Quaterly,true));
+                    $("#Annualp").html("$" +formatNumber(response[0].Yearly,true));
+                    if (response[0].Monthly != "0") {
+                        count1M = parseInt(response[0].Monthly);
+                    }
+                    else {
+                        count1M = "0";
+
+                    }
+                    if (response[0].Quaterly != "0") {
+                        count2Q = parseInt(response[0].Quaterly);
+                    }
+                    else {
+                        count2Q = "0";
+
+                    }
+                    if (response[0].Yearly != "0") {
+                        count3A = parseInt(response[0].Yearly);
+                    }
+                    else {
+                        count3A = "0";
+
+                    }
+                    updateProgressMonthely(count1M,count3A);
+                    updateProgressQuarter(count2Q,count3A);
+                    updateProgressAnnual(count3A);
+
+
+                }
+            });
+            $.ajax({
+                url: "/Dashboard/BindTotalVendors",
+                data: {},
+                success: function (response) {
+
+                    $("#activendorv").html(response[0].ActiveVendors);
+                    $("#activendorRV").html(response[0].RenewedVendors);
+                    $("#activendorCV").html(response[0].CancelMembership);
+                    if (response[0].lastyearActiveVendors != "0") {
+                        count1A = parseInt(response[0].ActiveVendors / response[0].lastyearActiveVendors * 100);
+                    }
+                    else {
+                        count1A = "0";
+
+                    }
+                    if (response[0].LastYearRenewedVendors != "0") {
+                        count2R = parseInt(response[0].RenewedVendors / response[0].LastYearRenewedVendors * 100);
+                    }
+                    else {
+                        count2R = "0";
+
+                    }
+                    if (response[0].LastYearCancelMembership != "0") {
+                        count3C = parseInt(response[0].CancelMembership / response[0].LastYearCancelMembership * 100);
+                    }
+                    else {
+                        count3C = "0";
+
+                    }
+
+
+
+                    updateProgressRenewed(count1A);
+                    updateProgresscancell(count2R);
+                    updateProgressactive(count3C);
+
+                }
+            });
+
+
+            $.ajax({
+                type: "GET",
+                url: "/Dashboard/PieChart",
+                data: { bType: "B" },
+
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    successFunc(response);
+                },
+            });
+            $.ajax({
+                type: "GET",
+                url: "/Dashboard/PieChart",
+                data: { bType: "W" },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    successFuncW(response);
+                },
+            });
+            function successFunc(jsondata) {
+
+                var data = {};
+                var BidValues = [];
+                jsondata.forEach(function (e) {
+                    BidValues.push(e.Type);
+                    data[e.Type] = e.BidValue;
+                })
+                var chart = c3.generate({
+                    bindto: '#pieChart1',
+                    data: {
+                        json: [data],
+                        keys: {
+                            value: BidValues,
+                        },
+                        type: 'pie'
+                    },
+                    color: {
+                        pattern: ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+                    },
+                });
+
+                jsondata.forEach(function (e) {
+                    BidValues.push(e.Type);
+                    data[e.Type] = e.BidValue;
+                })
+
+                var chart = c3.generate({
+                    bindto: '#pieChart1',
+
+                    data: {
+                        json: [data],
+                        keys: {
+                            value: BidValues,
+                        },
+                        type: 'pie'
+                    },
+                    color: {
+                        pattern: ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+                    },
+                });
+            }
+            function successFuncW(jsondata) {
+
+                var data = {};
+                var BidValues = [];
+                jsondata.forEach(function (e) {
+                    BidValues.push(e.Type);
+                    data[e.Type] = e.BidValue;
+                })
+                var chart = c3.generate({
+                    bindto: '#pieChart2',
+                    data: {
+                        json: [data],
+                        keys: {
+                            value: BidValues,
+                        },
+                        type: 'pie'
+                    },
+                    color: {
+                        pattern: ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+                    },
+                });
+
+                jsondata.forEach(function (e) {
+                    BidValues.push(e.Type);
+                    data[e.Type] = e.BidValue;
+                })
+                var chart = c3.generate({
+                    bindto: '#pieChart2',
+
+                    data: {
+                        json: [data],
+                        keys: {
+                            value: BidValues,
+                        },
+                        type: 'pie'
+                    },
+                    color: {
+                        pattern: ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+                    },
+                });
+            }
+
+            function sucess(data1) {
+
+
+                debugger;
+                var options = {
+                    annotations: {
+                        yaxis: [{
+                            y: 30,
+                            borderColor: '#999',
+                            label: {
+                                show: true,
+                                text: 'Support',
+                                style: {
+                                    color: "#fff",
+                                    background: '#00E396'
+                                }
+                            }
+                            
+                        }],
+                        xaxis: [{
+                            x: new Date('30 Jul 2020').getTime(),
+                            borderColor: '#999',
+                            yAxisIndex:   0,
+                            label: {
+                                show: true,
+                                text: 'Rally',
+                                style: {
+                                    color: "#fff",
+                                    background: '#775DD0'
+                                }
+                            }
+                        }]
+                    },
+                    chart: {
+                        type: 'area',
+                        height: 350,
+                        width: "100%",
+                    },
+
+                    dataLabels: {
+                        enabled: false
+                    },
+                    series: [{
+                        data:   data1
+                    }],
+                   
+                    labels: ['Sales'],
+                    colors: ['#467fcf'],
+                    markers: {
+                        size: 0,
+                        style: 'hollow',
+                    },
+                    xaxis: {
+                        type: 'datetime',
+                        min: new Date('30 Jul 2019').getTime(),
+                        tickAmount: 20,
+                    },yaxis: {
+                        labels: {
+                          formatter: function(val, index) {
+                                return "$" + val.toFixed(0);
+                          }
+                        }
+                      },
+                    tooltip: {
+                        x: {
+                            format: 'dd MMM yyyy'
+                        },
+                        y: {
+                            formatter: function (y) {
+                                if (typeof y !== "undefined") {
+                                    return "$" + y.toFixed(0);
+                                }
+                                return y;
+                            }
+                        }
+                    },
+                    fill: {
+                        type: 'gradient',
+                        gradient: {
+                            shadeIntensity: 1,
+                            opacityFrom: 0.7,
+                            opacityTo: 0.9,
+                            stops: [0, 100]
+                        }
+                    },
+
+                }
+                var chart = new ApexCharts(
+                    document.querySelector("#timeline-chart1"),
+                    options
+                );
+                chart.render();
+
+
+
+            }
+
+        });
+        
+    
+ 
+</script>
+

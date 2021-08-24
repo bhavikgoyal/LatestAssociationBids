@@ -1,0 +1,169 @@
+﻿@model List<AssociationBids.Portal.Model.ABNotificationModel>
+    <a class="nav-link icon" data-toggle="dropdown" aria-expanded="false">
+        <i class="fe fe-bell "></i>
+        @if (Model != null && Model.Count > 0)
+        {
+    <span class="bg-success bell-count">@Model[0].TotalCount</span>
+        }
+    </a>
+    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" style="width:250px !important;">
+        @if (Model != null && Model.Count > 0)
+        {
+            <a href="javascript:void(0)" class="dropdown-item text-center" style="cursor:default !important;"><span class="badge badge-primary">@Model[0].TotalCount</span> New Notifications</a>
+            <div class="dropdown-divider"></div>
+            for (int i = 0; i < Model.Count; i++)
+            {
+                string cls = "dropdown-item d-flex pb-3 notilink";
+                //if (Model[i].Status == "New")
+                //{ cls += " unread"; }
+                if (Model[i].ModuleKey == 200)
+                {
+                    <a href="@Model[i].resLink" class="@cls">
+                        <div class="div-icon-noti">
+                            <span class="badge bg-orange noti-count">@Model[i].NewNotificationCount</span>
+                            <div class="notifyimg bg-green">
+                                <i class="fe fe-dollar-sign font18"></i>
+
+                            </div>
+                        </div>
+                        <div style="display:inline-block;text-align:left !important;">
+                            <strong>@Model[i].Title</strong>
+                            <div class="small text-muted">@Model[i].NotificationText</div>
+                        </div>
+                    </a>
+                }
+                else if (Model[i].ModuleKey == 705)
+                {
+                    <a href="@Model[i].resLink" class="@cls">
+                        <div class="div-icon-noti">
+                            <span class="badge bg-green noti-count">@Model[i].NewNotificationCount</span>
+                            <div class="notifyimg bg-orange">
+                                <i class="fe fe-user font18"></i>
+                            </div>
+                        </div>
+                        <div style="display:inline-block;text-align:left !important;">
+                            <strong>@Model[i].Title</strong>
+                            <div class="small text-muted">@Model[i].NotificationText</div>
+                        </div>
+
+                    </a>
+                }
+                else if (Model[i].ModuleKey == 100)
+                {
+                    <a href="@Model[i].resLink" class="@cls">
+                        <div class="div-icon-noti">
+                            <span class="badge bg-green noti-count">@Model[i].NewNotificationCount</span>
+                            <div class="notifyimg bg-orange">
+                                <i class="fe fe-dollar-sign font18"></i>
+                            </div>
+                        </div>
+                        <div style="display:inline-block;text-align:left !important;">
+                            <strong>@Model[i].Title</strong>
+                            <div class="small text-muted">@Model[i].NotificationText</div>
+                        </div>
+
+                    </a>
+                }
+                else if (Model[i].ModuleKey == 106)
+                {
+                    <a href="@Model[i].resLink" class="@cls">
+                        <div class="div-icon-noti">
+                            <span class="badge bg-orange noti-count">@Model[i].NewNotificationCount</span>
+                            <div class="notifyimg bg-green">
+                                <i class="fe fe-dollar-sign font18"></i>
+                            </div>
+                        </div>
+                        <div style="display:inline-block;text-align:left !important;">
+                            <strong>@Model[i].Title</strong>
+                            <div class="small text-muted">@Model[i].NotificationText</div>
+                        </div>
+
+                    </a>
+                }
+                else if (Model[i].ModuleKey == 302)
+                {
+                    <a href="@Model[i].resLink" class="@cls">
+                        <div class="div-icon-noti">
+                            <span class="badge bg-warning noti-count">@Model[i].NewNotificationCount</span>
+                            <div class="notifyimg bg-danger">
+                                <i class="fe fe-book-open font18"></i>
+                            </div>
+                        </div>
+                        <div style="display:inline-block;text-align:left !important;">
+                            <strong>@Model[i].Title</strong>
+                            <div class="small text-muted">@Model[i].NotificationText</div>
+                        </div>
+
+                    </a>
+                }
+                else if (Model[i].ModuleKey == 301)
+                {
+                    <a href="@Model[i].resLink" class="@cls">
+                        <div class="div-icon-noti">
+                            <span class="badge bg-danger noti-count">@Model[i].NewNotificationCount</span>
+                            <div class="notifyimg bg-warning">
+                                <i class="fe fe-credit-card font18"></i>
+                            </div>
+                        </div>
+                        <div style="display:inline-block;text-align:left !important;">
+                            <strong>@Model[i].Title</strong>
+                            <div class="small text-muted">@Model[i].NotificationText</div>
+                        </div>
+
+                    </a>
+                }
+                else if (Model[i].ModuleKey == 300)
+                {
+                    <a href="@Model[i].resLink" class="@cls">
+                        <div class="div-icon-noti">
+                            <span class="badge bg-warning noti-count">@Model[i].NewNotificationCount</span>
+                            <div class="notifyimg bg-primary">
+                                <i class="fe fe-edit font18"></i>
+                            </div>
+                        </div>
+                        <div style="display:inline-block;text-align:left !important;">
+                            <strong>@Model[i].Title</strong>
+                            <div class="small text-muted">@Model[i].NotificationText</div>
+                        </div>
+
+                    </a>
+                }
+            }
+        }
+        else
+        {
+            <a href="#" class="dropdown-item text-center"> No Notifications</a>
+        }
+        <div class="dropdown-divider"></div>
+        @*<a href="#" class="dropdown-item text-center">View all Notifications</a>*@
+    </div>
+<script>
+    function markasread(id, status, url,obkey) {
+        debugger;
+        @*if (status == 'new') {
+            $.ajax({
+                type: "post",
+                url: '@Url.Action("UpdateStatus","ABNotification")',
+                data: { NotiId: id, Status: 'Read' },
+                success: function () {
+                    window.location.href = new URL(location.host + url);
+                }
+            });
+        }
+        else*@
+        {
+            window.location.href = url;
+            if (window.location.href.includes(url)) {
+                var url1 = window.location.href;
+                if (url1.indexOf('#msg?data') > -1) {
+                    url1 += '#msg?data=' + obkey;
+                }
+                window.location.href = url;
+                location.reload(true);
+            }
+
+        }
+
+    }
+    
+</script>

@@ -1,0 +1,278 @@
+﻿@model AssociationBids.Portal.Model.PropertyModel
+@{
+    ViewBag.Title = "PMAcessEdit";
+    Layout = "~/Views/Shared/_PropertyManagerLayout.cshtml";
+    string Errormessage = Convert.ToString(ViewData["Errormessage"]);
+}
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<link href="~/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" />
+<link href="~/Content/themes/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" />
+<link href="~/assets/plugins/fileuploads/css/dropify.min.css" rel="stylesheet" />
+<script src="~/assets/plugins/fileuploads/js/dropify.js"></script>
+<script src="~/assets/plugins/fileuploads/js/dropify-demo.js"></script>
+<script src="~/assets/plugins/fileuploads/js/dropify.min.js"></script>
+<style>
+    div#ManagerChoosen_chosen {
+        width: 100% !important;
+    }
+
+    .selector_ED {
+        width: auto !important;
+    }
+
+
+
+    .chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+        background: url('../../Content/themes/cancelimg.jpg');
+    }
+
+    .chosen-select placeholder_text {
+        padding: 5px;
+    }
+
+    .Error {
+        color: red;
+    }
+</style>
+
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="../PMProperties/PMPropertiesList.html">Properties</a></li>
+                <li class="breadcrumb-item"><a href="PropertiesView.html">Property Details</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Access</li>
+            </ol><!-- End breadcrumb -->
+
+        </div>
+        <!-- End page-header -->
+
+
+        @if (ViewData["Errormessage"] != null)
+        {
+            <p class="alert alert-success alert-dismissible" id="successMessage">
+                @ViewData["Errormessage"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        <div class="row">
+            @Html.HiddenFor(model => model.PropertyKey)
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="clearfix">
+                            <a href="javascript:void(0);" class="btn btn-primary pull-right" data-toggle="modal" id="btnaddmanager" data-target="#addmanagers" title="Add Manager">+AddManager</a>
+
+                        </div>
+                        <br />
+                        <div class="table-responsive" id="managerdiv">
+                            <table id="dataTableExample" class="table table-striped table-bordered w-100 dataTable no-footer">
+                                <thead>
+                                    <tr>
+                                        <th>Assigned Managers</th>
+                                        <th width="5%"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="manspan"></span></td>
+                                        <td align="center"><a title="Delete" onclick="removemanager(this);"><i class="fe fe-trash redtxt font18"></i></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div><!-- end of table responsive -->
+                        <hr />
+                    </div><!-- end of card body -->
+                    <div class="card-footer">
+                        <div class="text-right">
+                            <a onclick="Updatemanager();" class="btn btn-info text-white" title="Update">Update</a>
+
+                        </div>
+                    </div>
+                </div><!-- end of card -->
+            </div><!-- end of card -->
+        </div>
+
+
+        <!-- Message Modal -->
+        <div class="modal fade" id="addmanagers" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addmanagers3">Assigned Managers</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @*<form>*@
+                        <div class="row">
+                            <div class="col-md-12">
+
+                                <div class="form-group">
+                                    <label class="form-label">Managers </label>
+                                    @Html.HiddenFor(model => model.ResourceKey)
+                                    @Html.DropDownList("ManagerChoosen", new SelectList(ViewBag.lstmanager, "Value", "Text"), new { @data_rel = "chosen", @class = "form-control chosen-select", @multiple = "true" })
+
+                                </div>
+                            </div>
+                        </div><!-- end of row -->
+                        @*</form>*@
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnadd">+ Add</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- end of modal -->
+
+
+
+    </div><!--End side app-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+<!-- End app-content-->
+
+<link rel="stylesheet" href="../assets/css/cust-wizard.css">
+<link href="../assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
+<script src="../assets/js/cust-wizard.js"></script>
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<script src="../assets/plugins/fileuploads/js/dropify.js"></script>
+<script src="../assets/plugins/fileuploads/js/dropify-demo.js"></script>
+
+<script>
+     $(document).ready(function () {
+         bindmanager();
+        $(".chosen-select").chosen();
+        $('#loader').show();
+        $('.errormessage').html('');
+        $('#Error').hide();
+        $("#news_date").datepic
+         $('#Errormanager').hide();
+         $('#DocumentId').hide()
+        $('#loader').hide();
+        $(".advance_search").click(function () {
+            $("#advancesearch3").toggle(500);
+        });
+        $(".overlayclose").click(function () {
+            $("#advancesearch3").hide();
+        });
+
+    });
+
+
+   
+    $("#btncancel").click(function () {
+        var a = $("#PropertyKey").val();
+       
+        window.location.href = 'PropertiesView?PropertyKey=' + $("#PropertyKey").val();
+
+    });
+
+    $("#btnadd").click(function () {
+
+          $("#managerdiv table tbody tr:eq(0)").show();
+        var SelectedManager = $("#ManagerChoosen option:selected").map(function () {
+            var cln = $("#managerdiv table tbody tr:eq(0)").clone(true);
+            $(".manspan", cln).html($(this).text());
+            $("#managerdiv table").append(cln);
+
+        }).get();
+
+        $("#managerdiv table tbody tr:eq(0)").hide();
+
+        if ($('#ManagerChoosen_chosen').find('.chosen-choices').find('.search-choice').length == 0) {
+            $('.errormessage').html('Please select manager.');
+            $('#Errormanager').show();
+            return false;
+        }
+        else {
+            var SelectedManager = $("#ManagerChoosen option:selected").map(function () {
+                return $(this).val();
+            }).get().join(',');
+            $('#ResourceKey').val(SelectedManager);
+        }
+
+    });
+
+    function removemanager(me) {
+        debugger;
+        var m = $(me).parent("td").parent("tr").find('.manspan').text();   
+        var a = $("#PropertyKey").val();
+        var b = $(me).parent("td").parent("tr").find('.manspan').text();     
+        window.location.href = "ManagerDelete?PropertyKey=" + a + "&managername=" + b;
+    }
+
+    function Updatemanager() {
+        debugger;        
+        var SelectedManager = $("#ManagerChoosen option:selected").map(function () {
+        return $(this).val();
+        }).get().join(',');
+        $('#ResourceKey').val(SelectedManager);
+        var b = $('#ResourceKey').val(SelectedManager);
+      
+        var b = $('#ResourceKey').val();
+        var a = $('#PropertyKey').val();
+        window.location.href = "UpdateManager?PropertyKey=" + a + "&managername=" + b;
+    }
+
+    function bindmanager()
+    {
+        debugger;
+         $.ajax({
+            url: '@Url.Action("GetAllGroup", "PMProperties")',
+            cache: false,
+             data:
+             {
+              PropertyKey: $('#PropertyKey').val()
+            },
+            success: function (response)
+            {
+                debugger;
+                $("#managerdiv table tbody tr:not(:first)").remove();
+                $("#managerdiv table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    var cln = $("#managerdiv table tbody tr:eq(0)").clone(true);
+                    $(".manspan", cln).html(response[i].GroupName);
+                    $("#managerdiv table").append(cln);
+                }
+                $("#managerdiv table tbody tr:eq(0)").hide();
+
+            }
+        });
+    }
+
+
+     
+
+
+
+
+   
+
+
+    
+
+
+</script>

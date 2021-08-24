@@ -1,0 +1,857 @@
+﻿@model AssociationBids.Portal.Model.ResourceModel
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_VendorLayout.cshtml";
+
+    string errror = Convert.ToString(TempData["Errormessage"]);
+    string success = Convert.ToString(TempData["Sucessmessage"]);
+}
+
+<h2>Profile</h2>
+
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXnGGS4mlkx0DnmdnFUVLQ-0i58GSknZ8&sensor=true"></script>
+<script src="~/Scripts/Registration/RegistrationValidation.js"></script>
+<script src="~/Content/themes/chosen.jquery.min.js"></script>
+<link href="~/Content/themes/chosen.min.css" rel="stylesheet" />
+<script src="~/assets/plugins/fileuploads/js/dropify.js"></script>
+<script src="~/assets/plugins/fileuploads/js/dropify-demo.js"></script>
+<script src="~/assets/plugins/fileuploads/js/dropify.min.js"></script>
+<script src="~/Content/themes/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<script src="~/JSControllers/Commonfunction.js"></script>
+
+@using (Html.BeginForm("VProfile", "vProfile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <!-- app-content-->
+    <div class="app-content  my-3 my-md-5">
+        <div class="side-app">
+
+            <!-- page-header -->
+            <div class="page-header">
+                <ol class="breadcrumb">
+                    <!-- breadcrumb -->
+                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit Profile</li>
+                </ol><!-- End breadcrumb -->
+
+            </div>
+            <!-- End page-header -->
+            <!-- row -->
+            @if (!string.IsNullOrEmpty(errror))
+            {
+                <div class="alert alert-danger" style=" margin-top: 20px;">
+                    <strong><span class="">@errror</span></strong>
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(success))
+            {
+                <div class="alert alert-success" style=" margin-top: 20px;">
+                    <strong><span class="successmessage">@success</span></strong>
+                </div>
+            }
+            <div class="alert alert-danger" id="Error" style="display:none; margin-top: 20px;">
+                <strong><span class="errormessage">@errror</span></strong>
+            </div>
+            <div class="alert alert-success" id="Success" style="display:none; margin-top: 20px;">
+                <strong><span class="successmessage"></span></strong>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Company Information</h3>
+                            <div class="card-options">
+                                <div class="card-options">
+                                    <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body border-top">
+                            @Html.HiddenFor(Model => Model.ResourceKey)
+                            @*@Html.HiddenFor(Model => Model.Address)
+                                @Html.HiddenFor(Model => Model.Address2)
+                                @Html.HiddenFor(Model => Model.City)
+                                @Html.HiddenFor(Model => Model.Zip)*@
+                            @Html.HiddenFor(Model => Model.ResourceTypeKey)
+                            @Html.HiddenFor(Model => Model.VendorKey)
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Title:</label>
+                                        @{
+                                            List<SelectListItem> listItems = new List<SelectListItem>();
+                                            listItems.Add(new SelectListItem { Text = "Mr.", Value = "Mr." });
+                                            listItems.Add(new SelectListItem { Text = "Mrs", Value = "Mrs" });
+                                            listItems.Add(new SelectListItem { Text = "Miss", Value = "Miss" });
+                                        }
+                                        <p>
+                                            @Html.DropDownListFor(Model => Model.Title, listItems, new { @class = "form-control" })
+                                        </p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">First Name:</label>
+                                        <p>@Html.TextBoxFor(Model => Model.FirstName, new { @class = "form-control" })</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Last Name:</label>
+                                        <p>@Html.TextBoxFor(Model => Model.LastName, new { @class = "form-control" })</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Email:</label>
+                                        <p>@Html.TextBoxFor(Model => Model.Email, new { @class = "form-control", @type = "email" })</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Cell Phone:</label>
+                                        <p>@Html.TextBoxFor(Model => Model.CellPhone, new { @class = "form-control FormatPhoneNumber" })</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Work Phone 1</label>
+                                        <p>@Html.TextBoxFor(Model => Model.Work, new { @class = "form-control FormatPhoneNumber" })</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Work Phone 2</label>
+                                        <p>@Html.TextBoxFor(Model => Model.Work2, new { @class = "form-control FormatPhoneNumber" })</p>
+                                    </div>
+                                </div><!-- end of col -->
+
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Address 1:</label>
+                                        <p>@Html.TextBoxFor(Model => Model.Address, new { @class = "form-control" })</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Address 2:</label>
+                                        <p>@Html.TextBoxFor(Model => Model.Address2, new { @class = "form-control" })</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">City:</label>
+                                        <p>@Html.TextBoxFor(Model => Model.City, new { @class = "form-control" })</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">State:</label>
+                                        <p>@Html.DropDownListFor(Model => Model.State, new SelectList(ViewBag.lststate, "Value", "Text"), new { @class = "form-control" })</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Zip:</label>
+                                        <p>@Html.TextBoxFor(Model => Model.Zip, new { @class = "form-control" })</p>
+                                    </div>
+                                </div><!-- end of col -->
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- row end -->
+            <!-- row -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Services</h3>
+                            <div class="card-options">
+                                @*<a class="btn btn-success ml-auto  pull-right" style="margin-right:2px;color:white;" title="Edit" data-toggle="modal" data-target="#addService"><i class="fa fa-plus"></i></a>*@
+                                @*<a onclick=" EditPage('services');" class="btn btn-primary ml-auto text-white pull-right" title="Edit"><i class="fa fa-pencil"></i> Edit</a>*@
+                                <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body border-top">
+
+                            <div class="row">
+                                <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6 m-3">
+                                                    @Html.DropDownListFor(model => model.ServiceKey, new SelectList(ViewBag.lstservice, "Value", "Text"), new { @data_rel = "Choose_one", @class = "form-control", placeholder = "Please Select...", @onchange = "checkVali()" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 m-3">
+                                                    @Html.DropDownListFor(model => model.ServiceKey1, new SelectList(ViewBag.lstservice, "Value", "Text"), new { @data_rel = "Choose_one", @class = "form-control", placeholder = "Please Select...", @onchange = "checkVali()" })
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 m-3">
+                                                    @Html.DropDownListFor(model => model.ServiceKey2, new SelectList(ViewBag.lstservice, "Value", "Text"), new { @data_rel = "Choose_one", @class = "form-control", placeholder = "Please Select...", @onchange = "checkVali()" })
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!-- card body end -->
+                    </div><!-- card end -->
+                </div><!-- col end -->
+            </div><!-- row end -->
+
+
+            <div class="row">
+                <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Username</label>
+                                        @Html.TextBoxFor(Model => Model.Email, new { @class = "form-control", @placeholder = "Username", @disabled = "disabled" })
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">&nbsp;</label>
+                                        <button class="btn btn-primary" type="button" title="Change Password" data-toggle="modal" data-target="#divChangePassword" onclick="ClearPopup();"> <i class="fa fa-gear"></i> Change Password</button>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Upload Picture</label>
+                                        @*<input type="file" class="dropify" id="ProfilePicture">*@
+                                        @Html.TextBox("ProfilePicture", "", new { @type = "file", @class = "dropify" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- row end -->
+            <!-- row -->
+            <div class="row">
+                <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Radius </label>
+
+                                        @Html.DropDownListFor(model => model.Radius, new SelectList(ViewBag.lstRadius, "Value", "Text"), new { @tabindex = "6", @class = "form-control", @onchange = "OnRadiusChanges(this)" })
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Address</label>
+                                        <p id="vServiceAddress"></p>
+                                        <p>@Html.DisplayFor(Model => Model.ServiceAddress, new { @class = "form-control" })</p>
+
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-lg-9 col-md-12">
+                                    <div class="form-group mapIframe">
+                                        <label class="form-label">Map</label>
+                                        <div id="map" style="width:100%;height:300px;"></div>
+                                        @*<iframe id="srcid" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>*@
+                                        @*<iframe id="srcid" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d93321.45784906122!2d-76.2093204565947!3d43.035212545342986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d9f39bbf979a0d%3A0xd50ce2d7ad9545!2sSyracuse%2C%20NY%2C%20USA!5e0!3m2!1sen!2sin!4v1583905479861!5m2!1sen!2sin&callback=initMap" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>*@
+                                    </div>
+                                </div>
+                            </div>
+                            @Html.HiddenFor(model => model.Latitude)
+                            @Html.HiddenFor(model => model.Longitude)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- row end -->
+    <div class="card-footer text-right">
+        <input t class="btn btn-primary ml-auto" id="btnsubmit" type="submit" title="Save" value="Save" onclick="return validation();" /><i class="fa fa-loppy-o"></i>
+        @*<a href="#" class="btn btn-success mt-1">Save</a>*@
+        <a href="VProfileView" class="btn btn-warning">Cancel</a>
+        @*<a onclick=" Cancle();"  class="btn btn-warning " title="Cancel">s Cancel</a>*@
+        @*<a href="#" class="btn btn-warning ">Cancel</a>*@
+    </div>
+
+
+    <!--footer-->
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+    <!-- modal -->
+    <div class="modal  bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">Enter Project Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="listname">Project name</label>
+                            <input type="text" class="form-control" name="listname" id="listname" placeholder="Enter your listname">
+                        </div>
+                        <div class="form-group">
+                            <label for="listname">Backend</label>
+                            <select name="Language" id="select-Language" class="form-control custom-select">
+                                <option value="ph" data-data="">PHP</option>
+                                <option value="aj" data-data="">Angular js</option>
+                                <option value="jv" data-data="">Java</option>
+                                <option value="nt" data-data="" selected="">.Net</option>
+                                <option value="py" data-data="">Phython</option>
+                                <option value="js" data-data="">Javascript</option>
+                                <option value="ui" data-data="">UI Design</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Deadline</label>
+                            <input type="Date" name="Date" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="listname">Team Members</label>
+                            <input type="text" class="form-control" name="listname" id="listname2" placeholder="How many Team memebers?">
+                        </div>
+                        <div class="form-group">
+                            <label for="listname">Description</label>
+                            <textarea class="form-control" name="example-textarea-input" rows="3" placeholder="text here.."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Add a list item</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" name="example-file-input-custom">
+                                <label class="custom-file-label">Choose file</label>
+                            </div>
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-block bg-info text-white">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal end -->
+    <!-- modal -->
+    <div class="modal  bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" id="divChangePassword">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">Change Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger" style="display:none; margin-top: 20px;" id="divErrorChangePassword">
+                        <strong><span class="spanerrormodal"></span></strong>
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <label for="listname">Old Password</label>
+                            <div class="input-group ">
+                                <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
+                                @Html.Password("OldPassword", "", new { @class = "form-control", @tabindex = "1", autocomplete = "off", @required = true, @style = "width:90%;" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <div class="input-group ">
+                                <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
+                                @Html.Password("NewPassword", "", new { @class = "form-control", @tabindex = "2", autocomplete = "off", @required = true, @style = "width:90%;" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="listname">Confirm Password</label>
+                            <div class="input-group ">
+                                <span class="input-group-addon"><i class="fa fa-unlock-alt"></i></span>
+                                @Html.Password("ConfirmPassword", "", new { @class = "form-control", @tabindex = "3", autocomplete = "off", @required = true, @style = "width:90%;" })
+                            </div>
+                        </div>
+                        <div class="form-group text-center">
+                            <button type="button" class="btn btn-block bg-info text-white" onclick="return updatePassword();">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal end -->
+
+
+    <!-- End app-content-->
+}
+
+<!-- Back to top -->
+<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+<!-- Jquery js-->
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+
+<!--Bootstrap.min js-->
+@*<script src="~/Content/themes/assets/plugins/bootstrap/popper.min.js"></script>
+    <script src="~/Content/themes/assets/plugins/bootstrap/js/bootstrap.min.js"></script>*@
+
+<!--Jquery Sparkline js-->
+@*<script src="~/Content/themes/assets/js/vendors/jquery.sparkline.min.js"></script>*@
+
+<!-- Chart Circle js-->
+@*<script src="~/Content/themes/assets/js/vendors/circle-progress.min.js"></script>*@
+
+<!-- Star Rating js-->
+@*<script src="~/Content/themes/assets/plugins/rating/jquery.rating-stars.js"></script>*@
+
+<!--Moment js-->
+@*<script src="~/Content/themes/assets/plugins/moment/moment.min.js"></script>*@
+
+<!-- Daterangepicker js-->
+@*<script src="~/Content/themes/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>*@
+
+<!--Side-menu js-->
+@*<script src="~/Content/themes/assets/plugins/sidemenu/sidemenu-icon.js"></script>*@
+
+<!--News Ticker js-->
+@*<script src="~/Content/themes/assets/plugins/newsticker/breaking-news-ticker.min.js"></script>
+    <script src="~/Content/themes/assets/plugins/newsticker/newsticker.js"></script>*@
+
+<!--Time Counter js-->
+@*<script src="~/Content/themes/assets/plugins/counters/jquery.missofis-countdown.js"></script>
+    <script src="~/Content/themes/assets/plugins/counters/counter.js"></script>*@
+
+<!-- Sidebar Accordions js -->
+@*<script src="~/Content/themes/assets/plugins/sidemenu-responsive-tabs/js/easyResponsiveTabs.js"></script>*@
+
+<!-- Perfect scroll bar js-->
+@*<script src="~/Content/themes/assets/plugins/pscrollbar/perfect-scrollbar.js"></script>
+    <script src="~/Content/themes/assets/plugins/pscrollbar/p-scroll.js"></script>*@
+
+<!-- Rightsidebar js -->
+@*<script src="~/Content/themes/assets/plugins/sidebar/sidebar.js"></script>*@
+
+<!-- ECharts js -->
+@*<script src="~/Content/themes/assets/plugins/echarts/echarts.js"></script>*@
+
+<!-- File Uploads css-->
+<link href="~/Content/themes/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
+<!-- File uploads js -->
+<script src="~/Content/themes/assets/plugins/fileuploads/js/dropify.js"></script>
+<script src="~/Content/themes/assets/plugins/fileuploads/js/dropify-demo.js"></script>
+
+
+<!-- Custom js-->
+@*<script src="~/Content/themes/assets/js/custom.js"></script>*@
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXnGGS4mlkx0DnmdnFUVLQ-0i58GSknZ8&sensor=false"></script>
+
+
+<script>
+
+    function logout() {
+        window.location.href = '@Url.Action("LogOut","Login")';
+        return false;
+    }
+    $(document).ready(function () {
+        $("#Vpr").closest('li').addClass('active');
+        $("#Vpr1").addClass('active');
+        Fillvalueview();
+
+        $('#Error').hide();
+        if ('@Model.Title' != '') {
+        $('#Title').val('@Model.Title');
+        }
+    });
+
+
+    function validationservice11() {
+        debugger;
+        $('#sucess').hide();
+        $('#Error').hide();
+        $('#sucesssave').hide();
+        $('#errrorssave').hide();
+        var a = @Session["CompanyKey"];
+
+        var ser1 = $("#ServiceKey").val();
+        var ser2 = $("#ServiceKey1").val();
+        var ser3 = $("#ServiceKey2").val();
+        if (ser1 == 0 && ser2 == 0 && ser3 == 0) {
+            $('.errormessage').html("Please select at least 1 service.");
+            $('#Error').show();
+            $(window).scrollTop(0);
+            event.preventDefault();
+            return false;
+        }
+        else if ((ser1 == ser2 && ser1 != 0) || (ser1 == ser3 && ser1 != 0) || (ser2 == ser3 && ser2 != 0)) {
+            $('.errormessage').html("You can not re-select a service");
+            $('#Error').show();
+            $(window).scrollTop(0);
+            event.preventDefault();
+            return false;
+        }
+
+        var formData = new FormData();
+
+
+        formData.append("vendorkey",a);
+        formData.append("Service", $("#ServiceKey").val());
+        formData.append("Service", $("#ServiceKey1").val());
+        formData.append("Service", $("#ServiceKey2").val());
+
+        $.ajax({
+            type: "POST",
+            url: '/VendorManager/EditVendorService',
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (Response) {
+                if (Response == true) {
+
+                }
+
+                //$('#global-loader').hide();
+            },
+            error: function (xhr, status, p3, p4) {
+                var err = "Error " + " " + status + " " + p3 + " " + p4;
+                if (xhr.responseText && xhr.responseText[0] == "{")
+                    err = JSON.parse(xhr.responseText).Message;
+                //$('#global-loader').hide();
+            }
+        });
+        $('#Error').hide();
+        return true;
+    }
+    function Fillvalueview() {
+
+        $('#ServiceAddress').val($('#Address').val() + ' ' + $('#Address2').val());
+        $('#vServiceAddress').html($('#Address').val() + ' ' + $('#Address2').val());
+        $('#vserviceaddressc').html($('#Address').val() + ' ' + $('#Address2').val());
+        $('#vRadius').html($('#Radius option:selected').text());
+        $('#vCompanyName').html($('#CompanyName').val());
+        $('#vLegalName').html($('#LegalName').val());
+        $('#vTaxID').html($('#TaxID').val());
+        if ($('#Address2').val() !== "") {
+            $('#vServiceAddress').html($('#Address').val() + ', ' + $('#Address2').val() + ', ' + $('#City').val() + ', ' + $('#State option:selected').text() + '-' + $('#Zip').val());
+            $('#vserviceaddressc').html($('#Address').val() + ', ' + $('#Address2').val() + ', ' + $('#City').val() + ', ' + $('#State option:selected').text() + '-' + $('#Zip').val());
+        }
+        else {
+
+            $('#vServiceAddress').html($('#Address').val() + '' + $('#Address2').val() + ', ' + $('#City').val() + ', ' + $('#State option:selected').text() + '-' + $('#Zip').val());
+            $('#vserviceaddressc').html($('#Address').val() + '' + $('#Address2').val() + ', ' + $('#City').val() + ', ' + $('#State option:selected').text() + '-' + $('#Zip').val());
+        }
+        $('#vAddress').html($('#Address').val());
+        $('#vAddress2').html($('#Address2').val());
+        $('#vCity').html($('#City').val());
+        $('#vStateKey').html($('#StateKey').val());
+        $('#vState').html($('#State').val());
+        $('#vZip').html($('#Zip').val());
+        $('#vWork').html($('#Work').val());
+        $('#vWork2').html($('#Work2').val());
+        $('#vWebsite').html($('#Website').val());
+        $('#vFax').html($('#Fax').val());
+        $('#vNameOfCard').html($('#NameOfCard').val());
+        $('#vfirstname').html($('#FirstName').val());
+        $('#vlastname').html($('#LastName').val());
+        $('#vEmail').html($('#EmailId').val());
+
+        initMap();
+        var policyno = $("#PolicyNumber").val();
+        var files = $("#Insurancefiles")[0].files;
+        //if (files.length > 0 && policyno != '')
+        {
+            $("#policyno").html(policyno);
+            $("#insuranceamount").html($("#InsuranceAmount").val());
+            $("#startdate").html($("#StartDate").val().split(" ")[0] == '1/1/0001' ? '' : $("#StartDate").val());
+            $("#enddate").html($("#EndDate").val().split(" ")[0] == '1/1/0001' ? '' : $("#EndDate").val());
+            $("#renewaldate").html($("#RenewalDate").val().split(" ")[0] == '1/1/0001' ? '' : $("#RenewalDate").val());
+            var docnames = '';
+            for (var i = 0; i < files.length; i++) {
+                docnames += '<p>' + files[i].name + '</p>';
+            }
+            $("#docname").html(docnames);
+            if (policyno != '') {
+                $("#insDetails").show();
+            }
+            else {
+                $("#insDetails").hide();
+            }
+        }
+
+        if ($('#CardNumber').val() !== "") {
+            const id = $('#CardNumber').val();
+            var fourlastchar = id.substr(id.length - 5);
+            $('#vCardNumber').html('XXXX XXXX XXXX ' + fourlastchar);
+        }
+
+        $('#vValidTillMM').html($('#ValidTillMM').val());
+        $('#vValidTillYY').html($('#ValidTillYY').val());
+        $('#vFullValidTill').html($('#ValidTillMM').val() + '/' + $('#ValidTillYY').val());
+        $('#vCVV').html($('#CVV').val());
+        $('#sucesssave').hide();
+        $('#errrorssave').hide();
+
+    }
+
+
+    function OnRadiusChanges() {
+
+        setTimeout(function () {
+
+            initMap();
+        }, 1000);
+    }
+    function initMap() {
+
+        map = new google.maps.Map(document.getElementById('map'), { zoom: 10 });
+        geocoder = new google.maps.Geocoder();
+        codeAddress(geocoder, map);
+
+    }
+
+    function codeAddress(geocoder, map) {
+        geocoder.geocode({ 'address': $("#vServiceAddress").html() }, function (results, status) {
+
+            if (status === 'OK') {
+                var str = $("#Radius option:selected").text().split(" ");
+                if (str[0] === 'Please') {
+                    str = '0';
+                }
+
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+
+                var circle = new google.maps.Circle({
+                    map: map,
+                    radius: str[0] * 1609.344,
+                    fillOpacity: 0.25,
+                    fillColor: '#AA0000'
+                });
+
+                circle.bindTo('center', marker, 'position');
+                map.setCenter(results[0].geometry.location);
+            }
+
+        });
+    }
+    function codeAddressview(geocoder, map1) {
+
+        geocoder.geocode({ 'address': $("#vServiceAddress").html() }, function (results, status) {
+
+            if (status === 'OK') {
+                var str = $("#Radius option:selected").text().split(" ");
+                if (str[0] === 'Please') {
+                    str = '0';
+                }
+
+                var marker = new google.maps.Marker({
+                    map: map1,
+                    position: results[0].geometry.location
+                });
+                var circle = new google.maps.Circle({
+                    map: map1,
+                    radius: str[0] * 1609.344,
+                    fillOpacity: 0.25,
+                    fillColor: '#AA0000'
+                });
+                circle.bindTo('center', marker, 'position');
+                map1.setCenter(results[0].geometry.location);
+            }
+
+        });
+    }
+
+    function validation(isvalidated = false) {
+        debugger;
+        $('#loader').show();
+        $('.errormessage').html('');
+
+        //if ($('#Username').val() == "") {
+        //    $('.errormessage').html('Please Enter UserName.');
+        //    $('#Error').show();
+        //    $('#Username').focus();
+        //    $(window).scrollTop(0);
+        //    return false;
+        //}
+
+        if ($('#State').val() == "0") {
+            $('.errormessage').html('Please Select State.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+        }
+
+        if ($('#Email').val() == "") {
+            $('.errormessage').html('Please Enter Email.');
+            $('#Error').show();
+            $('#Email').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+
+        var postdata = $('form')[0];
+        var file = document.getElementById('ProfilePicture').files[0];
+        var fd = new FormData();
+        if (file != "" && file != "undefined" && file != null) {
+            postdata.append("files", file);
+        }
+        //var xhr = new XMLHttpRequest();
+        //xhr.open("POST", "/Home/Index", false);
+        //xhr.send(fd);
+        isvalidated = validationservice11();
+        var isval = false;
+        if (isvalidated)
+            isval = true;
+        else
+            GetLocation();
+        $('#loader').hide();
+        return isval;
+    }
+
+    function GetLocation() {
+        var Isvalid = false;
+        $('.errormessage').html('');
+        $("#Error").hide();
+
+        var geocoder = new google.maps.Geocoder();
+        var con = $('#Address').val();
+        var Adde = $('#Address2').val();
+        var city = $('#City').val();
+        var zip = $('#Zip').val();
+        var com = city + ',' + $('#State').val();
+
+        geocoder.geocode({
+            componentRestrictions: {
+
+                country: 'USA',
+                postalCode: zip
+            }
+        },
+
+            function (results, status) {
+                debugger;
+                if (status == 'OK') {
+                    debugger;
+                    var marker = new google.maps.Marker({
+
+                        position: results[0].geometry.location
+
+
+                    });
+
+                    $('#Latitude').val(results[0].geometry.location.lat());
+                    $('#Longitude').val(results[0].geometry.location.lng());
+                    $("#btnsubmit").attr("onclick", "return validation(true)");
+                    $("#btnsubmit").click();
+
+                }
+                else {
+                    debugger;
+                    $('.errormessage').html('Invalid address, please enter accurate address');
+                    $('#Error').show();
+                    $(window).scrollTop(0);
+                    Isvalid = false;
+                }
+            });
+
+    }
+
+    function updatePassword() {
+
+        $('#loader').show();
+        $('#divErrorChangePassword').hide();
+        $('#divErrorChangePassword').find('span.spanerrormodal').html('');
+
+        if ($('#OldPassword').val() == '') {
+            $('#divErrorChangePassword').show();
+            $('#divErrorChangePassword').find('span.spanerrormodal').html('Old password required.');
+            return false;
+        }
+
+        if ($('#ConfirmPassword').val() != $('#NewPassword').val()) {
+            $('#divErrorChangePassword').show();
+            $('#divErrorChangePassword').find('span.spanerrormodal').html('New password and confirm password should be same.');
+            return false;
+        }
+        if ($('#ConfirmPassword').val() == '' || $('#NewPassword').val() == '') {
+            $('#divErrorChangePassword').show();
+            $('#divErrorChangePassword').find('span.spanerrormodal').html('New password and confirm password should not be blank.');
+            return false;
+        }
+
+
+        $('#Success').hide();
+        $('#Success').find('span.successmessage').html('');
+
+        $.ajax({
+            url: '@Url.Action("SavePassword", "vProfile")',
+            data: { 'OldPassword': $('#OldPassword').val(), 'NewPassword': $('#NewPassword').val()},
+            async: false,
+            success: function (res) {
+                if (res.indexOf('Success') >= 0) {
+                    $('#Success').show();
+                    $('#Success').find('span.successmessage').html('Password has been changed successfully.');
+                    $('button.close').click();
+                } else {
+                    $('#divErrorChangePassword').show();
+                    $('#divErrorChangePassword').find('span.spanerrormodal').html(res);
+                }
+                $('#loader').hide();
+            }
+        });
+        return false;
+    }
+
+    function ClearPopup() {
+        $('#OldPassword').val('');
+        $('#NewPassword').val('');
+        $('#ConfirmPassword').val('');
+        $('#divErrorChangePassword').hide();
+        $('#divErrorChangePassword').find('span.spanerrormodal').html('');
+    }
+
+    function Cancle() {
+
+        window.location.href = 'VProfileView?ResourceKey=' + $("#ResourceKey").val();
+
+    }
+</script>

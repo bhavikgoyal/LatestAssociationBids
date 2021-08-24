@@ -1,0 +1,18 @@
+ var fu_files = $("#fu_files")[0].files;
+
+
+ <div class="modal-body">
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-12">
+                                                                                                <div class="form-group">
+                                                                                                    <label class="form-label">Upload Files</label>
+                                                                                                    <input id="fu_files" type="file" class="dropify" />
+                                                                                                    
+                                                                                                </div>
+                                                                                            </div><!-- end of col -->
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="modal-footer">
+                                                                                        <button type="button" class="btn btn-secondary" onclick="closeFileUploadModal()">Close</button>
+                                                                                        <button type="button" class="btn btn-primary" onclick="fileUpload()">Upload</button>
+                                                                                    </div>

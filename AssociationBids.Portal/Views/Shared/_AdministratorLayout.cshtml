@@ -1,0 +1,275 @@
+﻿<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="" name="description">
+    <meta content="Association Bids" name="author">
+    <meta name="keywords" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/brand/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/brand/favicon.ico" />
+
+    <!-- Title -->
+    <title>Association Bids</title>
+
+    <!--Bootstrap.min css-->
+    <link href="~/Content/themes/assets/css/style.css" rel="stylesheet" />
+
+    <!-- Perfect scroll bar css-->
+    <link href="~/Content/themes/assets/plugins/pscrollbar/perfect-scrollbar.css" rel="stylesheet" />
+
+    <!--Sidemenu css-->
+    <link rel="stylesheet" href="~/Content/themes/assets/plugins/sidemenu/sidemenu-icon.css">
+
+    <!--Daterangepicker css-->
+    <link href="~/Content/themes/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+
+    <!-- Sidebar Accordions css -->
+    <link href="~/Content/themes/assets/plugins/sidemenu-responsive-tabs/css/easy-responsive-tabs.css" rel="stylesheet">
+
+    <!-- Rightsidebar css -->
+    <link href="~/Content/themes/assets/plugins/sidebar/sidebar.css" rel="stylesheet">
+
+    <!--News ticker css -->
+    <link href="~/Content/themes/assets/plugins/newsticker/breaking-news-ticker.css" rel="stylesheet" />
+
+    <!---Font icons css-->
+    <link href="~/Content/themes/assets/plugins/webfonts/plugin.css" rel="stylesheet" />
+    <link href="~/Content/themes/assets/plugins/webfonts/icons.css" rel="stylesheet" />
+    <link href="~/Content/themes/assets/fonts/fonts/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Color-skins css -->
+    <link id="theme" rel="stylesheet" type="text/css" media="all" href="~/Content/themes/assets/colors/color-skins/color.css" />
+    <link rel="stylesheet" href="~/Content/themes/assets/css/demo-styles.css" />
+</head>
+
+<body class="app sidebar-mini">
+
+    <!--Global-Loader-->
+    <div id="global-loader">
+        <img src="assets/images/brand/icon.png" alt="loader">
+    </div>
+
+    <div class="page">
+        <div class="page-main">
+            <!--app-header-->
+            <div class="app-header header d-flex">
+                <div class="container-fluid">
+                    <div class="d-flex">
+                        <a class="header-brand" href="~/Dashboard/Dashboard">
+                            <img src="~/Content/themes/assets/images/brand/logo.png" class="header-brand-img main-logo" alt="Sparic logo">
+                            <img src="~/Content/themes/assets/images/brand/icon.png" class="header-brand-img icon-logo" alt="Sparic logo">
+                        </a><!-- logo-->
+                        <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-toggle="sidebar" href="#"></a>
+                        <a href="#" data-toggle="search" class="nav-link nav-link  navsearch"><i class="fa fa-search"></i></a><!-- search icon -->
+
+                        <div class="header-top-txt">
+                            <h2>AssociationBids Management</h2>
+                            <h3>Administrator Portal</h3>
+                        </div>
+
+                        
+                        <div class="d-flex order-lg-2 ml-auto header-rightmenu">
+
+                            <div class="dropdown">
+                                <a class="nav-link icon full-screen-link" id="fullscreen-button">
+                                    <i class="fe fe-maximize-2"></i>
+                                </a>
+                            </div><!-- full-screen -->
+                            <div class="dropdown header-notify">
+                                <a class="nav-link icon" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fe fe-bell "></i>
+                                    <span class="pulse bg-success"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow ">
+                                    <a href="#" class="dropdown-item text-center">4 New Notifications</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="dropdown-item d-flex pb-3">
+                                        <div class="notifyimg bg-green">
+                                            <i class="fe fe-mail"></i>
+                                        </div>
+                                        <div>
+                                            <strong>Message Sent.</strong>
+                                            <div class="small text-muted">12 mins ago</div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="dropdown-item d-flex pb-3">
+                                        <div class="notifyimg bg-pink">
+                                            <i class="fe fe-shopping-cart"></i>
+                                        </div>
+                                        <div>
+                                            <strong>Order Placed</strong>
+                                            <div class="small text-muted">2  hour ago</div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="dropdown-item d-flex pb-3">
+                                        <div class="notifyimg bg-blue">
+                                            <i class="fe fe-calendar"></i>
+                                        </div>
+                                        <div>
+                                            <strong> Event Started</strong>
+                                            <div class="small text-muted">1  hour ago</div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="dropdown-item d-flex pb-3">
+                                        <div class="notifyimg bg-orange">
+                                            <i class="fe fe-monitor"></i>
+                                        </div>
+                                        <div>
+                                            <strong>Your Admin Lanuch</strong>
+                                            <div class="small text-muted">2  days ago</div>
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="dropdown-item text-center">View all Notifications</a>
+                                </div>
+                            </div><!-- notifications -->
+                            <div class="dropdown header-user">
+                                <a class="nav-link leading-none siderbar-link" data-toggle="sidebar-right" data-target=".sidebar-right">
+                                    <span class="mr-3 d-none d-lg-block ">
+                                        <span class="text-gray-white"><span class="ml-2">Alison</span></span>
+                                    </span>
+                                    <span class="avatar avatar-md brround"><img src="~/Content/themes/assets/images/users/avatars/19.png" alt="Profile-img" class="avatar avatar-md brround"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                    <div class="header-user text-center mt-4 pb-4">
+                                        <span class="avatar avatar-xxl brround"><img src="~/Content/themes/assets/images/users/avatars/19.png" alt="Profile-img" class="avatar avatar-xxl brround"></span>
+                                        <a href="#" class="dropdown-item text-center font-weight-semibold user h3 mb-0">Alison</a>
+                                       
+                                    </div>
+                                  
+                                    <div class="card-body border-top">
+                                        <div class="row">
+                                         
+                                            <div class="col-6 text-center">
+                                                <a class="" href=""><i class="dropdown-icon mdi mdi-logout-variant fs-30 m-0 leading-tight"></i></a>
+                                                <div>Sign out</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- profile -->
+
+                            <div class="dropdown">
+                                <a class="nav-link icon siderbar-link" data-toggle="sidebar-right" data-target=".sidebar-right">
+                                    <i class="fe fe-more-horizontal"></i>
+                                </a>
+                            </div><!-- Right-siebar-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/app-header-->
+            <!-- Sidebar menu-->
+            <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+            <aside class="app-sidebar toggle-sidebar">
+
+                <ul class="side-menu toggle-menu">
+                    <li class="slide">
+                        <a class="side-menu__item" href="index.html"><i class="side-menu__icon typcn typcn-device-desktop"></i><span class="side-menu__label">Home</span></a>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item" href="propertymang/propertymanagement.html"><i class="side-menu__icon fa fa-suitcase"></i><span class="side-menu__label">Management Companies</span></a>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon fa fa-users"></i><span class="side-menu__label">Vendors</span><i class="angle fa fa-angle-right"></i></a>
+                        <ul class="slide-menu">
+                            <li><a href="vendormang/vendormangment.html" class="slide-item"> Vendors</a></li>
+                            <li><a href="vendormang/invitedvendors.html" class="slide-item"> Invited Vendors</a></li>
+                            <li><a href="vendormang/vendorapprovals.html" class="slide-item"> Vendor Approvals (6)</a></li>
+                            <li><a href="vendormang/vendorrefund.html" class="slide-item"> Vendors Refunds (3)</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="side-menu__item" href="staffdirectory/staffdirectory.html"><i class="side-menu__icon fa fa-address-book"></i><span class="side-menu__label">Staff Directory</span></a>
+                    </li>
+                    <li class="slide">
+                        <a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon fa fa-gears"></i><span class="side-menu__label">Account Management</span><i class="angle fa fa-angle-right"></i></a>
+                        <ul class="slide-menu">
+                            <li><a href="~/ServiceTmp/ServiceList" class="slide-item"> Services</a></li>
+                            <li><a href="~/Agreement/AgreementList" class="slide-item"> Agreements</a></li>
+                            <li><a href="~/EmailTemplate/EmailTemplateList" class="slide-item"> Email Templates</a></li>
+                            <li><a href="masters/pricing.html" class="slide-item"> Pricing</a></li>
+                            <li><a href="~/NotificationTemplate/NotifiCationTemplateList" class="slide-item"> Notificatiaon templates</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </aside>
+
+            @RenderBody()
+            <!--sidemenu end-->
+            <!-- app-content-->
+          
+            <!-- End app-content-->
+        </div>
+    </div>
+
+    <!-- End Page -->
+
+
+    <script src="~/Content/themes/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/plugins/bootstrap/popper.min.js"></script>
+
+    <!--Jquery Sparkline js-->
+    <script src="~/Content/themes/assets/js/vendors/jquery.sparkline.min.js"></script>
+
+    <!-- Chart Circle js-->
+    <script src="~/Content/themes/assets/js/vendors/circle-progress.min.js"></script>
+
+    <!-- Star Rating js-->
+    <script src="~/Content/themes/assets/plugins/rating/jquery.rating-stars.js"></script>
+
+    <!--Moment js-->
+    <script src="~/Content/themes/assets/plugins/moment/moment.min.js"></script>
+
+    <!-- Daterangepicker js-->
+    <script src="~/Content/themes/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!--Side-menu js-->
+    <script src="~/Content/themes/assets/plugins/sidemenu/sidemenu-icon.js"></script>
+
+    <!--News Ticker js-->
+    <script src="~/Content/themes/assets/plugins/newsticker/breaking-news-ticker.min.js"></script>
+    <script src="~/Content/themes/assets/plugins/newsticker/newsticker.js"></script>
+
+    <!-- Sidebar Accordions js -->
+    <script src="~/Content/themes/assets/plugins/sidemenu-responsive-tabs/js/easyResponsiveTabs.js"></script>
+
+    <!-- Perfect scroll bar js-->
+    <script src="~/Content/themes/assets/plugins/pscrollbar/perfect-scrollbar.js"></script>
+    <script src="~/Content/themes/assets/plugins/pscrollbar/p-scroll.js"></script>
+
+    <!-- Rightsidebar js -->
+    <script src="~/Content/themes/assets/plugins/sidebar/sidebar.js"></script>
+
+    <!--Time Counter js-->
+    <script src="~/Content/themes/assets/plugins/counters/jquery.missofis-countdown.js"></script>
+    <script src="~/Content/themes/assets/plugins/counters/counter.js"></script>
+
+    <!-- ApexChart -->
+    <script src="~/Content/themes/assets/js/apexcharts.js"></script>
+
+    <!-- Charts js-->
+    <script src="~/Content/themes/assets/plugins/chart/chart.bundle.js"></script>
+    <script src="~/Content/themes/assets/plugins/chart/utils.js"></script>
+
+    <!--Peitychart js-->
+    <script src="~/Content/themes/assets/plugins/peitychart/jquery.peity.min.js"></script>
+    <script src="~/Content/themes/assets/plugins/peitychart/peitychart.init.js"></script>
+
+    <!-- Custom-charts js-->
+    <script src="~/Content/themes/assets/js/index1.js"></script>
+
+    <!-- Custom js-->
+    <script src="~/Content/themes/assets/js/custom.js"></script>
+    <link rel="stylesheet" href="../assets/css/cust-wizard.css">
+    <script src="../assets/js/cust-wizard.js"></script>
+
+    <script src="~/Content/themes/chosen.jquery.min.js"></script>
+    <link href="~/Content/themes/chosen.min.css" rel="stylesheet" />
+
+</body>
+</html>

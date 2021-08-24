@@ -1,0 +1,92 @@
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\AssociationBids.Portal.Common.dll.config
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\AssociationBids.Portal.Common.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\AssociationBids.Portal.Common.pdb
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\Newtonsoft.Json.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\Stripe.net.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\System.Net.Http.Formatting.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\System.Web.Http.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\Newtonsoft.Json.xml
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\Stripe.net.pdb
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\Stripe.net.xml
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\System.Net.Http.Formatting.xml
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\System.Web.Http.xml
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.csproj.CoreCompileInputs.cache
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.csproj.CopyComplete
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.dll
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.pdb
+H:\pankaj  garg\New GithubAssociation\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.csprojAssemblyReference.cache
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\AssociationBids.Portal.Common.dll.config
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\AssociationBids.Portal.Common.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\AssociationBids.Portal.Common.pdb
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\Newtonsoft.Json.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\Stripe.net.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\System.Net.Http.Formatting.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\System.Web.Http.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\Newtonsoft.Json.xml
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\Stripe.net.pdb
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\Stripe.net.xml
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\System.Net.Http.Formatting.xml
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Common\bin\Debug\System.Web.Http.xml
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.csprojAssemblyReference.cache
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.csproj.CoreCompileInputs.cache
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.csproj.CopyComplete
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.dll
+D:\pankaj  garg\New GithubAssociation\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.pdb
+D:\pankaj  garg\MyAssocition\AssociationBids.Common\bin\Debug\AssociationBids.Portal.Common.dll.config
+D:\pankaj  garg\MyAssocition\AssociationBids.Common\bin\Debug\AssociationBids.Portal.Common.dll
+D:\pankaj  garg\MyAssocition\AssociationBids.Common\bin\Debug\AssociationBids.Portal.Common.pdb
+D:\pankaj  garg\MyAssocition\AssociationBids.Common\bin\Debug\Newtonsoft.Json.dll
+D:\pankaj  garg\MyAssocition\AssociationBids.Common\bin\Debug\Stripe.net.dll
+D:\pankaj  garg\MyAssocition\AssociationBids.Common\bin\Debug\System.Net.Http.Formatting.dll
+D:\pankaj  garg\MyAssocition\AssociationBids.Common\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\pankaj  garg\MyAssocition\AssociationBids.Common\bin\Debug\System.Web.Http.dll
+D:\pankaj  garg\MyAssocition\AssociationBids.Common\bin\Debug\Newtonsoft.Json.xml
+D:\pankaj  garg\MyAssocition\AssociationBids.Common\bin\Debug\Stripe.net.pdb
+D:\pankaj  garg\MyAssocition\AssociationBids.Common\bin\Debug\Stripe.net.xml
+D:\pankaj  garg\MyAssocition\AssociationBids.Common\bin\Debug\System.Net.Http.Formatting.xml
+D:\pankaj  garg\MyAssocition\AssociationBids.Common\bin\Debug\System.Web.Http.xml
+D:\pankaj  garg\MyAssocition\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.csprojAssemblyReference.cache
+D:\pankaj  garg\MyAssocition\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.csproj.CoreCompileInputs.cache
+D:\pankaj  garg\MyAssocition\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.csproj.CopyComplete
+D:\pankaj  garg\MyAssocition\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.dll
+D:\pankaj  garg\MyAssocition\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.pdb
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\bin\Debug\AssociationBids.Portal.Common.dll.config
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\bin\Debug\AssociationBids.Portal.Common.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\bin\Debug\AssociationBids.Portal.Common.pdb
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\bin\Debug\Newtonsoft.Json.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\bin\Debug\Stripe.net.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\bin\Debug\System.Net.Http.Formatting.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\bin\Debug\System.Web.Http.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\bin\Debug\itextsharp.xml
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\bin\Debug\Newtonsoft.Json.xml
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\bin\Debug\Stripe.net.pdb
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\bin\Debug\Stripe.net.xml
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\bin\Debug\System.Net.Http.Formatting.xml
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\bin\Debug\System.Web.Http.xml
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.csprojAssemblyReference.cache
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.csproj.CoreCompileInputs.cache
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.csproj.CopyComplete
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.dll
+D:\pankaj  garg\My New Association\EDDIE&SHARAD\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.pdb
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\bin\Debug\AssociationBids.Portal.Common.dll.config
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\bin\Debug\AssociationBids.Portal.Common.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\bin\Debug\AssociationBids.Portal.Common.pdb
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\bin\Debug\Newtonsoft.Json.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\bin\Debug\Stripe.net.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\bin\Debug\System.Net.Http.Formatting.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\bin\Debug\System.Web.Http.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\bin\Debug\itextsharp.xml
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\bin\Debug\Newtonsoft.Json.xml
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\bin\Debug\Stripe.net.pdb
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\bin\Debug\Stripe.net.xml
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\bin\Debug\System.Net.Http.Formatting.xml
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\bin\Debug\System.Web.Http.xml
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.csprojAssemblyReference.cache
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.csproj.CoreCompileInputs.cache
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.csproj.CopyComplete
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.dll
+D:\pankaj  garg\LatestMyAssociation\AssociationBids.Common\obj\Debug\AssociationBids.Portal.Common.pdb

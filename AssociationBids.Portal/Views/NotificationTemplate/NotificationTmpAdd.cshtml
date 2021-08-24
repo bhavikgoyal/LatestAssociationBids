@@ -1,0 +1,214 @@
+﻿@model AssociationBids.Portal.Model.NotificationTmpModel
+
+@{
+    ViewBag.Title = "NotificationTmpAdd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>NotificationTmpAdd</h2>
+
+<link href="~/js/jquery.tagsinput.css" rel="stylesheet" />
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="~/js/jquery.tagsinput.js"></script>
+<script src="https://cdn.ckeditor.com/4.14.1/FullPackage/ckeditor.js"></script>
+<script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="../NotificationTemplate/NotifiCationTemplateList">Notification Template</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add Notification Template</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+        <!-- End page-header -->
+        <div class="alert alert-danger" id="Error" style="display:block; margin-top: 20px;">
+            <strong><span class="errormessage"></span></strong>
+        </div>
+
+
+        @using (Html.BeginForm("NotificationTmpAdd", "NotificationTemplate", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+        {
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+
+                        <div class="card-body">
+
+                            <div class="form-div">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                Title
+                                                @Html.ValidationMessageFor(model => model.PushNotificationTitle, "*", new { @class = "text-danger" })
+                                            </label>
+                                            @Html.EditorFor(model => model.PushNotificationTitle, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Notification Title" } })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                Notificatiaon	Type
+                                                @Html.ValidationMessageFor(model => model.PushNotificationType, "*", new { @class = "text-danger" })
+                                            </label>
+                                            @Html.DropDownListFor(model => model.PushNotificationType, new SelectList(ViewBag.lstlookUp, "Value", "Text"), new { @data_rel = "Choose_one", @class = "form-control", placeholder = "Please Select..." })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                Subject
+                                                @Html.ValidationMessageFor(model => model.NTSubject, "*", new { @class = "text-danger" })
+                                            </label>
+                                            @Html.EditorFor(model => model.NTSubject, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Notification Subject" } })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                Body
+
+                                            </label>
+                                            @Html.TextAreaFor(model => model.Body, new { @class = "form-control ", placeholder = "EmailSubject" })
+
+                                            <script>
+                                                CKEDITOR.replace('Body');
+                                            </script>
+                                            <p id="Message"></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <p id="varnames"></p>
+                                        </div>
+                                    </div>
+                                </div><!-- end of row -->
+                                <hr />
+
+                                <hr />
+
+                                <div class="button-row d-flex mt-4">
+                                    <a href="@Request.UrlReferrer" class="btn btn-default" title="Cancel">Cancel</a>
+                                    @*<button class="btn btn-default" onclick="return Clear()" type="button" value="UserAdd" title="Clear">Clear</button>*@
+                                    <input t class="btn btn-primary ml-auto" id="btnsubmit" type="submit" onclick="return validation()" title="Save" value="Save" /><i class="fa fa-loppy-o"></i>
+                                </div>
+                            </div><!-- end of form-div  -->
+                        </div><!--end of card body -->
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+    </div><!--End side app-->
+    <!-- Right-sidebar-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+
+<!-- Back to top -->
+<!-- Custom js-->
+<script src="../assets/js/custom.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$("#Notifi").closest('li').addClass('active');
+        //$("#Notifi1").addClass('active');
+        SetActiveMenu($("#Notifi"), false);
+        $(".advance_search").click(function () {
+            $("#advancesearch3").toggle(500);
+        });
+        $(".overlayclose").click(function () {
+            $("#advancesearch3").hide();
+        });
+    });
+    $(document).ready(function () {
+        $('#loader').show();
+        $('.errormessage').html('');
+        $('#Error').hide();
+
+        $('#loader').hide();
+
+    });
+    function validation() {
+
+        $('#loader').show();
+        $('.errormessage').html('');
+
+        if ($('#PushNotificationTitle').val() == "") {
+            $('.errormessage').html('Please Enter Title.');
+            $('#Error').show();
+            $('#PushNotificationTitle').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+        if ($('#PushNotificationType').val() == "0") {
+            $('.errormessage').html('Please Select Notification Type.');
+            $('#Error').show();
+            $('#PushNotificationType').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+
+        if ($('#NTSubject').val() == "") {
+            $('.errormessage').html('Please Enter Subject.');
+            $('#Error').show();
+            $('#NTSubject').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+
+
+        $('#loader').hide();
+
+        return true;
+    }
+
+    $("#PushNotificationType").change(function () {
+        var ntype = $("#PushNotificationType").find(":selected").text()
+
+        $.ajax
+            ({
+                url: '@Url.Action("GetVariablesForNotification", "NotificationTemplate")',
+                cache: false,
+                data: {
+                    type: ntype
+                },
+                success: function (response) {
+                    $("#varnames").html(response);
+                }
+            });
+    });
+
+    function Clear() {
+
+        document.getElementById("PushNotificationTitle").value = "";
+        document.getElementById("PushNotificationType").value = "Please Select";
+        document.getElementById("NTSubject").value = "";
+        document.getElementById("Body").value = "";
+        $('.field-validation-error').html("");
+    }
+</script>

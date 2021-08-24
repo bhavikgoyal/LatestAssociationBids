@@ -1,0 +1,143 @@
+﻿@model AssociationBids.Portal.Model.PropertyModel
+@{
+    ViewBag.Title = "PropertyUpdate";
+    Layout = "~/Views/Shared/_PropertyManagerLayout.cshtml";
+}
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="PMPropertiesList.html">Properties</a></li>
+                <li class="breadcrumb-item"><a href="PropertiesView.html">Property Details</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Properties</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+        <!-- End page-header -->
+
+        @using (Html.BeginForm("PropertyUpdate", "PMProperties", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="text-right"><a href="#" class="btn btn-icon btn-danger"><i class="fe fe-trash"></i> Delete</a></div>
+                                    @Html.HiddenFor(model => model.PropertyKey)
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Title</label>
+                                        @*<input type="text" class="form-control" name="input" placeholder="First Name">*@
+                                        @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Title" } })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Number Of Units</label>
+                                        @*<input type="text" class="form-control" name="input" placeholder="Last Name">*@
+                                        @Html.EditorFor(model => model.NumberOfUnits, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Number Of Units" } })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Description</label>
+                                        @*<input type="text" class="form-control" name="input" placeholder="Enter Email">*@
+                                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Description" } })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Address</label>
+                                        @*<input type="text" class="form-control" name="input" placeholder="Enter Secondary Email">*@
+                                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Address" } })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Address2</label>
+                                        @*<input type="text" class="form-control" name="input" placeholder="Work Phone 1">*@
+                                        @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Address2" } })
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">City</label>
+                                        @*<input type="text" class="form-control" name="input" placeholder="City">*@
+                                        @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "First Name" } })
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">State</label>
+                                        @Html.DropDownList("State", new SelectList(ViewBag.lststate, "Value", "Text"), new { @data_rel = "Choose_one", @class = "form-control", placeholder = "Please Select..." })
+                                    </div>
+                                </div><!-- end of col -->
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Zip</label>
+                                        @*<input type="text" class="form-control" name="input" placeholder="Zip">*@
+                                        @Html.EditorFor(model => model.Zip, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "First Name" } })
+                                    </div>
+                                </div><!-- end of col -->
+
+                            </div><!-- end of row-->
+
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">BidRequestAmount</label>
+                                        @*<input type="text" class="form-control" name="input" placeholder="Address 1">*@
+                                        @Html.EditorFor(model => model.BidRequestAmount, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "BidRequestAmount" } })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">MinimumInsuranceAmount</label>
+                                        @*<input type="text" class="form-control" name="input" placeholder="Address 2">*@
+                                        @Html.EditorFor(model => model.MinimumInsuranceAmount, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "MinimumInsuranceAmount" } })
+                                    </div>
+                                </div>
+                            </div><!-- end of row -->
+
+
+                        </div><!--end of card body -->
+                        <div class="card-footer">
+                            <div class="button-row d-flex">
+                                <a  href="~/PMProperties/PropertiesView" class="btn btn-default" title="Cancel">Cancel</a>
+                                <button class="btn btn-sm btn-primary ml-auto" type="submit" title="Update"><i class="fa fa-check-circle-o "></i> Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+    </div><!--End side app-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+<!-- End app-content-->

@@ -1,0 +1,223 @@
+﻿@model AssociationBids.Portal.Model.CompanyModel
+    @{
+        ViewBag.Title = "companyView";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+
+    <script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+    <h2>companyView</h2>
+
+
+    <!-- app-content-->
+    <div class="app-content  my-3 my-md-5">
+        <div class="side-app">
+
+            <!-- page-header -->
+            <div class="page-header">
+                <ol class="breadcrumb">
+                    <!-- breadcrumb -->
+                    <li class="breadcrumb-item"><a href="../ACompanyManagement/companydefaultView.html">Company  Management</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Company Details</li>
+                </ol><!-- End breadcrumb -->
+
+            </div>
+            <!-- End page-header -->
+
+
+
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        @Html.HiddenFor(model => model.CompanyKey)
+                        <div class="card-body">
+
+                            <!-- Tabs -->
+                            <ul class="nav panel-tabs">
+                                <li class=""><a href="#bidrequests" class="active" data-toggle="tab">Bid Requests</a></li>
+                                <li><a href="#comments" data-toggle="tab">Comments (3)</a></li>
+                                <li><a href="#notes" data-toggle="tab">Notes</a></li>
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane active " id="bidrequests">
+                            </div><!-- end of tab -->
+                            <div class="tab-pane " id="comments">
+                            </div><!-- end of tab -->
+                            <div class="tab-pane " id="notes">
+                            </div><!-- end of tab -->
+                        </div><!-- end of tab content -->
+
+
+                        <div class="form-div">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a onclick=" EditPage();" class="btn btn-primary ml-auto  pull-right" style="color: white;" title="Edit"><i class="fa fa-pencil"></i> Edit</a>
+                                </div>
+                            </div>
+                            <hr />
+
+                            <h4 class="box-title-blk">Property Management</h4>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Primary Contact</label>
+                                        <p>@Model.PrimaryContact</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Name</label>
+                                        <p>@Model.Name</p>
+                                    </div>
+                                </div><!-- end of col -->
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Legal Name</label>
+                                        <p>@Model.LegalName</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Tax ID</label>
+                                        <p>@Model.TaxID</p>
+                                    </div>
+                                </div><!-- end of col -->
+                            </div>
+
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Address 1</label>
+                                        <p>@Model.Address</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Address 2</label>
+                                        <p>@Model.Address2</p>
+                                    </div>
+                                </div><!-- end of col -->
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">City</label>
+                                        <p>@Model.City</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">State</label>
+                                        <p>@Model.State</p>
+                                    </div>
+                                </div><!-- end of col -->
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Zip</label>
+                                        <p>@Model.Zip</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <hr />
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Work Phone 1</label>
+                                        <p>@Model.Work</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Work Phone 2</label>
+                                        <p>@Model.Work2</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Fax Number</label>
+                                        <p>@Model.Fax</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Website</label>
+                                        <p>@Model.Website</p>
+                                    </div>
+                                </div><!-- end of col -->
+                            </div>
+
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Description</label>
+                                        <p>@Model.Description</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Days to respons to bid requests</label>
+                                        <p>@Model.BidRequestResponseDays</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Due to  submit days</label>
+                                        <p>@Model.BidSubmitDays</p>
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Bid request amount</label>
+                                        <p>@Model.BidRequestAmount</p>
+                                    </div>
+                                </div><!-- end of col -->
+
+
+                            </div><!-- end of row -->
+
+
+
+
+
+                        </div><!-- end of form div -->
+
+
+
+
+
+
+
+                    </div><!--end of card body -->
+                </div>
+            </div>
+
+
+
+
+        </div><!--End side app-->
+        <!--footer-->
+        <footer class="footer">
+            <div class="container">
+                <div class="row align-items-center flex-row-reverse">
+                    <div class="col-lg-12 col-sm-12   text-center">
+                        Copyright © 2020 Association Bids. All rights reserved.
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End Footer-->
+    </div>
+    <!-- End app-content-->
+
+    <script>
+
+        function EditPage() {
+            window.location.href = 'ACompanyEdit?CompanyKey=' + $("#CompanyKey").val();
+    }
+    </script>

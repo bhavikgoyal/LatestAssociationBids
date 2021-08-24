@@ -1,0 +1,868 @@
+﻿@model AssociationBids.Portal.Model.PricingModel
+@{
+    ViewBag.Title = "PricingList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string Errormessage = Convert.ToString(ViewData["Errormessage"]);
+}
+<h2>PricingList</h2>
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<!-- app-content-->
+
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="#" onclick="homepage()">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Pricing</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+        @if (TempData["Sucessmessage"] != null)
+        {
+            <p class="alert alert-success alert-dismissible" id="successMessage">
+                @TempData["Sucessmessage"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        @if (TempData["delete"] != null)
+        {
+            <p class="alert alert-danger alert-dismissible" id="successMessage">
+                @TempData["delete"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        <div role="alert">
+            <div class="alert alert-danger" id="Error" style="display: none;margin-top: 20px;">
+                <strong><span class="errormessage"></span></strong>
+            </div>
+            @if (!string.IsNullOrEmpty(Errormessage))
+            {
+                <div class="alert alert-danger" style="margin-top: 20px;">
+                    <strong><span>@Errormessage</span></strong>
+                </div>
+            }
+        </div>
+        <!-- End page-header -->
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="row">
+
+                                <div class="col-lg-4 col-xl-4 mb15">
+                                    <label class="form-label">PricingType</label>
+                                    @Html.DropDownList("pricetype", new SelectList(ViewBag.lstPricingType, "Value", "Text"), new { @data_rel = "Choose_one", @class = "form-control", placeholder = "Choose one" })
+
+                                </div>
+                                <div class="col-lg-4  col-xl-4 " style="position:relative">
+                                    <input type="button" class="btn btn-secondary" id="btnsearch" value="Search" style="position: absolute; bottom: 2px">
+                                    @*<a class="btn btn-secondary" href="#" role="button">Search</a>*@
+                                    @*@<span class="advance_search btn_advsearch" onclick="toggle_visibility('advancesearch2');"><i class="fe fe-chevron-down"></i></span>*@
+                                </div>
+                                <div class="col-lg-4 col-xl-4">
+                                    <div class="btn_group_div text-right">
+                                        <a href="~/NewPricing/NewPricingAdd" class="btn btn-primary">+ Add Pricing</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end of form group -->
+                        <div id="advancesearch3">
+                            <div class="overlayclose"><i class="fa fa-times"></i></div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        @*<label class="form-label">Status</label>*@
+                                        <select class="form-control" id="drpAdvancSearch">
+                                            @*<option value="StartAmount">Start Amount</option>
+                                                <option value="EndAmount">End Amount</option>*@
+                                            <option value="Fee">Fee</option>
+                                            <option value="PricingTypeKey">Pricing Type</option>
+                                            @*<option value="CompanyKey">Company</option>*@
+                                            <option value="SortOrder">Sort Order</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @*<label class="form-label">&nbsp;</label>*@
+                                        <input class="form-control" id="txtAdvancedSearch" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        @*<label class="form-label">&nbsp;</label>*@
+                                        <button type="button" id="btnadvancesearch" class="btn btn-primary btn-icon-text">
+                                            Search
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="table-responsive" id="RawDatas">
+                            <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                <thead>
+                                    <tr>
+                                        @*<th width="15%" onclick="SortingFun('StartAmount');" style="cursor: pointer;">
+                                                Start Amount <i id="StartAmount" class="fa fa-sort-asc pull-right"></i>
+
+                                            </th>
+                                            <th width="15%" onclick="SortingFun('EndAmount');" style="cursor: pointer;">
+                                                End Amount<i id="EndAmount" class="fa fa-sort-asc pull-right"></i>
+
+                                            </th>*@
+                                        <th width="15%" onclick="SortingFun('FeeAmount');" style="cursor: pointer;">
+                                            Fee Amount<i id="FeeAmount" class="fa fa-sort-asc pull-right"></i>
+
+                                        </th>
+                                        <th width="15%" onclick="SortingFun('PricingType');" style="cursor: pointer;">
+                                            Pricing Type<i id="PricingType" class="fa fa-sort-asc pull-right"></i>
+
+                                        </th>
+                                        @*<th width="15%" onclick="SortingFun('Company');" style="cursor: pointer;">
+                                                Company<i id="Company" class="fa fa-sort-asc pull-right"></i>
+
+                                            </th>*@
+                                        <th width="15%" onclick="SortingFun('SortOrder');" style="cursor: pointer;">
+                                            Sort Order<i id="SortOrder" class="fa fa-sort-asc pull-right"></i>
+
+                                        </th>
+                                        <th width="5%">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        @*<td>$<span class="StartAmount"></span></td>
+                                            <td>$<span class="EndAmount"></span></td>*@
+                                        <td><span class="FeeAmount"></span></td>
+                                        <td><span class="PricingType"></span></td>
+                                        @*<td><span class="Company"></span></td>*@
+                                        <td><span class="SortOrder"></span></td>
+                                        <td align="center"><a id="viewdata" title="View Details" role="button"><i class="fe fe-eye font18"></i></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="pull-left">
+                                <label><span class="spnToRecs">0</span> to <span class="spnOfRecs">0</span> out of <span class="spnTotalRecs">0</span>&nbsp; Records </label>
+                            </div>
+                            <div class="dataTables_paginate paging_simple_numbers" id="pagin">
+                                <ul class="pagination"></ul>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="pagination" style="display:none;">
+                        <input type="hidden" id="HdnSortValue" value="order by pr.StartAmount asc" />
+                        <input type="hidden" id="HdnPageIndex" value="1" />
+                        <input type="hidden" id="HdnAdvanceSearch" value="" />
+
+                        
+                        <input type="hidden" id="StartAmounthdn" value="asc" />
+                        <input type="hidden" id="EndAmounthdn" value="asc" />
+                        <input type="hidden" id="FeeAmounthdn" value="asc" />
+                        <input type="hidden" id="PricingTypehdn" value="asc" />
+                        @*<input type="hidden" id="Companyhdn" value="asc" />*@
+                        <input type="hidden" id="SortOrderhdn" value="asc" />
+                        <input type="hidden" id="TotalPageRecord" value='0' />
+
+                        @*<input type="hidden" id="incremSlide" value='5' />
+                            <input type="hidden" id="startPage" value='0' />
+                            <input type="hidden" id="numberPage" value='0' />*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--End side app-->
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+</div>
+<!-- End app-content-->
+
+<script src="../assets/js/index1.js"></script>
+<!-- Custom js-->
+<script src="../assets/js/custom.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".advance_search").click(function () {
+
+            $("#advancesearch2").toggle(500);
+        });
+        $(".overlayclose").click(function () {
+            $("#advancesearch2").hide();
+        });
+        $('.loader-wrapper').show();
+        LoadSortTableFill();
+        var sorted = 'order by StartAmount asc';
+        $("#SortValuee").val(sorted);
+        $('#divSuccess').hide();
+
+        $("#btnadvancesearch").click(function () {
+            var field = $("#drpAdvancSearch").val();
+            var Condition = "";
+            //And (Pr.StartAmount=20)
+            if (field == 'PricingTypeKey') {
+                Condition = " and (Pr." + field + " = " + "( select LookUpKey from LookUp where Title ='" + $("#txtAdvancedSearch").val() + "' and LookUpTypeKey = 12 ))";
+            }
+            //else if (field == 'CompanyKey')
+            //{
+            //    Condition = " and (Pr." + field + " = " + " (select CompanyKey from company where Name ='" + $("#txtAdvancedSearch").val() + "' ) )";
+            //}
+            else {
+                Condition = " and (Pr." + field + " =" + $("#txtAdvancedSearch").val() + ")";
+            }
+
+            $("#HdnAdvanceSearch").val(Condition);
+            $('#HdnPageIndex').val("1");
+
+            LoadSortTableFill();
+
+            $("#HdnAdvanceSearch").val("");
+            $("#drpAdvancSearch").val("StartAmount");
+            $("#txtAdvancedSearch").val("");
+            $("#advancesearch3").hide();
+        });
+        LoadSortTableFill();
+    });
+
+
+     function updatePagingsearch(TotalRecs, PageIndex) {
+
+        $('ul.pagination').html('');
+        var liClone = $('ul.pagination');
+
+        debugger;
+
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        //var pageSize = $('#PageSize').val();
+        var NoPage = 1;
+        if (parseInt(TotalRecs) > parseInt(pageSize)) {
+            NoPage = parseInt(parseInt(TotalRecs) / parseInt(pageSize));
+            if (parseFloat(parseInt(parseInt(TotalRecs) / parseInt(pageSize))) < parseFloat(parseInt(TotalRecs) / parseInt(pageSize))) {
+                NoPage = (parseInt(parseInt(TotalRecs) / parseInt(pageSize)) + 1);
+            }
+        }
+
+        var lp = 0;//parseFloat(parseInt($('#HdnPageIndex').val()) / 5);
+        if (parseFloat(parseInt(PageIndex) % 5) == 0) {
+            lp = ((parseInt(parseInt(PageIndex) / 5) - 1) * 5);
+        }
+        else {
+            lp = parseInt(parseInt(PageIndex) / 5) * 5;
+        }
+
+        var ind = 0;
+        for (var i = 1; i <= NoPage; i++) {
+            if ((parseInt(lp)) < i) {
+                if (parseInt(PageIndex) > 5 && $(liClone).find('li.previous').length == 0) {
+                    $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')"><a href="#">Previous</a></li>');
+                }
+                if (ind < 5) {
+                    if (i == parseInt(PageIndex)) {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current">' + i + '</a></li>');
+                    } else {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')">' + i + '</a></li>');
+                    }
+                } else if ($(liClone).find('li.next').length == 0) {
+                    $(liClone).append('<li class="paginate_button next " aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')"><a href="#">Next</a></li>');
+                }
+                ind = ind + 1;
+            }
+        }
+
+
+
+    }
+
+
+    function LoadSortTableFillWithSearchForNewPricing() {
+        var pageSize = "10";
+        var PageIndex = "1";
+           var txtprice = $('#pricetype option:selected').text();
+           var txtsearch = "";
+           if (txtprice != "--Please Select--") {
+            txtsearch = txtprice;
+        }
+    
+        $.ajax({
+            url: '@Url.Action("IndexPricingPaging", "NewPricing")',
+            cache: false,
+            data: {
+                PageSize: pageSize,
+                PageIndex: PageIndex,
+                Search: txtsearch,
+                Sort: $("#HdnSortValue").val()
+            },
+            success: function (response) {
+
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+
+                    debugger;
+                    curRecords = parseInt((PageIndex) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('#TotalPageRecord').val(parseInt(response[0].TotalRecords));
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                } else {
+                    $("#ddlload").hide();
+                }
+
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+                debugger;
+                for (var i = 0; i < response.length; i++) {
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $(".StartAmount", table).html(response[i].StartAmount);
+                    $(".EndAmount", table).html(response[i].EndAmount);
+                    if (response[i].FeeType == "Fixed" || response[i].FeeType == null)
+                        $(".FeeAmount", table).html('$' + formatNumber(response[i].Fee,true));
+                    else
+                        $(".FeeAmount", table).html(response[i].Fee + '%');
+                    $(".PricingType", table).html(response[i].PricingType);
+                    //$(".Company", table).html(response[i].Company);
+                    $(".SortOrder", table).html(response[i].SortOrder);
+
+                    $("#viewdata", table).attr('href', '/NewPricing/NewPricingView?PricingKey=' + response[i].PricingKey);
+
+                    $("#RawDatas table").append(table);
+                    spnToRecs++;
+                }
+                $("#RawDatas table tbody tr:eq(0)").hide();
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                    $("#RawDatas table thead tr:eq(0)").show();
+                    $(".pagination").show();
+                    updatePagingsearch(TotalRecs, PageIndex);
+                    $('#Error').hide();
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                    updatePagingsearch(TotalRecs, PageIndex);
+                    if (TotalRecs = 'undefined') {
+                        $('.errormessage').html('Data Not Found.');
+                        $('#Error').show();
+                        $("#RawDatas table thead tr:eq(0)").hide();
+                        $("#RawDatas table tbody tr:eq(0)").hide();
+                        $(".pagination").hide();
+                    }
+                }
+                debugger;
+
+
+
+                updatePagingsearch(TotalRecs, PageIndex);
+
+            }
+        });
+    }
+
+
+
+    function updatePaging(TotalRecs) {
+        debugger;
+        $('ul.pagination').html('');
+        var liClone = $('ul.pagination');
+        debugger;
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        //var pageSize = $('#PageSize').val();
+        var NoPage = 1;
+        if (parseInt(TotalRecs) > parseInt(pageSize)) {
+            NoPage = parseInt(parseInt(TotalRecs) / parseInt(pageSize));
+            if (parseFloat(parseInt(parseInt(TotalRecs) / parseInt(pageSize))) < parseFloat(parseInt(TotalRecs) / parseInt(pageSize))) {
+                NoPage = (parseInt(parseInt(TotalRecs) / parseInt(pageSize)) + 1);
+            }
+        }
+
+        var lp = 0;//parseFloat(parseInt($('#HdnPageIndex').val()) / 5);
+        if (parseFloat(parseInt($('#HdnPageIndex').val()) % 5) == 0) {
+            lp = ((parseInt(parseInt($('#HdnPageIndex').val()) / 5) - 1) * 5);
+        } else {
+            lp = parseInt(parseInt($('#HdnPageIndex').val()) / 5) * 5;
+        }
+
+        var ind = 0;
+
+        for (var i = 1; i <= NoPage; i++) {
+
+            if ((parseInt(lp)) < i) {
+                if (parseInt($('#HdnPageIndex').val()) > 5 && $(liClone).find('li.previous').length == 0) {
+                    $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" ><a href="#" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')">Previous</a></li>');
+                }
+                if (ind < 5) {
+
+                    if (i == parseInt($('#HdnPageIndex').val())) {
+                        if (NoPage == 1) {
+                            $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current" style="border-top-left-radius: 3px !important;border-bottom-left-radius: 3px!important;border-top-right-radius: 3px!important; border-bottom-right-radius: 3px!important;">' + i + '</a></li>');
+                        }
+                        else {
+                            $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current">' + i + '</a></li>');
+                        }
+                    } else {
+
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')">' + i + '</a></li>');
+                    }
+                } else if ($(liClone).find('li.next').length == 0) {
+
+                    $(liClone).append('<li class="paginate_button next " aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')"><a href="#">Next</a></li>');
+                }
+                ind = ind + 1;
+            }
+        }
+    }
+
+    function LoadPagingSortTableFill(pageIndex) {
+        debugger;
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        $('#HdnPageIndex').val(pageIndex);
+        var txtsearch = "";
+        $.ajax({
+            url: '@Url.Action("IndexPricingPaging", "NewPricing")',
+            cache: false,
+            data: {
+                PageSize: pageSize,
+                PageIndex: pageIndex,
+                Search: txtsearch,
+                Sort: $("#HdnSortValue").val()
+            },
+            success: function (response) {
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('#TotalPageRecord').val(parseInt(response[0].TotalRecords));
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                } else {
+                    $("#ddlload").hide();
+                }
+
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++) {
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $(".StartAmount", table).html(response[i].StartAmount);
+                    $(".EndAmount", table).html(response[i].EndAmount);
+                    if (response[i].FeeType == "Fixed" || response[i].FeeType == null)
+                        $(".FeeAmount", table).html('$' + formatNumber(response[i].Fee,true));
+                    else
+                        $(".FeeAmount", table).html(response[i].Fee + '%');
+                    $(".PricingType", table).html(response[i].PricingType);
+                    //$(".Company", table).html(response[i].Company);
+                    $(".SortOrder", table).html(response[i].SortOrder);
+
+                    $("#viewdata", table).attr('href', '/NewPricing/NewPricingView?PricingKey=' + response[i].PricingKey);
+
+                    $("#RawDatas table").append(table);
+                    spnToRecs++;
+                }
+                $("#RawDatas table tbody tr:eq(0)").hide();
+
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                    $(".pagination").show();
+                    $('#Error').hide();
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                    updatePaging(TotalRecs);
+                    if (TotalRecs = 'undefined') {
+                        $('.errormessage').html('Data Is Not Found.');
+                        $('#Error').show();
+                        $("#RawDatas table thead tr:eq(0)").hide();
+                        $("#RawDatas table tbody tr:eq(0)").hide();
+                        $(".pagination").hide();
+                    }
+                }
+
+                updatePaging(response[0].TotalRecords);
+
+            }
+        });
+
+    }
+
+    function homepage()
+        {
+            window.location.href = '@Url.Action("Dashboard", "Dashboard")';
+    }
+
+    $("#btnsearch").click(function () {
+        LoadSortTableFillWithSearchForNewPricing();
+    });
+
+     function LoadSortTableFill() {
+        debugger;
+
+        var txtprice = $('#pricetype option:selected').text();
+        var txtsearch = "";
+        if (txtprice != "--Please Select--") {
+            txtsearch = txtprice;
+        }
+       var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        $.ajax({
+            url: '@Url.Action("IndexPricingPaging", "NewPricing")',
+            cache: false,
+            data: {
+                PageSize: pageSize,
+                PageIndex: $('#HdnPageIndex').val(),
+                Search: txtsearch,
+                Sort: $("#HdnSortValue").val()
+            },
+            success: function (response) {
+
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+
+                    debugger;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('#TotalPageRecord').val(parseInt(response[0].TotalRecords));
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                } else {
+                    $("#ddlload").hide();
+                }
+
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+                debugger;
+                for (var i = 0; i < response.length; i++) {
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $(".StartAmount", table).html(response[i].StartAmount);
+                    $(".EndAmount", table).html(response[i].EndAmount);
+                    if (response[i].FeeType == "Fixed" || response[i].FeeType == null)
+                        $(".FeeAmount", table).html('$' + formatNumber(response[i].Fee,true));
+                    else
+                        $(".FeeAmount", table).html(response[i].Fee + '%');
+                    $(".PricingType", table).html(response[i].PricingType);
+                    //$(".Company", table).html(response[i].Company);
+                    $(".SortOrder", table).html(response[i].SortOrder);
+
+                    $("#viewdata", table).attr('href', '/NewPricing/NewPricingView?PricingKey=' + response[i].PricingKey);
+
+                    $("#RawDatas table").append(table);
+                    spnToRecs++;
+                }
+                $("#RawDatas table tbody tr:eq(0)").hide();
+
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                    $(".pagination").show();
+                    $('#Error').hide();
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                    updatePaging(TotalRecs);
+                    if (TotalRecs = 'undefined') {
+                        $('.errormessage').html('Data Is Not Found.');
+                        $('#Error').show();
+                        $("#RawDatas table thead tr:eq(0)").hide();
+                        $("#RawDatas table tbody tr:eq(0)").hide();
+                        $(".pagination").hide();
+                    }
+                }
+
+                updatePaging(response[0].TotalRecords);
+
+            }
+        });
+    }
+
+
+    function Getdata() {
+
+        $("#divSucces").hide();
+        $("#divSucces").html('');
+        $("#divError").hide();
+        $("#divError").html('');
+        $("#loading1").show();
+        $("#hdnload").val("1");
+        $("#ddlload").hide();
+        GetRecords();
+    }
+
+    function GetRecords() {
+        var SearchVal = $('#SearchVal').val();
+
+        //SearchVal = SearchVal.replace("'", "''");
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        $("#divSucces").hide();
+        $("#divSucces").html('');
+        $("#divError").hide();
+        $("#divError").html('');
+        var hdnPageIndex = parseInt($('#HdnPageIndex').val());
+
+        var CountVal = hdnPageIndex + 1;
+
+        var Index = (parseInt(pageSize) * CountVal);
+
+        $('#HdnPageIndex').val(CountVal);
+        //var sort = $("#HdnSortValue").val();
+        $("#loading1").show();
+
+        $.ajax({
+            type: "Get",
+            url: "/NewPricing/IndexPricingPaging",
+            data: {
+                PageSize: Index,
+                PageIndex: 1,
+                Search: $('#txtsearch').val(),
+                Sort: $("#HdnSortValue").val()
+            },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: OnSuccess,
+            failure: function (response) {
+            },
+            error: function (response) {
+            }
+        });
+    }
+    function SortingFun(val) {
+        $("#ddlload").show();
+        $('#HdnPageIndex').val('1');
+        var Sort = $('#SortValue').val();
+        debugger;
+        var ascdesc = 'fa-sort-asc';
+        var ascdesc1 = 'fa-sort-desc';
+        var ascdesc3 = 'fa-sort-asc';
+        var ascdesc4 = 'fa-sort-desc';
+
+        $('.loader-wrapper').show();
+        var Sort = '';
+        $('#HdnPageIndex').val('1');
+        $('#StartAmount').removeClass(ascdesc4);
+        $('#StartAmount').addClass(ascdesc3);
+
+        $('#EndAmount').removeClass(ascdesc4);
+        $('#EndAmount').addClass(ascdesc3);
+
+        $('#FeeAmount').removeClass(ascdesc4);
+        $('#FeeAmount').addClass(ascdesc3);
+
+        $('#PricingType').removeClass(ascdesc4);
+        $('#PricingType').addClass(ascdesc3);
+
+        //$('#Company').removeClass(ascdesc4);
+        //$('#Company').addClass(ascdesc3);
+
+        $('#SortOrder').removeClass(ascdesc4);
+        $('#SortOrder').addClass(ascdesc3);
+
+        debugger;
+
+        //-----------------------------------------------------------
+        if (val == 'StartAmount') {
+            if ($('#StartAmounthdn').val() == 'asc') {
+                Sort = 'order by pr.StartAmount desc';
+                $('#StartAmounthdn').val('desc');
+                $('#StartAmount').removeClass(ascdesc);
+                $('#StartAmount').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by pr.StartAmount asc';
+                $('#StartAmounthdn').val('asc');
+                $('#StartAmount').removeClass(ascdesc1);
+                $('#StartAmount').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------
+        if (val == 'EndAmount') {
+            if ($('#EndAmounthdn').val() == 'asc') {
+                Sort = 'order by pr.EndAmount desc';
+                $('#EndAmounthdn').val('desc');
+                $('#EndAmount').removeClass(ascdesc);
+                $('#EndAmount').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by pr.EndAmount asc';
+                $('#EndAmounthdn').val('asc');
+                $('#EndAmount').removeClass(ascdesc1);
+                $('#EndAmount').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------------
+        if (val == 'FeeAmount') {
+            if ($('#FeeAmounthdn').val() == 'asc') {
+                Sort = 'order by pr.Fee desc';
+                $('#FeeAmounthdn').val('desc');
+                $('#FeeAmount').removeClass(ascdesc);
+                $('#FeeAmount').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by pr.Fee asc';
+                $('#FeeAmounthdn').val('asc');
+                $('#FeeAmount').removeClass(ascdesc1);
+                $('#FeeAmount').addClass(ascdesc);
+            }
+        }
+        //------------------------------------------------
+
+        if (val == 'PricingType') {
+            if ($('#PricingTypehdn').val() == 'asc') {
+                Sort = 'order by LK.title desc';
+                $('#PricingTypehdn').val('desc');
+                $('#PricingType').removeClass(ascdesc);
+                $('#PricingType').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by LK.title asc';
+                $('#PricingTypehdn').val('asc');
+                $('#PricingType').removeClass(ascdesc1);
+                $('#PricingType').addClass(ascdesc);
+            }
+        }
+
+        //------------------------------------------------
+
+        //if (val == 'Company') {
+        //    if ($('#Companyhdn').val() == 'asc') {
+        //        Sort = 'order by Cm.Name desc';
+        //        $('#Companyhdn').val('desc');
+        //        $('#Company').removeClass(ascdesc);
+        //        $('#Company').addClass(ascdesc1);
+        //    }
+        //    else {
+        //        Sort = 'order by Cm.Name asc';
+        //        $('#Companyhdn').val('asc');
+        //        $('#Company').removeClass(ascdesc1);
+        //        $('#Company').addClass(ascdesc);
+        //    }
+        //}
+
+        //------------------------------------------------
+
+        if (val == 'SortOrder') {
+            if ($('#SortOrderhdn').val() == 'asc') {
+                Sort = 'order by pr.SortOrder desc';
+                $('#SortOrderhdn').val('desc');
+                $('#SortOrder').removeClass(ascdesc);
+                $('#SortOrder').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by pr.SortOrder asc';
+                $('#SortOrderhdn').val('asc');
+                $('#SortOrder').removeClass(ascdesc1);
+                $('#SortOrder').addClass(ascdesc);
+            }
+        }
+        $("#ddlload").show();
+
+        $("#HdnSortValue").val(Sort);
+        $('.loader-wrapper').show();
+        LoadSortTableFill();
+    }
+
+
+    function OnSuccess(response) {
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        debugger;
+
+        $('.spnOfRecs').text(0);
+        $('.spnTotalRecs').text(0);
+        $('.spnToRecs').text(0);
+        if (parseInt(response.length) > 0) {
+            var curRecords = 0;
+            var TotalRecs = 0;
+            var spnToRecs = 0;
+
+            debugger;
+            curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+            curRecords = curRecords - (pageSize - parseInt(response.length));
+            TotalRecs = parseInt(response[0].TotalRecords);
+            $('.spnOfRecs').text(curRecords);
+            $('.spnTotalRecs').text(TotalRecs);
+
+
+        } else {
+
+        }
+        $("#RawDatas table tbody tr:not(:first)").remove();
+        $("#RawDatas table tbody tr:eq(0)").show();
+        for (var i = 0; i < response.length; i++) {
+            var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+            $(".StartAmount", table).html(response[i].StartAmount);
+            $(".EndAmount", table).html(response[i].EndAmount);
+            if (response[i].FeeType == "Fixed" || response[i].FeeType == null)
+                $(".FeeAmount", table).html('$' + formatNumber(response[i].Fee,true));
+            else
+                $(".FeeAmount", table).html(response[i].Fee + '%');
+            $(".PricingType", table).html(response[i].PricingType);
+            //$(".Company", table).html(response[i].Company);
+            $(".SortOrder", table).html(response[i].SortOrder);
+
+            $("#viewdata", table).attr('href', '/NewPricing/NewPricingView?PricingKey=' + response[i].PricingKey);
+            $("#RawDatas table").append(table);
+            spnToRecs++;
+        }
+        $("#RawDatas table tbody tr:eq(0)").hide();
+
+        spnToRecs = (curRecords - spnToRecs) + 1;
+        if (spnToRecs > 0) {
+            $('.spnToRecs').text(spnToRecs);
+        }
+        else {
+            $('.spnToRecs').text(0);
+        }
+
+        updatePaging(response[0].TotalRecords);
+        $("#loading1").hide();
+    }
+
+</script>

@@ -1,0 +1,28 @@
+select * from [Group]
+select * from GroupMember
+select * from bid
+select * from BidRequest
+select * from bidvendor
+select * from company
+select * from CompanyVendor
+select * from GroupModuleAccess
+select * from Membership
+select * from module
+select * from portal
+select * from property
+select * from PropertyResource
+select * from PropertyVendorDistance
+select * from Resource where ResourceKey = 1063
+select * from [user]
+select * from UserAgreement
+
+
+select * from BidRequest as br
+right join resource as rs on rs.ResourceKey = br.ResourceKey
+right join company as cp on cp.CompanyKey = rs.CompanyKey where rs.ResourceKey = 1063
+
+select BidRequestKey, Title,title as PropertyName,StartDate,BidDueDate,
+(select count(1) from Bid b where b.BidVendorKey in (Select BidVendorKey from BidVendor bv where bv.BidRequestKey = br.BidRequestKey) and b.BidStatus  = 801) as NoofBids  
+,0 as TotalRecord  from BidRequest
+
+select * from bidrequest where resourcekey = 1063

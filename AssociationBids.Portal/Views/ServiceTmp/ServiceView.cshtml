@@ -1,0 +1,260 @@
+﻿@model AssociationBids.Portal.Model.ServiceModel
+
+@{
+    ViewBag.Title = "ServiceView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string Errormessage = Convert.ToString(TempData["ErrorMessage"]);
+    string SuccessMessage = Convert.ToString(TempData["SuccessMessage"]);
+}
+
+<h2>ServiceView</h2>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+
+<!--sidemenu end-->
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="ServiceList">Service</a></li>
+                <li class="breadcrumb-item active" aria-current="page">View Service</li>
+            </ol><!-- End breadcrumb -->
+
+        </div>
+        <!-- End page-header -->
+        @if (!string.IsNullOrEmpty(Errormessage))
+        {
+            <p class="alert alert-success alert-dismissible">
+                @Errormessage
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        @if (!string.IsNullOrEmpty(SuccessMessage))
+        {
+            <p class="alert alert-success alert-dismissible">
+                @SuccessMessage
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a onclick=" EditPage();" class="btn btn-primary ml-auto text-white pull-right" title="Edit"><i class="fa fa-pencil"></i> Edit</a>
+                            </div>
+                        </div>
+                        <hr />
+                        <hr />
+
+                        <div class="form-div">
+                            <div class="row">
+                                @Html.HiddenFor(item => Model.ServiceKey)
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Title</label>
+                                        @Html.DisplayFor(item => Model.Title)
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+
+                                </div>
+                                <div class="col-md-4">
+
+                                </div>
+                                <div class="col-md-12">
+
+                                </div>
+
+                            </div><!-- end of row -->
+
+                            <hr />
+
+                        </div><!-- end of form-div  -->
+
+                    </div><!--end of card body -->
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div><!--End side app-->
+    <!-- Right-sidebar-->
+    <!-- End Rightsidebar-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+<!-- End app-content-->
+        </div>
+    </div>
+<!-- End Page -->
+<!--Select2 css -->
+<link href="../assets/plugins/select2/select2.min.css" rel="stylesheet" />
+
+
+
+<!-- Custom js-->
+<script src="../assets/js/custom.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$("#Serv").closest('li').addClass('active');
+        //$("#Serv1").addClass('active');
+        SetActiveMenu($("#Serv"), false);
+        $(".advance_search").click(function () {
+            $("#advancesearch3").toggle(500);
+        });
+        $(".overlayclose").click(function () {
+            $("#advancesearch3").hide();
+        });
+    });
+    debugger;
+    function EditPage() {
+        alert();
+        window.location.href = 'ServiceEdit?ServiceKey=' + $("#ServiceKey").val();
+
+    }
+
+    $("#btncancel").click(function () {
+        var a = $("#ServiceKey").val();
+
+        window.location.href = 'ServiceView?ServiceKey=' + $("#ServiceKey").val();
+
+    });
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        bindDocument();
+        bindmanager();
+        $(".chosen-select").chosen();
+        $('#loader').show();
+        $('.errormessage').html('');
+        $('#Error').hide();
+        $("#news_date").datepic
+        $('#Errormanager').hide();
+        $('#loader').hide();
+        $(".advance_search").click(function () {
+            $("#advancesearch3").toggle(500);
+        });
+        $(".overlayclose").click(function () {
+            $("#advancesearch3").hide();
+        });
+
+    });
+
+    debugger
+    function EditPage() {
+        window.location.href = 'ServiceEdit?ServiceKey=' + $("#ServiceKey").val();
+
+    }
+
+
+    $("#btncancel").click(function () {
+        var a = $("#ServiceKey").val();
+
+        window.location.href = 'ServiceView?ServiceKey=' + $("#ServiceKey").val();
+
+    });
+    $("#btndelete").click(function () {
+        window.location.href = 'Delete?ServiceKey=' + $("#ServiceKey").val();
+
+    });
+    function validation() {
+        debugger;
+
+        var IsValid = true;
+        $('.errormessage').html('');
+        var errormessage = '';
+
+        if ($("#Title").val() == "") {
+
+            errormessage = $('.errormessage').html();
+            $('#Error').show();
+            IsValid = false;
+        }
+
+        if ($('#NumberOfUnits').val() == "0") {
+
+
+            $('#Error').show();
+            IsValid = false;
+        }
+
+        if ($('#Description').val() == "") {
+
+            IsValid = false;
+            $('#Error').show();
+        }
+
+        if ($('#Address').val() == "") {
+
+            IsValid = false;
+            $('#Error').show();
+        }
+
+
+        if ($('#Address2').val() == "") {
+
+            $('#Error').show();
+            IsValid = false;
+        }
+
+        if ($('#City').val() == "") {
+
+            $('#Error').show();
+            IsValid = false;
+        }
+
+        if ($('#State').val() == "") {
+
+            IsValid = false;
+            $('#Error').show();
+        }
+
+        if ($('#Zip').val() == "") {
+
+            IsValid = false;
+            $('#Error').show();
+        }
+
+        if ($('#BidRequestAmount').val() == "") {
+
+            IsValid = false;
+            $('#Error').show();
+        }
+
+        if ($('#MinimumInsuranceAmount').val() == "") {
+
+            IsValid = false;
+            $('#Error').show();
+        }
+        if (!IsValid)
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+
+        $('#loader').hide();
+        return IsValid;
+    }
+</script>
+

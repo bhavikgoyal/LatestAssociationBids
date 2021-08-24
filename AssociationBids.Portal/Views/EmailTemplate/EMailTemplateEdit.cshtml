@@ -1,0 +1,555 @@
+﻿@model AssociationBids.Portal.Model.EmailTemplateModel
+
+@{
+    ViewBag.Title = "EMailTempletEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>EMailTempletEdit</h2>
+
+
+<link href="~/js/jquery.tagsinput.css" rel="stylesheet" />
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="~/js/jquery.tagsinput.js"></script>
+<script src="https://cdn.ckeditor.com/4.14.1/FullPackage/ckeditor.js"></script>
+<script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+
+@*<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />*@
+<style type="text/css">
+    body {
+        font-family: Arial;
+        font-size: 10pt;
+    }
+
+    .error {
+        color: red;
+    }
+
+  
+</style>
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="EmailTemplateList">Email Template</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Email Template</li>
+            </ol><!-- End breadcrumb -->
+
+        </div>
+        <div class="alert alert-danger" id="Error" style="display:block; margin-top: 20px;">
+            <strong><span class="errormessage"></span></strong>
+        </div>
+        <!-- End page-header -->
+
+        @using (Html.BeginForm("EMailTemplateEdit", "EmailTemplate", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+
+            <div class="row">
+                <div class="col-12">
+
+
+                    <div class="card">
+
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="text-right"><a href="#" role="button" id="btndelete" class="btn btn-icon btn-danger" hidden="hidden" style="margin-right:10px;"><i class="fe fe-trash"></i> Delete</a></div>
+                                    @Html.HiddenFor(model => model.EmailTemplateKey)
+                                    @*@Html.HiddenFor(model => model.lookUpType)*@
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-div">
+
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                Title
+                                                @Html.ValidationMessageFor(model => model.EmailTitle, "*", new { @class = "text-danger" })
+                                            </label>
+
+                                            @Html.EditorFor(model => model.EmailTitle, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Title" } })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                Email Type
+                                                @Html.ValidationMessageFor(model => model.lookUpType, "*", new { @class = "text-danger" })
+                                            </label>
+                                            @Html.DropDownListFor(model => model.lookUpType, new SelectList(ViewBag.lstlookup, "Value", "Text"), new { @data_rel = "Choose_one", @class = "form-control", disabled = "disabled", placeholder = "Please Select..." })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                Subject
+                                                @Html.ValidationMessageFor(model => model.EmailSubject, "*", new { @class = "text-danger" })
+                                            </label>
+                                            @Html.EditorFor(model => model.EmailSubject, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Body" } })
+                                            @*                                            @Html.TextAreaFor(model => model.EmailSubject, new { @class = "form-control", placeholder = "EmailSubject" })*@
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                Body
+
+                                            </label>
+                                            @Html.TextAreaFor(model => model.Body, new { @class = "form-control ", placeholder = "EmailSubject" })
+
+                                            <script>
+                                                CKEDITOR.replace('Body');
+                                            </script>
+                                            <p id="Message"></p> 
+                                        </div>
+                                    </div>
+
+                                </div><!-- end of row -->
+
+
+                                <div class="button-row d-flex mt-4">
+                                    <a href="@Request.UrlReferrer" class="btn btn-default" title="Cancel">Cancel</a>
+
+                                    <input t class="btn btn-primary ml-auto" id="btnsubmit" type="submit" onclick="return validation()" title="Update" value="Update" /><i class="fa fa-loppy-o"></i>
+                                </div>
+
+                            </div><!-- end of form-div  -->
+                        </div><!--end of card body -->
+                    </div>
+                </div>
+            </div>
+        }
+
+        <!-- End Page -->
+        <!-- Back to top -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row align-items-center flex-row-reverse">
+                    <div class="col-lg-12 col-sm-12   text-center">
+                        Copyright © 2020 Association Bids. All rights reserved.
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+        
+        <script>
+            //tinymce.init({ selector: 'textarea' });
+            $(document).ready(function () {
+                //$("#EmailT").closest('li').addClass('active');
+                //$("#EmailT1").addClass('active');
+                SetActiveMenu($("#EmailT"), false);
+                $('#loader').show();
+                $('.errormessage').html('');
+                $('#Error').hide();
+
+                $('#loader').hide();
+
+                Message();
+                
+            });
+
+            function Message() {
+                debugger;
+              
+                if ($('#lookUpType option:selected').text() == "Reset Password") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[ResetPasswordlink] =  Link to redirect for reset password'
+                        + '\n[SendDate] =  Date and time on which link was generated'
+                        + '\n[LinkExpiryDate] =  Date and time till which link will be valid'
+                        + '\n[MemberEmail] =  Email address'
+                        + '\n[MemberCompanyName] =  Company name');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Manager registration") {
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[ResetPasswordlink] =  Link to redirect for reset password');
+                    //$("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                    //    + '\n[ResetPasswordlink] =  Link to redirect for reset password'
+                    //    + '\n[SendDate] =  Date and time on which link was generated'
+                    //    + '\n[LinkExpiryDate] =  Date and time till which link will be valid'
+                    //    + '\n[MemberEmail] =  Email address of member'
+                    //    + '\n[MemberCompanyName] =  Company name of the member');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Vendor invitation") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[CompanyName] =  Company Name'
+                        + '\n[Email] =  Email address'
+                        + '\n[ContactPerson] =  Contact Person'
+                        + '\n[VendorRegistrationLink] =  Link to redirect for Vendor Registration');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Vendor registration") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        //+ '\n[VendorRegistrationLink] =  Link to redirect for Vendor Registration'
+                        + '\n[CompanyName] =  Company Name'
+                        + '\n[LegalName] =  Legal Name'
+                        + '\n[TaxId] =  TaxId'
+                        + '\n[WebSite] =  WebSite Name'
+                        //+ '\n[FirstName] =  Company name of the member'
+                        + '\n[Service] =  Service of member');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Vendor Registration Confirm") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        //+ '\n[VendorRegistrationLink] =  Link to redirect for Vendor Registration'
+                        + '\n[CompanyName] =  Company Name'
+                        + '\n[LegalName] =  Legal Name'
+                        + '\n[TaxId] =  TaxId'
+                        + '\n[WebSite] =  WebSite Name'
+                        //+ '\n[FirstName] =  Company name of the member'
+                        + '\n[Service] =  Service Name');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Vendor approval") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[ResetPasswordlink] =  Link to redirect for reset password'
+                        + '\n[CompanyName] =  Company Name');
+                        //+ '\n[LegalName] =  Legal Name of Company'
+                        //+ '\n[Service] =  Service of member');
+                    //+ '\n[MemberCompanyName] = Company name of the member');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Bid invitation") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[Property] =  Property Name'
+                        + '\n[Services] =  Services Name'
+                        + '\n[Title] =  Bid Name'
+                        + '\n[ResponseDueDate] =  Response Due Date'
+                        + '\n[BidDueDate] =  Bid Due Date'
+                        + '\n[VendorName] =  Vendor Name'
+                        + '\n[BidName] =  Bid Name'
+                        + '\n[CompanyName] =  Company Name');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Bid invitation reminde") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[ResponseDueDate] =  Response Due Date'
+                        + '\n[CompanyName] =  Company Name'
+                        + '\n[BidName] =  Bid Name'
+                        + '\n[Title] =  Bid Name');
+                    //+ '\n[MemberCompanyName] =  Company name of the member');
+                }
+
+                else if ($('#lookUpType  option:selected').text() == "BidSubmissionReminder") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[ResponseDueDate] =  Response Due Date'
+                        + '\n[Proposal reminder Link] = Bid Reminder link'
+                        + '\n[Title] =  Bid Name');
+                    //+ '\n[LinkExpiryDate] =  Date and time till which link will be valid'
+                    //+ '\n[MemberEmail] =  Email address of member'
+                    //+ '\n[MemberCompanyName] =  Company name of the member');
+                }
+
+
+                else if ($('#lookUpType  option:selected').text() == "Bid withdrawal email") {
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name');
+                    //$("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                    //    + '\n[ResponseDueDate] =  Link to redirect for reset password'
+                    //    + '\n[Title] =  Date and time on which link was generated');
+                    //+ '\n[LinkExpiryDate] =  Date and time till which link will be valid'
+                    //+ '\n[MemberEmail] =  Email address of member'
+                    //+ '\n[MemberCompanyName] =  Company name of the member');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Proposal reminder") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[ProposalReminderLink] =  Link to redirect for Login'
+                        + '\n[BidName] =  Bid Name'
+                        + '\n[ResponseDueDate] =  Response Due Date');
+                    //+ '\n[SendDate] =  Date and time on which link was generated'
+                    //+ '\n[LinkExpiryDate] =  Date and time till which link will be valid'
+                    //+ '\n[MemberEmail] =  Email address of member'
+                    //+ '\n[MemberCompanyName] =  Company name of the member');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Bid award") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[CompanyName] =  Company Name'
+                        + '\n[FirstName] =  First Name'
+                        + '\n[EmailAdderess] =  Email Adderess'
+                        + '\n[Property] =  Property Name'
+                        + '\n[PropertyContactDetail] = Property Contact Details'
+                        + '\n[Title] =  Bid Name'
+                        + '\n[ChargeAmount] = Amount'
+                        + '\n[BidName] =  Bid Name');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Bid rejection") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[CompanyName] =  Company Name'
+                        + '\n[FirstName] =  FirstName'
+                        + '\n[EmailAdderess] =  Email Adderess '
+                        + '\n[BidName] =  Bid Name');
+                    //+ '\n[BidDueDate] =  Company name of the member');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Comments email") {
+                    //$("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name');
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[CompanyName] =  Company Name'
+                        + '\n[MessageBody] =  Body of Message'
+                        + '\n[BidName] =  Bid Name')
+                        
+                    //    + '\n[MemberEmail] =  Email address of member'
+                    //    + '\n[MemberCompanyName] =  Company name of the member');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Incomplete bid fee") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                    //$("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                    //    + '\n[ResetPasswordlink] =  Link to redirect for reset password'
+                    //    + '\n[SendDate] =  Date and time on which link was generated'
+                    //    + '\n[LinkExpiryDate] =  Date and time till which link will be valid'
+                    //    + '\n[MemberEmail] =  Email address of member'
+                        + '\n[BidName] =  Bid Name');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Win fee") {
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        //$("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[ChargeAmount] =  total  amount '
+                        + '\n[Title] =  Bid Name');
+                    //    + '\n[LinkExpiryDate] =  Date and time till which link will be valid'
+                    //    + '\n[MemberEmail] =  Email address of member'
+                    //    + '\n[MemberCompanyName] =  Company name of the member');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Credit card about to expire") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[CreditCardExpireDate] =  Credit Card Expire Date'
+                        + '\n[CreditCardNo] =  Credit Card Number'
+                        + '\n[LogInLink] =  Link to redirect for Login'
+                        + '\n[CreditCardHolderName] =  Credit card holder Name');
+                    //+ '\n[MemberEmail] =  Email address of member'
+                    //+ '\n[MemberCompanyName] =  Company name of the member');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Credit card expired") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[CreditCardExpireDate] =  Credit Card Expire Date'
+                        + '\n[LogInLink] =  Link to redirect for Login'
+                        + '\n[CreditCardHolderName] =  Credit card holder Name');
+                       //+ '\n[MemberEmail] =  Email address of member'
+                       //+ '\n[MemberCompanyName] =  Company name of the member');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Forgot Password") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[SendDate] =  Send Date'
+                        + '\n[LinkExpiryDate] =  Link Expiry Date'
+                        + '\n[MemberCompanyName] =  Member Company Name'
+                        + '\n[ResetPasswordlink] =  Reset Password Link'
+                        + '\n[MemberEmail] =  Email Address');
+                    //+ '\n[MemberEmail] =  Email address of member'
+                    //+ '\n[MemberCompanyName] =  Company name of the member');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Insurance renewal") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[InsuranceRenewalDate] =  Insurance Date'
+                        + '\n[InsuranceRenewallink] = Insurance Renewal link'
+                        + '\n[PolicyNumber] =  Policy Number');
+                      
+                    //+ '\n[MemberEmail] =  Email address of member'
+                    //+ '\n[MemberCompanyName] =  Company name of the member');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Insurance expired") {
+
+                         $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                             + '\n[InsuranceExpireDate] =  Insurance Expire Date'
+                             + '\n[InsuranceRenewalDate] =  Insurance Renewal Date'
+                             + '\n[PolicyNumber] =   Policy Number'
+                             + '\n[InsuranceRenewLink] =  Insurance Renew Link');
+                    //+ '\n[MemberEmail] =  Email address of member'
+                    //+ '\n[MemberCompanyName] =  Company name of the member');
+                }
+
+
+
+                else if ($('#lookUpType  option:selected').text() == "MembershipFees") {
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        //$("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[ChargeAmount] =  total  amount '
+                        + '\n[Title] =  Bid Name');
+                    //    + '\n[LinkExpiryDate] =  Date and time till which link will be valid'
+                    //    + '\n[MemberEmail] =  Email address of member'
+                    //    + '\n[MemberCompanyName] =  Company name of the member');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Bid Fine") {
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        //$("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[ChargeAmount] =  total  amount '
+                        + '\n[Title] =  Bid Name');
+                    //    + '\n[LinkExpiryDate] =  Date and time till which link will be valid'
+                    //    + '\n[MemberEmail] =  Email address of member'
+                    //    + '\n[MemberCompanyName] =  Company name of the member');
+                }
+
+                else if ($('#lookUpType  option:selected').text() == "RefundRequest") {
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        //$("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[ChargeAmount] =  total  amount '
+                        + '\n[VendorName] =  Vendor Name'
+                        + '\n[Title] =  Bid Name');
+                        
+                    //    + '\n[MemberEmail] =  Email address of member'
+                    //    + '\n[MemberCompanyName] =  Company name of the member');
+                }
+
+                else if ($('#lookUpType  option:selected').text() == "RefundRequest Acknowledgement") {
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        //$("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[ChargeAmount] =  total  amount '
+                        + '\n[Title] =  Bid Name');
+
+                    //    + '\n[MemberEmail] =  Email address of member'
+                    //    + '\n[MemberCompanyName] =  Company name of the member');
+                }
+
+                else if ($('#lookUpType  option:selected').text() == "Win fee") {
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        //$("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[ChargeAmount] =  total  amount '
+                        + '\n[Title] =  Bid Name');
+                    //    + '\n[LinkExpiryDate] =  Date and time till which link will be valid'
+                    //    + '\n[MemberEmail] =  Email address of member'
+                    //    + '\n[MemberCompanyName] =  Company name of the member');
+                }
+
+                else if ($('#lookUpType  option:selected').text() == "Membership renewal") {
+ 
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[LoginLink] =  Link to redirect for Login'
+                        + '\n[RenewalDate] =  Renewal Date'
+                        + '\n[CurrentDate] =  Current Date');
+                    //+ '\n[MemberEmail] =  Email address of member'
+                    //+ '\n[MemberCompanyName] =  Company name of the member');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Membership expired") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[LogInLink] =  Link to redirect for Login'
+                        + '\n[RenewalDate] =  Renewal Date'
+                        
+                        + '\n[CurrentDate] =  Current Date');
+                    //+ '\n[MemberEmail] =  Email address of member'
+                    //+ '\n[MemberCompanyName] =  Company name of the member');
+                }
+
+
+                else if ($('#lookUpType  option:selected').text() == "Bid Reject Email") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        + '\n[CompanyName] =  Company Name'
+                        + '\n[FirstName] =  First Name'
+                        + '\n[EmailAdderess] =  Email Adderess'
+                        + '\n[BidName] =  Bid Name');
+                    //+ '\n[BidDueDate] =  Company name of the member');
+                }
+                else if ($('#lookUpType  option:selected').text() == "Email Change") {
+
+                    $("#Message").multiline('[MemberName] =  Member First Name + " " + Member Last Name'
+                        //+ '\n[CompanyName] =  Company Name of the Member'
+                        //+ '\n[FirstName] =  FirstName of Company'
+                        + '\n[OldEmail] =  Old Email Adderess'+'\n[NewEmail] = New Email Adderess');
+                    //+ '\n[MemberEmail] =  Email Adderess'
+                    //+ '\n[BidDueDate] =  Company name of the member');
+                }
+
+            }
+
+
+            $.fn.multiline = function (text) {
+                this.text(text);
+                this.html(this.html().replace(/\n/g, '<br/>'));
+                return this;
+            }
+
+            function validation() {
+                debugger;
+                $('#loader').show();
+                $('.errormessage').html('');
+                //alert($('#Body').val());
+                if ($('#EmailTitle').val() == "") {
+                    $('.errormessage').html('Please Enter Email Title.');
+                    $('#Error').show();
+                    $('#EmailTitle').focus();
+                    $(window).scrollTop(0);
+                    return false;
+                }
+                if ($('#lookUpType').val() == "0") {
+                    $('.errormessage').html('Please Select Email Type.');
+                    $('#Error').show();
+                    $(window).scrollTop(0);
+                    return false;
+                }
+
+                if ($('#EmailSubject').val() == "") {
+                    $('.errormessage').html('Please Enter Email Subject.');
+                    $('#Error').show();
+                    $('#EmailSubject').focus();
+                    $(window).scrollTop(0);
+                    return false;
+                }
+
+                //if ($('#Body').val() == "") {
+                //    $('.errormessage').html('Please Enter Body.');
+                //    $('#Error').show();
+                //    $('#Body').focus();
+                //    $(window).scrollTop(0);
+                //    return false;
+                //}
+                $('#loader').hide();
+
+                return true;
+            }
+
+            function Clear() {
+
+                document.getElementById("EmailTitle").value = "";
+                document.getElementById("lookUpType").value = "Please Select";
+                document.getElementById("EmailSubject").value = "";
+                document.getElementById("Body").value = "";
+                $('.field-validation-error').html("");
+            }
+            $("#btncancel").click(function () {
+                var a = $("#EmailTemplateKey").val();
+                //alert(a);
+                window.location.href = 'EmailTemplateView?EmailTemplateKey=' + $("#EmailTemplateKey").val();
+
+            });
+
+            $("#btndelete").click(function () {
+                if (confirm('Are you sure you want to delete this record?')) {
+                    window.location.href = 'Delete?EmailTemplateKey=' + $("#EmailTemplateKey").val();
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            });
+            $(document).ready(function () {
+                debugger;
+                $("#ddlload").hide();
+            });
+                    //debugger
+        </script>
+
+
+
+
+

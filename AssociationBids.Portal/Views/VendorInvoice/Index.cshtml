@@ -1,0 +1,786 @@
+﻿
+@model AssociationBids.Portal.Model.VendorInvoiceModal
+@{
+    ViewBag.Title = "Invoice";
+    Layout = "~/Views/Shared/_VendorLayout.cshtml";
+    string Errormessage = Convert.ToString(ViewData["Errormessage"]);
+    string Sucessmessage = Convert.ToString(ViewData["Sucessmessage"]);
+}
+<script src="../assets/js/vendors/jquery-3.2.1.min.js"></script>
+
+<script>
+    $(document).ready(function ()
+    {
+
+        debugger;
+
+        LoadSortTableFill()
+        checkPoratl()
+    });
+
+
+
+
+    function updatePaging(TotalRecs) {
+        debugger;
+        $('ul.pagination').html('');
+        var liClone = $('ul.pagination');
+        //debugger;
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        //var pageSize = $('#PageSize').val();
+        var NoPage = 1;
+        if (parseInt(TotalRecs) > parseInt(pageSize)) {
+            NoPage = parseInt(parseInt(TotalRecs) / parseInt(pageSize));
+            if (parseFloat(parseInt(parseInt(TotalRecs) / parseInt(pageSize))) < parseFloat(parseInt(TotalRecs) / parseInt(pageSize))) {
+                NoPage = (parseInt(parseInt(TotalRecs) / parseInt(pageSize)) + 1);
+            }
+        }
+
+        var lp = 0;//parseFloat(parseInt($('#HdnPageIndex').val()) / 5);
+        if (parseFloat(parseInt($('#HdnPageIndex').val()) % 5) == 0) {
+            lp = ((parseInt(parseInt($('#HdnPageIndex').val()) / 5) - 1) * 5);
+        } else {
+            lp = parseInt(parseInt($('#HdnPageIndex').val()) / 5) * 5;
+        }
+
+        var ind = 0;
+        for (var i = 1; i <= NoPage; i++) {
+            if ((parseInt(lp)) < i) {
+                if (parseInt($('#HdnPageIndex').val()) > 5 && $(liClone).find('li.previous').length == 0) {
+                    $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')"><a href="#">Previous</a></li>');
+                }
+                if (ind < 5) {
+                    if (i == parseInt($('#HdnPageIndex').val())) {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current">' + i + '</a></li>');
+                    } else {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')">' + i + '</a></li>');
+                    }
+                } else if ($(liClone).find('li.next').length == 0) {
+                    $(liClone).append('<li class="paginate_button next " aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')"><a href="#">Next</a></li>');
+                }
+                ind = ind + 1;
+            }
+        }
+
+
+
+    }
+
+     function InsertData(InvoiceKey) {
+
+         debugger;
+
+        $("#InvoiceKey").val(InvoiceKey);
+         LoadMessagesList(InvoiceKey)
+    }
+
+
+
+    function SendMessage() {
+
+        debugger;
+
+        var ObjectKey = $("#InvoiceKey").val();
+        bodytext = $("#txtMessageBody").val();
+            $.ajax({
+              url: '@Url.Action("SendInsertMessage", "VendorInvoice")',
+                cache: false,
+                data: {
+                    Body: bodytext, Status: 'New', ObjectKey: ObjectKey,  ModuleKeyName: 'Invoice'
+                },
+                success: function (response) {
+
+                    debugger;
+                    var option1 = "";
+                    LoadMessagesList(ObjectKey);
+                    $("#txtMessageBody").val(option1);
+                }
+            });
+
+    }
+
+    function LoadMessagesList(ObjectKey) {
+
+        $("#commentspm").html('');
+        debugger;
+        $.ajax({
+
+           url: '@Url.Action("SendInsertMessageList", "VendorInvoice")',
+            cache: false,
+            async: false,
+            data: {
+                ObjectKey: ObjectKey,
+                ModuleKeyName: 'Invoice',
+                UpdatemsgStatus: "1",
+            },
+            success: function (response) {
+                debugger;
+                $("#MessageRawDatas div.table123:not(:first)").remove();
+                $("#MessageRawDatas div.table123:eq(0)").show();
+                response = JSON.parse(response);
+                if (parseInt(response.length) > 0) {
+                    $("[id='MsgTab']").each(function () {
+                        $(this).val(response.length);
+                    });
+
+                    $("#MsgTab").html("Message (" + response.length + ")");
+
+                    for (var i = 0; i < response.length; i++) {
+
+                        if (response[i].NewMessagecnt !== "0") {
+                            $("#BidRequestsMenu").html("Bid Requests (" + response[i].NewMessagecnt + ")");
+                        } else { $("#BidRequestsMenu").html("Bid Requests"); }
+                        var table = $("#MessageRawDatas div.table123:eq(0)").clone(true);
+
+                        if (response[i].RightLeft === 'Right') {
+                            $("#DivRightSide", table).show();
+                            $("#DivLeftSide", table).hide();
+                            $("#DivLeftSide", table).attr("style", "display:none !important;");
+
+                            $(".namefirstletter", table).html(response[i].FirstName);
+                            $("#SendMesg", table).html(response[i].Body);
+                            $("#SendTime", table).html(response[i].SendDate + ' ' + response[i].SendTime);
+                        } else {
+                            $("#DivLeftSide", table).show();
+                            $("#DivRightSide", table).hide();
+                            $("#DivRightSide", table).attr("style", "display:none !important;");
+
+                            $(".namefirstletter", table).html(response[i].FirstName);
+                            $("#ReceiveMesg", table).html(response[i].Body);
+                            $("#ReceiveTime", table).html(response[i].SendDate + ' ' + response[i].SendTime);
+                        }
+                        //$(table).show();
+                        $("#MessageRawDatas").append(table);
+                    }
+                    // $("#MessageRawDatas table tbody tr:eq(0)").hide();
+
+
+                    // $("#message1").html('');
+                }
+                $("#MessageRawDatas div.table123:eq(0)").hide();
+                $("#commentspm").html($("#message1").html());
+                $(".loader-wrapper").hide();
+            }
+        });
+    }
+
+    function LoadSortTableFill() {
+
+        debugger;
+        //debugger;
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        $.ajax({
+            url: '@Url.Action("InvoiceListForVendor", "VendorInvoice")',
+            cache: false,
+            data: {
+                PageSize: pageSize,
+                PageIndex: $('#HdnPageIndex').val(),
+                Search: $('#txtsearch').val(),
+                Sort: $("#HdnSortValue").val()
+            },
+            success: function (response)
+            {
+                debugger;
+
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+                    //debugger;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+
+                } else {
+
+                }
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    var a = response[i].InvoiceNo;
+
+                    debugger;
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+
+                    $(".DATE", table).html(response[i].Date);
+                    $(".Invoicetype", table).html(response[i].Description);
+                    if (response[i].Amount != null) {
+                        $(".AMOUNT", table).html(response[i].Amount);
+
+                    }
+                    if (response[i].Balance != null) {
+
+                        $(".BALANCE", table).html(response[i].Balance);
+                    }
+
+                    if (response[i].Amount == null) {
+                        $(".AMOUNT", table).html("$0.00");
+
+                    }
+
+                    if (response[i].Status == true) {
+                        $(".Status", table).html("Refund Processed");
+
+                    } if (response[i].RefundRequestKey != 0 && response[i].Status != true) {
+                        $(".Status", table).html("Refund Requested");
+
+                    }
+
+                 
+
+                    if (response[i].Balance == null) {
+
+                        $(".BALANCE", table).html("$0.00");
+                    }
+                    if (response[i].RefundRequestKey == 0) {
+                        $("#Message", table).css("display", "none");
+
+                    }
+                
+                    $(".INVOICENO", table).html(a);
+                    $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ');');
+                    $("#viewdata", table).attr('href', '/VendorInvoice/VendorInvoiceView?InvoiceKey=' + response[i].InvoiceKey);
+
+                    $("#RawDatas table").append(table);
+                    spnToRecs++;
+                }
+                $("#RawDatas table tbody tr:eq(0)").hide();
+
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                }
+                if (curRecords.text == "NaN")
+                {
+
+                    $('.errormessage').html('Data Is Not Found.');
+                    $('#Error').show();
+                    $("#RawDatas table thead tr:eq(0)").hide();
+                    $("#RawDatas table tbody tr:eq(0)").hide();
+                }
+                else {
+                    updatePaging(response[0].TotalRecords);
+                    //$("#loading1").hide();
+                }
+            }
+        });
+    }
+
+
+    function SortingFun(val) {
+
+        $('#HdnPageIndex').val('1');
+        var Sort = $('#SortValue').val();
+        debugger;
+        var ascdesc = 'fa-sort-asc';
+        var ascdesc1 = 'fa-sort-desc';
+        var ascdesc3 = 'fa-sort-asc';
+        var ascdesc4 = 'fa-sort-desc';
+
+        $('.loader-wrapper').show();
+        var Sort = '';
+        $('#HdnPageIndex').val('1');
+
+        $('#INVOICENOi').removeClass(ascdesc4);
+        $('#INVOICENOi').addClass(ascdesc3);
+
+        $('#DATEi').removeClass(ascdesc4);
+        $('#DATEi').addClass(ascdesc3);
+
+        $('#AMOUNTi').removeClass(ascdesc4);
+        $('#AMOUNTi').addClass(ascdesc3);
+
+        $('#INVOICETYPEi').removeClass(ascdesc4);
+        $('#INVOICETYPEi').addClass(ascdesc3);
+
+        $('#BALANCEi').removeClass(ascdesc4);
+        $('#BALANCEi').addClass(ascdesc3);
+
+
+        debugger;
+        //-----------------------------------------------------------
+
+        if (val == 'INVOICENO') {
+            if ($('#INVOICENOhdn').val() == 'asc') {
+                Sort = 'order by n.ReferenceNumber desc';
+                $('#INVOICENOhdn').val('desc');
+                $('#INVOICENOi').removeClass(ascdesc3);
+                $('#INVOICENOi').addClass(ascdesc4);
+            }
+            else {
+                Sort = 'order by n.ReferenceNumber asc';
+                $('#INVOICENOhdn').val('asc');
+                $('#INVOICENOi').removeClass(ascdesc4);
+                $('#INVOICENOi').addClass(ascdesc3);
+            }
+        }
+
+        //-------------------------------------------------
+        if (val == 'DATE') {
+            if ($('#DATEhdn').val() == 'asc') {
+                Sort = 'order by n.TransactionDate desc';
+                $('#DATEhdn').val('desc');
+                $('#DATEi').removeClass(ascdesc);
+                $('#DATEi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by n.TransactionDate asc';
+                $('#DATEhdn').val('asc');
+                $('#DATEi').removeClass(ascdesc1);
+                $('#DATEi').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------------
+        if (val == 'AMOUNT') {
+            if ($('#AMOUNThdn').val() == 'asc') {
+                Sort = 'order by n.Amount desc';
+                $('#AMOUNThdn').val('desc');
+                $('#AMOUNTi').removeClass(ascdesc);
+                $('#AMOUNTi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by n.Amount asc';
+                $('#AMOUNThdn').val('asc');
+                $('#AMOUNTi').removeClass(ascdesc1);
+                $('#AMOUNTi').addClass(ascdesc);
+            }
+        }
+
+        if (val == 'INVOICETYPE') {
+            if ($('#INVOICETYPEHDN').val() == 'asc') {
+                Sort = 'order by ln.Description desc';
+                $('#INVOICETYPEHDN').val('desc');
+                $('#INVOICETYPEi').removeClass(ascdesc);
+                $('#INVOICETYPEi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by ln.Description asc';
+                $('#INVOICETYPEHDN').val('asc');
+                $('#INVOICETYPEi').removeClass(ascdesc1);
+                $('#INVOICETYPEi').addClass(ascdesc);
+            }
+        }
+
+        if (val == 'BALANCE') {
+            if ($('#BALANCEhdn').val() == 'asc') {
+                Sort = 'order by n.Balance desc';
+                $('#BALANCEhdn').val('desc');
+                $('#BALANCEi').removeClass(ascdesc);
+                $('#BALANCEi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by n.Balance asc';
+                $('#BALANCEhdn').val('asc');
+                $('#BALANCEi').removeClass(ascdesc1);
+                $('#BALANCEi').addClass(ascdesc);
+            }
+        }
+
+
+
+
+
+        $("#HdnSortValue").val(Sort);
+        $('.loader-wrapper').show();
+        LoadSortTableFill();
+    }
+
+
+
+
+
+    function LoadPagingSortTableFill(pageIndex) {
+
+        debugger;
+        //debugger;
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        $('#HdnPageIndex').val(pageIndex);
+        $.ajax({
+            url: '@Url.Action("InvoiceListForVendor", "VendorInvoice")',
+            cache: false,
+            data: {
+                PageSize: pageSize,
+                PageIndex: pageIndex,
+                Search: $('#txtsearch').val(),
+                Sort: $("#HdnSortValue").val()
+            },
+            success: function (response)
+            {
+                debugger;
+
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+                    //debugger;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+
+                } else {
+
+                }
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    var a = response[i].InvoiceNo;
+
+                    debugger;
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $(".Invoicetype", table).html(response[i].Description);
+                    $(".DATE", table).html(response[i].Date);
+                    if (response[i].Amount != null) {
+                        $(".AMOUNT", table).html(response[i].Amount);
+
+                    }
+                    if (response[i].Balance != null) {
+
+                        $(".BALANCE", table).html(response[i].Balance);
+                    }
+
+                    if (response[i].Amount == null) {
+                        $(".AMOUNT", table).html("$0.00");
+
+                    }
+                    if (response[i].Status == true) {
+                        $(".Status", table).html("Done");
+
+                    } if (response[i].RefundRequestKey != 0 && response[i].Status != true) {
+                        $(".Status", table).html("Refund Requested");
+
+                    }
+                    if (response[i].Balance == null) {
+
+                        $(".BALANCE", table).html("$0.00");
+                    }
+                    if (response[i].RefundRequestKey == 0) {
+                        $("#Message", table).css("display", "none");
+
+                    }
+                    $(".INVOICENO", table).html(a);
+                    $("#Message", table).attr('onclick', 'return InsertData(' + response[i].InvoiceKey + ');');
+                    $("#viewdata", table).attr('href', '/VendorInvoice/VendorInvoiceView?InvoiceKey=' + response[i].InvoiceKey);
+
+                    $("#RawDatas table").append(table);
+                    spnToRecs++;
+                }
+                $("#RawDatas table tbody tr:eq(0)").hide();
+
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                }
+                if (curRecords.text == "NaN")
+                {
+
+                    $('.errormessage').html('Data Is Not Found.');
+                    $('#Error').show();
+                    $("#RawDatas table thead tr:eq(0)").hide();
+                    $("#RawDatas table tbody tr:eq(0)").hide();
+                }
+                else {
+                    updatePaging(response[0].TotalRecords);
+                    //$("#loading1").hide();
+                }
+            }
+        });
+    }
+
+
+
+
+
+      function checkPoratl()
+      {
+          debugger;
+          var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+         $.ajax({
+            url: '@Url.Action("checkPortal", "PMProperties")',
+            cache: false,
+             data:
+             {
+              PropertyKey: $('#PropertyKey').val()
+            },
+            success: function (response)
+            {
+                debugger;
+
+                if (response == false) {
+                     window.location.href = '@Url.Action("Index", "Login")';
+                }
+
+                else {
+
+                }
+
+            }
+        });
+    }
+
+
+
+</script>
+<h2>Invoice</h2>
+
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="~/VDashboard/index">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Invoice</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+
+        @if (TempData["Sucessmessage"] != null)
+        {
+            <p class="alert alert-success alert-dismissible" id="successMessage">
+                @TempData["Sucessmessage"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        @if (TempData["delete"] != null)
+        {
+            <p class="alert alert-danger alert-dismissible" id="successMessage">
+                @TempData["delete"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+
+        <div role="alert">
+            @*<div class="alert alert-danger" id="Error" style="display: none;margin-top: 20px;">
+                    <strong><span class="errormessage"></span></strong>
+                </div>*@
+            @if (!string.IsNullOrEmpty(Errormessage))
+            {
+                <div class="alert alert-danger" style="margin-top: 20px;">
+                    <strong><span>@Errormessage</span></strong>
+                </div>
+            }
+        </div>
+        <!-- End page-header -->
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="modal fade" id="review" tabindex="-1" role="dialog" aria-labelledby="review" aria-hidden="true">
+                            <div class="modal-dialog modal-lg " role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="review1">Message</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+
+
+
+
+                                        <div id="message1">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="col-md-12 col-lg-12 col-xl-12  chat">
+                                                                <div class="card ">
+                                                                    <!-- card-footer -->
+                                                                    <div class="card-footer">
+                                                                        <div class="msb-reply d-flex">
+                                                                            <div class="input-group">
+                                                                                <input id="txtMessageBody" type="text" class="txtMessageBody form-control  bg-white" placeholder="Typing....">
+                                                                                <div class="input-group-append ">
+                                                                                    <button type="button" class="btn btn-sm btn-primary" onclick="SendMessage();">
+                                                                                        Add Message
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                    <div id="MessageRawDatas" class="card-body msg_card_body">
+                                                                        <div id="table123" class="table123" style="display:none;">
+                                                                            <div id="DivLeftSide" class="d-flex justify-content-start  mb-4" style="display:none;">
+                                                                                <div class="img_cont_msg">
+                                                                                    <div class="rounded-circle user_img_msg namefirstletter" style="background-color:blue"></div>
+                                                                                </div>
+                                                                                <div class="msg_cotainer" style="min-width: 104px !important;">
+                                                                                    <p id="ReceiveMesg"></p>
+                                                                                    <span id="ReceiveTime" class="msg_time" style="min-width:20px;"></span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div id="DivRightSide" class="d-flex justify-content-end" style="display:none;">
+                                                                                <div class="msg_cotainer_send" style="min-width: 104px !important;">
+                                                                                    <p id="SendMesg"> </p>
+                                                                                    <span id="SendTime" class="msg_time_send" style="min-width:20px;"></span>
+                                                                                </div>
+                                                                                <div class="img_cont_msg">
+                                                                                    <div class="rounded-circle user_img_msg namefirstletter" style="background-color:green"></div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div>
+                                                                                <p>@Html.HiddenFor(Model => Model.InvoiceKey)</p>
+
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div><!--end of card body -->
+                                                    </div><!--end of card -->
+                                                </div><!--end of col -->
+                                            </div><!--end of row -->
+                                        </div>
+                                        <!-- end of tab -->
+
+                                        <div class="alert alert-icon alert-warning" role="alert" style="padding-left: 2.5rem;display:none;">
+                                            <i class="fa fa-bell-o mr-2" aria-hidden="true" style="top:8px;"></i>
+                                        </div>
+
+                                    </div><!-- end of modal body -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="RawDatas" class="table-responsive">
+                            <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                <thead>
+                                    <tr>
+
+                                        <th width="20%" onclick="SortingFun('INVOICENO');" style="cursor: pointer;" class="text-left">
+
+                                            INVOICE NO
+
+                                            <i id="INVOICENOi" class="fa fa-sort-asc pull-right"></i>
+                                        </th>
+                                        <th width="20%" onclick="SortingFun('INVOICETYPE');" style="cursor: pointer;" class="text-left">
+
+                                            INVOICE TYPE
+
+                                            <i id="INVOICETYPEi" class="fa fa-sort-asc pull-right"></i>
+                                        </th>
+
+                                        <th width="20%" onclick="SortingFun('DATE');" style="cursor: pointer;" class="text-left">
+
+                                            DATE
+                                            <i id="DATEi" class="fa fa-sort-asc pull-right"></i>
+                                        </th>
+                                        <th width="20%" onclick="SortingFun('AMOUNT');" style="cursor: pointer;" class="text-left">
+
+                                            AMOUNT
+                                            <i id="AMOUNTi" class="fa fa-sort-asc pull-right"></i>
+                                        </th>
+                                        <th width="20%" onclick="SortingFun('BALANCE');" style="cursor: pointer;" class="text-left">
+
+                                            BALANCE
+                                            <i id="BALANCEi" class="fa fa-sort-asc pull-right"></i>
+                                        </th>
+
+                                        <th width="50%" style="cursor: pointer;" class="text-left">
+
+                                            Status
+                                          
+                                        </th>
+
+
+                                        <th width="10%">
+                                        <th width="5%">
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="INVOICENO"></span></td>
+                                        <td><span class="Invoicetype"></span></td>
+                                        <td><span class="DATE"></span></td>
+                                        <td class="text-right"><span class="AMOUNT"></span></td>
+                                        <td class="text-right"><span class="BALANCE"></span></td>
+                                        <td class="text-right"><span class="Status"></span></td>
+
+                                        <td>
+
+                                            <a href="" class="font18" data-toggle="modal" onclick="openpopup();" data-target="#review"><button class="btn btn-primary" id="Message">Message</button></a>
+                                        </td>
+                                        <td alignDATE="center"><a id="viewdata" title="View Details" role="button"><i class="fe fe-eye font18"></i></a></td>
+                                    </tr>
+
+
+                                </tbody>
+
+
+
+
+                            </table>
+                            <div class="pull-left">
+                                <label><span class="spnToRecs">0</span> to <span class="spnOfRecs">0</span> out of <span class="spnTotalRecs">0</span>&nbsp; Records </label>
+                            </div>
+                            <div class="dataTables_paginate paging_simple_numbers" id="pagin">
+                                <ul class="pagination"></ul>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="pagination" style="display:none;">
+                        <input type="hidden" id="HdnSortValue" value="order by n.Amount asc" />
+                        <input type="hidden" id="HdnPageIndex" value="1" />
+                        <input type="hidden" id="PageSize" value="10" />
+                        <input type="hidden" id="INVOICENOhdn" value="asc" />
+                        <input type="hidden" id="INVOICETYPEHDN" value="asc" />
+                        <input type="hidden" id="AMOUNThdn" value="asc" />
+                        <input type="hidden" id="DATEhdn" value="asc" />
+                        <input type="hidden" id="BALANCEhdn" value="asc" />
+                        <input type="hidden" id="TotalPageRecord" value='0' />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--End side app-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+<!-- End app-content-->

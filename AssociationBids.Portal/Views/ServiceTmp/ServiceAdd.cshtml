@@ -1,0 +1,211 @@
+﻿@model AssociationBids.Portal.Model.ServiceModel
+
+@{
+    ViewBag.Title = "ServiceAdd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ServiceAdd</h2>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="ServiceList">Service</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add Service</li>
+            </ol><!-- End breadcrumb -->
+
+        </div>
+        <div class="alert alert-danger" id="Error" style="display:block; margin-top: 20px;">
+            <strong><span class="errormessage"></span></strong>
+        </div>
+     
+        <div class="alert alert-danger alert-dismissible" id="duplicate" style="display:block; margin-top: 20px;">
+            <strong><span>Service Already Exit</span></strong>
+        </div>
+
+
+
+        <!-- End page-header -->
+        @*<link href="~/js/jquery.tagsinput.css" rel="stylesheet" />
+        <script src="~/ckeditor/ckeditor.js"></script>
+        <script src="~/js/jquery.tagsinput.js"></script>
+
+        <script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+        <script type="text/javascript">
+            tinymce.init({ selector: 'textarea', width: 720, height: 400 });
+        </script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
+        <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />*@
+
+        @using (Html.BeginForm("ServiceAdd", "ServiceTmp", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+        {
+          
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+
+                        <div class="card-body">
+
+                            <div class="form-div">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                Title
+                                                @Html.ValidationMessageFor(model => model.Title, "*", new { @class = "text-danger" })
+                                            </label>
+                                            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Service" } })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+
+                                        </div>
+                                    </div>
+                                </div><!-- end of row -->
+                                <hr />
+                                <div class="button-row d-flex mt-4">
+                                    <a href="@Request.UrlReferrer" class="btn btn-default" title="Cancel">Cancel</a>
+                                    @*<button class="btn btn-default" onclick="return Clear()" type="button" value="UserAdd" title="Clear">Clear</button>*@
+                                    <input t class="btn btn-primary ml-auto" id="btnsubmit" type="submit" onclick="return validation()" title="Save" value="Save" /><i class="fa fa-loppy-o"></i>
+                                </div>
+
+                            </div><!-- end of form-div  -->
+
+                        </div><!--end of card body -->
+                    </div>
+                </div>
+            </div>
+
+
+        }
+
+    </div><!--End side app-->
+    <!-- Right-sidebar-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+
+<!-- Back to top -->
+
+<!--Select2 css -->
+<link href="../assets/plugins/select2/select2.min.css" rel="stylesheet" />
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$("#Serv").closest('li').addClass('active');
+        //$("#Serv1").addClass('active');
+        SetActiveMenu($("#Serv"), false);
+        $("#btn").click(function () {
+            alert("this Final Code")
+            var geocoder = new google.maps.Geocoder();
+            var con = document.getElementById('txtCon').value;
+            var city = document.getElementById('txtCity').value;
+            var res = document.getElementById('lblresult');
+            var com = city + "," + con;
+            geocoder.geocode({ 'address': com }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    res.innerHTML = "Latitude : " + results[0].geometry.location.lat() + "<br/>Longitude :" +
+                        results[0].geometry.location.lng();
+                } else {
+                    res.innerHTML = "Wrong Details: " + status;
+                }
+            });
+        });
+    });
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".advance_search").click(function () {
+            $("#advancesearch2").toggle(500);
+        });
+        $(".overlayclose").click(function () {
+            $("#advancesearch3").hide();
+        });
+    });
+
+
+    $(document).ready(function () {
+        $('#loader').show();
+        $('.errormessage').html('');
+        $('#Error').hide();
+        $('#duplicate').hide();
+
+        $('#loader').hide();
+
+    });
+    function validation() {
+        debugger;
+       
+        $('#loader').show();
+        $('.errormessage').html('');
+
+        if ($('#Title').val() == "") {
+            $('.errormessage').html('Please Enter Title.');
+            $('#Error').show();
+            $('#Title').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+        debugger;
+        @*if ($(@ViewData["SuccessMessage"])!= "")
+        {
+            
+            $('#duplicate').show();
+            $('#Error').hide();
+            
+        }*@
+       
+      
+        $('#loader').hide();
+        
+        return true;
+    }
+
+    function Clear() {
+
+        document.getElementById("Title").value = "";
+       
+        $('.field-validation-error').html("");
+    }
+</script>
+
+
+
+

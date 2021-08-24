@@ -1,0 +1,378 @@
+﻿@model AssociationBids.Portal.Model.VendorManagerModel
+@using AssociationBids.Portal.Common
+@{
+    ViewBag.Title = "Invited Vendor View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    if (Session["PortalKey"] == null)
+    { Response.Redirect("~/", true); }
+    else if (Session["PortalKey"].ToString() == "2")
+    { Response.Redirect("~/PMDashboard/Dashboard", true); }
+    else if (Session["PortalKey"].ToString() == "3")
+    { Response.Redirect("~/VDashboard/Index", true); }
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<h2>VendorView</h2>
+
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="../Dashboard/Dashboard">Home</a></li>
+                <li class="breadcrumb-item"><a href="../VendorManager/InvitedVendorsList">Invited Vendors</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Invited Vendor Details</li>
+            </ol><!-- End breadcrumb -->
+
+        </div>
+        @if (TempData["Sucessmessage"] != null)
+        {
+            <p class="alert alert-success alert-dismissible" id="successMessage">
+                @TempData["Sucessmessage"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        @if (TempData["delete"] != null)
+        {
+            <p class="alert alert-danger alert-dismissible" id="successMessage">
+                @TempData["delete"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+
+        <div role="alert">
+            <div class="alert alert-danger" id="Error" style="display: none;margin-top: 20px;">
+                <strong><span class="errormessage"></span></strong>
+            </div>
+            @if (TempData["Error"] != null && TempData["Error"].ToString() != "")
+            {
+                <div class="alert alert-danger" style="margin-top: 20px;">
+                    <strong><span>@TempData["Error"]</span></strong>
+                </div>
+            }
+        </div>
+        <!-- End page-header -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    @Html.HiddenFor(model => model.Vendor.CompanyKey)
+
+                    <div class="card-body">
+                       <div class="form-div">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Company Information</h3>
+                                        <div class="card-options">
+                                            <a onclick=" EditPage('Invite');" class="btn btn-primary ml-auto text-white pull-right" title="Edit and Invite again"><i class="fa fa-pencil"></i> Edit and Invite again</a>
+                                            <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="card-body border-top">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="form-label">Company Name</label>
+                                                    <p>@Model.Vendor.CompanyName</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">Address 1</label>
+                                                    <p>@Model.Vendor.Address</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">Address 2</label>
+                                                    <p>@Model.Vendor.Address2</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">City</label>
+                                                    @Model.Vendor.City
+                                                </div>
+                                            </div><!-- end of col -->
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">State</label>
+                                                    @Model.Vendor.State
+                                                </div>
+                                            </div><!-- end of col -->
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">Zip</label>
+                                                    @Model.Vendor.Zip
+                                                </div>
+                                            </div><!-- end of col -->
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">Contact Person</label>
+                                                    @Model.Resource.FirstName @Model.Resource.LastName
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label class="form-label">Phone</label>
+                                                    <p>@Utility.FormatPhoneNumberHelper(Model.Vendor.Work2)</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">Email</label>
+                                                    @Model.Resource.Email
+                                                </div>
+                                            </div>
+                                        </div><!-- end of row -->
+
+                                    </div><!-- card body end -->
+                                </div><!-- card end -->
+                            </div><!-- col end -->
+                        </div><!-- row end -->
+
+
+
+                    </div><!-- end of form-div  -->
+
+                    </div><!--end of card body -->
+                </div>
+            </div>
+        </div>
+
+       
+    </div><!--End side app-->
+                            <!--footer-->
+                            <footer class="footer">
+                                <div class="container">
+                                    <div class="row align-items-center flex-row-reverse">
+                                        <div class="col-lg-12 col-sm-12   text-center">
+                                            Copyright © 2020 Association Bids. All rights reserved.
+                                        </div>
+                                    </div>
+                                </div>
+                            </footer>
+                            <!-- End Footer-->
+                    </div>
+                    <!-- End app-content-->
+
+
+<script>
+
+    $(document).ready(function () {
+        //$("#Inv1").closest('li').addClass('active');
+        //$("#Inv6").addClass('active');
+        SetActiveMenu($("#Inv1"), false);
+        bindservice();
+        bindDocument();
+        insurancetableFill();
+
+        $("#ddlload").hide();
+        $(".advance_search").click(function () {
+            $("#advancesearch3").toggle(500);
+        });
+        $(".overlayclose").click(function () {
+            $("#advancesearch3").hide();
+        });
+        $('.loader-wrapper').show();
+        //$.get('/VendorManager/IndexinsurancePaging', { PageSize: 0, PageIndex: 1, Search: '', Sort: sorted }, function (response) {
+        //    $("#RawDatas table tbody tr:eq(0)").hide();
+        //    $(".loader-wrapper").hide();
+        //});
+
+    });
+
+
+    @*function insurancetableFill()
+    {
+        debugger;
+        $.ajax({
+
+            url: '@Url.Action("IndexinsurancePaging", "VendorManager")',
+            cache: false,
+             data:
+              {
+                 CompanyKey: $('#CompanyKey').val()
+              },
+            success: function (response)
+            {
+
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    debugger;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt($('#PageSize').val()));
+                    curRecords = curRecords - ($('#PageSize').val() - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                } else {
+                    $("#ddlload").hide();
+                }
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++) {
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $(".policynumber", table).html(response[i].FileName);
+                    //$(".insuranceamount", table).html(response[i].InsuranceAmount);
+                    //$(".startdate", table).html(response[i].StartDate);
+                    $("#viewdata", table).attr('href', '/VendorManager/VendorView?CompanyKey=' + response[i].CompanyKey);
+
+                    $("#RawDatas table").append(table);
+                }
+                $("#RawDatas table tbody tr:eq(0)").hide();
+                $("#loading1").hide();
+            }
+        });
+    }*@
+
+    function EditPage() {
+        var a = $("#CompanyKey").val();
+
+        window.location.href = 'VendorEdit?CompanyKey=' + $("#CompanyKey").val();
+
+    }
+    function EditPage(formname) {
+        var a = $("#Vendor_CompanyKey").val();
+        if(formname == 'Invite')
+            window.location.href = 'Update_InviteVendor?CompanyKey=' + a;
+    }
+
+    function removeser(me) {
+        debugger;
+        var m = $(me).parent("td").parent("tr").find('.ser-fl').text();
+
+        var a = $("#Vendor_CompanyKey").val();
+        var b = $(me).parent("td").parent("tr").find('.ser-fl').text();
+        var c = $(me).parent("td").parent("tr").find('input[name = "vsk"]').val();
+        var r = confirm("Are you sure to remove service: " + b + "?");
+        if (r) {
+            window.location.href = "Delete?CompanyKey=" + a + "&VendorServiceKey=" + c;
+        }
+    }
+
+
+    $("#btnadd").click(function () {
+
+        $("#vendordiv table tbody tr:eq(0)").show();
+        var vendor = $("#ServiceTitle1 option:selected").map(function () {
+            var cln = $("#vendordiv table tbody tr:eq(0)").clone(true);
+            $(".venspan", cln).html($(this).text());
+            $("#vendordiv table").append(cln);
+
+        }).get();
+
+        $("#vendordiv table tbody tr:eq(0)").hide();
+
+        if ($('#ServiceTitle1_chosen').find('.chosen-choices').find('.search-choice').length == 0) {
+            $('.errormessage').html('Please select vendor.');
+            $('#Errormanager').show();
+            return false;
+        }
+        else {
+            var vendor = $("#Choosen option:selected").map(function () {
+                return $(this).val();
+            }).get().join(',');
+            $('#ServiceKey').val(vendor);
+        }
+
+    });
+
+    function toggleModal(insuranceKey) {
+        var companyKey = $('#Vendor_CompanyKey').val();
+        $.ajax({
+            url: '@Url.Action("GetInsuranceDetails", "VendorManager")',
+            cache: false,
+            data:
+            {
+                CompanyKey: companyKey,
+                InsuranceKey: insuranceKey
+            },
+            success: function (response) {
+                debugger;
+                if (response != null && response.length > 0) {
+                    $("#policynumber").text(response[0].Insurance.PolicyNumber);
+                    $("#amount").text(response[0].Insurance.InsuranceAmount);
+                    $("#startdate").text(getDate(response[0].Insurance.StartDate));
+                    $("#enddate").text(getDate(response[0].Insurance.EndDate));
+                    $("#renewaldate").text(getDate(response[0].Insurance.RenewalDate));
+                    $("#viewinsurance").modal('toggle');
+                }
+            }
+        });
+    }
+    function getDate(datestring) {
+
+        var milli = datestring.replace(/\/Date\((-?\d+)\)\//, '$1');
+        return new Date(parseInt(milli)).toLocaleDateString(); ;
+    }
+      function bindDocument()
+      {
+         $.ajax({
+            url: '@Url.Action("bindDocument", "VendorManager")',
+            cache: false,
+             data:
+              {
+                 CompanyKey: $('#Vendor_CompanyKey').val()
+              },
+            success: function (response)
+            {
+                debugger;
+                $("#divFileUploader table tbody tr:not(:first)").remove();
+                $("#divFileUploader table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    var cln = $("#divFileUploader table tbody tr:eq(0)").clone(true);
+                    $(".upd-fl", cln).html(response[i].Document.FileName);
+                    $("#divFileUploader table").append(cln);
+                }
+                $("#divFileUploader table tbody tr:eq(0)").hide();
+            }
+        });
+    }
+
+   function bindservice()
+   {
+       debugger;
+       $.ajax({
+
+            url: '@Url.Action("bindservice", "VendorManager")',
+            cache: false,
+             data:
+              {
+                 CompanyKey: $('#Vendor_CompanyKey').val()
+              },
+            success: function (response)
+            {
+                debugger;
+                $("#divservc table tbody tr:not(:first)").remove();
+                $("#divservc table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    var cln = $("#divservc table tbody tr:eq(0)").clone(true);
+                    $(".ser-fl", cln).html(response[i].Title);
+                    $(cln).append("<input type='hidden' name='vsk' value='" + response[i].VendorServiceKey + "'/>");
+                    $("#divservc table").append(cln);
+                }
+                $("#divservc table tbody tr:eq(0)").hide();
+            }
+        });
+    }
+
+</script>

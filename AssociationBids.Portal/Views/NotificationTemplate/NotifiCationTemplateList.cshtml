@@ -1,0 +1,885 @@
+﻿
+
+@{
+    ViewBag.Title = "NotifiCationTemplateList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string Errormessage = Convert.ToString(ViewData["Errormessage"]);
+}
+
+<h2>NotifiCationTemplateList</h2>
+
+
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Notification Template</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+        @if (TempData["Sucessmessage"] != null)
+        {
+            <p class="alert alert-success alert-dismissible" id="successMessage">
+                @TempData["Sucessmessage"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        @if (TempData["delete"] != null)
+        {
+            <p class="alert alert-danger alert-dismissible" id="successMessage">
+                @TempData["delete"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+
+        <div role="alert">
+
+            @if (!string.IsNullOrEmpty(Errormessage))
+            {
+                <div class="alert alert-danger" style="margin-top: 20px;">
+                    <strong><span>@Errormessage</span></strong>
+                </div>
+            }
+        </div>
+        <!-- End page-header -->
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-4 col-xl-4 mb15">
+                                    <input type="text" class="form-control" id="txtsearch" placeholder="Title Name">
+                                </div>
+                                <div class="col-lg-4 col-xl-4">
+                                    <a class="btn btn-secondary" href="#" id="btnsearch" role="button">Search</a>
+                                    <span class="advance_search btn_advsearch" onclick="toggle_visibility('advancesearch2');"><i class="fe fe-chevron-down"></i></span>
+                                </div>
+                                <div class="col-lg-4 col-xl-4">
+                                    <div class="btn_group_div text-right">
+                                        <a href="~/NotificationTemplate/NotificationTmpAdd" class="btn btn-primary">+ Add Notification</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end of form group -->
+
+                        <div id="advancesearch3">
+                            <div class="overlayclose"><i class="fa fa-times"></i></div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Notification Title</label>
+                                        <input class="form-control" id="txtNotiTitle" placeholder="Title" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Notification Type</label>
+                                        <input class="form-control" id="TxtNotificationType" placeholder="Type" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">&nbsp;</label>
+                                        <button type="button" id="btnsearchVendor" class="btn btn-sm btn-primary btn-icon-text">
+                                            Search
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert alert-danger" id="Error" style="display:block; margin-top: 20px;">
+                            <strong><span class="errormessage"></span></strong>
+                        </div>
+
+                        <hr />
+                        <div id="RawDatas" class="table-responsive">
+                            <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                <thead>
+                                    <tr>
+                                        @*<th>Name</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <th align="center" class="text-center">Status</th>
+                                            <th>&nbsp;</th>*@
+
+                                        <th width="15%" onclick="SortingFun('PushNotificationTitle');" style="cursor: pointer;">
+                                            <i id="PushNotificationTitlei" class="fa fa-sort-asc pull-right"></i>
+                                            Title
+                                        </th>
+                                        <th width="15%" onclick="SortingFun('Title');" style="cursor: pointer;">
+                                            <i id="Titlei" class="fa fa-sort-asc pull-right"></i>
+                                            Notification Type
+                                        </th>
+                                        <th width="15%" onclick="SortingFun('NTSubject');" style="cursor: pointer;">
+                                            <i id="NTSubjecti" class="fa fa-sort-asc pull-right"></i>
+                                            Subject
+                                        </th>
+                                        <th width="15%" onclick="SortingFun('Body');" style="cursor: pointer;">
+                                            <i id="Bodyi" class="fa fa-sort-asc pull-right"></i>
+                                            Notification
+                                        </th>
+
+                                        <th width="5%"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="PushNotificationTitle"></span></td>
+                                        <td><span class="Title"></span></td>
+                                        <td><span class="NTSubject"></span></td>
+                                        <td><span class="Body"></span></td>
+
+                                        <td align="center"><a id="viewdata" title="View Details" role="button"><i class="fe fe-eye font18"></i></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="pull-left">
+                                <label><span class="spnToRecs">0</span> to <span class="spnOfRecs">0</span> out of <span class="spnTotalRecs">0</span>&nbsp; Records </label>
+                            </div>
+                            <div class="dataTables_paginate paging_simple_numbers" id="pagin">
+                                <ul class="pagination"></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pagination" style="display:none;">
+                        <input type="hidden" id="HdnSortValue" value="order by NT.PushNotificationTitle asc" />
+                        <input type="hidden" id="HdnPageIndex" value="1" />
+                       
+                        <input type="hidden" id="PushNotificationTitlehdn" value="asc" />
+                        <input type="hidden" id="Titlehdn" value="asc" />
+                        <input type="hidden" id="NTSubjecthdn" value="asc" />
+                        <input type="hidden" id="Bodyhdn" value="asc" />
+                        <input type="hidden" id="TotalPageRecord" value='0' />
+                        <input type="hidden" id="hdnSearch" value="" />
+                        <input type="hidden" id="hdntitletype" value="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--End side app-->
+</div>
+<!--footer-->
+<footer class="footer">
+    <div class="container">
+        <div class="row align-items-center flex-row-reverse">
+            <div class="col-lg-12 col-sm-12   text-center">
+                Copyright © 2020 Association Bids. All rights reserved.
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- End Footer-->
+<!-- End app-content-->
+<!-- End Page -->
+<!-- Back to top -->
+<!-- Custom-charts js-->
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".advance_search").click(function () {
+            $("#advancesearch2").toggle(500);
+        });
+        $(".overlayclose").click(function () {
+            $("#advancesearch2").hide();
+        });
+
+    });
+    function updatePaging(TotalRecs) {
+        $('ul.pagination').html('');
+        var liClone = $('ul.pagination');
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        debugger;
+        //var pageSize = $('#PageSize').val();
+        var NoPage = 1;
+        if (parseInt(TotalRecs) > parseInt(pageSize)) {
+            NoPage = parseInt(parseInt(TotalRecs) / parseInt(pageSize));
+            if (parseFloat(parseInt(parseInt(TotalRecs) / parseInt(pageSize))) < parseFloat(parseInt(TotalRecs) / parseInt(pageSize))) {
+                NoPage = (parseInt(parseInt(TotalRecs) / parseInt(pageSize)) + 1);
+            }
+        }
+
+        var lp = 0;//parseFloat(parseInt($('#HdnPageIndex').val()) / 5);
+        if (parseFloat(parseInt($('#HdnPageIndex').val()) % 5) == 0) {
+            lp = ((parseInt(parseInt($('#HdnPageIndex').val()) / 5) - 1) * 5);
+        } else {
+            lp = parseInt(parseInt($('#HdnPageIndex').val()) / 5) * 5;
+        }
+
+        var ind = 0;
+        for (var i = 1; i <= NoPage; i++) {
+            if ((parseInt(lp)) < i) {
+                if (parseInt($('#HdnPageIndex').val()) > 5 && $(liClone).find('li.previous').length == 0) {
+                    $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')"><a href="#">Previous</a></li>');
+                }
+                if (ind < 5) {
+                    if (i == parseInt($('#HdnPageIndex').val())) {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current">' + i + '</a></li>');
+                    } else {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')">' + i + '</a></li>');
+                    }
+                } else if ($(liClone).find('li.next').length == 0) {
+                    $(liClone).append('<li class="paginate_button next " aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')"><a href="#">Next</a></li>');
+                }
+                ind = ind + 1;
+            }
+        }
+    }
+
+    function LoadPagingSortTableFill(pageIndex) {
+        $('#HdnPageIndex').val(pageIndex);
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        debugger
+        $.ajax
+            ({
+                url: '@Url.Action("IndexreStaffPagingForAdvancedSearch", "NotificationTemplate")',
+                cache: false,
+                data: {
+                    PageSize: pageSize,
+                    PageIndex: pageIndex,
+                    Search: $("#hdnSearch").val(),
+                    TitleType: $("#hdntitletype").val(),
+                    Sort: $("#HdnSortValue").val()
+                },
+                success: function (response) {
+
+                    $('.spnOfRecs').text(0);
+                    $('.spnTotalRecs').text(0);
+                    $('.spnToRecs').text(0);
+
+                    if (parseInt(response.length) > 0) {
+
+                        var curRecords = 0;
+                        var TotalRecs = 0;
+                        var spnToRecs = 0;
+
+                        curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+                        curRecords = curRecords - (pageSize - parseInt(response.length));
+                        TotalRecs = parseInt(response[0].TotalRecords);
+                        $('.spnOfRecs').text(curRecords);
+                        $('.spnTotalRecs').text(TotalRecs);
+                        if (curRecords === 0 || curRecords === TotalRecs) {
+                            $("#ddlload").hide();
+                        }
+                        else {
+                            $("#ddlload").show();
+                        }
+                    } else {
+                        $("#ddlload").hide();
+                    }
+
+                    $("#RawDatas table tbody tr:not(:first)").remove();
+                    $("#RawDatas table tbody tr:eq(0)").show();
+
+
+                        for (var i = 0; i < response.length; i++) {
+                            var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                            $(".PushNotificationTitle", table).html(response[i].PushNotificationTitle);
+                            $(".Title", table).html(response[i].Title);
+                            $(".NTSubject", table).html(response[i].NTSubject);
+                            $(".Body", table).html(response[i].Body);
+
+                            $("#viewdata", table).attr('href', '/NotificationTemplate/NoticationTemplateView?PushNotificaionTemplateKey=' + response[i].PushNotificaionTemplateKey);
+
+                            $("#RawDatas table").append(table);
+                            spnToRecs++;
+                        }
+                        $("#RawDatas table tbody tr:eq(0)").hide();
+
+                        spnToRecs = (curRecords - spnToRecs) + 1;
+                    if (spnToRecs > 0) {
+                        $('.spnToRecs').text(spnToRecs);
+                    }
+                    else {
+                        debugger;
+                        $('.spnToRecs').text(0);
+                        updatePaging(TotalRecs);
+                        if (TotalRecs = 'undefined') {
+                            $('.errormessage').html('Data Is Not Found.');
+                            $('#Error').show();
+                            $("#RawDatas table thead tr:eq(0)").hide();
+                            $("#RawDatas table tbody tr:eq(0)").hide();
+                            $(".pagination").hide();
+                        }
+                    }
+                    updatePaging(TotalRecs);
+
+
+                }
+            });
+    }
+
+
+</script>
+
+
+<script>
+
+
+
+    $(document).ready(function ()
+    {
+
+        $("#global-loader").show();
+        debugger;
+        $("#ddlload").hide();
+        $('.loader-wrapper').show();
+        $("#hdnSearch").val('');
+        LoadSortTableFill();
+
+        $('.errormessage').html('');
+        $("#Error").hide();
+        var sorted = 'order by Title asc, Status asc';
+        $("#SortValuee").val(sorted);
+        $('#divSuccess').hide();
+        //$.get('/NotificationTemplate/IndexreStaffPagingForAdvancedSearch', {  Search: '', Sort: sorted }, function (response) {
+        //    $("#RawDatas table tbody tr:eq(0)").hide();
+        //    $(".loader-wrapper").hide();
+
+        //    $("#global-loader").hide();
+        //});
+
+
+    });
+    console.log()
+    $("#btnsearch").click(function () {
+
+        debugger;
+        $("#ddlload").hide();
+        $("#loading1").show();
+        $("#hdnSearch").val($("#txtsearch").val());
+        $("#hdntitletype").val('');
+        LoadSortTableFillWithSearchForNotificationTemplatelist();
+    });
+
+    $("#btnsearchVendor").click(function () {
+        $("#txtsearch").val('');
+        LoadSortTableFillWithSearch();
+        $("#advancesearch3").hide();
+    });
+
+
+     function updatePagingsearch(TotalRecs, PageIndex) {
+
+        $('ul.pagination').html('');
+        var liClone = $('ul.pagination');
+
+        debugger;
+
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        //var pageSize = $('#PageSize').val();
+        var NoPage = 1;
+        if (parseInt(TotalRecs) > parseInt(pageSize)) {
+            NoPage = parseInt(parseInt(TotalRecs) / parseInt(pageSize));
+            if (parseFloat(parseInt(parseInt(TotalRecs) / parseInt(pageSize))) < parseFloat(parseInt(TotalRecs) / parseInt(pageSize))) {
+                NoPage = (parseInt(parseInt(TotalRecs) / parseInt(pageSize)) + 1);
+            }
+        }
+
+        var lp = 0;//parseFloat(parseInt($('#HdnPageIndex').val()) / 5);
+        if (parseFloat(parseInt(PageIndex) % 5) == 0) {
+            lp = ((parseInt(parseInt(PageIndex) / 5) - 1) * 5);
+        }
+        else {
+            lp = parseInt(parseInt(PageIndex) / 5) * 5;
+        }
+
+        var ind = 0;
+        for (var i = 1; i <= NoPage; i++) {
+            if ((parseInt(lp)) < i) {
+                if (parseInt(PageIndex) > 5 && $(liClone).find('li.previous').length == 0) {
+                    $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')"><a href="#">Previous</a></li>');
+                }
+                if (ind < 5) {
+                    if (i == parseInt(PageIndex)) {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current">' + i + '</a></li>');
+                    } else {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')">' + i + '</a></li>');
+                    }
+                } else if ($(liClone).find('li.next').length == 0) {
+                    $(liClone).append('<li class="paginate_button next " aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')"><a href="#">Next</a></li>');
+                }
+                ind = ind + 1;
+            }
+        }
+
+
+
+    }
+
+
+    function LoadSortTableFillWithSearchForNotificationTemplatelist() {
+        var pageSize = "10";
+        var PageIndex = "1";
+      
+
+        $.ajax({
+            url: '@Url.Action("IndexreStaffPagingForAdvancedSearch", "NotificationTemplate")',
+            cache: false,
+            data: {
+                PageSize: pageSize,
+                PageIndex: PageIndex,
+                Search: $("#hdnSearch").val(),
+                TitleType: $("#hdntitletype").val(),
+                Sort: $("#HdnSortValue").val()
+            },
+            success: function (response) {
+
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+
+                    debugger;
+                    curRecords = parseInt((PageIndex) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('#TotalPageRecord').val(parseInt(response[0].TotalRecords));
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                } else {
+                    $("#ddlload").hide();
+                }
+
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+                debugger;
+                for (var i = 0; i < response.length; i++) {
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $(".PushNotificationTitle", table).html(response[i].PushNotificationTitle);
+                    $(".Title", table).html(response[i].Title);
+                    $(".NTSubject", table).html(response[i].NTSubject);
+                    $(".Body", table).html(response[i].Body);
+
+                    $("#viewdata", table).attr('href', '/NotificationTemplate/NoticationTemplateView?PushNotificaionTemplateKey=' + response[i].PushNotificaionTemplateKey);
+
+                    $("#RawDatas table").append(table);
+                    table.show();
+                    spnToRecs++;
+
+                }
+                $("#RawDatas table tbody tr:eq(0)").hide();
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                    $("#RawDatas table thead tr:eq(0)").show();
+                    $(".pagination").show();
+                    updatePagingsearch(TotalRecs, PageIndex);
+                    $('#Error').hide();
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                    updatePagingsearch(TotalRecs, PageIndex);
+                    if (TotalRecs = 'undefined') {
+                        $('.errormessage').html('Data Not Found.');
+                        $('#Error').show();
+                        $("#RawDatas table thead tr:eq(0)").hide();
+                        $("#RawDatas table tbody tr:eq(0)").hide();
+                        $(".pagination").hide();
+                    }
+                }
+                debugger;
+
+
+
+                updatePagingsearch(TotalRecs, PageIndex);
+
+            }
+        });
+    }
+
+
+
+    function LoadSortTableFill() {
+        $("#RawDatas table tbody tr:eq(0)").hide();
+
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        debugger
+        $.ajax({
+            url: '@Url.Action("IndexreStaffPagingForAdvancedSearch", "NotificationTemplate")',
+            cache: false,
+            data: {
+                PageSize: pageSize,
+                PageIndex: $('#HdnPageIndex').val(),
+                Search: $("#hdnSearch").val(),
+                TitleType: $("#hdntitletype").val(),
+                Sort: $("#HdnSortValue").val()
+            },
+            success: function (response) {
+
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                } else {
+                    $("#ddlload").hide();
+                }
+
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                //$("#RawDatas table tbody tr:eq(0)").show();
+
+                    for (var i = 0; i < response.length; i++) {
+                        var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                        $(".PushNotificationTitle", table).html(response[i].PushNotificationTitle);
+                        $(".Title", table).html(response[i].Title);
+                        $(".NTSubject", table).html(response[i].NTSubject);
+                        $(".Body", table).html(response[i].Body);
+
+                        $("#viewdata", table).attr('href', '/NotificationTemplate/NoticationTemplateView?PushNotificaionTemplateKey=' + response[i].PushNotificaionTemplateKey);
+
+                        $("#RawDatas table").append(table);
+                        table.show();
+                        spnToRecs++;
+
+                    }
+                    $("#RawDatas table tbody tr:eq(0)").hide();
+
+                    spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+
+                    $('#Error').hide();
+                }
+
+
+                    updatePaging(response[0].TotalRecords)
+
+                }
+
+        });
+    }
+
+    function Getdata() {
+
+        $("#divSucces").hide();
+        $("#divSucces").html('');
+        $("#divError").hide();
+        $("#divError").html('');
+        $("#loading1").show();
+        $("#hdnload").val("1");
+        $("#ddlload").hide();
+        GetRecords();
+    }
+
+    function GetRecords() {
+        var SearchVal = $('#SearchVal').val();
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        //SearchVal = SearchVal.replace("'", "''");
+        console.log(GetRecords)
+        $("#divSucces").hide();
+        $("#divSucces").html('');
+        $("#divError").hide();
+        $("#divError").html('');
+        var hdnPageIndex = parseInt($('#HdnPageIndex').val());
+
+        var CountVal = hdnPageIndex + 1;
+
+        var Index = (parseInt(pageSize) * CountVal);
+
+        $('#HdnPageIndex').val(CountVal);
+        //var sort = $("#HdnSortValue").val();
+        $("#loading1").show();
+
+        $.ajax({
+            type: "Get",
+            url: "/NotificationTemplate/IndexreStaffPagingForAdvancedSearch",
+            data: {
+                PageSize: Index,
+                PageIndex: 1,
+                Search: $("#hdnSearch").val(),
+                TitleType:$("#hdntitletype").val(),
+                Sort: $("#HdnSortValue").val()
+            },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: OnSuccess,
+            failure: function (response) {
+            },
+            error: function (response) {
+            }
+        });
+    }
+    function LoadSortTableFillWithSearch() {
+        var txtTitle = $("#txtNotiTitle").val();
+        var titleType = $("#TxtNotificationType").val();
+
+        $("#hdnSearch").val(txtTitle);
+        $("#hdntitletype").val(titleType);
+        debugger;
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        $.ajax({
+            url: '@Url.Action("IndexreStaffPagingForAdvancedSearch", "NotificationTemplate")',
+            cache: false,
+            data: {
+                PageSize: pageSize,
+                PageIndex: $('#HdnPageIndex').val(),
+                Search: txtTitle,
+                TitleType:titleType,
+                Sort: $("#HdnSortValue").val()
+            },
+            success: function (response) {
+
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                } else {
+                    $("#ddlload").hide();
+                }
+
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                //$("#RawDatas table tbody tr:eq(0)").show();
+
+                    for (var i = 0; i < response.length; i++) {
+                        var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                        $(".PushNotificationTitle", table).html(response[i].PushNotificationTitle);
+                        $(".Title", table).html(response[i].Title);
+                        $(".NTSubject", table).html(response[i].NTSubject);
+                        $(".Body", table).html(response[i].Body);
+
+                        $("#viewdata", table).attr('href', '/NotificationTemplate/NoticationTemplateView?PushNotificaionTemplateKey=' + response[i].PushNotificaionTemplateKey);
+
+                        $("#RawDatas table").append(table);
+                        table.show();
+                        spnToRecs++;
+
+                    }
+                    $("#RawDatas table tbody tr:eq(0)").hide();
+
+                    spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                }
+                if (curRecords.text == "NaN") {
+
+                    $('.errormessage').html('Data Is Not Found.');
+                    $('#Error').show();
+                    $("#RawDatas table thead tr:eq(0)").hide();
+                    $("#RawDatas table tbody tr:eq(0)").hide();
+                }
+                else {
+                    updatePaging(response[0].TotalRecords)
+                }
+                }
+
+        });
+    }
+    function SortingFun(val) {
+        $("#ddlload").show();
+        $('#HdnPageIndex').val('1');
+        var Sort = $('#SortValue').val();
+        debugger;
+        var ascdesc = 'fa-sort-asc';
+        var ascdesc1 = 'fa-sort-desc';
+        var ascdesc3 = 'fa-sort-asc';
+        var ascdesc4 = 'fa-sort-desc';
+
+        $('.loader-wrapper').show();
+        var Sort = '';
+        $('#HdnPageIndex').val('1');
+        $('#PushNotificationTitlei').removeClass(ascdesc4);
+        $('#PushNotificationTitlei').addClass(ascdesc3);
+
+        $('#Titlei').removeClass(ascdesc4);
+        $('#Titlei').addClass(ascdesc3);
+
+        $('#NTSubjecti').removeClass(ascdesc4);
+        $('#NTSubjecti').addClass(ascdesc3);
+
+        $('#Bodyi').removeClass(ascdesc4);
+        $('#Bodyi').addClass(ascdesc3);
+
+        debugger;
+
+
+        //-----------------------------------------------------------
+        if (val == 'PushNotificationTitle') {
+            if ($('#PushNotificationTitlehdn').val() == 'asc') {
+                Sort = 'order by NT.PushNotificationTitle desc';
+                $('#PushNotificationTitlehdn').val('desc');
+                $('#PushNotificationTitlei').removeClass(ascdesc);
+                $('#PushNotificationTitlei').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by NT.PushNotificationTitle asc';
+                $('#PushNotificationTitlehdn').val('asc');
+                $('#PushNotificationTitlei').removeClass(ascdesc1);
+                $('#PushNotificationTitlei').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------
+        if (val == 'Title') {
+            if ($('#Titlehdn').val() == 'asc') {
+                Sort = 'order by Lk.Title desc';
+                $('#Titlehdn').val('desc');
+                $('#Titlei').removeClass(ascdesc);
+                $('#Titlei').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by Lk.Title asc';
+                $('#Titlehdn').val('asc');
+                $('#Titlei').removeClass(ascdesc1);
+                $('#Titlei').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------------
+        if (val == 'NTSubject') {
+            if ($('#NTSubjecthdn').val() == 'asc') {
+                Sort = 'order by NT.NTSubject desc';
+                $('#NTSubjecthdn').val('desc');
+                $('#NTSubjecti').removeClass(ascdesc);
+                $('#NTSubjecti').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by NT.NTSubject asc';
+                $('#NTSubjecthdn').val('asc');
+                $('#NTSubjecti').removeClass(ascdesc1);
+                $('#ENTSubjecti').addClass(ascdesc);
+            }
+        }
+
+        if (val == 'Body') {
+            if ($('#Bodyhdn').val() == 'asc') {
+                Sort = 'order by NT.Body desc';
+                $('#Bodyhdn').val('desc');
+                $('#Bodyi').removeClass(ascdesc);
+                $('#Bodyi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by NT.Body asc';
+                $('#Bodyhdn').val('asc');
+                $('#Bodyi').removeClass(ascdesc1);
+                $('#Bodyi').addClass(ascdesc);
+            }
+        }
+        $("#ddlload").show();
+
+        $("#HdnSortValue").val(Sort);
+        $('.loader-wrapper').show();
+        LoadSortTableFill();
+    }
+    console.log("CallFuction")
+    function OnSuccess(response) {
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        debugger;
+
+        $('.spnOfRecs').text(0);
+        $('.spnTotalRecs').text(0);
+        $('.spnToRecs').text(0);
+
+        if (parseInt(response.length) > 0) {
+            var curRecords = 0;
+            var TotalRecs = 0;
+            var spnToRecs = 0;
+            debugger;
+            curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+            curRecords = curRecords - (pageSize - parseInt(response.length));
+            TotalRecs = parseInt(response[0].TotalRecords);
+            $('.spnOfRecs').text(curRecords);
+            $('.spnTotalRecs').text(TotalRecs);
+
+            if (curRecords === 0 || curRecords === TotalRecs) {
+                $("#ddlload").hide();
+            }
+            else {
+                $("#ddlload").show();
+            }
+        } else {
+            $("#ddlload").hide();
+        }
+        $("#RawDatas table tbody tr:not(:first)").remove();
+        $("#RawDatas table tbody tr:eq(0)").show();
+
+            for (var i = 0; i < response.length; i++) {
+                var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                $(".PushNotificationTitle", table).html(response[i].PushNotificationTitle);
+                $(".Title", table).html(response[i].Title);
+                $(".NTSubject", table).html(response[i].NTSubject);
+                $(".Body", table).html(response[i].Body);
+            }
+                $("#viewdata", table).attr('href', '/NotificationTemplate/NoticationTemplateView?PushNotificaionTemplateKey=' + response[i].PushNotificaionTemplateKey);
+
+                $("#RawDatas table").append(table);
+
+                spnToRecs++;
+
+            $("#RawDatas table tbody tr:eq(0)").hide();
+
+            spnToRecs = (curRecords - spnToRecs) + 1;
+        if (spnToRecs > 0) {
+            $('.spnToRecs').text(spnToRecs);
+        }
+        else {
+            $('.spnToRecs').text(0);
+        }
+        if (curRecords.text == "NaN") {
+
+            $('.errormessage').html('Data Is Not Found.');
+            $('#Error').show();
+            $("#RawDatas table thead tr:eq(0)").hide();
+            $("#RawDatas table tbody tr:eq(0)").hide();
+        }
+        else {
+            updatePaging(response[0].TotalRecords)
+
+            $("#loading1").hide();
+        }
+
+    }
+
+
+
+</script>
+

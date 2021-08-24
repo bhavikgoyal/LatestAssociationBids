@@ -1,0 +1,847 @@
+﻿
+@{
+    ViewBag.Title = "Reports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string Errormessage = Convert.ToString(ViewData["Errormessage"]);
+}
+<head><title>Reports</title></head>
+<h2>Vendorswiththemostbidsaccepted</h2>
+
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+               
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item">@Html.ActionLink("Home", "Dashboard", "Dashboard", null, new { })</li>
+                <li class="breadcrumb-item active" aria-current="page">Vendors with the most bids accepted</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+        @if (TempData["Sucessmessage"] != null)
+        {
+            <p class="alert alert-success alert-dismissible" id="successMessage">
+                @TempData["Sucessmessage"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        @if (TempData["delete"] != null)
+        {
+            <p class="alert alert-danger alert-dismissible" id="successMessage">
+                @TempData["delete"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+
+        <div role="alert">
+            @*<div class="alert alert-danger" id="Error" style="display: none;margin-top: 20px;">
+                    <strong><span class="errormessage"></span></strong>
+                </div>*@
+            @if (!string.IsNullOrEmpty(Errormessage))
+            {
+                <div class="alert alert-danger" style="margin-top: 20px;">
+                    <strong><span>@Errormessage</span></strong>
+                </div>
+            }
+        </div>
+        <!-- End page-header -->
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-4 col-xl-4 mb15">
+                                    <input type="text" class="form-control" id="txtsearch" hidden="hidden" placeholder="Company Name">
+                                </div>
+                                <div class="col-lg-4 col-xl-4">
+                                    <a class="btn btn-secondary" href="#" id="btnsearch" hidden="hidden" role="button">Search</a>
+                                    @*<span class="advance_search btn_advsearch" onclick="toggle_visibility('advancesearch2');"></span>*@
+                                </div>
+                                <div class="col-lg-4 col-xl-4" id="btnadd">
+                                    <div class="btn_group_div text-right">
+                                        <button class="btn btn-primary ml-auto" id="ExportToExcel" type="submit" title="Export To Excel"> Export To Excel</button>
+                                        <button class="btn btn-primary ml-auto" id="ExportToPdf" type="submit" title="Export To PDF"> Export To PDF</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end of form group -->
+                        @*<div id="advancesearch3">
+                                <div class="overlayclose"><i class="fa fa-times"></i></div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label class="form-label">First Name</label>
+                                            <input class="form-control" id="txtFirstName" placeholder="Vendor Name" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Last Name</label>
+                                            <input class="form-control" id="txtLastName" placeholder="Vendor Name" />
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Status</label>
+                                            <select id="ddlStatus" class="form-control select2 custom-select" data-placeholder="Choose one">
+                                                @*<option label="Choose one"></option>
+                                                <option value="3">All</option>
+                                                <option value="2">Active</option>
+                                                <option value="1">InActive</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">&nbsp;</label>
+                                            <button type="button" id="btnsearchVendor" class="btn btn-sm btn-primary btn-icon-text">
+                                                Search
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="alert alert-danger" id="Error" style="display: none;margin-top: 20px;">
+                                        <strong><span class="errormessage"></span></strong>
+                                    </div>
+                                </div>
+                            </div>*@
+                        <hr />
+                        <div id="RawDatas" class="table-responsive">
+                            <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                <thead>
+                                    <tr>
+                                        @*<th>Name</th>
+                                            <th>Phone</th>
+                                            <th>Email</th>
+                                            <th align="center" class="text-center">Status</th>
+                                            <th>&nbsp;</th>*@
+                                        <th width="15%" onclick="SortingFun('VendorName');" style="cursor: pointer;">
+                                           @* <i id="VendorNamei" class="fa fa-sort-asc pull-right"></i>*@
+                                            Vendor Name
+                                        </th>
+                                        <th width="15%" onclick="SortingFun('AcceptName');" style="cursor: pointer;">
+                                            @*<i id="AcceptNamei" class="fa fa-sort-asc pull-right"></i>*@
+                                            Accepted Bids
+                                        </th>
+                                        
+                                        @*<th width="15%" onclick="SortingFun('Amount');" style="cursor: pointer;">
+                                                <i id="Amounti" class="fa fa-sort-asc pull-right"></i>
+                                                Amount
+                                            </th>
+
+                                            <th width="6%" align="center" class="text-center" onclick="SortingFun('Balance');" style="cursor: pointer;">
+                                                <i id="Balancei" class="fa fa-sort-asc pull-right"></i>
+                                                Balance
+                                            </th>
+                                            <th width="5%"></th>*@
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="VendorName"></span></td>
+                                        <td><span class="AcceptBid"></span></td>
+                                        
+                                        @*<td><span class="Amount"></span></td>
+                                            <td><span class="Balance"></span></td>*@
+
+                                        @*<td align="center"><a id="viewdata" role="button"><i class="fe fe-eye font18"></i></a></td>*@
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="pull-left">
+                                <label><span class="spnToRecs">0</span> to <span class="spnOfRecs">0</span> out of <span class="spnTotalRecs">0</span>&nbsp; Records </label>
+                            </div>
+                            <div class="dataTables_paginate paging_simple_numbers" id="pagin">
+                                <ul class="pagination"></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pagination" style="display:none;">
+                        <input type="hidden" id="HdnSortValue" value="order by FirstName asc" />
+                        <input type="hidden" id="HdnPageIndex" value="1" />
+                        <div style="float: right; line-height: 13px; padding: 1px 10px 1px 5px;">
+                            <select id="ReportPageSize">
+                                <option selected="selected" value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                            <span style="line-height: 25px; vertical-align: top;">Records/Page</span>
+                        </div>
+                        <input type="hidden" id="Namehdn" value="asc" />
+                        <input type="hidden" id="CompanyNamehdn" value="asc" />
+                        <input type="hidden" id="Amounthdn" value="asc" />
+                        <input type="hidden" id="Balancehdn" value="asc" />
+                        <input type="hidden" id="TotalPageRecord" value='0' />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--End side app-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+<!-- End app-content-->
+
+<script type="text/javascript">
+        $(document).ready(function ()
+        {
+			  $(".advance_search").click(function(){
+				  $("#advancesearch2").toggle(500);
+			  });
+			  $(".overlayclose").click(function(){
+				  $("#advancesearch2").hide();
+              });
+            checkPoratl();
+            checkUserRole()
+            $('.errormessage').html('');
+            $("#Error").hide();
+         });
+
+
+
+          @*function checkPoratl() {
+        $.ajax({
+            url: '@Url.Action("checkPortal", "VendorsWithOpenInvoice")',
+            cache: false,
+            data:
+            {
+                PropertyKey: $('#PropertyKey').val()
+            },
+            success: function (response) {
+                debugger;
+
+                if (response == false) {
+                    window.location.href = '@Url.Action("Index", "Login")';
+                }
+
+                else {
+
+                }
+
+            }
+        });
+    }*@
+           @*function checkUserRole() {
+        $.ajax({
+            url: '@Url.Action("checkUserRole", "StaffDirectory")',
+            cache: false,
+            data:
+            {
+                PropertyKey: $('#PropertyKey').val()
+            },
+            success: function (response) {
+                debugger;
+
+                if (response == false) {
+                    $("#btnadd").hide();
+                }
+
+                else {
+
+                }
+
+            }
+        });
+    }*@
+
+
+       function updatePaging(TotalRecs)
+        {
+            $('ul.pagination').html('');
+            var liClone = $('ul.pagination');
+           debugger;
+            var reportpagesize = '@System.Configuration.ConfigurationManager.AppSettings["ReportPageSize"].ToString()';
+            //var pageSize = $('#PageSize').val();
+            var NoPage = 1;
+           if (parseInt(TotalRecs) > parseInt(reportpagesize)) {
+               NoPage = parseInt(parseInt(TotalRecs) / parseInt(reportpagesize));
+               if (parseFloat(parseInt(parseInt(TotalRecs) / parseInt(reportpagesize))) < parseFloat(parseInt(TotalRecs) / parseInt(reportpagesize))) {
+                   NoPage = (parseInt(parseInt(TotalRecs) / parseInt(reportpagesize)) + 1);
+                }
+            }
+
+            var lp = 0;//parseFloat(parseInt($('#HdnPageIndex').val()) / 5);
+            if (parseFloat(parseInt($('#HdnPageIndex').val()) % 5) == 0) {
+                lp = ((parseInt(parseInt($('#HdnPageIndex').val()) / 5) - 1) * 5);
+            } else {
+                lp = parseInt(parseInt($('#HdnPageIndex').val()) / 5) * 5;
+            }
+
+            var ind = 0;
+            for (var i = 1; i <= NoPage; i++) {
+                if ((parseInt(lp)) < i) {
+                    if (parseInt($('#HdnPageIndex').val()) > 5 && $(liClone).find('li.previous').length == 0) {
+                        $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')"><a href="#">Previous</a></li>');
+                    }
+                    if (ind < 5) {
+                        if (i == parseInt($('#HdnPageIndex').val())) {
+                            $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current">' + i + '</a></li>');
+                        } else {
+                            $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')">' + i + '</a></li>');
+                        }
+                    } else if ($(liClone).find('li.next').length == 0) {
+                        $(liClone).append('<li class="paginate_button next " aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')"><a href="#">Next</a></li>');
+                    }
+                    ind = ind + 1;
+                }
+            }
+            }
+
+        function LoadPagingSortTableFill(pageIndex)
+        {
+             var reportpagesize = '@System.Configuration.ConfigurationManager.AppSettings["ReportPageSize"].ToString()';
+            $('#HdnPageIndex').val(pageIndex);
+            //alert("txtSearch = " +$('#txtsearch').val());
+            $.ajax({
+                url: '@Url.Action("VendorswiththemostbidsacceptedIndexPaging", "VendorsWithOpenInvoice")',
+                cache: false,
+                data: {
+                    ReportPageSize: reportpagesize,
+                    PageIndex: pageIndex,
+                    Search: $('#txtsearch').val(),
+                    Sort: $("#HdnSortValue").val()
+                },
+                success: function (response) {
+
+                    $('.spnOfRecs').text(0);
+                    $('.spnTotalRecs').text(0);
+                    $('.spnToRecs').text(0);
+
+                    if (parseInt(response.length) > 0) {
+
+                        var curRecords = 0;
+                        var TotalRecs = 0;
+                        var spnToRecs = 0;
+                        curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(reportpagesize));
+                        curRecords = curRecords - (reportpagesize - parseInt(response.length));
+                        TotalRecs = parseInt(response[0].TotalRecords);
+                        $('.spnOfRecs').text(curRecords);
+                        $('.spnTotalRecs').text(TotalRecs);
+                        if (curRecords === 0 || curRecords === TotalRecs) {
+                            $("#ddlload").hide();
+                        }
+                        else {
+                            $("#ddlload").show();
+                        }
+                    } else {
+                        $("#ddlload").hide();
+                    }
+
+                    $("#RawDatas table tbody tr:not(:first)").remove();
+                    $("#RawDatas table tbody tr:eq(0)").show();
+                    for (var i = 0; i < response.length; i++) {
+                        var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                        $(".AcceptBid", table).html(response[i].AcceptBid);
+                        $(".VendorName", table).html(response[i].VendorName);
+                        //$(".Amount", table).html(response[i].Amount);
+                        //$(".Balance", table).html('$' + response[i].Balance + '.00');
+
+                        //if (response[i].Status == "1") {
+                        //    //alert(" Red  " + i + "Status " + response[i].Statuss);
+                        //    $("#statuscss", table).css("color", "red");
+                        //}
+                        //else if (response[i].Status == "2" || response[i].Status == "101") {
+                        //    //alert(" Green  " + i + "Status" + response[i].Statuss);
+                        //    //$(".status", table).append("<i id='statuscss' class='fa fa-circle'></i>");
+                        //    $("#statuscss", table).css("color", "green");
+                        //}
+                        ////$(".status", table).html();
+                        //$("#viewdata", table).attr('href', '/StaffDirectory/StaffDirectoryView?ResourceKey=' + response[i].ResourceKey);
+                        $("#RawDatas table").append(table);
+                        spnToRecs++;
+                    }
+                    $("#RawDatas table tbody tr:eq(0)").hide();
+
+                    spnToRecs = (curRecords - spnToRecs) + 1;
+                    if (spnToRecs > 0) {
+                        $('.spnToRecs').text(spnToRecs);
+                    }
+                    else {
+                        $('.spnToRecs').text(0);
+                    }
+                    if (curRecords.text == "NaN") {
+
+                        $('.errormessage').html('Data Is Not Found.');
+                        $('#Error').show();
+                        $("#RawDatas table thead tr:eq(0)").hide();
+                        $("#RawDatas table tbody tr:eq(0)").hide();
+                    }
+                    else {
+                        updatePaging(response[0].TotalRecords);
+                    }
+                }
+            });
+        }
+
+    $("#ExportToExcel").click(function () {
+         var reportpagesize = $('.spnTotalRecs').text();
+        window.location.href = "/VendorsWithOpenInvoice/ExportToExcelTop5?ReportPage= " + reportpagesize + "&PageSize=" + 1 + " &Search=" + $('#Status').val() + " &Short=" + $("#HdnSortValue").val() + " &PageName=Vendorswiththemostbidsaccepted ";
+    });
+    $("#ExportToPdf").click(function () {
+         var reportpagesize = $('.spnTotalRecs').text();
+        window.location.href = "/VendorsWithOpenInvoice/ExportToPdfTop5?ReportPage= " + reportpagesize + "&PageSize=" + 1 + " &Search=" + $('#Status').val() + " &Short=" + $("#HdnSortValue").val() + " &PageName=Vendorswiththemostbidsaccepted ";
+
+    });
+
+
+
+</script>
+<script>
+
+    $(document).ready(function ()
+    {
+        //$("#statuscss").css("color", "green");
+        LoadSortTableFill();
+        $('#divSuccess').hide();
+
+        //$('#divSuccess').show();
+    });
+
+    $("#btnsearch").click(function ()
+    {
+        LoadSortTableFill();
+    });
+
+    $("#btnsearchVendor").click(function () {
+        LoadSortTableFillWithSearch();
+    });
+
+        function LoadSortTableFill()
+        {
+
+             var reportpagesize = '@System.Configuration.ConfigurationManager.AppSettings["ReportPageSize"].ToString()';
+            //alert("txtSearch = " +$('#txtsearch').val());
+        $.ajax({
+            url: '@Url.Action("VendorswiththemostbidsacceptedIndexPaging", "VendorsWithOpenInvoice")',
+            cache: false,
+            data: {
+                ReportPageSize: reportpagesize,
+                PageIndex: $('#HdnPageIndex').val(),
+                Search: $('#txtsearch').val(),
+                Sort: $("#HdnSortValue").val()
+            },
+            success: function (response)
+            {
+                debugger;
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(reportpagesize));
+                    curRecords = curRecords - (reportpagesize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                } else {
+                    $("#ddlload").hide();
+                }
+
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $(".AcceptBid", table).html(response[i].AcceptBid);
+                    $(".VendorName", table).html(response[i].VendorName);
+                    //$(".Amount", table).html(response[i].Amount);
+                    //$(".Balance", table).html('$' + response[i].Balance + '.00');
+
+                    //if (response[i].Status == "1") {
+                    //    //alert(" Red  " + i + "Status " + response[i].Statuss);
+                    //    $("#statuscss", table).css("color", "red");
+                    //}
+                    //else if (response[i].Status == "2" || response[i].Status == "101") {
+                    //    //alert(" Green  " + i + "Status" + response[i].Statuss);
+                    //    //$(".status", table).append("<i id='statuscss' class='fa fa-circle'></i>");
+                    //    $("#statuscss", table).css("color", "green");
+                    //}
+                    ////$(".status", table).html();
+                    //$("#viewdata", table).attr('href', '/StaffDirectory/StaffDirectoryView?ResourceKey=' + response[i].ResourceKey);
+                    $("#RawDatas table").append(table);
+                    spnToRecs++;
+                }
+                $("#RawDatas table tbody tr:eq(0)").hide();
+
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                }
+                if (curRecords.text == "NaN") {
+
+                    $('.errormessage').html('Data Is Not Found.');
+                    $('#Error').show();
+                    $("#RawDatas table thead tr:eq(0)").hide();
+                    $("#RawDatas table tbody tr:eq(0)").hide();
+                }
+                else {
+                    updatePaging(response[0].TotalRecords);
+                }
+            }
+        });
+    }
+
+        function Getdata() {
+
+            $("#divSucces").hide();
+            $("#divSucces").html('');
+            $("#divError").hide();
+            $("#divError").html('');
+            $("#loading1").show();
+            $("#hdnload").val("1");
+            $("#ddlload").hide();
+            GetRecords();
+        }
+
+    function GetRecords() {
+        var reportpagesize = '@System.Configuration.ConfigurationManager.AppSettings["ReportPageSize"].ToString()';
+            var SearchVal = $('#SearchVal').val();
+
+            //SearchVal = SearchVal.replace("'", "''");
+
+            $("#divSucces").hide();
+            $("#divSucces").html('');
+            $("#divError").hide();
+            $("#divError").html('');
+            var hdnPageIndex = parseInt($('#HdnPageIndex').val());
+
+            var CountVal = hdnPageIndex + 1;
+
+        var Index = (parseInt(reportpagesize) * CountVal);
+
+            $('#HdnPageIndex').val(CountVal);
+            //var sort = $("#HdnSortValue").val();
+            $("#loading1").show();
+
+            $.ajax({
+                type: "Get",
+                url: "/VendorsWithOpenInvoice/VendorswiththemostbidsacceptedIndexPaging",
+                data: {
+                    ReportPageSize: Index,
+                    PageIndex: 1,
+                    Search: $('#txtsearch').val(),
+                    Sort: $("#HdnSortValue").val()
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: OnSuccess,
+                failure: function (response) {
+                },
+                error: function (response) {
+                }
+            });
+        }
+
+    @*$("#ExportToExcel").click(function () {
+         var reportpagesize = '@System.Configuration.ConfigurationManager.AppSettings["ReportPageSize"].ToString()';
+        window.location.href = "/VendorsWithOpenInvoice/ExportToExcelTop5?ReportPage= " + reportpagesize + "&PageSize=" + $('#HdnPageIndex').val() + " &Search=" + $('#Status').val() + " &Short=" + $("#HdnSortValue").val() + " &PageName=Vendorswiththemostbidsaccepted ";
+    });
+    $("#ExportToPdf").click(function () {
+         var reportpagesize = '@System.Configuration.ConfigurationManager.AppSettings["ReportPageSize"].ToString()';
+        window.location.href = "/VendorsWithOpenInvoice/ExportToPdfTop5?ReportPage= " + reportpagesize + "&PageSize=" + $('#HdnPageIndex').val() + " &Search=" + $('#Status').val() + " &Short=" + $("#HdnSortValue").val() + " &PageName=Vendorswiththemostbidsaccepted ";
+
+    });*@
+
+    function LoadSortTableFillWithSearch() {
+        var reportpagesize = '@System.Configuration.ConfigurationManager.AppSettings["ReportPageSize"].ToString()';
+            var txtFirstName = $('#txtFirstName').val();
+            var txtLastName = $('#txtLastName').val();
+            var ddlStatus = $('#ddlStatus').val();
+            var txtsearch = "";
+
+            if (txtFirstName != "" && txtLastName != "") {
+
+                txtsearch = txtFirstName + " " + txtLastName;
+            }
+            else if (txtFirstName != "") {
+
+                txtsearch = txtFirstName;
+            }
+            else if (txtLastName != "") {
+
+                txtsearch = txtLastName;
+            }
+            //alert(ddlStatus);
+            //var hdnPageIndex = parseInt($('#HdnPageIndex').val());
+            ////alert("pageindex " +hdnPageIndex);
+            //var CountVal = hdnPageIndex + 1;
+            ////alert("Countval " + CountVal);
+            //var Index = (parseInt($('#PageSize').val()) * CountVal);
+            ////alert("Index " +Index);
+
+            $.ajax({
+                url: 'VendorsWithOpenInvoice/VendorswiththemostbidsacceptedIndexPaging',
+                cache: false,
+                data: {
+                    ReportPageSize: reportpagesize,
+                    PageIndex: $('#HdnPageIndex').val(),
+                    Search: txtsearch,
+                    Sort: $("#HdnSortValue").val()
+                },
+                success: function (response) {
+
+                    $('.spnOfRecs').text(0);
+                    $('.spnTotalRecs').text(0);
+                    $('.spnToRecs').text(0);
+
+                    if (response.length > 0) {
+
+                        var curRecords = 0;
+                        var TotalRecs = 0;
+                        var spnToRecs = 0;
+
+                        curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(reportpagesize));
+                        curRecords = curRecords - (reportpagesize - parseInt(response.length));
+                        TotalRecs = parseInt(response[0].TotalRecords);
+                        $('.spnOfRecs').text(curRecords);
+                        $('.spnTotalRecs').text(TotalRecs);
+                        if (curRecords === 0 || curRecords === TotalRecs) {
+                            $("#ddlload").hide();
+                        }
+                        else {
+                            $("#ddlload").show();
+                        }
+                    }
+                    else {
+                        $('.spnOfRecs').text(0);
+                        $('.spnTotalRecs').text(0);
+                    }
+
+                    $("#RawDatas table tbody tr:not(:first)").remove();
+                    $("#RawDatas table tbody tr:eq(0)").show();
+                    for (var i = 0; i < response.length; i++) {
+
+                            var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                        $(".VendorName", table).html(response[i].VendorName);
+                        $(".CompanyName", table).html(response[i].CompanyName);
+                        //$(".Amount", table).html(response[i].Amount);
+                        //$(".Balance", table).html('$' + response[i].Balance + '.00');
+
+                            //if (response[i].Status == "1") {
+                            //    $("#statuscss", table).css("color", "red");
+                            //}
+                            //else if (response[i].Status == "2" || response[i].Status == "101") {
+                            //    $("#statuscss", table).css("color", "green");
+                            //}
+                            ////$(".status", table).html();
+                            //$("#viewdata", table).attr('href', '/StaffDirectory/StaffDirectoryView?ResourceKey=' + response[i].ResourceKey);
+                            $("#RawDatas table").append(table);
+                            spnToRecs++;
+
+                    }
+                    $("#RawDatas table tbody tr:eq(0)").hide();
+
+                    spnToRecs = (curRecords - spnToRecs) + 1;
+                    if (spnToRecs > 0) {
+                        $('.spnToRecs').text(spnToRecs);
+                    }
+                    else {
+                        $('.spnToRecs').text(0);
+                    }
+                    if (curRecords.text == "NaN") {
+
+                        $('.errormessage').html('Data Is Not Found.');
+                        $('#Error').show();
+                        $("#RawDatas table thead tr:eq(0)").hide();
+                        $("#RawDatas table tbody tr:eq(0)").hide();
+                    }
+                    else {
+                        updatePaging(response[0].TotalRecords);
+                    }
+
+                }
+            });
+        }
+    function SortingFun(val) {
+
+        var ascdesc = 'fa-sort-asc';
+        var ascdesc1 = 'fa-sort-desc';
+        var ascdesc3 = 'fa-sort-asc';
+        var ascdesc4 = 'fa-sort-desc';
+
+        $('.loader-wrapper').show();
+        var Sort = '';
+        $('#HdnPageIndex').val('1');
+
+        $('#VendorNamei').removeClass(ascdesc4);
+        $('#VendorNamei').addClass(ascdesc3);
+
+
+        $('#CompanyNamei').removeClass(ascdesc4);
+        $('#CompanyNamei').addClass(ascdesc3);
+
+
+        $('#Amounti').removeClass(ascdesc4);
+        $('#Amounti').addClass(ascdesc3);
+
+        $('#Balancei').removeClass(ascdesc4);
+        $('#Balancei').addClass(ascdesc3);
+
+
+
+
+        //-----------------------------------------------------------
+        if (val == 'VendorName') {
+            if ($('#Namehdn').val() == 'asc') {
+                Sort = 'order by rs.FirstName desc';
+                $('#Namehdn').val('desc');
+                $('#VendorNamei').removeClass(ascdesc);
+                $('#VendorNamei').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.FirstName asc';
+                $('#Namehdn').val('asc');
+                $('#VendorNamei').removeClass(ascdesc1);
+                $('#VendorNamei').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------
+        if (val == 'CompanyName') {
+            if ($('#CompanyNamehdn').val() == 'asc') {
+                Sort = 'order by cp.LegalName desc';
+                $('#CompanyNamehdn').val('desc');
+                $('#CompanyNamei').removeClass(ascdesc);
+                $('#CompanyNamei').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by cp.LegalName asc';
+                $('#CompanyNamehdn').val('asc');
+                $('#CompanyNamei').removeClass(ascdesc1);
+                $('#CompanyNamei').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------------
+        //if (val == 'Amount') {
+        //    if ($('#Amounthdn').val() == 'asc') {
+        //        Sort = 'order by Amount desc';
+        //        $('#Amounthdn').val('desc');
+        //        $('#Amounti').removeClass(ascdesc);
+        //        $('#Amounti').addClass(ascdesc1);
+        //    }
+        //    else {
+        //        Sort = 'order by Amount asc';
+        //        $('#Amounthdn').val('asc');
+        //        $('#Amounti').removeClass(ascdesc1);
+        //        $('#Amounti').addClass(ascdesc);
+        //    }
+        //}
+        ////---------------------------------------------------------
+        //if (val == 'Balance') {
+        //    if ($('#Balancehdn').val() == 'asc') {
+        //        Sort = 'order by Iv.Balance desc';
+        //        $('#Balancehdn').val('desc');
+        //        $('#Balancei').removeClass(ascdesc);
+        //        $('#Balancei').addClass(ascdesc1);
+        //    }
+        //    else {
+        //        Sort = 'order by Iv.Balance asc';
+        //        $('#Balancehdn').val('asc');
+        //        $('#Balancei').removeClass(ascdesc1);
+        //        $('#Balancei').addClass(ascdesc);
+        //    }
+        //}
+        //--------------------------------------------------------------
+
+        //--------------------------------------------------------------
+        $("#HdnSortValue").val(Sort);
+        $('.loader-wrapper').show();
+        LoadSortTableFill();
+        }
+
+        function OnSuccess(response) {
+             var reportpagesize = '@System.Configuration.ConfigurationManager.AppSettings["ReportPageSize"].ToString()';
+
+            $('.spnOfRecs').text(0);
+            $('.spnTotalRecs').text(0);
+            $('.spnToRecs').text(0);
+
+            if (parseInt(response.length) > 0) {
+
+                var curRecords = 0;
+                var TotalRecs = 0;
+                var spnToRecs = 0;
+                curRecords = parseInt(1 * parseInt(reportpagesize));
+                curRecords = curRecords - (reportpagesize - parseInt(response.length));
+                TotalRecs = parseInt(response[0].TotalRecords);
+                $('.spnOfRecs').text(curRecords);
+                $('.spnTotalRecs').text(TotalRecs);
+
+                if (curRecords === 0 || curRecords === TotalRecs) {
+                    $("#ddlload").hide();
+                }
+                else {
+                    $("#ddlload").show();
+                }
+            } else {
+                $("#ddlload").hide();
+            }
+            $("#RawDatas table tbody tr:not(:first)").remove();
+            $("#RawDatas table tbody tr:eq(0)").show();
+
+            for (var i = 0; i < response.length; i++) {
+                var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                $(".VendorName", table).html(response[i].VendorName);
+                $(".CompanyName", table).html(response[i].CompanyName);
+                //$(".Amount", table).html(response[i].Amount);
+                //$(".Balance", table).html('$' + response[i].Balance + '.00');
+                //if (response[i].Status == "1") {
+                //    //alert(" Red  " + i + "Status " + response[i].Status);
+                //    $("#statuscss", table).css("color", "red");
+                //}
+                //else if (response[i].Status == "2" || response[i].Status == "101")
+                //{
+                //    //alert(" Green  " + i + "Status" + response[i].Status);
+                //    $("#statuscss", table).css("color", "green");
+                //}
+                //$(".status", table).html();
+                //$("#viewdata", table).attr('href', '/StaffDirectory/StaffDirectoryView?ResourceKey=' + response[i].ResourceKey);
+                $("#RawDatas table").append(table);
+                spnToRecs++;
+            }
+            $("#RawDatas table tbody tr:eq(0)").hide();
+
+            spnToRecs = (curRecords - spnToRecs) + 1;
+            if (spnToRecs > 0) {
+                $('.spnToRecs').text(spnToRecs);
+            }
+            else {
+                $('.spnToRecs').text(0);
+            }
+            if (curRecords.text == "NaN") {
+
+                $('.errormessage').html('Data Is Not Found.');
+                $('#Error').show();
+                $("#RawDatas table thead tr:eq(0)").hide();
+                $("#RawDatas table tbody tr:eq(0)").hide();
+            }
+            else {
+                updatePaging(response[0].TotalRecords);
+                $("#loading1").hide();
+            }
+        }
+</script>
+
+
+

@@ -1,0 +1,917 @@
+﻿@model AssociationBids.Portal.Model.PropertyModel
+@{
+    ViewBag.Title = "Add Property";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string Errormessage = Convert.ToString(ViewData["Errormessage"]);
+    Errormessage = (string.IsNullOrEmpty(Errormessage)? Convert.ToString(TempData["Errormessage"]): Errormessage);
+}
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<link href="~/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" />
+<link href="~/Content/themes/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" />
+<link href="~/assets/plugins/fileuploads/css/dropify.min.css" rel="stylesheet" />
+<script src="~/assets/plugins/fileuploads/js/dropify.js"></script>
+<script src="~/assets/plugins/fileuploads/js/dropify-demo.js"></script>
+<script src="~/assets/plugins/fileuploads/js/dropify.min.js"></script>
+<style>
+    div#ManagerChoosen_chosen {
+        width: 100% !important;
+    }
+
+    .selector_ED {
+        width: auto !important;
+    }
+
+
+
+    /*.chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+        background: url('../../Content/themes/cancelimg.jpg');
+    }*/
+
+    .chosen-select placeholder_text {
+        padding: 5px;
+    }
+
+    .Error {
+        color: red;
+    }
+</style>
+
+<h2>Add Property</h2>
+<!-- app-content-->
+<ul class="nav navbar-nav">
+    <li class="active">@Html.ActionLink("Add Property", "APMPropertyAdd", "ACompanyManagement")</li>
+</ul>
+i>
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item">  @Html.ActionLink("Management Companies", "ACompanylist", "ACompanyManagement", new { })</li>
+                <li class="breadcrumb-item">@Html.ActionLink("Management Company Detail", "companydefaultView", "ACompanyManagement", new { @CompanyKey = Convert.ToString(Session["ViewCompanyFromList"]) }, new { })</li>
+                <li class="breadcrumb-item active" aria-current="page">Add Properties</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+        <div class="alert alert-danger" id="Error" style="display:none; margin-top: 20px;">
+            <span class="errormessage"></span>
+        </div>
+        @if (!string.IsNullOrEmpty(Errormessage))
+        {
+        <p class="alert alert-danger alert-dismissible">
+            @Errormessage
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        </p>
+        }
+        <!-- End page-header -->
+        @using (Html.BeginForm("APMPropertyAdd", "ACompanyManagement", FormMethod.Post, new { enctype = "multipart/form-data", @class = "active", @id = "AddForm" }))
+        {
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="cust-wizard">
+                            <!--multisteps-form-->
+                            <div class="multisteps-form">
+                                <!--progress bar-->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="multisteps-form__progress">
+                                            <button class="multisteps-form__progress-btn js-active" type="button" title="Property">Property</button>
+                                            <button class="multisteps-form__progress-btn" id="btnDoc" type="button" title="Access">Access</button>
+                                            <button class="multisteps-form__progress-btn" id="btnDoc" type="button" title="Document">Documents</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--form panels-->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="multisteps-form__form">
+                                            <!--single form panel-->
+                                            <div class="multisteps-form__panel p-4 rounded bg-white js-active" data-animation="scaleIn">
+                                                <div class="multisteps-form__content">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+
+                                                                                <label class="form-label">
+                                                                                    Title
+                                                                                    @Html.ValidationMessageFor(model => model.Title, "*", new { @class = "text-danger" })
+                                                                                </label>
+                                                                                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Title", @onfocusout = "checkVali()" } })
+
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">
+                                                                                    # No. of Units
+                                                                                    @Html.ValidationMessageFor(model => model.NumberOfUnits, "*", new { @class = "text-danger" })
+                                                                                </label>
+                                                                                @Html.EditorFor(model => model.NumberOfUnits, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "# No. of Units", @oninput = "checkVali()" } })
+
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">
+                                                                                    Description
+                                                                                    @*@Html.ValidationMessageFor(model => model.Description, "*", new { @class = "text-danger" })*@
+                                                                                </label>
+                                                                                @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @tabindex = "1", placeholder = "Description" })
+
+
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                    </div><!-- end of row -->
+                                                                    <hr />
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">
+                                                                                    Address 1
+                                                                                    @Html.ValidationMessageFor(model => model.Address, "*", new { @class = "text-danger" })
+                                                                                </label>
+                                                                                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Address", @onfocusout = "checkVali()" } })
+
+
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">
+                                                                                    Address 2
+                                                                                </label>
+                                                                                @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Address 2" } })
+
+
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">
+                                                                                    City
+                                                                                    @Html.ValidationMessageFor(model => model.City, "*", new { @class = "text-danger" })
+                                                                                </label>
+                                                                                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "City", @onfocusout = "checkVali()" } })
+
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">
+                                                                                    State
+                                                                                    @Html.ValidationMessageFor(model => model.State, "*", new { @class = "text-danger" })
+                                                                                </label>
+                                                                                @Html.DropDownList("State", new SelectList(ViewBag.lststate, "Value", "Text"), new { @data_rel = "Choose_one", @tabindex = "1", @class = "form-control", placeholder = "Please Select...", @onchange = "checkVali()" })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">
+                                                                                    Zip
+                                                                                    @Html.ValidationMessageFor(model => model.Zip, "*", new { @class = "text-danger" })
+                                                                                </label>
+                                                                                @Html.EditorFor(model => model.Zip, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Zip", @onfocusout = "checkVali()" } })
+
+
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                    </div>
+                                                                    <div id="lblresult">
+
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="bidreq-box" style="width: 100%;">
+                                                                            <h4 class="box-title">Default Bid Request Amount</h4>
+                                                                            <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label">
+                                                                                            Bid Request Amount
+                                                                                            @*@Html.ValidationMessageFor(model => model.BidRequestAmount, "*", new { @class = "text-danger" })*@
+                                                                                        </label>
+
+                                                                                        <div class="input-group">
+                                                                                            <div class="input-group-prepend">
+                                                                                                <div class="input-group-text">
+                                                                                                    <i class="fa fa-dollar tx-16 lh-0 op-6"></i>
+                                                                                                </div>
+                                                                                            </div><!-- input-group-prepend -->
+                                                                                            @Html.EditorFor(model => model.BidRequestAmount, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Bid Request Amount" } })
+
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div><!-- end of col -->
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label">
+                                                                                            Min. Insurance Amount
+                                                                                            @*@Html.ValidationMessageFor(model => model.MinimumInsuranceAmount, "*", new { @class = "text-danger" })*@
+                                                                                        </label>
+                                                                                        <div class="input-group">
+                                                                                            <div class="input-group-prepend">
+                                                                                                <div class="input-group-text">
+                                                                                                    <i class="fa fa-dollar tx-16 lh-0 op-6"></i>
+                                                                                                </div>
+                                                                                            </div><!-- input-group-prepend -->
+                                                                                            @Html.EditorFor(model => model.MinimumInsuranceAmount, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Min. Insurance Amount" } })
+
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div><!-- end of col -->
+                                                                            </div><!-- end of row-->
+                                                                        </div><!-- end of bidreq-box -->
+                                                                    </div>
+                                                                </div><!-- end of card body -->
+                                                                @Html.Hidden("Latitude", "")
+                                                                @Html.Hidden("Longitude", "")
+                                                                <div class="card-footer">
+                                                                    <div class="button-row d-flex">
+                                                                        <button class="btn btn-info ml-auto js-btn-next" id="btnNext" type="button" title="Next">Next <i class="fe fe-chevron-right"></i></button>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 pull-right">
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- end of card -->
+                                                        </div><!-- end of col -->
+                                                    </div><!-- end of row -->
+                                                </div>
+                                            </div>
+                                            <!--single form panel-->
+                                            <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                                                <div class="alert alert-danger" id="Errorformanager" style="display:none; margin-top: 20px;">
+                                                    <span class="errormessage"></span>
+                                                </div>
+                                                <div class="multisteps-form__content">
+                                                    <div class="row">
+
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="clearfix">
+                                                                        <a href="javascript:void(0);" class="btn btn-primary pull-right" data-toggle="modal" id="btnaddmanager" data-target="#addmanagers" title="Add Manager" onclick="return Manager()">+ Add Manager</a>
+                                                                    </div>
+                                                                    <br />
+                                                                    <div class="table-responsive" id="managerdiv">
+                                                                        <table id="dataTableExample" class="table table-striped table-bordered w-100 dataTable no-footer">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Assigned Managers</th>
+                                                                                    <th width="5%"></th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr id="DocumentId">
+                                                                                    <td>
+                                                                                        <span class="manspan" id="manspanid"></span>
+                                                                                        <span class="manspanId" id="manspanidVal" style="display:none;"></span>
+                                                                                    </td>
+                                                                                    <td align="center"><a title="Delete" onclick="removeman(this);"><i class="fe fe-trash redtxt font18"></i></a></td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div><!-- end of table responsive -->
+                                                                    <hr />
+                                                                </div><!-- end of card body -->
+                                                                <div class="card-footer">
+                                                                    <div class="button-row d-flex">
+                                                                        <button class="btn btn-warning js-btn-prev" type="button" title="Prev"><i class="fe fe-chevron-left"></i> Prev</button>
+                                                                        <button class="btn btn-info ml-auto js-btn-next" id="btnfilenext" type="button" title="Next">Next <i class="fe fe-chevron-right"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- end of card -->
+                                                        </div><!-- end of card -->
+                                                    </div>
+                                                    <!-- end of col -->
+                                                </div><!-- end of row -->
+                                                <!-- Message Modal -->
+                                                <div class="modal fade" id="addmanagers" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="addmanagers3">Assigned Managers</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                @*<form>
+                                                                    *@
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <div class="alert alert-danger" id="Errorformanagerpopup" style="display:none; margin-top: 20px;">
+                                                                                <strong><span class="errormessage"></span></strong>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Managers @Html.ValidationMessageFor(model => model.MinimumInsuranceAmount, "*", new { @class = "text-danger" })</label>
+
+                                                                                @Html.DropDownList("ManagerChoosen", new SelectList(ViewBag.lstmanager, "Value", "Text"), new { @data_rel = "Choose_one", @class = "form-control chosen-select", @placeholder = "Please Select...", @multiple = "true", @onchange = "AddMan()" })
+                                                                                @Html.DropDownList("ManagerChoosen1", new SelectList(ViewBag.lstmanager, "Value", "Text"), new { @data_rel = "form-control Choose_one", @class = "form-control chosen-select", @placeholder = "Please Select...", @multiple = "true" })
+                                                                                @*@Html.DropDownList("ManagerChoosen", (List<SelectListItem>
+                                                                                    )ViewBag.lstmanager, new { @class = "form-control chosen-select", multiple = "multiple" })*@
+                                                                                    @*@html.dropdownlist("managerchoosen", new selectlist(viewbag.lstmanager, "value", "text"), new { @class = "form-control chosen-select", @multiple = "true", placeholder = "please choose " })*@
+                                                                            </div>
+                                                                        </div>
+                                                                    </div><!-- end of row -->
+                                                                    @*
+                                                                </form>*@
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnadd">+ Add</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><!-- end of modal -->
+                                            </div>
+                                            <!--single form panel-->
+                                            <div class="multisteps-form__panel p-4 rounded bg-white " data-animation="scaleIn">
+                                                <div class="multisteps-form__content">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="button-row d-flex">
+                                                                        <button class="btn btn-primary ml-auto" type="button" data-toggle="modal" data-target="#uploadmodal" title="Upload">+ Add <i class="fe fe-upload"></i></button>
+                                                                    </div>
+                                                                    <hr />
+                                                                    <div class="table-responsive" id="divFileUploader">
+                                                                        <table id="dataTableExample" class="table table-striped table-bordered w-100 dataTable no-footer">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Document</th>
+                                                                                    <th width="5%"></th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr id="HeaderId">
+                                                                                    <td>
+                                                                                        <span id="fu_files1" type="file1" class="upd-fl"></span>
+
+                                                                                    </td>
+                                                                                    <td align="center">
+                                                                                        <a title="Delete" onclick="removeDoc(this);"><i class="fe fe-trash redtxt font18"></i></a>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                            </tbody>
+                                                                        </table>
+
+
+                                                                    </div><!-- end of table responsive -->
+
+
+
+                                                                    <div class="modal fade" id="uploadmodal" tabindex="-1" role="dialog" aria-labelledby="uploadmodalLabel" aria-hidden="true">
+                                                                        <div class="modal-dialog" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="uploadmodalLabel">Upload</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">×</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Upload Files</label>
+                                                                                                @Html.TextBoxFor(model => model.Files, "", new { @type = "file", @multiple = "true", @class = "dropify" })
+                                                                                                @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger" })
+
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-secondary" onclick="return clearFiles();" data-dismiss="modal">Close</button>
+                                                                                    <button type="button" class="btn btn-primary" onclick="return clearFiles();" data-dismiss="modal">Upload</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div><!-- end Modal -->
+
+                                                                </div><!-- end of card body -->
+                                                                <div class="card-footer">
+                                                                    <div class="button-row d-flex">
+                                                                        <button class="btn btn-warning js-btn-prev" type="button" title="Prev"><i class="fe fe-chevron-left"></i> Prev</button>
+                                                                        <input class="btn btn-primary ml-auto" id="btnsubmit" type="submit" title="Save" value="Save" onclick="return SendFile()" /><i class="fa fa-loppy-o"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- end of card -->
+                                                        </div><!-- end of col -->
+                                                    </div><!-- end of row -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--single form panel-->
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- end of cust-wizard-->
+                </div><!--end of card body -->
+            </div>
+        </div>
+
+
+        }
+
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!--End side app-->
+</div>
+<!--footer-->
+<!-- End Footer-->
+<!-- End Page -->
+<!-- Back to top -->
+ //for multi select dropdownlist
+
+<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+<link rel="stylesheet" href="../assets/css/cust-wizard.css">
+<link href="../assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
+<script src="../assets/js/cust-wizard.js"></script>
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<script src="../assets/plugins/fileuploads/js/dropify.js"></script>
+<script src="../assets/plugins/fileuploads/js/dropify-demo.js"></script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+<script async src="//code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXnGGS4mlkx0DnmdnFUVLQ-0i58GSknZ8&sensor=false"></script>
+<script>
+
+
+
+    $(document).ready(function () {
+        debugger;
+        $('#lblresult').hide();
+        $('li.active active-menu').removeClass('active active-menu');
+        $('a[href="/ACompanyManagement/CompanyDefaultView"]').closest('li').addClass('active active-menu');
+        document.getElementById('lblresult').innerHTML = '';
+        $('#Latitude').val('');
+        $('#Longitude').val('');
+        $(".chosen-select").chosen();
+        $('#loader').show();
+        $('.errormessage').html('');
+        $("#Error").hide();
+        $('#HeaderId').hide();
+        $('#DocumentId').hide();
+        $("#news_date").datepicker();
+        $("#Errorformanager").hide();
+        $('#Errorformanagerpopup').hide();
+        $('#loader').hide();
+
+        $('#btnNext').prop('disabled', true);
+
+
+    });
+
+
+    $(".advance_search").click(function () {
+        $("#advancesearch3").toggle(500);
+    });
+    $(".overlayclose").click(function () {
+        $("#advancesearch3").hide();
+    });
+
+    function AddMan()
+    {
+        if ($('.search-choice').length != 0) {
+
+            $('#btnadd').prop('disabled', false);
+        }
+    }
+
+
+    $("#btnDoc").click(function () {
+
+        debugger;
+        var status = false;
+        status = Validation();
+
+        return status;
+
+    });
+
+
+    function checkVali() {
+
+
+        if ($('#Title').val() == "") {
+
+            $('#btnNext').prop('disabled', true);
+
+            return false;
+        }
+
+        var checknumber = $('#NumberOfUnits').val();
+
+        if (jQuery.isNumeric(checknumber) == false)
+        /*else if ($('#NumberOfUnits').val() == "0")*/ {
+            $('#btnNext').prop('disabled', true);
+
+            return false;
+        }
+
+        else if ($('#Address').val() == "") {
+            $('#btnNext').prop('disabled', true);
+
+            return false;
+        }
+
+        else if ($('#Zip').val() == "") {
+            $('#btnNext').prop('disabled', true);
+
+            return false;
+        }
+        else if ($('#State').val() == "0") {
+            $('#btnNext').prop('disabled', true);
+
+            return false;
+        }
+        else if ($('#City').val() == "") {
+
+            $('#btnNext').prop('disabled', true);
+            return false;
+        }
+
+        else {
+            $('#btnNext').prop('disabled', false);
+        }
+
+
+
+    }
+
+    function Validation() {
+        debugger;
+        $('#loader').show();
+        $('.errormessage').html('');
+        var checknumber = $('#NumberOfUnits').val();
+        if ($("#Title").val() == "") {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            $('#btnNext').prop('disabled', true);
+            return false;
+        }
+
+        else if (jQuery.isNumeric(checknumber) == false) {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+         $(window).scrollTop(0);
+            return false;
+        }
+
+        else if ($('#Address').val() == "") {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            $('#btnNext').prop('disabled', true);
+            return false;
+        }
+        else if ($('#Zip').val() == "") {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            $('#btnNext').prop('disabled', true);
+            return false;
+        }
+        else if ($('#State').val() == "0") {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            $('#btnNext').prop('disabled', true);
+            return false;
+        }
+        else if ($('#City').val() == "") {
+             $('.errormessage').html('Please Enter Mandatory Fields.');
+             $('#Error').show();
+             $(window).scrollTop(0);
+             $('#btnNext').prop('disabled', true);
+            return false;
+        }
+
+        else {
+            $('#Error').hide();
+            $('#btnNext').prop('disabled', false);
+            return true;
+        }
+
+    }
+
+
+
+    $("#btnNext").click(function () {
+        debugger;
+          $("#Error").hide();
+         var mySetting = '@System.Configuration.ConfigurationManager.AppSettings["MapCheck"].ToString()';
+            var geocoder = new google.maps.Geocoder();
+            var con = $('#Address').val();
+            var Adde = $('#Address2').val();
+            var city = $('#City').val();
+            var zip = $('#Zip').val();
+            var res = document.getElementById('lblresult');
+            var com = con + ', ' + city + ', ' + $('#State').val() + ', ' + zip;
+            console.log()
+        if (mySetting == "Active") {
+            if (res.innerHTML.length == 0) {
+                geocoder.geocode({ 'address': com }, function (results, status) {
+
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        res.innerHTML = "Latitude : " + results[0].geometry.location.lat() + "<br/>Longitude :" +
+                            results[0].geometry.location.lng();
+                        $('#Latitude').val(results[0].geometry.location.lat());
+                        $('#Longitude').val(results[0].geometry.location.lng());
+                        $("#btnNext").click();
+                    } else {
+                        res.innerHTML = "Wrong Details: " + status;
+                    }
+                });
+                return false;
+            }
+            else {
+                $('#Error').hide();
+                return true;
+            }
+        }
+        else
+        {
+            return true;
+        }
+
+    });
+
+
+
+    $("#btnsubmit").click(function () {
+        if ($('#ManagerChoosen_chosen').find('.chosen-choices').find('.search-choice').length == 0) {
+            $('#Errorformanager').hide();
+            var managers = '';
+            $('#managerdiv table tbody tr:not(:first)').each(function (i, e) {
+                managers = managers + ',' + ($(this).find('td:eq(0)').find('.manspanId').html());
+            });
+            $('#AddForm').append('Manager', managers);
+            //$('.errormessage').html('Please Add manager.');
+            //$('#Errorformanager').show();
+            return true;
+        }
+        else {
+            $('#Errorformanager').hide();
+            var managers = '';
+            $('#managerdiv table tbody tr:not(:first)').each(function (i,e) {
+                managers = managers+','+( $(this).find('td:eq(0)').find('.manspanId').html());
+            });
+            $('#AddForm').append('Manager', managers);
+            return true
+        }
+    });
+
+
+    $("#btnfilenext").click(function () {
+
+        if (file.files.length == 0) {
+            $('.errormessage').html('Please select File.');
+            $('#Error').show();
+            return false;
+
+        }
+    });
+
+    $("#btnadd").click(function () {
+
+
+
+        $('#Error').hide();
+        $('#Errorformanager').hide();
+        $('#Errorformanagerpopup').hide();
+
+        const listItems = document.querySelectorAll('.chosen-choices li');
+        for (let i = 0; i < listItems.length; i++) {
+           var a = (listItems[i].textContent);
+
+
+        }
+
+
+
+        //var a = $('#ManagerChoosen_chosen').find('.chosen-choices').find('.search-choice').text();
+        //alert(a);
+        $(".chosen-select").chosen();
+        $("#managerdiv table tbody tr:eq(0)").show();
+        $("#managerdiv table tbody tr:not(:first)").remove();
+        $("#managerdiv table tbody tr:not(:first)");
+        var SelectedManager = $("#ManagerChoosen option:selected").map(function () {
+            var cln = $("#managerdiv table tbody tr:eq(0)").clone(true);
+            $(".manspan", cln).html($(this).text());
+            $(".manspanId", cln).html($(this).val());
+            $("#managerdiv table").append(cln);
+            return false;
+        }).get();
+
+        $("#managerdiv table tbody tr:eq(0)").hide();
+
+        if ($('#ManagerChoosen_chosen').find('.chosen-choices').find('.search-choice').length == 0) {
+            $('.errormessage').html('Please select manager.');
+            $('#Errorformanagerpopup').show();
+            $("#addmanagers").show();
+            return false;
+        }
+        else {
+            var SelectedManager = $("#ManagerChoosen option:selected").map(function () {
+                return $(this).val();
+            }).get().join(',');
+            $('#ResourceKey').val(SelectedManager);
+        }
+
+
+        console.log("#manspanid option:selected")
+        if ($("#manspanid option:selected").length > 0) {
+            $("li:has('span')").remove();
+        }
+
+
+        $("#addmanagers").modal('toggle');
+        return false;
+    });
+
+
+
+    function removeDoc(me) {
+
+        if ($(".upd-fl").text() == "") {
+            $("#divFileUploader table tbody tr:eq(0)").hide();
+            $(me).closest("tr").remove();
+        }
+        else {
+            $(me).closest("tr").remove();
+        }
+
+
+        $.ajax({
+            type: 'GET',
+            datatype: 'json',
+            url: '@Url.Action("PropertyRemoveAddedDocument", "ACompanyManagement")',
+            data: { fileName: $(me).closest("tr").find('td:eq(0)').find('.upd-fl').html()},
+            success: function (respo) {
+                debugger;
+                $('#loader').hide();
+            }
+        });
+
+    }
+
+
+    function SendFile()
+    {
+        ////////debugger;
+
+
+        $('#dataTableExample tbody tr:not(:first-child)').each(function (i, e) {
+            options.push($(e).find('td:eq(0)').find('span.manspanId').html());
+        });
+
+    }
+    function FileValid()
+    {
+        debugger;
+        if (file.files.length == 0) {
+            $('.errormessage').html('Please select File.');
+            $('#Errormanager').show();
+            $('#Error').show();
+            return false;
+        }
+    }
+
+
+    function Manager() {
+        //////debugger;
+        setTimeout(function () {
+            var options = [];
+            options.push('0');
+            $('#btnadd').prop('disabled', true);
+            $('#ManagerChoosen1_chosen').hide();
+            // $('.chosen-choices').hide();
+            $('#dataTableExample tbody tr:not(:first-child)').each(function (i, e) {
+                options.push($(e).find('td:eq(0)').find('span.manspanId').html());
+            });
+            $('#ManagerChoosen').val(options).trigger("liszt:updated");
+            $('#ManagerChoosen').val(options).trigger("chosen:updated");
+        },200);
+    }
+    //function readURL(input) {
+    //    // //////debugger;
+    //    var fu_files = $("#fu_files")[0].files;
+    //    //////debugger;
+
+    //    var oFReader = new FileReader();
+    //    oFReader.readAsDataURL(document.getElementById("fu_files").files[0]);
+    //    oFReader.onload = function (oFREvent) {
+    //        $("#divFileUploader table tbody tr:eq(0)").show();
+    //        var cln = $("#divFileUploader table tbody tr:eq(0)").clone(true);
+    //        $(".upd-fl", cln).html(document.getElementById("fu_files").files[0].name);
+    //        $(".upd-fl", cln).parent('td').append($("#fu_files").clone(true).removeAttr('id').hide());
+    //        $("#divFileUploader table").append(cln);
+    //        $("#divFileUploader table tbody tr:eq(0)").hide();
+    //        //$(".dropify-clear").trigger("click");
+    //    };
+
+
+    //}
+
+    function clearFiles() {
+        $('#Files').parent('div').find('.dropify-clear').click();
+        $('#Files').parent('div').find('.dropify-clear').trigger('click');
+        return true;
+    }
+
+    function readURL(input) {
+        debugger;
+        $("#divFileUploader table tbody tr:eq(0)").show();
+        for (var i = 0; i < input.files.length; i++) {
+            var cln = $("#divFileUploader table tbody tr:eq(0)").clone(true);
+            $(".upd-fl", cln).html(input.files[i].name);
+            $("#divFileUploader table").append(cln);
+        }
+        $("#divFileUploader table tbody tr:eq(0)").hide();
+
+        var formData = new FormData();
+        var totalFiles = document.getElementById("Files").files.length;
+        for (var i = 0; i < totalFiles; i++) {
+            var file = document.getElementById("Files").files[i];
+            formData.append("Files", file);
+        }
+
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("PropertyAddDocumentPost", "ACompanyManagement")',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (respo) {
+                debugger;
+                $('#loader').hide();
+            }
+        });
+    }
+
+    //$("#Files").change(function () {
+    //        readURL(this);
+
+    //});
+
+    function removeman(me) {
+        ////////debugger;
+        $('#ManagerChoosen').val('');
+        if ($(".manspan").text() == "") {
+            $("#managerdiv table tbody tr:eq(0)").hide();
+            array.remove(index, me);
+        }
+        else {
+            ////////debugger;
+            $(me).closest("tr").remove();
+            $(me).closest("a").remove();
+            $("active-result").show(me);
+        }
+
+    }
+
+
+
+
+    $("#Files").change(function () {
+
+        readURL(this);
+    });
+
+
+</script>
+
+

@@ -1,0 +1,1439 @@
+﻿
+@{
+    ViewBag.Title = "PMAdminBidReport";
+    Layout = "~/Views/Shared/_PropertyManagerLayout.cshtml";
+    string Errormessage = Convert.ToString(ViewData["Errormessage"]);
+}
+
+<h2>Work Order Report</h2>
+
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item">@Html.ActionLink("Home", "Dashboard", "Dashboard", null, new { })</li>
+                <li class="breadcrumb-item active" aria-current="page">Bid Report</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+        @if (TempData["Sucessmessage"] != null)
+        {
+            <p class="alert alert-success alert-dismissible" id="successMessage">
+                @TempData["Sucessmessage"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        @if (TempData["delete"] != null)
+        {
+            <p class="alert alert-danger alert-dismissible" id="successMessage">
+                @TempData["delete"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        @*<div class="alert alert-danger" id="Error" style="display:block; margin-top: 20px;display:none;">
+                <strong><span class="errormessage"></span></strong>
+            </div>*@
+        <div role="alert">
+            <div class="alert alert-danger" id="Error" style="display: none;margin-top: 20px;">
+                <strong><span class="errormessages"></span></strong>
+            </div>
+            @if (!string.IsNullOrEmpty(Errormessage))
+            {
+                <div class="alert alert-danger" style="margin-top: 20px;">
+                    <strong><span class="errormessage">@Errormessage</span></strong>
+                </div>
+            }
+        </div>
+        <!-- End page-header -->
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            @*<div class="row">
+                                    <div class="col-lg-4 col-xl-4 mb15">
+                                        <input type="text" id="txtsearch" class="form-control" placeholder="Search for...">
+                                    </div>
+                                    <div class="col-lg-4 col-xl-4">
+                                        <a class="btn btn-secondary" id="btnsearch" href="#" role="button">Search</a>
+                                        <span class="advance_search btn_advsearch" onclick="toggle_visibility('advancesearch2');"><i class="fe fe-chevron-down"></i></span>
+
+                                    </div>
+                                    <div class="col-lg-4 col-xl-4">
+                                        <div class="btn_group_div text-right">
+                                            <a href="~/PMBidRequests/PMBidRequestAdd" class="btn btn-primary">+ Add Bid Request</a>
+                                        </div>
+                                    </div>
+                                </div>*@
+                        </div><!-- end of form group -->
+                        <!--<div id="advancesearch3">
+                            <div class="overlayclose"><i class="fa fa-times"></i></div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label class="form-label">Property Name</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Bid Request Status</label>
+                                        @*<input class="form-control" id="txtVendorName" placeholder="Vendor Name" />*@
+                                    <!--</div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">&nbsp;</label>
+                                        <button type="button" id="btnAdvancesearch" class="btn  btn-primary btn-icon-text">
+                                            Search
+                                        </button>
+                                    </div>
+                                    <div class="alert alert-danger" id="Error" style="display:none; margin-top: 20px;">
+                                        <strong><span class="errormessage"></span></strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                        @*<hr />*@
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        Property
+
+                                    </label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-search tx-16 lh-0 op-6"></i>
+                                            </div>
+                                        </div>@*<input class="form-control" placeholder="Seaech property..." type="text">*@
+
+
+                                        @Html.DropDownList("Property", new SelectList(ViewBag.lstProperty, "Value", "Text"), new { @tabindex = "1", @data_rel = "Choose_one", @class = "form-control", placeholder = "Select property..." })
+
+
+
+
+                                    </div>
+                                </div>
+                            </div><!-- end of col -->
+
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        Bid Status
+                                    </label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-search tx-16 lh-0 op-6"></i>
+                                            </div>
+                                        </div>@*<input class="form-control" placeholder="Seaech property..." type="text">*@
+
+
+                                        @Html.DropDownList("ddlBidRequestStatus", new SelectList(ViewBag.lstBidStatus, "Value", "Text"), new { @tabindex = "1", @data_rel = "Choose_one", @class = "form-control", placeholder = "Select Bid Status..." })
+
+
+
+
+                                    </div>
+                                </div>
+
+                            </div><!-- end of col -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        From Date
+
+                                    </label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                            </div>
+                                        </div>
+                                        <input class="form-control fc-datepicker" id="txtStartDate" placeholder="MM/DD/YYYY" type="text">
+                                    </div>
+                                </div>
+                            </div><!-- end of col -->
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        To Date
+
+                                    </label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                            </div>
+                                        </div>
+                                        <input class="form-control fc-datepicker" id="txtBidDueDate" placeholder="MM/DD/YYYY" type="text">
+
+                                    </div>
+                                </div>
+                            </div><!-- end of col -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">
+
+
+                                    </label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            @*<div class="input-group-text">
+                                                    <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                                </div>*@
+                                        </div>
+                                        <button class="btn btn-success ml-auto js-btn-next" style="float:right" id="btnView1" type="button" title="Next">Search</button>
+
+                                    </div>
+                                </div>
+                            </div><!-- end of col -->
+
+                        </div>
+                        <div id="RawDatas" class="table-responsive">
+                            <table id="dataTableExample" class="table table-bordered text-nowrap w-100 dataTable no-footer">
+                                <thead>
+                                    <tr>
+                                        @*<th>Title</th>
+                                            <th>Response Date</th>
+                                            <th>Bid Due Date</th>
+                                            <th>#No. of Bids</th>
+                                            <th>Bid Request Status</th>
+                                            <th align="center" class="text-center">Action</th>*@
+                                        <th width="15%" style="cursor: pointer;">
+                                            Select &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input type="checkbox" id="Cbl_SelectAll" checked />
+                                        </th>
+                                        <th width="15%" onclick="SortingFun('Title');" style="cursor: pointer;">
+                                            <i id="Titlei" class="fa fa-sort-asc pull-right"></i>
+                                            Title
+                                        </th>
+                                        <th width="15%" onclick="SortingFun('PropertyName');" style="cursor: pointer;">
+                                            <i id="PropertyNamei" class="fa fa-sort-asc pull-right"></i>
+                                            Property Name
+                                        </th>
+                                        <th width="15%" onclick="SortingFun('StartDate');" style="cursor: pointer;">
+                                            <i id="StartDatei" class="fa fa-sort-asc pull-right"></i>
+                                            Start Date
+                                        </th>
+                                        <th width="15%" onclick="SortingFun('BidDueDate');" style="cursor: pointer;">
+                                            <i id="BidDueDatei" class="fa fa-sort-asc pull-right"></i>
+                                            Bid Due Date
+                                        </th>
+                                        <th width="15%" onclick="SortingFun('NoofBids');" style="cursor: pointer;">
+                                            <i id="NoofBidsi" class="fa fa-sort-asc pull-right"></i>
+                                            #No. of Bids
+                                        </th>
+                                        <th width="15%" onclick="SortingFun('BidRequestStatus');" style="cursor: pointer;">
+                                            <i id="BidRequestStatusi" class="fa fa-sort-asc pull-right"></i>
+                                            Bid Status
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align:center;"><span class="Cbl"></span></td>
+                                        <td><span class="title"></span></td>
+                                        <td><span class="PropertyName"></span></td>
+                                        <td><span class="StartDate"></span></td>
+                                        <td><span class="bidDueDate"></span></td>
+                                        <td><span class="noofBids"></span></td>
+                                        @*<td><span class="badge badge-success   mr-1 mb-1 mt-1 bidRequestStatus"></span></td>*@
+                                        <td id="blue"><span class="badge badge-primary  mr-1 mb-1 mt-1 bidRequestStatus"></span></td>
+                                        <td id="red" style="display:none"><span class="badge badge-danger   mr-1 mb-1 mt-1 bidRequestStatus"></span></td>
+                                        <td id="green" style="display:none"><span class="badge badge-success  mr-1 mb-1 mt-1 bidRequestStatus"></span></td>
+                                        <td id="yellow" style="display:none"><span class="badge badge-warning  mr-1 mb-1 mt-1 bidRequestStatus"></span></td>
+
+                                    </tr>
+                                    @*<tr>
+                                            <td><span class="title">test02</span></td>
+                                            <td><span class="PropertyName">prop01</span></td>
+                                            <td><span class="StartDate">03/01/2021</span></td>
+                                            <td><span class="bidDueDate">04/01/2021</span></td>
+                                            <td><span class="noofBids">5</span></td>
+                                            <td><span class="badge badge-success   mr-1 mb-1 mt-1 bidRequestStatus">submitted</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="title">test03</span></td>
+                                            <td><span class="PropertyName">prop01</span></td>
+                                            <td><span class="StartDate">03/01/2021</span></td>
+                                            <td><span class="bidDueDate">04/01/2021</span></td>
+                                            <td><span class="noofBids">5</span></td>
+                                            <td><span class="badge badge-success   mr-1 mb-1 mt-1 bidRequestStatus">submitted</span></td>
+                                        </tr>*@
+                                </tbody>
+                            </table>
+                            <div class="pull-left">
+                                <label><span class="spnToRecs">1</span> to <span class="spnOfRecs">3</span> out of <span class="spnTotalRecs">3</span>&nbsp; Records </label>
+                                <input type="hidden" class="bidRequestkey" id="bidRequestkey" value="" />
+                            </div>
+
+
+                            <div class="dataTables_paginate paging_simple_numbers" id="pagin">
+                                <ul class="pagination"></ul>
+
+                            </div>
+
+                        </div>
+                        <button class="btn btn-primary ml-auto js-btn-next" style="float:right" id="btnView" type="button" title="Next">Next <i class="fe fe-chevron-right"></i></button>
+                    </div>
+                    <div class="pagination" style="display:none;">
+                        <input type="hidden" id="HdnSortValue" value="order by Title asc" />
+                        <input type="hidden" id="HdnPageIndex" value="1" />
+                        <input type="hidden" id="Titlehdn" value="asc" />
+                        <input type="hidden" id="StartDatehdn" value="asc" />
+                        <input type="hidden" id="BidDueDatehdn" value="asc" />
+                        <input type="hidden" id="NoofBidshdn" value="asc" />
+                        <input type="hidden" id="PropertyNamehdn" value="asc" />
+                        <input type="hidden" id="BidRequestStatushdn" value="asc" />
+                        <input type="hidden" id="TotalPageRecord" value='0' />
+                        <input type="hidden" id="ispriorityrecord" value='true' />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!--End side app-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //SetActiveMenu($("#PMBid1"), true);
+        //$("#global-loader").show();
+        //$(".advance_search").click(function () {
+        //    $("#advancesearch2").toggle(500);
+        //});
+        //$(".overlayclose").click(function () {
+        //    $("#advancesearch2").hide();
+        //});
+        $('#loader').hide();
+        $('#divSuccess').hide();
+        $('#ddlBidRequestStatus').val('600, 601');
+
+        LoadSortTableFill();
+        //checkPoratl()
+        $("#global-loader").hide();
+    });
+
+    function LoadSortTableFill(issort = false) {
+        $("#RawDatas table tbody tr:eq(0)").hide();
+        //var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        var pageSize = 500;
+
+        var ddlProperty = $('#Property').val();
+        var ddlStatus = $('#ddlBidRequestStatus').val();
+        //var Search = $('#ddlBidRequestStatus').val();
+        var Search = '';
+        var StartDate = $('#txtStartDate').val();
+        var BidDueDate = $('#txtBidDueDate').val();
+        var url1 = '@Url.Action("PMIndexreStaffPaging", "BidReport")';
+        if (issort == false)
+            url1 = '@Url.Action("PMIndexreStaffPagingPriority", "BidReport")';
+
+        $.ajax({
+            url: url1,
+            cache: false,
+            data: {
+                PageSize: pageSize,
+                PageIndex: $('#HdnPageIndex').val(),
+                Modulekey: 100,
+                Search: Search,
+                Sort: $("#HdnSortValue").val(),
+                PropertyKey: ddlProperty,
+                BidRequestStatus: ddlStatus,
+                StartDate: StartDate,
+                BidDueDate: BidDueDate
+            },
+            success: function (response)
+            {
+
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                  
+
+                }
+
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                ///$("#RawDatas table tbody tr:eq(0)").show();
+                var CblVendor = "";
+                for (var i = 0; i < response.length; i++) {
+                    debugger;
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $(".Cbl", table).append('<input type="checkbox" id="Cbl_' + response[i].BidRequestKey + '" checked />');
+                    CblVendor += "Cbl_" + response[i].BidRequestKey +",";
+                        $(".title", table).html(response[i].Title);
+                        $(".StartDate", table).html(response[i].StartDates);
+                        $(".bidDueDate", table).html(response[i].BidDueDates);
+                        $(".noofBids", table).html(formatNumber(response[i].NoofBids,false));
+                        $(".bidRequestStatus", table).html(response[i].BidReqStatus);
+                        if (response[i].BidReqStatus == "Accepted" || response[i].BidReqStatus == "Submitted" || response[i].BidReqStatus == "Completed") {
+                            //$("#blue", table).css("display", "none");
+                            //$("#red", table).css("display", "none");
+                            //$("#yellow", table).css("display", "none");
+                            //$("#green", table).css("display", "block");
+
+                            $("#blue", table).hide();
+                            $("#red", table).hide();
+                            $("#yellow", table).hide();
+                            $("#green", table).show();
+
+                        }
+                        if (response[i].BidReqStatus == "In Progress") {
+                            //$("#blue", table).css("display", "block");
+                            //$("#red", table).css("display", "none");
+                            //$("#yellow", table).css("display", "none");
+                            //$("#green", table).css("display", "none");
+
+                            $("#blue", table).show();
+                            $("#red", table).hide();
+                            $("#yellow", table).hide();
+                            $("#green", table).hide();
+                        }
+                        if (response[i].BidReqStatus == "Rejected" || response[i].BidReqStatus == "Not Interested") {
+                            //$("#blue", table).css("display", "none");
+                            //$("#red", table).css("display", "block");
+                            //$("#yellow", table).css("display", "none");
+                            //$("#green", table).css("display", "none");
+
+                            $("#blue", table).hide();
+                            $("#red", table).show();
+                            $("#yellow", table).hide();
+                            $("#green", table).hide();
+                        }
+                        if (response[i].BidReqStatus == "Interested") {
+                            //$("#blue", table).css("display", "none");
+                            //$("#red", table).css("display", "none");
+                            //$("#yellow", table).css("display", "block");
+                            //$("#green", table).css("display", "none");
+
+                            $("#blue", table).hide();
+                            $("#red", table).hide();
+                            $("#yellow", table).show();
+                            $("#green", table).hide();
+                        }
+
+
+                    if (response[i].BidReqStatus == "Closed") {
+                        //$("#blue", table).css("display", "block");
+                        //$("#red", table).css("display", "none");
+                        //$("#yellow", table).css("display", "none");
+                        //$("#green", table).css("display", "none");
+
+                        $("#blue", table).show();
+                        $("#red", table).hide();
+                        $("#yellow", table).hide();
+                        $("#green", table).hide();
+                    }
+
+
+                        $(".PropertyName", table).html(response[i].Property);
+                        //if (response[i].NewMessageCount > 0 || response[i].priority == '1')
+                        //{
+                        //    if (response[i].BidReqStatus != "Cancelled") {
+                        //        $("#viewdata i", table).removeClass("fe fe-eye font18");
+                        //        $("#viewdata i", table).addClass("fa fa-bell faa-ring animated redtxt");
+                        //    }
+
+                        //}
+                        //NewMessageCount
+
+                        //$("#viewdata", table).attr('href', '/PMBidRequests/PMBidRequestView?BidRequestKey=' + response[i].BidRequestKey);
+                        $("#RawDatas table").append(table);
+                        table.show();
+                        spnToRecs++;
+                    }
+                $('.spnTotalRecs').text(spnToRecs);
+                $("#RawDatas table tbody tr:eq(0)").hide();
+
+                $("#bidRequestkey").val(CblVendor);
+                if (response.length > 0) {
+                    $("#ispriorityrecord").val(response[0].ispriorityrecord);
+                }
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+
+                    $('#Error').hide();
+                }
+
+
+                    //updatePaging(response[0].TotalRecords);
+
+            }
+        });
+    }
+
+     function updatePaging(TotalRecs) {
+        $('ul.pagination').html('');
+        var liClone = $('ul.pagination');
+        debugger;
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        //var pageSize = $('#PageSize').val();
+        var NoPage = 1;
+        if (parseInt(TotalRecs) > parseInt(pageSize)) {
+            NoPage = parseInt(parseInt(TotalRecs) / parseInt(pageSize));
+            if (parseFloat(parseInt(parseInt(TotalRecs) / parseInt(pageSize))) < parseFloat(parseInt(TotalRecs) / parseInt(pageSize))) {
+                NoPage = (parseInt(parseInt(TotalRecs) / parseInt(pageSize)) + 1);
+            }
+        }
+
+        var lp = 0;//parseFloat(parseInt($('#HdnPageIndex').val()) / 5);
+        if (parseFloat(parseInt($('#HdnPageIndex').val()) % 5) == 0) {
+            lp = ((parseInt(parseInt($('#HdnPageIndex').val()) / 5) - 1) * 5);
+        } else {
+            lp = parseInt(parseInt($('#HdnPageIndex').val()) / 5) * 5;
+        }
+
+        var ind = 0;
+        for (var i = 1; i <= NoPage; i++) {
+            if ((parseInt(lp)) < i) {
+                if (parseInt($('#HdnPageIndex').val()) > 5 && $(liClone).find('li.previous').length == 0) {
+                    $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')"><a href="#">Previous</a></li>');
+                }
+                if (ind < 5) {
+                    if (i == parseInt($('#HdnPageIndex').val())) {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current">' + i + '</a></li>');
+                    } else {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')">' + i + '</a></li>');
+                    }
+                } else if ($(liClone).find('li.next').length == 0) {
+                    $(liClone).append('<li class="paginate_button next " aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')"><a href="#">Next</a></li>');
+                }
+                ind = ind + 1;
+            }
+        }
+
+
+
+    }
+
+    $("#btnView1").click(function () {
+        var status = validation();
+        $("#loading1").show();
+        if (status == true)
+        {
+            LoadSortTableFillWithSearchBid();
+        }
+    });
+
+    function LoadSortTableFillWithSearchBid() {
+
+        debugger;
+        var PageSize = "500";
+        var PageIndex = "1";
+        var Text = $('#txtsearch').val();
+        var Text = '';
+        var ddlProperty = $('#Property').val();
+        var ddlStatus = $('#ddlBidRequestStatus').val();
+        var StartDate = $('#txtStartDate').val();
+        var BidDueDate = $('#txtBidDueDate').val();
+        if ($('#txtsearch').val() == "") {
+            PageSize = "10";
+        }
+
+        $.ajax({
+            url: '/BidReport/PMIndexreStaffPaging',
+            cache: false,
+            data: {
+                PageSize: PageSize,
+                PageIndex: PageIndex,
+                Modulekey: 100,
+                Search: Text,
+                Sort: $("#HdnSortValue").val(),
+                PropertyKey: ddlProperty,
+                BidRequestStatus: ddlStatus,
+                StartDate: StartDate,
+                BidDueDate: BidDueDate
+            },
+            success: function (response) {
+                debugger;
+
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+                    //debugger;
+                    curRecords = parseInt((PageIndex) * parseInt(PageSize));
+                    curRecords = curRecords - (PageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+
+                }
+                else {
+
+                }
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                var CblVendor = "";
+
+                for (var i = 0; i < response.length; i++) {
+
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+
+                    $(".Cbl", table).append('<input type="checkbox" id="Cbl_' + response[i].BidRequestKey + '" checked />');
+                    CblVendor += "Cbl_" + response[i].BidRequestKey + ",";
+                    $(".title", table).html(response[i].Title);
+                    $(".StartDate", table).html(response[i].StartDates);
+                    $(".bidDueDate", table).html(response[i].BidDueDates);
+
+                    $(".bidDueDate", table).html(response[i].BidDueDates);
+                    $(".noofBids", table).html(formatNumber(response[i].NoofBids, false));
+                    $(".bidRequestStatus", table).html(response[i].BidReqStatus);
+                    if (response[i].BidReqStatus == "Accepted" || response[i].BidReqStatus == "Submitted" || response[i].BidReqStatus == "Completed") {
+
+                        //$("#blue", table).css("display", "none");
+                        //$("#red", table).css("display", "none");
+                        //$("#yellow", table).css("display", "none");
+                        //$("#green", table).css("display", "block");
+
+                        $("#blue", table).hide();
+                        $("#red", table).hide();
+                        $("#yellow", table).hide();
+                        $("#green", table).show();
+
+                    }
+                    if (response[i].BidReqStatus == "In Progress") {
+                        //$("#blue", table).css("display", "block");
+                        //$("#red", table).css("display", "none");
+                        //$("#yellow", table).css("display", "none");
+                        //$("#green", table).css("display", "none");
+
+                        $("#blue", table).show();
+                        $("#red", table).hide();
+                        $("#yellow", table).hide();
+                        $("#green", table).hide();
+                    }
+                    if (response[i].BidReqStatus == "Closed") {
+                        //$("#blue", table).css("display", "block");
+                        //$("#red", table).css("display", "none");
+                        //$("#yellow", table).css("display", "none");
+                        //$("#green", table).css("display", "none");
+
+                        $("#blue", table).show();
+                        $("#red", table).hide();
+                        $("#yellow", table).hide();
+                        $("#green", table).hide();
+                    }
+                    if (response[i].BidReqStatus == "Rejected" || response[i].BidReqStatus == "Not Interested") {
+                        //$("#blue", table).css("display", "none");
+                        //$("#red", table).css("display", "block");
+                        //$("#yellow", table).css("display", "none");
+                        //$("#green", table).css("display", "none");
+
+                        $("#blue", table).hide();
+                        $("#red", table).show();
+                        $("#yellow", table).hide();
+                        $("#green", table).hide();
+                    }
+                    if (response[i].BidReqStatus == "Interested") {
+                        //$("#blue", table).css("display", "none");
+                        //$("#red", table).css("display", "none");
+                        //$("#yellow", table).css("display", "block");
+                        //$("#green", table).css("display", "none");
+
+                        $("#blue", table).hide();
+                        $("#red", table).hide();
+                        $("#yellow", table).show();
+                        $("#green", table).hide();
+                    }
+                    $(".PropertyName", table).html(response[i].Property);
+                    if (response[i].NewMessageCount > 0 || response[i].priority == '1') {
+                        if (response[i].BidReqStatus != "Cancelled") {
+                            $("#viewdata i", table).removeClass("fe fe-eye font18");
+                            $("#viewdata i", table).addClass("fa fa-bell faa-ring animated redtxt");
+                        }
+                    }
+                    //NewMessageCount
+
+                    $("#viewdata", table).attr('href', '/PMBidRequests/PMBidRequestView?BidRequestKey=' + response[i].BidRequestKey);
+
+                    $("#RawDatas table").append(table);
+                    table.show();
+                    spnToRecs++;
+                }
+                $('.spnTotalRecs').text(spnToRecs);
+                $("#RawDatas table tbody tr:eq(0)").hide();
+
+                $("#bidRequestkey").val(CblVendor);
+
+                if (response.length > 0) {
+                    $("#ispriorityrecord").val(response[0].ispriorityrecord);
+                }
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                    $("#RawDatas table thead tr:eq(0)").show();
+                    $(".pagination").show();
+                    //updatePagingsearch(TotalRecs, PageIndex);
+                    $('#Error').hide();
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                    //updatePagingsearch(TotalRecs, PageIndex);
+                    if (TotalRecs = 'undefined') {
+                        $('.errormessages').html('Data Not Found.');
+                        $('#Error').show();
+                        $("#RawDatas table thead tr:eq(0)").hide();
+                        $("#RawDatas table tbody tr:eq(0)").hide();
+                        $(".pagination").hide();
+                    }
+                }
+                debugger;
+
+
+
+                //updatePagingsearch(TotalRecs, PageIndex);
+
+            }
+        });
+    }
+
+    function updatePagingsearch(TotalRecs, PageIndex) {
+
+        $('ul.pagination').html('');
+        var liClone = $('ul.pagination');
+
+            debugger;
+
+            var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+            //var pageSize = $('#PageSize').val();
+            var NoPage = 1;
+            if (parseInt(TotalRecs) > parseInt(pageSize)) {
+                NoPage = parseInt(parseInt(TotalRecs) / parseInt(pageSize));
+                if (parseFloat(parseInt(parseInt(TotalRecs) / parseInt(pageSize))) < parseFloat(parseInt(TotalRecs) / parseInt(pageSize))) {
+                    NoPage = (parseInt(parseInt(TotalRecs) / parseInt(pageSize)) + 1);
+                }
+            }
+
+            var lp = 0;//parseFloat(parseInt($('#HdnPageIndex').val()) / 5);
+        if (parseFloat(parseInt(PageIndex) % 5) == 0) {
+            lp = ((parseInt(parseInt(PageIndex) / 5) - 1) * 5);
+            }
+            else {
+            lp = parseInt(parseInt(PageIndex) / 5) * 5;
+            }
+
+            var ind = 0;
+            for (var i = 1; i <= NoPage; i++) {
+                if ((parseInt(lp)) < i) {
+                    if (parseInt(PageIndex) > 5 && $(liClone).find('li.previous').length == 0) {
+                        $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')"><a href="#">Previous</a></li>');
+                    }
+                    if (ind < 5) {
+                        if (i == parseInt(PageIndex)) {
+                            $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current">' + i + '</a></li>');
+                        } else {
+                            $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')">' + i + '</a></li>');
+                        }
+                    } else if ($(liClone).find('li.next').length == 0) {
+                        $(liClone).append('<li class="paginate_button next " aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')"><a href="#">Next</a></li>');
+                    }
+                    ind = ind + 1;
+                }
+            }
+
+
+
+    }
+
+    function SortingFun(val) {
+
+        var ascdesc = 'fa-sort-asc';
+        var ascdesc1 = 'fa-sort-desc';
+        var ascdesc3 = 'fa-sort-asc';
+        var ascdesc4 = 'fa-sort-desc';
+
+        $('.loader-wrapper').show();
+        var Sort = '';
+        $('#HdnPageIndex').val('1');
+        $('#Titlei').removeClass(ascdesc4);
+        $('#Titlei').addClass(ascdesc3);
+
+        $('#StartDatei').removeClass(ascdesc4);
+        $('#StartDatei').addClass(ascdesc3);
+
+        $('#BidDueDatei').removeClass(ascdesc4);
+        $('#BidDueDatei').addClass(ascdesc3);
+
+        $('#NoofBidsi').removeClass(ascdesc4);
+        $('#NoofBidsi').addClass(ascdesc3);
+
+        $('#BidRequestStatusi').removeClass(ascdesc4);
+        $('#BidRequestStatusi').addClass(ascdesc3);
+
+
+        $('#PropertyNamei').removeClass(ascdesc4);
+        $('#PropertyNamei').addClass(ascdesc3);
+        //-----------------------------------------------------------
+        debugger;
+        if (val == 'Title') {
+            if ($('#Titlehdn').val() == 'asc') {
+                Sort = 'order by Title desc';
+                $('#Titlehdn').val('desc');
+                $('#Titlei').removeClass(ascdesc);
+                $('#Titlei').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by Title asc';
+                $('#Titlehdn').val('asc');
+                $('#Titlei').removeClass(ascdesc1);
+                $('#Titlei').addClass(ascdesc);
+            }
+        }
+        if (val == 'PropertyName') {
+            if ($('#PropertyNamehdn').val() == 'asc') {
+                Sort = 'order by PropertyName desc';
+                $('#PropertyNamehdn').val('desc');
+                $('#PropertyNamei').removeClass(ascdesc);
+                $('#PropertyNamei').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by NoofBids asc';
+                $('#PropertyNamehdn').val('asc');
+                $('#PropertyNamei').removeClass(ascdesc1);
+                $('#PropertyNamei').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------
+        if (val == 'StartDate') {
+            if ($('#StartDatehdn').val() == 'asc') {
+                Sort = 'order by StartDate desc';
+                $('#StartDatehdn').val('desc');
+                $('#StartDatei').removeClass(ascdesc);
+                $('#StartDatei').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by StartDate asc';
+                $('#StartDatehdn').val('asc');
+                $('#StartDatei').removeClass(ascdesc1);
+                $('#StartDatei').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------------
+        if (val == 'BidDueDate') {
+            if ($('#BidDueDatehdn').val() == 'asc') {
+                Sort = 'order by BidDueDate desc';
+                $('#BidDueDatehdn').val('desc');
+                $('#BidDueDatei').removeClass(ascdesc);
+                $('#BidDueDatei').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by BidDueDate asc';
+                $('#BidDueDatehdn').val('asc');
+                $('#BidDueDatei').removeClass(ascdesc1);
+                $('#BidDueDatei').addClass(ascdesc);
+            }
+        }
+        //---------------------------------------------------------
+        if (val == 'NoofBids') {
+            if ($('#NoofBidshdn').val() == 'asc') {
+                Sort = 'order by NoofBids desc';
+                $('#NoofBidshdn').val('desc');
+                $('#NoofBidsi').removeClass(ascdesc);
+                $('#NoofBidsi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by NoofBids asc';
+                $('#NoofBidshdn').val('asc');
+                $('#NoofBidsi').removeClass(ascdesc1);
+                $('#NoofBidsi').addClass(ascdesc);
+            }
+        }
+        //--------------------------------------------------------------
+        if (val == 'BidRequestStatus') {
+            if ($('#BidRequestStatushdn').val() == 'asc') {
+                Sort = 'order by BidRequestStatus desc';
+                $('#BidRequestStatushdn').val('desc');
+                $('#BidRequestStatusi').removeClass(ascdesc);
+                $('#BidRequestStatusi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by BidRequestStatus asc';
+                $('#BidRequestStatushdn').val('asc');
+                $('#BidRequestStatusi').removeClass(ascdesc1);
+                $('#BidRequestStatusi').addClass(ascdesc);
+            }
+        }
+        //--------------------------------------------------------------
+
+        $("#HdnSortValue").val(Sort);
+        $('.loader-wrapper').show();
+        LoadSortTableFill(true);
+    }
+
+    function LoadPagingSortTableFill(pageIndex)
+    {
+        //var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        var pageSize = 500;
+        $('#HdnPageIndex').val(pageIndex);
+        var ddlProperty = $('#Property').val();
+        var ddlStatus = $('#ddlBidRequestStatus').val();
+        var StartDate = $('#txtStartDate').val();
+        var BidDueDate = $('#txtBidDueDate').val();
+        var url1 = '@Url.Action("PMIndexreStaffPaging", "BidReport")';
+        if ($("#ispriorityrecord").val() == 'true')
+            url1 = '@Url.Action("PMIndexreStaffPagingPriority", "BidReport")';
+        $.ajax({
+            url: url1,
+            cache: false,
+            data: {
+                PageSize: pageSize,
+                PageIndex: pageIndex,
+                Modulekey: 100,
+                Search: $('#txtsearch').val(),
+                Sort: $("#HdnSortValue").val(),
+                PropertyKey: ddlProperty,
+                BidRequestStatus: ddlStatus,
+                StartDate: StartDate,
+                BidDueDate: BidDueDate
+            },
+            success: function (response)
+            {
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+
+                }
+
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+                var CblVendor = "";
+
+                for (var i = 0; i < response.length; i++) {
+                    debugger;
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+
+                    $(".Cbl", table).append('<input type="checkbox" id="Cbl_' + response[i].BidRequestKey + '" checked />');
+                    CblVendor += "Cbl_" + response[i].BidRequestKey + ",";
+
+                        $(".title", table).html(response[i].Title);
+
+                        $(".StartDate", table).html(response[i].StartDates);
+
+                        $(".bidDueDate", table).html(response[i].BidDueDates);
+
+                        $(".noofBids", table).html(formatNumber(response[i].NoofBids,false));
+
+                        $(".bidRequestStatus", table).html(response[i].BidReqStatus);
+                    if (response[i].BidReqStatus == "Accepted" || response[i].BidReqStatus == "Submitted" || response[i].BidReqStatus == "Completed") {
+
+                            //$("#blue", table).css("display", "none");
+                            //$("#red", table).css("display", "none");
+                            //$("#yellow", table).css("display", "none");
+                            //$("#green", table).css("display", "block");
+
+                        $("#blue", table).hide();
+                        $("#red", table).hide();
+                        $("#yellow", table).hide();
+                        $("#green", table).show();
+                        }
+                        if (response[i].BidReqStatus == "In Progress") {
+                            //$("#blue", table).css("display", "block");
+                            //$("#red", table).css("display", "none");
+                            //$("#yellow", table).css("display", "none");
+                            //$("#green", table).css("display", "none");
+
+                            $("#blue", table).show();
+                            $("#red", table).hide();
+                            $("#yellow", table).hide();
+                            $("#green", table).hide();
+                    }
+                    if (response[i].BidReqStatus == "Closed") {
+                        //$("#blue", table).css("display", "block");
+                        //$("#red", table).css("display", "none");
+                        //$("#yellow", table).css("display", "none");
+                        //$("#green", table).css("display", "none");
+
+                        $("#blue", table).show();
+                        $("#red", table).hide();
+                        $("#yellow", table).hide();
+                        $("#green", table).hide();
+                    }
+
+
+                        if (response[i].BidReqStatus == "Rejected" || response[i].BidReqStatus == "Not Interested") {
+                            //$("#blue", table).css("display", "none");
+                            //$("#red", table).css("display", "block");
+                            //$("#yellow", table).css("display", "none");
+                            //$("#green", table).css("display", "none");
+
+                            $("#blue", table).hide();
+                            $("#red", table).show();
+                            $("#yellow", table).hide();
+                            $("#green", table).hide();
+                        }
+                        if (response[i].BidReqStatus == "Interested") {
+                            //$("#blue", table).css("display", "none");
+                            //$("#red", table).css("display", "none");
+                            //$("#yellow", table).css("display", "block");
+                            //$("#green", table).css("display", "none");
+
+                            $("#blue", table).hide();
+                            $("#red", table).hide();
+                            $("#yellow", table).show();
+                            $("#green", table).hide();
+                        }
+
+
+
+
+                        $(".PropertyName", table).html(response[i].Property);
+                        if (response[i].NewMessageCount > 0 || response[i].priority == '1') {
+                            $("#viewdata i", table).removeClass("fe fe-eye font18");
+                            $("#viewdata i", table).addClass("fa fa-bell faa-ring animated redtxt");
+
+                        }
+                        $("#viewdata", table).attr('href', '/PMBidRequests/PMBidRequestView?BidRequestKey=' + response[i].BidRequestKey);
+
+                        $("#RawDatas table").append(table);
+                        spnToRecs++;
+                    }
+
+                $("#RawDatas table tbody tr:eq(0)").hide();
+
+                $("#bidRequestkey").val(CblVendor);
+
+                if (response.length > 0) {
+                    $("#ispriorityrecord").val(response[0].ispriorityrecord);
+                }
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                }
+
+                //updatePaging(response[0].TotalRecords);
+            }
+        });
+    }
+
+    function LoadPagingSortTableFill(pageIndex)
+    {
+        //var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        var pageSize = 500;
+        $('#HdnPageIndex').val(pageIndex);
+        var ddlProperty = $('#Property').val();
+        var ddlStatus = $('#ddlBidRequestStatus').val();
+        var StartDate = $('#txtStartDate').val();
+        var BidDueDate = $('#txtBidDueDate').val();
+        //var txtsearch = $('#txtsearch').val();
+        var txtsearch = '';
+        var url1 = '@Url.Action("PMIndexreStaffPaging", "BidReport")';
+        if ($("#ispriorityrecord").val() == 'true')
+            url1 = '@Url.Action("PMIndexreStaffPagingPriority", "BidReport")';
+        $.ajax({
+            url: url1,
+            cache: false,
+            data: {
+                PageSize: pageSize,
+                PageIndex: pageIndex,
+                Modulekey: 100,
+                Search: txtsearch,
+                Sort: $("#HdnSortValue").val(),
+                PropertyKey: ddlProperty,
+                BidRequestStatus: ddlStatus,
+                StartDate: StartDate,
+                BidDueDate: BidDueDate
+            },
+            success: function (response)
+            {
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+
+                }
+
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+
+                var CblVendor = "";
+
+                for (var i = 0; i < response.length; i++) {
+                    debugger;
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+
+                    $(".Cbl", table).append('<input type="checkbox" id="Cbl_' + response[i].BidRequestKey + '" checked />');
+                    CblVendor += "Cbl_" + response[i].BidRequestKey + ",";
+
+                        $(".title", table).html(response[i].Title);
+
+                        $(".StartDate", table).html(response[i].StartDates);
+
+                        $(".bidDueDate", table).html(response[i].BidDueDates);
+
+                        $(".noofBids", table).html(formatNumber(response[i].NoofBids,false));
+
+                        $(".bidRequestStatus", table).html(response[i].BidReqStatus);
+                    if (response[i].BidReqStatus == "Accepted" || response[i].BidReqStatus == "Submitted" || response[i].BidReqStatus == "Completed") {
+
+                            //$("#blue", table).css("display", "none");
+                            //$("#red", table).css("display", "none");
+                            //$("#yellow", table).css("display", "none");
+                            //$("#green", table).css("display", "block");
+
+                        $("#blue", table).hide();
+                        $("#red", table).hide();
+                        $("#yellow", table).hide();
+                        $("#green", table).show();
+                        }
+                        if (response[i].BidReqStatus == "In Progress") {
+                            //$("#blue", table).css("display", "block");
+                            //$("#red", table).css("display", "none");
+                            //$("#yellow", table).css("display", "none");
+                            //$("#green", table).css("display", "none");
+
+                            $("#blue", table).show();
+                            $("#red", table).hide();
+                            $("#yellow", table).hide();
+                            $("#green", table).hide();
+                    }
+                    if (response[i].BidReqStatus == "Closed") {
+                        //$("#blue", table).css("display", "block");
+                        //$("#red", table).css("display", "none");
+                        //$("#yellow", table).css("display", "none");
+                        //$("#green", table).css("display", "none");
+
+                        $("#blue", table).show();
+                        $("#red", table).hide();
+                        $("#yellow", table).hide();
+                        $("#green", table).hide();
+                    }
+
+
+                        if (response[i].BidReqStatus == "Rejected" || response[i].BidReqStatus == "Not Interested") {
+                            //$("#blue", table).css("display", "none");
+                            //$("#red", table).css("display", "block");
+                            //$("#yellow", table).css("display", "none");
+                            //$("#green", table).css("display", "none");
+
+                            $("#blue", table).hide();
+                            $("#red", table).show();
+                            $("#yellow", table).hide();
+                            $("#green", table).hide();
+                        }
+                        if (response[i].BidReqStatus == "Interested") {
+                            //$("#blue", table).css("display", "none");
+                            //$("#red", table).css("display", "none");
+                            //$("#yellow", table).css("display", "block");
+                            //$("#green", table).css("display", "none");
+
+                            $("#blue", table).hide();
+                            $("#red", table).hide();
+                            $("#yellow", table).show();
+                            $("#green", table).hide();
+                        }
+
+
+
+
+                        $(".PropertyName", table).html(response[i].Property);
+                        if (response[i].NewMessageCount > 0 || response[i].priority == '1') {
+                            $("#viewdata i", table).removeClass("fe fe-eye font18");
+                            $("#viewdata i", table).addClass("fa fa-bell faa-ring animated redtxt");
+
+                        }
+                        $("#viewdata", table).attr('href', '/PMBidRequests/PMBidRequestView?BidRequestKey=' + response[i].BidRequestKey);
+
+                        $("#RawDatas table").append(table);
+                        spnToRecs++;
+                    }
+
+                $("#RawDatas table tbody tr:eq(0)").hide();
+
+                $("#bidRequestkey").val(CblVendor);
+
+                if (response.length > 0) {
+                    $("#ispriorityrecord").val(response[0].ispriorityrecord);
+                }
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                }
+
+                //updatePaging(response[0].TotalRecords);
+            }
+        });
+    }
+
+    $("#btnView").click(function () {
+        debugger;
+        var val = $("#bidRequestkey").val();
+        var count = val.substring(0, val.length - 1);
+        //alert(count);
+        var RId = count.split(',');
+        var VId = "";
+        for (var i = 0; i < RId.length; i++) {
+            var count = RId[i];
+
+            var ischecked = $("#" + count + "").is(':checked');
+            if (!ischecked) {
+                //$("#txtInclude_COI").hide();
+                //$("#chkInclude_COI").hide();
+            }
+            else {
+                VId += count + ",";
+
+            }
+            //alert(count);
+        }
+        var count = VId.substring(0, VId.length - 1);
+        if (VId == "") {
+            $('.errormessages').html('Please select at least 1 record.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+        }
+        else
+        {
+            FatchData();
+        }
+
+       //window.location.href = 'ViewAdminGeneratedReport';
+
+    });
+
+
+    function validation()
+    {
+        debugger;
+        //$('#txtStartDate').val(Date.parse($('#txtStartDate').val()).toString('MM/dd/yyyy'));
+
+        //$('#txtBidDueDate').val(Date.parse($('#txtBidDueDate').val()).toString('MM/dd/yyyy'));
+        var StartDates  = Date.parse($('#txtStartDate').val());
+        var EndDates = Date.parse($('#txtBidDueDate').val());
+        var StartDate = new Date($("#txtStartDate").val());
+        var EndDate  = new Date($("#txtBidDueDate").val());
+
+        if (StartDate == EndDate) {
+            $('.errormessages').html('Start Date not Equal to End Date.');
+            $('#Error').show();
+
+            return false;
+        }
+        if (StartDate > EndDate) {
+            $('.errormessages').html('Start Date must be less than End Date.');
+            $('#Error').show();
+
+            return false;
+        }
+        //if (StartDate < EndDate) {
+        //    $('.errormessages').html('End Date must be greater than Start Date.');
+        //    $('#Error').show();
+
+        //    return false;
+        //}
+        return true;
+    }
+
+    $("#txtStartDate").change("click", function () {
+        debugger;
+        var StartDates = Date.parse($('#txtStartDate').val());
+        var EndDates = Date.parse($('#txtBidDueDate').val());
+        var StartDate = new Date($("#txtStartDate").val());
+        var EndDate = new Date($("#txtBidDueDate").val());
+
+        if (StartDate == EndDate) {
+            $('.errormessages').html('Start Date not Equal to End Date.');
+            $('#Error').show();
+
+            return false;
+        }
+        if (StartDate > EndDate) {
+            $('.errormessages').html('Start Date must be less than End Date.');
+            $('#Error').show();
+
+            return false;
+        }
+
+        $('#Error').hide();
+        return true;
+
+    }
+    );
+    $("#txtBidDueDate").change("click", function () {
+        var StartDates = Date.parse($('#txtStartDate').val());
+        var EndDates = Date.parse($('#txtBidDueDate').val());
+        var StartDate = new Date($("#txtStartDate").val());
+        var EndDate = new Date($("#txtBidDueDate").val());
+
+        debugger;
+        if (StartDate == EndDate) {
+            $('.errormessages').html('Start Date not Equal to End Date.');
+            $('#Error').show();
+
+            return false;
+        }
+        if (StartDate > EndDate) {
+            $('.errormessages').html('End Date must be greater than Start Date.');
+            $('#Error').show();
+
+            return false;
+        }
+        $('#Error').hide();
+        return true;
+
+    }
+    );
+    function FatchData()
+    {
+        debugger;
+        var PageSize = $('.spnTotalRecs').text();
+        var PageIndex = "1";
+        var Text = $('#txtsearch').val();
+        var Text = '';
+        var ddlProperty = $('#Property').val();
+        var ddlStatus = $('#ddlBidRequestStatus').val();
+        var StartDate = $('#txtStartDate').val();
+        var BidDueDate = $('#txtBidDueDate').val();
+
+
+        $.ajax({
+            url: '/BidReport/PMIndexreStaffPaging',
+            cache: false,
+            data: {
+                PageSize: PageSize,
+                PageIndex: PageIndex,
+                Modulekey: 100,
+                Search: Text,
+                Sort: $("#HdnSortValue").val(),
+                PropertyKey: ddlProperty,
+                BidRequestStatus: ddlStatus,
+                StartDate: StartDate,
+                BidDueDate: BidDueDate
+            },
+            success: function (response) {
+                debugger;
+                var val = $("#bidRequestkey").val();
+                //alert(val);
+                var count = val.substring(0, val.length - 1);
+                //alert(count);
+                var RId = count.split(',');
+                var VId = "";
+                for (var i = 0; i < RId.length; i++) {
+                    var count = RId[i];
+
+                    var ischecked = $("#" + count + "").is(':checked');
+                    if (!ischecked) {
+                        //$("#txtInclude_COI").hide();
+                        //$("#chkInclude_COI").hide();
+                    }
+                    else {
+                        VId += count + ",";
+
+                    }
+                    //alert(count);
+                }
+                var count = VId.substring(0, VId.length - 1);
+                //var Count = "";
+                //for (var i = 0; i < response.length; i++) {
+                //    Count += response[i].BidRequestKey +',';
+                //}
+                //var count = Count.substring(0, Count.length - 1);
+                window.location.href = 'PMViewAdminGeneratedReport?BidRequestId=' + count;
+            }
+        });
+
+    }
+
+    $("#Cbl_SelectAll").change(function () {
+        debugger;
+        var val = $("#bidRequestkey").val();
+        //alert(val);
+        var count = val.substring(0, val.length - 1);
+        //alert(count);
+        var RId = count.split(',');
+        var VId = "";
+
+        var ischecked = $(this).is(':checked');
+        if (!ischecked) {
+            for (var i = 0; i < RId.length; i++) {
+                var count = RId[i];
+
+                var ischecked = $("#" + count + "").is(':checked');
+                if (!ischecked) {
+                    $("#" + count + "").prop('checked', false);
+                    //$("#" + count + "").ischecked = false;
+                }
+                else {
+                    $("#" + count + "").prop('checked', false);
+                    //$("#" + count + "").ischecked = false;
+                }
+                //alert(count);
+            }
+        }
+        else {
+
+            for (var i = 0; i < RId.length; i++) {
+                var count = RId[i];
+
+                var ischecked = $("#" + count + "").is(':checked');
+                if (!ischecked) {
+                    $("#" + count + "").prop('checked', true);
+                    //$("#" + count + "").ischecked = true;
+                }
+                else {
+                    $("#" + count + "").prop('checked', true);
+                    //$("#" + count + "").ischecked = false;
+                }
+                //alert(count);
+            }
+        }
+    });
+</script>

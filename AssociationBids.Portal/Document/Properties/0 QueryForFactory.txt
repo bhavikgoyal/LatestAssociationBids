@@ -1,0 +1,865 @@
+
+
+3)
+select * from Factory where Name = 'Aquamate' and FactoryAddressLine1 = 'Juqi road 40, Humen Town' and FactoryCity='Dongguan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='523927'
+select * from FactoryAgent where AgentName = 'Aquamate K&B Ltd.'
+select * from Country where CountryName = 'China'
+
+---- Insert AgentName
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Aquamate K&B Ltd.',GetDate(),0,'Juqi road 40, Humen Town','Dongguan','Guangdong','523927',39)
+---- 4) 
+select * from Factory where Name = 'Bairun' and FactoryAddressLine1 = 'Yongwu Road,Quanxi Town' and FactoryCity='Wuyi' and factorystate = 'Zhejiang' and FactoryCountryId = 39 and FactoryZipCode='321200'
+select * from FactoryAgent where AgentName = ''
+select * from Country where CountryName = 'China'
+
+
+5)
+select * from Factory where Name = 'Bestlane' and FactoryAddressLine1 = 'Nanshui Town, Gaolan Port, Economic Zone' and FactoryCity='Zhuhai' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='519050'
+select * from FactoryAgent where AgentName = 'Best Lane Industrial Ltd.'
+select * from Country where CountryName = 'China'
+
+---- Insert AgentName,Factory
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Best Lane Industrial Ltd.',GetDate(),0,'Nanshui Town, Gaolan Port, Economic Zone','Zhuhai','Guangdong','519050',39)
+
+Select * from Factory order by 1 desc
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Bestlane','Nanshui Town, Gaolan Port, Economic Zone','Zhuhai','Guangdong','519050',39,28)
+
+6) 
+
+select * from Factory where Name = 'Biu Chun' and FactoryAddressLine1 = '3 Fu Yuan Road, Yunxiang Town' and FactoryCity='Heshan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='529731'
+select * from FactoryAgent where AgentName = 'Biu Chun Metal & Plastic Factory Ltd.'
+select * from Country where CountryName = 'China'
+
+---- Insert Agenet Name 
+
+Select * from FactoryAgent order by 1 desc
+
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Biu Chun Metal & Plastic Factory Ltd.',GetDate(),0,'3 Fu Yuan Road, Yunxiang Town','Heshan','Guangdong','529731',39)
+
+---- Update FactoryAgentID
+
+Select * from Factory where Name = 'Biu Chun' order by 1 desc
+
+Update Factory set FactoryAgentID = 29 where FactoryID = 211
+
+7)
+
+select * from Factory where Name = 'Borford' and FactoryAddressLine1 = 'No. 66  13th Rd Longyan Ave. Longyan Village, Humen Town' and FactoryCity='Dongguan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='523920'
+select * from FactoryAgent where AgentName = 'Boford Creation Ltd.'
+select * from Country where CountryName = 'China'
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Boford Creation Ltd.',GetDate(),0,'No. 66  13th Rd Longyan Ave. Longyan Village, Humen Town','Dongguan','Guangdong','523920',39)
+
+Select * from Factory order by 1 desc
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Borford','No. 66  13th Rd Longyan Ave. Longyan Village, Humen Town','Dongguan','Guangdong','523920',39,30)
+
+8)
+select * from Factory where Name = 'Brother' and FactoryAddressLine1 = '#8 Nahuo Industrial District, Yangdong' and FactoryCity='Yangjiang' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='529931'
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.'
+select * from Country where CountryName = 'China'
+
+--- Insert AgentName,Factory
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Chef Pro International Ltd.',GetDate(),0,'#8 Nahuo Industrial District, Yangjiang','Dongguan','Guangdong','529931',39)
+
+Select * from Factory order by 1 desc
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Brother','#8 Nahuo Industrial District, Yangjiang','Dongguan','Guangdong','529931',39,31)
+
+9)
+select * from Factory where Name = 'Century' and FactoryAddressLine1 = '489 Qiaoping First Road, Yangxi Town' and FactoryCity='Yangjiang' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='529800'
+select * from FactoryAgent where AgentName = 'Century (International) Mfg. Ltd.'
+select * from Country where CountryName = 'China'
+
+--- Insert AgentName
+select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Century (International) Mfg. Ltd.',GetDate(),0,'489 Qiaoping First Road, Yangxi Town','Yangjiang','Guangdong','529800',39)
+
+---- Update FactoryAgentID
+
+Select * from Factory where Name = 'Century' order by 1 desc
+Update Factory set FactoryAgentID = 32 where FactoryID = 214
+
+10)
+select * from Factory where Name = 'Chef Pro' and FactoryAddressLine1 = 'Room1007-09,Cyber Times Tower ATianan Cyber Park, Futian District' and FactoryCity='Shenzhen' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='518040'
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.'
+select * from Country where CountryName = 'China'
+
+
+--- Insert AgentName,Factory
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Chef Pro International Ltd.',GetDate(),0,'Room1007-09,Cyber Times Tower ATianan Cyber Park, Futian District','Shenzhen','Guangdong','518040',39)
+
+Select * from Factory order by 1 desc
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Chef Pro','Room1007-09,Cyber Times Tower ATianan Cyber Park, Futian District','Shenzhen','Guangdong','518040',39,33)
+
+11) 
+select * from Factory where Name = 'Chinagama' and FactoryAddressLine1 = 'No.20, Lane 912, Duanmei Road, Gulin, Ningbo, Zhejiang,China,315177' and FactoryCity='Ningbo' and factorystate = 'Zhejiang' and FactoryCountryId = 39 and FactoryZipCode='315177'
+select * from FactoryAgent where AgentName = ''
+select * from Country where CountryName = 'China'
+--- Note (Name - Can't Added Duplicate Value.)
+
+12)
+select * from Factory where Name = 'Chinagama' and FactoryAddressLine1 = 'No. 9 Fengli Industrial Park, Gulin Town, Yinzhou, Ningbo, Zhejiang, China, 315177' and FactoryCity='' and factorystate = '' and FactoryCountryId = 0 and FactoryZipCode=''
+select * from FactoryAgent where AgentName = ''
+select * from Country where CountryName = 'China'
+
+--- Note (Name - Can't Added Duplicate Value.)
+
+13) 
+
+select * from Factory where Name = 'Chun Lun' and FactoryAddressLine1 = '5 Yi Zhuo Road, the Third Industrial Zone,Keng Zi Country, Pingsian District' and FactoryCity='Shenzhen' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='518122'
+select * from FactoryAgent where AgentName = 'Wonder Household Ltd.'
+select * from Country where CountryName = 'China'
+
+--- Insert AgentName
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Wonder Household Ltd.',GetDate(),0,'5 Yi Zhuo Road, the Third Industrial Zone,Keng Zi Country, Pingsian District','Shenzhen','Guangdong','518122',39)
+
+Select * from Factory where Name = 'Chun Lun' order by 1 desc
+Update Factory set FactoryAgentID = 34 where FactoryID = 219
+
+14)
+select * from Factory where Name = 'Donlim' and FactoryAddressLine1 = 'Longzhou Road, Leliu Town, Shunde District' and FactoryCity='Foshan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='528322'
+select * from FactoryAgent where AgentName = 'Guangdong Xinbao Electrical Appliances Holdings Co., Ltd.'
+select * from Country where CountryName = 'China'
+
+--- Insert AgentName
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Guangdong Xinbao Electrical Appliances Holdings Co., Ltd.',GetDate(),0,'Longzhou Road, Leliu Town, Shunde District','Foshan','Guangdong','528322',39)
+--- Update AgentId 
+Select * from Factory where Name = 'Donlim' order by 1 desc
+Update Factory set FactoryAgentID = 35 where FactoryID = 334
+
+15)
+select * from Factory where Name = 'Easepal' and FactoryAddressLine1 = '#555 Muye Avenue, Jiashan County' and FactoryCity='Jiaxing' and factorystate = 'Zhejiang' and FactoryCountryId = 39 and FactoryZipCode='314100'
+select * from FactoryAgent where AgentName = 'Xiamen Comfort Science & Technology Group Co., Ltd.'
+select * from Country where CountryName = 'China'
+
+
+--- Insert AgentName,Factory
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Xiamen Comfort Science & Technology Group Co., Ltd.',GetDate(),0,'#555 Muye Avenue, Jiashan County, Futian District','Jiaxing','Zhejiang','314100',39)
+
+Select * from Factory order by 1 desc
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Easepal','#555 Muye Avenue, Jiashan County, Futian District','Jiaxing','Zhejiang','314100',39,36)
+
+16)
+select * from Factory where Name = 'Easerich' and FactoryAddressLine1 = 'Kenglong Industrial, Nanya, Daojiao Town' and FactoryCity='Dongguan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='523172'
+select * from FactoryAgent where AgentName = 'Easerich Industrial Ltd.'
+select * from Country where CountryName = 'China'
+
+--- Insert AgentName
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Easerich Industrial Ltd.',GetDate(),0,'Kenglong Industrial, Nanya, Daojiao Town','Dongguan','Guangdong','523172',39)
+
+--- Update AgentId 
+Select * from Factory where Name = 'Easerich' order by 1 desc
+Update Factory set FactoryAgentID = 37 where FactoryID = 221
+
+17)
+select * from Factory where Name = 'Fairkeep' and FactoryAddressLine1 = 'Digital Industrial Park, Sandong' and FactoryCity='Huizhou' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='516025'
+select * from FactoryAgent where AgentName = 'Fairkeep Ltd.'
+select * from Country where CountryName = 'China'
+
+
+--- Insert AgentName,Factory
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Fairkeep Ltd.',GetDate(),0,'Digital Industrial Park, Sandong','Huizhou','Guangdong','516025',39)
+
+Select * from Factory order by 1 desc
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Fairkeep','Digital Industrial Park, Sandong','Huizhou','Guangdong','516025',39,38)
+
+18)
+select * from Factory where Name = 'Feng Mao' and FactoryAddressLine1 = 'T3/F, A31 Building, Phoenix 1ST Industrial Park, Fuyong Street, Baoan District' and FactoryCity='Shenzhen' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='518103'
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.'
+select * from Country where CountryName = 'China'
+
+--- Insert AgentName,Factory
+
+Select * from FactoryAgent order by 1 desc
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.' and AgentAddressLine1 = 'T3/F, A31 Building, Phoenix 1ST Industrial Park, Fuyong Street, Baoan District'
+
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Chef Pro International Ltd.',GetDate(),0,'T3/F, A31 Building, Phoenix 1ST Industrial Park, Fuyong Street, Baoan District','Shenzhen','Guangdong','518103',39)
+
+Select * from Factory order by 1 desc
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Feng Mao','T3/F, A31 Building, Phoenix 1ST Industrial Park, Fuyong Street, Baoan District','Shenzhen','Guangdong','518103',39,39)
+19)
+select * from Factory where Name = 'Forward' and FactoryAddressLine1 = 'Block19, ShanKen industrial Area, ShanXia Village, PingHu town' and FactoryCity='Shenzhen' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='518111'
+select * from FactoryAgent where AgentName = 'Wonder Household Ltd.'
+select * from Country where CountryName = 'China'
+
+Select * from Factory where Name = 'Forward' order by 1 desc
+Update Factory set FactoryAgentID = 34 where FactoryID = 229
+
+20)
+select * from Factory where Name = 'Shijin' and FactoryAddressLine1 = 'NO.86,Hulong Road,Tiantoujiao Village,Qiaotou Town' and FactoryCity='Dongguan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='523526'
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.'
+select * from Country where CountryName = 'China'
+
+--- Insert AgentName,Factory
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Chef Pro International Ltd.',GetDate(),0,'NO.86,Hulong Road,Tiantoujiao Village,Qiaotou Town','Dongguan','Guangdong','523526',39)
+
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.' AND AgentAddressline1 = 'NO.86,Hulong Road,Tiantoujiao Village,Qiaotou Town'
+Select * from Factory order by 1 desc
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Shijin','NO.86,Hulong Road,Tiantoujiao Village,Qiaotou Town','Dongguan','Guangdong','523526',39,40)
+
+21)
+select * from Factory where Name = 'Vburg' and FactoryAddressLine1 = 'Vburg Industry Zone, Cuiheng New Area, Maan Village ' and FactoryCity='Zhongshan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='528437'
+select * from FactoryAgent where AgentName = 'Zhongshan Vburg infant Products Co.,Ltd..'
+select * from Country where CountryName = 'China'
+
+--- Insert AgentName AND Update AgentId in Factory Table
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Zhongshan Vburg infant Products Co.,Ltd..',GetDate(),0,'Vburg Industry Zone, Cuiheng New Area, Maan Village ','Zhongshan','Guangdong','528437',39)
+
+Select * from Factory where Name = 'Vburg' order by 1 desc
+Update Factory set FactoryAgentID = 41 where FactoryID = 282
+
+
+22)
+select * from Factory where Name = 'Goodbaby' and FactoryAddressLine1 = 'No.25 Zhuquan Road North, Ninghai Science and Technology Gardens' and FactoryCity='Ningbo' and factorystate = 'Zhejiang' and FactoryCountryId = 39 and FactoryZipCode='315600'
+select * from FactoryAgent where AgentName = 'Goodbaby (Hongkong) Ltd.'
+select * from Country where CountryName = 'China'
+
+--- Insert AgentName AND Factory 
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Goodbaby (Hongkong) Ltd.',GetDate(),0,'No.25 Zhuquan Road North, Ninghai Science and Technology Gardens','Ningbo','Zhejiang','315600',39)
+
+Select * from Factory order by 1 desc
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Goodbaby','No.25 Zhuquan Road North, Ninghai Science and Technology Gardens','Ningbo','Zhejiang','315600',39,42)
+
+23)
+select * from Factory where Name = 'Goodbaby' and FactoryAddressLine1 = 'No.20 Luxi Road, Lujia Town' and FactoryCity='Kunshan' and factorystate = 'Jiangsu' and FactoryCountryId = 39 and FactoryZipCode='215331'
+select * from FactoryAgent where AgentName = 'Goodbaby (Hongkong) Ltd.'
+select * from Country where CountryName = 'China'
+
+-- Insert AgentName,Factory
+
+Select * from FactoryAgent order by 1 desc
+select * from FactoryAgent where AgentName = 'Goodbaby (Hongkong) Ltd.' and AgentAddressLine1 = 'No.20 Luxi Road, Lujia Town'
+
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Chef Pro International Ltd.',GetDate(),0,'T3/F, A31 Building, Phoenix 1ST Industrial Park, Fuyong Street, Baoan District','Shenzhen','Guangdong','518103',39)
+
+24)
+select * from Factory where Name = 'Great Performance' and FactoryAddressLine1 = 'No.109-111 Ping Di The First Industrial Village, Longgang District' and FactoryCity =' Shenzhen' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='518120'
+select * from FactoryAgent where AgentName = 'Great Performance Ltd.'
+select * from Country where CountryName = 'China'
+
+--- Insert AgentName AND UPDATE AgentId 
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Great Performance Ltd.',GetDate(),0,'No.109-111 Ping Di The First Industrial Village, Longgang District','Shenzhen','Guangdong','518120',39)
+
+Select * from Factory where Name = 'Great Performance' order by 1 desc
+Update Factory set FactoryAgentID = 43 where FactoryID = 234
+
+25)
+select * from Factory where Name = 'Great Star' and FactoryAddressLine1 = 'Qihui Street, Changan Town' and FactoryCity ='Haining' and factorystate = 'Zhejiang' and FactoryCountryId = 39 and FactoryZipCode='314423'
+select * from FactoryAgent where AgentName = 'Hangzhou Great Star Industrial Co., Ltd.'
+select * from Country where CountryName = 'China'
+
+--- Insert AgentName AND UPDATE AgentId 
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Hangzhou Great Star Industrial Co., Ltd.',GetDate(),0,'Qihui Street, Changan Town','Haining','Zhejiang','314423',39)
+
+Select * from Factory where Name = 'Great Star' order by 1 desc
+Update Factory set FactoryAgentID = 44 where FactoryID = 235
+
+26)
+select * from Factory where Name = 'Haworth' and FactoryAddressLine1 = 'No. 175, Tianxin Street, Tiantangwei, Fenggang Town' and FactoryCity ='Dongguan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='523686'
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.'
+select * from Country where CountryName = 'China'
+
+-- Insert AgentName,Factory
+
+Select * from FactoryAgent order by 1 desc
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.' AND AgentAddressLine1 = 'No. 175, Tianxin Street, Tiantangwei, Fenggang Town'
+
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Chef Pro International Ltd.',GetDate(),0,'No. 175, Tianxin Street, Tiantangwei, Fenggang Town','Shenzhen','Guangdong','523686',39)
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Haworth','No. 175, Tianxin Street, Tiantangwei, Fenggang Town','Shenzhen','Guangdong','523686',39,45)
+
+27)
+select * from Factory where Name = 'Hayco' and FactoryAddressLine1 = 'The 2nd Industrial state, Yanchuan, Songgang, Baoan district' and FactoryCity ='Dongguan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='518105'
+select * from FactoryAgent where AgentName = 'Hayco Manufacturing Ltd.'
+select * from Country where CountryName = 'China'
+
+--- Insert AgentName AND UPDATE AgentId 
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Hayco Manufacturing Ltd.',GetDate(),0,'The 2nd Industrial state, Yanchuan, Songgang, Baoan district','Dongguan','Guangdong','518105',39)
+
+Select * from Factory where Name = 'Hayco' order by 1 desc
+Update Factory set FactoryAgentID = 46 where FactoryID = 237
+
+28)
+select * from Factory where Name = 'Jehonn' and FactoryAddressLine1 = 'No.892,Xiuxin Road,Xiuzhou Industrial Park' and FactoryCity ='Jiaxing' and factorystate = 'Zhejiang' and FactoryCountryId = 39 and FactoryZipCode='314031'
+select * from FactoryAgent where AgentName = 'Jiaxing Jehonn Cleaning Products Co.,Ltd.'
+select * from Country where CountryName = 'China'
+
+--- Insert AgentName AND UPDATE AgentId 
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Hayco Manufacturing Ltd.',GetDate(),0,'No.892,Xiuxin Road,Xiuzhou Industrial Park','Jiaxing','Zhejiang','314031',39)
+
+Select * from Factory where Name = 'Jehonn' order by 1 desc
+Update Factory set FactoryAgentID = 47 where FactoryID = 239
+
+29)
+select * from Factory where Name = 'Jensen' and FactoryAddressLine1 = 'Block 14-15, Tong Fu Yu Ind. Zone Xinhe, Fuyong Street, Baoan District' and FactoryCity ='Shenzhen' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='518103'
+select * from FactoryAgent where AgentName = 'Jensen Industrial Ltd.'
+select * from Country where CountryName = 'China'
+
+--- Insert AgentName AND UPDATE AgentId 
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Jensen Industrial Ltd.',GetDate(),0,'Block 14-15, Tong Fu Yu Ind. Zone Xinhe, Fuyong Street, Baoan District','Shenzhen','Guangdong','518103',39)
+
+Select * from Factory where Name = 'Jensen' order by 1 desc
+Update Factory set FactoryAgentID = 48 where FactoryID = 240
+
+30)
+select * from Factory where Name = 'Jackson' and FactoryAddressLine1 = 'No.229 Jiachuang Road, Xiuzhou Industrial Park' and FactoryCity ='Jiaxing' and factorystate = 'Zhejiang' and FactoryCountryId = 39 and FactoryZipCode='314015'
+select * from FactoryAgent where AgentName = 'Jiaxing Jackson Travel Product Co.,Ltd.'
+select * from Country where CountryName = 'China'
+
+-- Insert AgentName,Factory
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Jiaxing Jackson Travel Product Co.,Ltd.',GetDate(),0,'No.229 Jiachuang Road, Xiuzhou Industrial Park','Jiaxing','Zhejiang','314015',39)
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Haworth','No.229 Jiachuang Road, Xiuzhou Industrial Park','Jiaxing','Zhejiang','314015',39,49)
+
+31)
+select * from Factory where Name = 'Jun Wen' and FactoryAddressLine1 = 'Block 2,Sixth Industrial Zone, Dapeng New District' and FactoryCity ='Shenzhen' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='518120'
+select * from FactoryAgent where AgentName = 'Wonder Household Ltd.'
+select * from Country where CountryName = 'China'
+
+--- Insert Factory
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Jun Wen','Block 2,Sixth Industrial Zone, Dapeng New District','Shenzhen','Guangdong','518120',39,34)
+
+32)
+select * from Factory where Name = 'Gang Dong' and FactoryAddressLine1 = 'No.633  Pingshen Road Chengnan Industrial Zone, Pingshan Town, Huidong County' and FactoryCity ='Huizhou' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='516300'
+select * from FactoryAgent where AgentName = 'Wonder Household Ltd.'
+select * from Country where CountryName = 'China'
+
+--- Insert AgentName AND UPDATE AgentId 
+select * from FactoryAgent where AgentName = 'Wonder Household Ltd.' AND AgentAddressLine1 = 'No.633  Pingshen Road Chengnan Industrial Zone, Pingshan Town, Huidong County'
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Wonder Household Ltd.',GetDate(),0,'No.633  Pingshen Road Chengnan Industrial Zone, Pingshan Town, Huidong County','Huizhou','Guangdong','516300',39)
+
+Select * from Factory where Name = 'Gang Dong' order by 1 desc
+Update Factory set FactoryAgentID = 50 where FactoryID = 230
+
+33)
+select * from Factory where Name = 'Kang Li' and FactoryAddressLine1 = 'Jianshan Qiao Tou, Yashao Town, Yangdong District' and FactoryCity ='Yangjiang' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='529500'
+select * from FactoryAgent where AgentName = 'Guangdong Kangli Household Products Co,.Ltd.'
+select * from Country where CountryName = 'China'
+
+-- Insert AgentName,Factory
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Guangdong Kangli Household Products Co,.Ltd.',GetDate(),0,'Jianshan Qiao Tou, Yashao Town, Yangdong District','Yangjiang','Guangdong','529500',39)
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Kang Li','Jianshan Qiao Tou, Yashao Town, Yangdong District','Yangjiang','Guangdong','529500',39,51)
+
+34)
+select * from Factory where Name = 'KentTech' and FactoryAddressLine1 = 'Huangitian Town, Xixiang, Baoan District' and FactoryCity ='Shenzhen' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='518128'
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.'
+select * from Country where CountryName = 'China'
+
+
+-- Insert AgentName,Factory
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Chef Pro International Ltd.',GetDate(),0,'Huangitian Town, Xixiang, Baoan District','Shenzhen','Guangdong','518128',39)
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('KentTech','Huangitian Town, Xixiang, Baoan District','Shenzhen','Guangdong','518128',39,52)
+35)
+select * from Factory where Name = 'KentTech' and FactoryAddressLine1 = 'Zhuangcun Road, Xiner Industrial Park, Shajing Town, Baoan District' and FactoryCity ='Shenzhen' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='518125'
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.'
+select * from Country where CountryName = 'China'
+
+-- Insert AgentName
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Chef Pro International Ltd.',GetDate(),0,'Zhuangcun Road, Xiner Industrial Park, Shajing Town, Baoan District','Shenzhen','Guangdong','518125',39)
+
+36)
+select * from Factory where Name = 'Konstar' and FactoryAddressLine1 = 'Zhuangcun Road, Xiner Industrial Park, Shajing Town, Baoan District' and FactoryCity ='Shenzhen' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='518125'
+select * from FactoryAgent where AgentName = 'Konstar Plastic Metal & Electronics (Dongguan) Co., Ltd.'
+select * from Country where CountryName = 'China'
+
+-- Insert AgentName AND Update AgentId
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Konstar Plastic Metal & Electronics (Dongguan) Co., Ltd.',GetDate(),0,'Zhuangcun Road, Xiner Industrial Park, Shajing Town, Baoan District','Shenzhen','Guangdong','518125',39)
+
+Select * from Factory where Name = 'Konstar' order by 1 desc
+Update Factory set FactoryAgentID = 54 where FactoryID = 250
+
+37)
+select * from Factory where Name = 'Krell' and FactoryAddressLine1 = 'No. 28 Xingyang Road, Economic Development Zone' and FactoryCity ='Yangzhou' and factorystate = 'Jiangsu' and FactoryCountryId = 39 and FactoryZipCode='225009'
+select * from FactoryAgent where AgentName = 'Krell Precision (Yangzhou) Co., Ltd.'
+select * from Country where CountryName = 'China'
+
+-- Insert AgentName,Factory
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Krell Precision (Yangzhou) Co., Ltd.',GetDate(),0,'No. 28 Xingyang Road, Economic Development Zone','Yangzhou','Jiangsu','225009',39)
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Krell','No. 28 Xingyang Road, Economic Development Zone','Yangzhou','Jiangsu','225009',39,55)
+
+38)
+select * from Factory where Name = 'Kwonnie' and FactoryAddressLine1 = 'No.6, Nan Si street, Xiang Mang West Road, The Third Industrial Zone, Qingxi Town' and FactoryCity ='Dongguan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='523660'
+select * from FactoryAgent where AgentName = 'Kwonnie Industrial Ltd.'
+select * from Country where CountryName = 'China'
+
+-- Insert AgentName AND Update AgentId
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Kwonnie Industrial Ltd.',GetDate(),0,'No.6, Nan Si street, Xiang Mang West Road, The Third Industrial Zone, Qingxi Town','Dongguan','Guangdong','523660',39)
+
+Select * from Factory where Name = 'Kwonnie' order by 1 desc
+Update Factory set FactoryAgentID = 56 where FactoryID = 254
+
+39)
+select * from Factory where Name = 'Linkfair' and FactoryAddressLine1 = 'Linkfair Industrial Dist., East Guang Xing Road,Xinxing County' and FactoryCity ='Yunfu' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='523695'
+select * from FactoryAgent where AgentName = 'Linkfair International Inc.'
+select * from Country where CountryName = 'China'
+
+
+-- Insert AgentName AND Update AgentId
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Linkfair International Inc.',GetDate(),0,'Linkfair Industrial Dist., East Guang Xing Road,Xinxing County','Yunfu','Guangdong','523695',39)
+
+Select * from Factory where Name = 'Linkfair' order by 1 desc
+Update Factory set FactoryAgentID = 57 where FactoryID = 256
+
+40)
+select * from Factory where Name = 'Li Nuo' and FactoryAddressLine1 = '30099 Longitude 10th E Rd., Licheng' and FactoryCity ='Jinan' and factorystate = 'Shandong' and FactoryCountryId = 39 and FactoryZipCode='250103'
+select * from FactoryAgent where AgentName = 'Shandong Linuo Technical Glass Co., Ltd.'
+select * from Country where CountryName = 'China'
+
+
+-- Insert AgentName,Factory
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Shandong Linuo Technical Glass Co., Ltd.',GetDate(),0,'30099 Longitude 10th E Rd., Licheng','Jinan','Shandong','250103',39)
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Li Nuo','30099 Longitude 10th E Rd., Licheng','Jinan','Shandong','250103',39,58)
+
+41)
+select * from Factory where Name = 'Maxfirm' and FactoryAddressLine1 = 'Jinqiao Industrial Zone, Tuqiao Management Zone, Qingxi Town' and FactoryCity ='Dongguan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='523653'
+select * from FactoryAgent where AgentName = 'Wings Trading (HK) Co., Ltd.'
+select * from Country where CountryName = 'China'
+
+
+-- Insert AgentName,Factory
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Wings Trading (HK) Co., Ltd.',GetDate(),0,'Jinqiao Industrial Zone, Tuqiao Management Zone, Qingxi Town','Dongguan','Guangdong','523653',39)
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Maxfirm','Jinqiao Industrial Zone, Tuqiao Management Zone, Qingxi Town','Dongguan','Guangdong','523653',39,59)
+
+42)
+select * from Factory where Name = 'Neoflam' and FactoryAddressLine1 = 'No.201,Donghanmen South Road' and FactoryCity ='Yuyao' and factorystate = 'Zhejiang' and FactoryCountryId = 39 and FactoryZipCode='315400'
+select * from FactoryAgent where AgentName = 'Neoflam Inc.'
+select * from Country where CountryName = 'China'
+
+-- Insert AgentName,Factory
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Neoflam Inc.',GetDate(),0,'No.201,Donghanmen South Road','Yuyao','Zhejiang','315400',39)
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Neoflam','No.201,Donghanmen South Road','Yuyao','Zhejiang','315400',39,60)
+43)
+select * from Factory where Name = 'Neoflam' and FactoryAddressLine1 = '2#，No.123 Xiaxia Road Jianshan Area' and FactoryCity ='Haining' and factorystate = 'Zhejiang' and FactoryCountryId = 39 and FactoryZipCode='314415'
+select * from FactoryAgent where AgentName = 'Neoflam Inc. '
+select * from Country where CountryName = 'China'
+
+
+-- Insert AgentName AND Update AgentId
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Neoflam Inc.',GetDate(),0,'2#，No.123 Xiaxia Road Jianshan Area','Haining','Zhejiang','314415',39)
+
+44)
+select * from Factory where Name = 'Sun International' and FactoryAddressLine1 = 'No.136 Changyang Road, Hongtang Town' and FactoryCity ='Ningbo' and factorystate = 'Zhejiang' and FactoryCountryId = 39 and FactoryZipCode='315033'
+select * from FactoryAgent where AgentName = 'Sun International Enterprise Co.,Ltd.'
+select * from Country where CountryName = 'China'
+
+
+-- Insert AgentName AND Update AgentId
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Sun International Enterprise Co.,Ltd.',GetDate(),0,'No.136 Changyang Road, Hongtang Town','Ningbo','Zhejiang','315033',39)
+
+Select * from Factory where Name = 'Sun International' AND FactoryAddressLine1 = 'No.136 Changyang Road, Hongtang Town' order by 1 desc
+Update Factory set FactoryAgentID = 62 where FactoryID = 273
+
+45)
+select * from Factory where Name = 'Sun International' and FactoryAddressLine1 = 'Ruifu Road,Zhongshan street, Pingqiao Town' and FactoryCity ='Xinyang' and factorystate = 'Henan' and FactoryCountryId = 39 and FactoryZipCode='464006'
+select * from FactoryAgent where AgentName = 'Sun International Enterprise Co.,Ltd.'
+select * from Country where CountryName = 'China'
+
+-- Insert AgentName AND Update AgentId
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Sun International Enterprise Co.,Ltd.',GetDate(),0,'Ruifu Road,Zhongshan street, Pingqiao Town','Xinyang','Henan','464006',39)
+
+Select * from Factory where Name = 'Sun International' AND FactoryAddressLine1 = 'Ruifu Road,Zhongshan street, Pingqiao Town' order by 1 desc
+Update Factory set FactoryAgentID = 63 where FactoryID = 274
+
+46)
+select * from Factory where Name = 'Radiant' and FactoryAddressLine1 = 'No.20, Wusongjiang Development Zone,Yushan Town' and FactoryCity ='Kunshan' and factorystate = 'Jiangsu' and FactoryCountryId = 39 and FactoryZipCode='215300'
+select * from FactoryAgent where AgentName = 'Radiant Innovation Inc.'
+select * from Country where CountryName = 'China'
+
+
+-- Insert AgentName AND Update AgentId
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Radiant Innovation Inc.',GetDate(),0,'No.20, Wusongjiang Development Zone,Yushan Town','Kunshan','Jiangsu','215300',39)
+
+Select * from Factory where Name = 'Radiant' AND FactoryAddressLine1 = 'No.20, Wusongjiang Development Zone,Yushan Town' order by 1 desc
+Update Factory set FactoryAgentID = 64 where FactoryID = 263
+
+47)
+select * from Factory where Name = 'Rhino' and FactoryAddressLine1 = 'No.18 Zhaoyi Road, Dongsheng Town' and FactoryCity ='Zhongshan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='528414'
+select * from FactoryAgent where AgentName = 'Rhinoceros Manufacturing (Zhongshan) Ltd.'
+select * from Country where CountryName = 'China'
+
+
+-- Insert AgentName AND Update AgentId
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Rhinoceros Manufacturing (Zhongshan) Ltd.',GetDate(),0,'No.18 Zhaoyi Road, Dongsheng Town','Zhongshan','Guangdong','528414',39)
+
+Select * from Factory where Name = 'Rhino' AND FactoryAddressLine1 = 'No.18 Zhaoyi Road, Dongsheng Town' order by 1 desc
+Update Factory set FactoryAgentID = 65 where FactoryID = 264
+
+48)
+select * from Factory where Name = 'Sellwell' and FactoryAddressLine1 = 'Jinniutan, Shiqiao village, SiQian Town, XinHui Zone' and FactoryCity ='Jiangmen' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='529159'
+select * from FactoryAgent where AgentName = 'Sellwell International Enterprises Ltd.'
+select * from Country where CountryName = 'China'
+
+
+-- Insert AgentName,Factory
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Sellwell International Enterprises Ltd.',GetDate(),0,'Jinniutan, Shiqiao village, SiQian Town, XinHui Zone','Jiangmen','Guangdong','529159',39)
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Sellwell','Jinniutan, Shiqiao village, SiQian Town, XinHui Zone','Jiangmen','Guangdong','529159',39,66)
+49)
+select * from Factory where Name = 'Shang Xing' and FactoryAddressLine1 = '2nd Block, 7th Row, Xingqiao 3rd Industrial Zone, Shajing Town, Baoan District' and FactoryCity ='Shenzhen' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='518125'
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.'
+select * from Country where CountryName = 'China'
+
+
+-- Insert AgentName,Factory
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.' and AgentAddressLine1 = '2nd Block, 7th Row, Xingqiao 3rd Industrial Zone, Shajing Town, Baoan District'
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Sellwell International Enterprises Ltd.',GetDate(),0,'2nd Block, 7th Row, Xingqiao 3rd Industrial Zone, Shajing Town, Baoan District','Shenzhen','Guangdong','518125',39)
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Shang Xing','2nd Block, 7th Row, Xingqiao 3rd Industrial Zone, Shajing Town, Baoan District','Shenzhen','Guangdong','518125',39,67)
+
+50)
+select * from Factory where Name = 'Shijia' and FactoryAddressLine1 = '#108, South Road, Xiwu' and FactoryCity ='Fenghua' and factorystate = 'Zhejiang' and FactoryCountryId = 39 and FactoryZipCode='315505'
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.'
+select * from Country where CountryName = 'China'
+
+-- Insert AgentName Update FactoryAgentId
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Chef Pro International Ltd.',GetDate(),0,'#108, South Road, Xiwu','Fenghua','Zhejiang','315505',39)
+
+Update Factory set FactoryAgentId= 68 where FactoryID = 268
+
+51)
+select * from Factory where Name = 'Shijia' and FactoryAddressLine1 = '#108, South Road, Xiwu' and FactoryCity ='Fenghua' and factorystate = 'Zhejiang' and FactoryCountryId = 39 and FactoryZipCode='315505'
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.'
+select * from Country where CountryName = 'China'
+
+52)
+select * from Factory where Name = 'Sinoglass' and FactoryAddressLine1 = '398 Kun Lun Shan Bei Road, Huangdao District' and FactoryCity ='Qingdao' and factorystate = 'Shandong' and FactoryCountryId = 39 and FactoryZipCode='266426'
+select * from FactoryAgent where AgentName = 'Sinoglass Housewares Co., Ltd.'
+select * from Country where CountryName = 'China'
+
+-- Insert AgentName Update FactoryAgentId
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Sinoglass Housewares Co., Ltd.',GetDate(),0,'398 Kun Lun Shan Bei Road, Huangdao District','Qingdao','Shandong','266426',39)
+
+Update Factory set FactoryAgentId= 69 where FactoryID = 271
+
+53)
+select * from Factory where Name = 'Songson' and FactoryAddressLine1 = 'No.188, Putou South Road, Xike Town, Tongan' and FactoryCity ='Xiamen' and factorystate = 'Fujian' and FactoryCountryId = 39 and FactoryZipCode='361100'
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.'
+select * from Country where CountryName = 'China'
+
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.' AND AgentAddressLine1 = 'No.188, Putou South Road, Xike Town, Tongan'
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Chef Pro International Ltd.',GetDate(),0,'No.188, Putou South Road, Xike Town, Tongan','Xiamen','Fujian','361100',39)
+
+Update Factory set FactoryAgentId= 70 where FactoryID = 272
+
+54)
+select * from Factory where Name = 'Sunshiny' and FactoryAddressLine1 = 'Riverside Industrial Park, Shenxiang Village, Qishi Town' and FactoryCity ='Dongguan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='523550'
+select * from FactoryAgent where AgentName = 'Chuanghui Industrial (Hongkong) Ltd.'
+select * from Country where CountryName = 'China'
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Chuanghui Industrial (Hongkong) Ltd.',GetDate(),0,'Riverside Industrial Park, Shenxiang Village, Qishi Town','Dongguan','Guangdong','523550',39)
+
+Update Factory set FactoryAgentId= 71 where FactoryID = 276
+
+55)
+select * from Factory where Name = 'Supreme' and FactoryAddressLine1 = 'Zhao Li Industrial Zone, Zhongtang Town' and FactoryCity ='Dongguan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='523226'
+select * from FactoryAgent where AgentName = 'Supreme Plastic Manufacturing Co Ltd.'
+select * from Country where CountryName = 'China'
+
+
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Supreme Plastic Manufacturing Co Ltd.',GetDate(),0,'Zhao Li Industrial Zone, Zhongtang Town','Dongguan','Guangdong','523226',39)
+
+Update Factory set FactoryAgentId= 72 where FactoryID = 277
+56)
+select * from Factory where Name = 'Takpo' and FactoryAddressLine1 = 'No. 18, Fengqi Road, Qilixiu Village, Pinghu Town' and FactoryCity ='Shenzhen' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='518111'
+select * from FactoryAgent where AgentName = 'Wonder Household Ltd.'
+select * from Country where CountryName = 'China'
+
+select * from FactoryAgent where AgentName = 'Wonder Household Ltd.' AND AgentAddressline1 = 'No. 18, Fengqi Road, Qilixiu Village, Pinghu Town'
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Wonder Household Ltd.',GetDate(),0,'No. 18, Fengqi Road, Qilixiu Village, Pinghu Town','Shenzhen','Guangdong','518111',39)
+
+Update Factory set FactoryAgentId= 73 where FactoryID = 278
+57)
+select * from Factory where Name = 'Tzeng' and FactoryAddressLine1 = 'Li Wang Ave., Pearl Industry Park' and FactoryCity ='Heyuan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='517000'
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.'
+select * from Country where CountryName = 'China'
+
+
+-- Insert AgentName,Factory
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.' AND AgentAddressline1 = 'Li Wang Ave., Pearl Industry Park'
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Chef Pro International Ltd.',GetDate(),0,'Li Wang Ave., Pearl Industry Park','Heyuan','Guangdong','517000',39)
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Tzeng','Li Wang Ave., Pearl Industry Park','Heyuan','Guangdong','517000',39,74)
+58)
+select * from Factory where Name = 'Union Lucky' and FactoryAddressLine1 = 'Block F, Level One South, Yin Hu Industrial Zone, Qingxi Town' and FactoryCity ='Dongguan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='523660'
+select * from FactoryAgent where AgentName = ''
+select * from Country where CountryName = 'China'
+
+59)
+select * from Factory where Name = 'Wellbase' and FactoryAddressLine1 = 'No.1117, Chun Jiang East Road, Economy Development Area of Tonglu' and FactoryCity ='Hangzhou' and factorystate = 'Zhejiang' and FactoryCountryId = 39 and FactoryZipCode='311501'
+select * from FactoryAgent where AgentName = 'Wellbase Industrial Ltd.'
+select * from Country where CountryName = 'China'
+
+
+-- Insert AgentName,Factory
+select * from FactoryAgent where AgentName = 'Wellbase Industrial Ltd.' AND AgentAddressline1 = 'No.1117, Chun Jiang East Road, Economy Development Area of Tonglu'
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Wellbase Industrial Ltd.',GetDate(),0,'No.1117, Chun Jiang East Road, Economy Development Area of Tonglu','Hangzhou','Zhejiang','311501',39)
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Wellbase','No.1117, Chun Jiang East Road, Economy Development Area of Tonglu','Hangzhou','Zhejiang','311501',39,75)
+
+60)
+select * from Factory where Name = 'Wellbase' and FactoryAddressLine1 = 'Block 3, City II Fuan Industrial City, Dayangtian Development Area, Fuyong Town, Baoan District' and FactoryCity ='Shenzhen' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='518103'
+select * from FactoryAgent where AgentName = 'Wellbase Industrial Ltd.'
+select * from Country where CountryName = 'China'
+
+select * from FactoryAgent where AgentName = 'Wellbase Industrial Ltd.' AND AgentAddressLine1 = 'Block 3, City II Fuan Industrial City, Dayangtian Development Area, Fuyong Town, Baoan District'
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Wonder Household Ltd.',GetDate(),0,'Block 3, City II Fuan Industrial City, Dayangtian Development Area, Fuyong Town, Baoan District','Shenzhen','Guangdong','518103',39)
+
+Update Factory set FactoryAgentId= 73 where FactoryID = 278
+
+61)
+
+select * from Factory where Name = 'Wiko' and FactoryAddressLine1 = 'The 1st Industrial District, Yangxi town' and FactoryCity ='Yangjiang' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='529800'
+select * from FactoryAgent where AgentName = 'Wiko Cutlery Ltd.'
+select * from Country where CountryName = 'China'
+
+
+-- Insert AgentName,Factory
+select * from FactoryAgent where AgentName = 'Wellbase Industrial Ltd.' AND AgentAddressline1 = 'No.1117, Chun Jiang East Road, Economy Development Area of Tonglu'
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Wiko Cutlery Ltd.',GetDate(),0,'The 1st Industrial District, Yangxi town','Yangjiang','Guangdong','529800',39)
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Wiko','The 1st Industrial District, Yangxi town','Yangjiang','Guangdong','529800',39,77)
+
+
+62)
+select * from Factory where Name = 'Wing Fat' and FactoryAddressLine1 = 'Yanwo Industrial Park, Shipai Town' and FactoryCity ='Dongguan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='523331'
+select * from FactoryAgent where AgentName = 'Wing Fat Plastic & Electrical Product Factory Ltd.'
+select * from Country where CountryName = 'China'
+
+
+-- Insert AgentName,Factory
+Select * from FactoryAgent order by 1 desc
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Wing Fat Plastic & Electrical Product Factory Ltd.',GetDate(),0,'Yanwo Industrial Park, Shipai Town','Dongguan','Guangdong','523331',39)
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Wing Fat','Yanwo Industrial Park, Shipai Town','Dongguan','Guangdong','523331',39,78)
+63)
+select * from Factory where Name = 'Wing Sing' and FactoryAddressLine1 = 'No 2. Wingsing Road , Wulian Xiang, Fenggang Town' and FactoryCity ='Dongguan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='523695'
+select * from FactoryAgent where AgentName = 'Wonder Household Ltd.'
+select * from Country where CountryName = 'China'
+
+
+select * from FactoryAgent where AgentName = 'Wonder Household Ltd.' AND AgentAddressLine1 = 'No 2. Wingsing Road , Wulian Xiang, Fenggang Town'
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Wonder Household Ltd.',GetDate(),0,'No 2. Wingsing Road , Wulian Xiang, Fenggang Town','Dongguan','Guangdong','523695',39)
+
+Update Factory Set FactoryAgentID = 79 where FactoryID = 285
+64)
+select * from Factory where Name = 'Winnington' and FactoryAddressLine1 = 'NO. 49 Pingnan Industrial Park, Zhongkai Hi-Tec Development Zone' and FactoryCity ='Huizhou' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='516006'
+select * from FactoryAgent where AgentName = ''
+select * from Country where CountryName = 'China'
+65)
+select * from Factory where Name = 'Xing Cai' and FactoryAddressLine1 = 'Qiaodong Industrial Area, Pandong' and FactoryCity ='Jieyang' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='522000'
+select * from FactoryAgent where AgentName = 'Wonder Household Ltd.'
+select * from Country where CountryName = 'China'
+
+--- Insert Factory,AgentName
+select * from FactoryAgent where AgentName = 'Wonder Household Ltd.' AND AgentAddressLine1 = 'Qiaodong Industrial Area, Pandong'
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Wonder Household Ltd.',GetDate(),0,'Qiaodong Industrial Area, Pandong','Jieyang','Guangdong','522000',39)
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Xing Cai','Qiaodong Industrial Area, Pandong','Jieyang','Guangdong','522000',39,80)
+66)
+select * from Factory where Name = 'Xiong Bing' and FactoryAddressLine1 = 'Jiahua Rd 40, Qianlong Industrial Area, Sanxiang Town' and FactoryCity ='Zhongshan' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='528463'
+select * from FactoryAgent where AgentName = 'Zhongshan City Xiongbing Rubber Co., Ltd.'
+select * from Country where CountryName = 'China'
+
+---- Insert AgentName,Factory
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Zhongshan City Xiongbing Rubber Co., Ltd.',GetDate(),0,'Jiahua Rd 40, Qianlong Industrial Area, Sanxiang Town','Zhongshan','Guangdong','528463',39)
+
+insert into Factory(Name,FactoryAddressLine1,FactoryCity,FactoryState,FactoryZipCode,FactoryCountryID,FactoryAgentID)
+Values ('Xiong Bing','Jiahua Rd 40, Qianlong Industrial Area, Sanxiang Town','Zhongshan','Guangdong','528463',39,81)
+
+67)
+select * from Factory where Name = 'Yinshan' and FactoryAddressLine1 = 'Fanrong Village, Yuanqiao, Huangyan' and FactoryCity ='Taizhou' and factorystate = 'Zhejiang' and FactoryCountryId = 39 and FactoryZipCode='318025'
+select * from FactoryAgent where AgentName = 'Taizhou Yinshan Manufacturing Brushes Co., Ltd.'
+select * from Country where CountryName = 'China'
+
+---- Insert AgentName And Update AgentFactoryId
+
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Taizhou Yinshan Manufacturing Brushes Co., Ltd.',GetDate(),0,'Fanrong Village, Yuanqiao, Huangyan','Taizhou','Zhejiang','318025',39)
+
+Update Factory set FactoryAgentID =82 where FactoryID = 291
+
+68)
+select * from Factory where Name = 'Chuco' and FactoryAddressLine1 = 'No.163, Huan Cheng Nan Rd., Pingdi Street Office, Pingdi Town, Longgang District' and FactoryCity ='Shenzhen' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='518117'
+select * from FactoryAgent where AgentName = 'Chuco International Co., Ltd.'
+select * from Country where CountryName = 'China'
+
+
+---- Insert AgentName And Update AgentFactoryId
+
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Chuco International Co., Ltd.',GetDate(),0,'Fanrong Village, Yuanqiao, Huangyan','Taizhou','Zhejiang','318025',39)
+
+Update Factory set FactoryAgentID =82 where FactoryID = 291
+69)
+select * from Factory where Name = 'Sanhe' and FactoryAddressLine1 = 'No. 69, Yaogong Street, Ganjingzi District' and FactoryCity ='Dalian' and factorystate = 'Liaoning' and FactoryCountryId = 39 and FactoryZipCode='116037'
+select * from FactoryAgent where AgentName = 'Dalian Sanhe Paper Products Co., Ltd.'
+select * from Country where CountryName = 'China'
+
+
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Dalian Sanhe Paper Products Co., Ltd.',GetDate(),0,'No. 69, Yaogong Street, Ganjingzi District','Dalian','Liaoning','116037',39)
+
+Update Factory set FactoryAgentID =83 where FactoryID = 265
+70)
+select * from Factory where Name = '' and FactoryAddressLine1 = 'District no.1,Yabian students Wai C,Manhole Town, Baoan District City, Shenzhen' and FactoryCity ='Shenzhen' and factorystate = 'Guangdong' and FactoryCountryId = 39 and FactoryZipCode='518125'
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.'
+select * from Country where CountryName = 'China'
+
+select * from FactoryAgent where AgentName = 'Chef Pro International Ltd.' AND AgentAddressLine1 = 'District no.1,Yabian students Wai C,Manhole Town, Baoan District City, Shenzhen'
+insert into FactoryAgent(AgentName,addedon,isdeleted,AgentAddressLine1,AgentCity,AgentState,AgentZipCode,AgentCountryId) 
+Values ('Chef Pro International Ltd.',GetDate(),0,'District no.1,Yabian students Wai C,Manhole Town, Baoan District City, Shenzhen','Shenzhen','Guangdong','518125',39)

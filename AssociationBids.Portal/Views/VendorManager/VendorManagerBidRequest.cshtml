@@ -1,0 +1,488 @@
+﻿@model AssociationBids.Portal.Model.BidRequestModel
+    @{
+        ViewBag.Title = "VendorManagerBidRequest";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+
+        if (Session["PortalKey"] == null)
+        { Response.Redirect("~/", true); }
+        else if (Session["PortalKey"].ToString() == "2")
+        { Response.Redirect("~/PMDashboard/Dashboard", true); }
+        else if (Session["PortalKey"].ToString() == "3")
+        { Response.Redirect("~/VDashboard/Index", true); }
+    }
+    <script src="../assets/js/vendors/jquery-3.2.1.min.js"></script>
+    <h2>VendorManagerBidRequest</h2>
+
+    <!-- app-content-->
+    <div class="app-content  my-3 my-md-5">
+        <div class="side-app">
+
+            <!-- page-header -->
+            <div class="page-header">
+                <ol class="breadcrumb">
+                    <!-- breadcrumb -->
+                    <li class="breadcrumb-item"><a href="../Dashboard/Dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a href="../VendorManager/Index">Vendors</a></li>
+                    <li class="breadcrumb-item"><a href="../VendorManager/VendorView?CompanyKey="@ViewBag.cid>Vendor View</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Vendor BidRequest Details</li>
+                </ol><!-- End breadcrumb -->
+
+            </div>
+            <!-- End page-header -->
+
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+
+                        <div class="card-body">
+
+
+
+                            <div class="form-div">
+
+                                <div class="tabs-menu1 ">
+                                    <!-- Tabs -->
+                                    <ul class="nav panel-tabs">
+                                        <li class=""><a href="#biddetails" class="active" data-toggle="tab">Bid Details</a></li>
+                                        <li><a href="#message" data-toggle="tab">Message</a></li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content">
+                                    <div class="tab-pane active " id="biddetails">
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Bid Details</h3>
+                                                        <div class="card-options">
+                                                            <a href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border-top">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Service:</label>
+                                                                    <p id="bidService"></p>
+                                                                </div>
+                                                            </div><!-- end of col -->
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Title:</label>
+                                                                    <p id="bidTitle"></p>
+                                                                </div>
+                                                            </div><!-- end of col -->
+                                                            <div class="col-md-3 ">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Response Date:</label>
+                                                                    <h3 class="mb-3 font-weight-semibold" id="bidResponseDate"></h3>
+                                                                </div>
+                                                            </div><!-- end of col -->
+                                                            <div class="col-md-3 ">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Bid Due Date:</label>
+                                                                    <h3 class="mb-3 font-weight-semibold" id="bidDuedate"></h3>
+                                                                </div>
+                                                            </div><!-- end of col -->
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Description:</label>
+                                                                    <p id="biddesc"></p>
+                                                                </div>
+                                                            </div><!-- end of col -->
+                                                        </div><!-- end of row -->
+
+                                                    </div><!--end of card body -->
+                                                </div><!--end of card -->
+                                            </div><!--end of col -->
+                                        </div><!--end of row -->
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Photos</h3>
+                                                        <div class="card-options">
+                                                            <a href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border-top">
+                                                        <div class="row">
+                                                            <div class="col-6 col-md-3">
+                                                                <a href="#" class="thumbnail mb-md-0">
+                                                                    <img src="../assets/images/photos/1.jpg" alt="thumb1" class="thumbimg">
+                                                                </a>
+                                                            </div>
+                                                            @*<div class="col-6 col-md-3">
+                                                                <a href="#" class="thumbnail mb-md-0">
+                                                                    <img src="../assets/images/photos/2.jpg" alt="thumb1" class="thumbimg">
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-6 col-md-3">
+                                                                <a href="#" class="thumbnail mb-0">
+                                                                    <img src="../assets/images/photos/3.jpg" alt="thumb1" class="thumbimg">
+                                                                </a>
+                                                            </div>
+                                                            <div class="col-6 col-md-3">
+                                                                <a href="#" class="thumbnail mb-0">
+                                                                    <img src="../assets/images/photos/5.jpg" alt="thumb1" class="thumbimg">
+                                                                </a>
+                                                            </div>*@
+                                                        </div>
+
+                                                    </div><!--end of card body -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Documents</h3>
+                                                        <div class="card-options">
+                                                            <a href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border-top">
+
+                                                        <div class="table-responsive">
+                                                            <table id="dataTableExample" class="table table-bordered w-100 no-footer">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Title</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td class="biddoc"><i class="fa fa-file-pdf-o"></i> Document name goes here</td>
+                                                                    </tr>
+                                                                    @*<tr>
+                                                                        <td><i class="fa fa-file-pdf-o"></i> Document name goes here</td>
+                                                                    </tr>*@
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+
+
+                                                    </div><!--end of card body -->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Property Details</h3>
+                                                        <div class="card-options">
+                                                            <a href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border-top">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Company:</label>
+                                                                    <p id="bidcompany"></p>
+                                                                </div>
+                                                            </div><!-- end of col -->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Property:</label>
+                                                                    <p id="proname"></p>
+                                                                </div>
+                                                            </div><!-- end of col -->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">#No. of Units:</label>
+                                                                    <p id="units"></p>
+                                                                </div>
+                                                            </div><!-- end of col -->
+
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Address 1:</label>
+                                                                    <p id="bidaddress"></p>
+                                                                </div>
+                                                            </div><!-- end of col -->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Address 2:</label>
+                                                                    <p id="bidaddress1"></p>
+                                                                </div>
+                                                            </div><!-- end of col -->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">City:</label>
+                                                                    <p id="bidcity"></p>
+                                                                </div>
+                                                            </div><!-- end of col -->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">State:</label>
+                                                                    <p id="bidstate"></p>
+                                                                </div>
+                                                            </div><!-- end of col -->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Zip:</label>
+                                                                    <p id="bidzip"></p>
+                                                                </div>
+                                                            </div><!-- end of col -->
+                                                        </div><!-- end of row -->
+
+
+                                                    </div><!--end of card body -->
+                                                </div><!--end of card -->
+                                            </div><!--end of col -->
+                                        </div><!--end of row -->
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Contact Information</h3>
+                                                        <div class="card-options">
+                                                            <a href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border-top">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Name:</label>
+                                                                    <p id="bidname"></p>
+                                                                </div>
+                                                            </div><!-- end of col -->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Company:</label>
+                                                                    <p id="bidcompany"></p>
+                                                                </div>
+                                                            </div><!-- end of col -->
+
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Phone</label>
+                                                                    <p id="bidphone"></p>
+                                                                </div>
+                                                            </div><!-- end of col -->
+
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Email:</label>
+                                                                    <p id="bidemail"></p>
+                                                                </div>
+                                                            </div><!-- end of col -->
+                                                        </div><!-- end of row -->
+
+
+                                                    </div><!--end of card body -->
+                                                </div><!--end of card -->
+                                            </div><!--end of col -->
+                                        </div><!--end of row -->
+
+
+                                    </div><!-- end of tab -->
+                                    <div class="tab-pane " id="message">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+
+                                                    <div class="card-body">
+
+                                                        <div class="col-md-12 col-lg-12 col-xl-12  chat">
+                                                            <div class="card ">
+
+                                                                <!-- msg_card_body -->
+                                                                <div class="card-body msg_card_body">
+                                                                    <div class="d-flex justify-content-start">
+                                                                        <div class="img_cont_msg">
+                                                                            <div class="rounded-circle user_img_msg" style="background-color:blue">S</div>
+                                                                        </div>
+                                                                        <div class="msg_cotainer">
+                                                                            Hi, how are you Jenna Side?
+                                                                            <span class="msg_time">8:40 AM, Today</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-end ">
+                                                                        <div class="msg_cotainer_send">
+                                                                            Hi Connor Paige i am good tnx how about you?
+                                                                            <span class="msg_time_send">8:55 AM, Today</span>
+                                                                        </div>
+                                                                        <div class="img_cont_msg">
+                                                                            <div class="rounded-circle user_img_msg" style="background-color:green">S</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-start ">
+                                                                        <div class="img_cont_msg">
+                                                                            <div class="rounded-circle user_img_msg" style="background-color:blue">S</div>
+                                                                        </div>
+                                                                        <div class="msg_cotainer">
+                                                                            I am good too, thank you for your chat template
+                                                                            <span class="msg_time">9:00 AM, Today</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-end ">
+                                                                        <div class="msg_cotainer_send">
+                                                                            You welcome Connor Paige
+                                                                            <span class="msg_time_send">9:05 AM, Today</span>
+                                                                        </div>
+                                                                        <div class="img_cont_msg">
+                                                                            <div class="rounded-circle user_img_msg" style="background-color:green">S</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-start ">
+                                                                        <div class="img_cont_msg">
+                                                                            <div class="rounded-circle user_img_msg" style="background-color:blue">S</div>
+                                                                        </div>
+                                                                        <div class="msg_cotainer">
+                                                                            Yo, Can you update Views?
+                                                                            <span class="msg_time">9:07 AM, Today</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-end mb-4">
+                                                                        <div class="msg_cotainer_send">
+                                                                            But I must explain to you how all this mistaken  born and I will give
+                                                                            <span class="msg_time_send">9:10 AM, Today</span>
+                                                                        </div>
+                                                                        <div class="img_cont_msg">
+                                                                            <div class="rounded-circle user_img_msg" style="background-color:green">S</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-start ">
+                                                                        <div class="img_cont_msg">
+                                                                            <div class="rounded-circle user_img_msg" style="background-color:blue">S</div>
+                                                                        </div>
+                                                                        <div class="msg_cotainer">
+                                                                            Yo, Can you update Views?
+                                                                            <span class="msg_time">9:07 AM, Today</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-end mb-4">
+                                                                        <div class="msg_cotainer_send">
+                                                                            But I must explain to you how all this mistaken  born and I will give
+                                                                            <span class="msg_time_send">9:10 AM, Today</span>
+                                                                        </div>
+                                                                        <div class="img_cont_msg">
+                                                                            <div class="rounded-circle user_img_msg" style="background-color:green">S</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-start ">
+                                                                        <div class="img_cont_msg">
+                                                                            <div class="rounded-circle user_img_msg" style="background-color:blue">S</div>
+                                                                        </div>
+                                                                        <div class="msg_cotainer">
+                                                                            Yo, Can you update Views?
+                                                                            <span class="msg_time">9:07 AM, Today</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-end mb-4">
+                                                                        <div class="msg_cotainer_send">
+                                                                            But I must explain to you how all this mistaken  born and I will give
+                                                                            <span class="msg_time_send">9:10 AM, Today</span>
+                                                                        </div>
+                                                                        <div class="img_cont_msg">
+                                                                            <div class="rounded-circle user_img_msg" style="background-color:green">S</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-flex justify-content-start">
+                                                                        <div class="img_cont_msg">
+                                                                            <div class="rounded-circle user_img_msg" style="background-color:blue">S</div>
+                                                                        </div>
+                                                                        <div class="msg_cotainer">
+                                                                            Okay Bye, text you later..
+                                                                            <span class="msg_time">9:12 AM, Today</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- msg_card_body end -->
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div><!--end of card body -->
+                                                </div><!--end of card -->
+                                            </div><!--end of col -->
+                                        </div><!--end of row -->
+
+                                    </div><!-- end of tab -->
+                                </div><!-- end of tab content -->
+
+
+
+
+
+
+                            </div><!-- end of form-div -->
+                            <!-- Modal -->
+                            <div class="modal fade" id="addmsg" tabindex="-1" role="dialog" aria-labelledby="addmsgLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <div class="form-popup">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Message:</label>
+                                                            <input type="text" class="form-control" placeholder="Message" />
+                                                        </div>
+
+                                                    </div><!-- end of col -->
+                                                </div>
+
+                                            </div><!-- end of form-popup -->
+
+                                        </div><!-- end of Moal body -->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-sm btn-info" data-dismiss="modal">Cancel</button>
+                                            <button type="button" class="btn btn-sm btn-primary">Send</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- end of modal-->
+
+
+
+
+
+                        </div><!--end of card body -->
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <!--footer-->
+            <footer class="footer">
+                <div class="container">
+                    <div class="row align-items-center flex-row-reverse">
+                        <div class="col-lg-12 col-sm-12   text-center">
+                            Copyright © 2020 Association Bids. All rights reserved.
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div><!--End side app-->
+    </div>
+
+<script>
+    $(document).ready(function () {
+        $("#global-loader").hide();
+    });
+</script>

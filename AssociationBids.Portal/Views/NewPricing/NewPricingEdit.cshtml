@@ -1,0 +1,551 @@
+﻿@model AssociationBids.Portal.Model.PricingModel
+
+@{
+    ViewBag.Title = "PricingEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>PricingEdit</h2>
+
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="NewPricingList">Pricing</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit Pricing</li>
+            </ol><!-- End breadcrumb -->
+
+        </div>
+        <div class="alert alert-danger" id="Error" style="display:none; margin-top: 20px;">
+            <strong><span class="errormessage"></span></strong>
+        </div>
+
+        <!-- End page-header -->
+
+        @using (Html.BeginForm("NewPricingEdit", "NewPricing", FormMethod.Post))
+        {
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+
+                        <div class="card-body">
+                            <div class="form-div">
+                                <div class="row">
+                                    @Html.HiddenFor(model => model.PricingKey)
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label">Pricing Type @Html.ValidationMessageFor(model => model.PricingTypeKey, "*", new { @class = "text-danger" })</label>
+                                            @*<input type="text" class="form-control" name="input" placeholder="Pricing type">*@
+                                            @Html.DropDownListFor(model => model.PricingTypeKey, new SelectList(ViewBag.lstPricingType, "Value", "Text"), new { @data_rel = "Choose_one", @class = "form-control", placeholder = "Choose One", @tabindex = "1" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4" id="StartAmountDiv">
+                                        <div class="form-group">
+                                            <label class="form-label">Start Amount   </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <i class="fa fa-dollar tx-16 lh-0 op-6"></i>
+                                                    </div>
+                                                </div><!-- input-group-prepend -->
+                                                @Html.HiddenFor(model => model.StartAmount)
+                                                @Html.Editor("txtStartAmount", new { htmlAttributes = new { @class = "form-control", @tabindex = "2", autocomplete = "off", placeholder = "Start Amount" } })
+                                                @*<input type="text" class="form-control" name="input" placeholder="">*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" id="EndAmountDiv">
+                                        <div class="form-group">
+                                            <label class="form-label">End Amount </label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <i class="fa fa-dollar tx-16 lh-0 op-6"></i>
+                                                    </div>
+                                                </div><!-- input-group-prepend -->
+                                                @*<input type="text" class="form-control" name="input" placeholder="">*@
+                                                @Html.HiddenFor(model => model.EndAmount)
+                                                @Html.Editor("txtEndAmount", new { htmlAttributes = new { @class = "form-control", @tabindex = "3", autocomplete = "off", placeholder = "End Amount" } })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label">Fee Type @Html.ValidationMessageFor(model => model.PricingTypeKey, "*", new { @class = "text-danger" })</label>
+                                            @*<input type="text" class="form-control" name="input" placeholder="Pricing type">*@
+                                            @Html.HiddenFor(model => model.FeeType)
+                                            <select id="feetypelist" class="form-control" tabindex="4">
+                                            </select>
+                                            @*@Html.DropDownListFor(model => model.PricingTypeKey, new SelectList(ViewBag.lstPricingType, "Value", "Text"), new { @data_rel = "Choose_one", @class = "form-control", placeholder = "Choose One", @tabindex ="4" })*@
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label">Fee  @Html.ValidationMessageFor(model => model.Fee, "*", new { @class = "text-danger" })</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <i class="fa fa-dollar tx-16 lh-0 op-6" id="typesign"></i>
+                                                    </div>
+                                                </div><!-- input-group-prepend -->
+                                                @*<input type="text" class="form-control" name="input" placeholder="">*@
+                                                @Html.HiddenFor(model => model.Fee)
+                                                @Html.Editor("txtFee", new { htmlAttributes = new { @class = "form-control", @tabindex = "5", autocomplete = "off", placeholder = "Fee" } })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*<div class="col-md-4">
+            <div class="form-group">
+                <label class="form-label">Company @Html.ValidationMessageFor(model => model.CompanyKey, "*", new { @class = "text-danger" }) </label>
+                @Html.DropDownListFor(model => model.CompanyKey, new SelectList(ViewBag.lstcompany, "Value", "Text"), new { @data_rel = "Choose_one", @class = "form-control", placeholder = "Choose One", @tabindex = "5" })
+
+            </div>
+        </div>*@
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="form-label">Sort Order  </label>
+                                            @Html.EditorFor(model => model.SortOrder, new { htmlAttributes = new { @class = "form-control", @tabindex = "6", autocomplete = "off", placeholder = "Sort Order" } })
+                                            @*<select class="form-control select2 custom-select" data-placeholder="Choose one">
+                    <option label="Choose one"></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>*@
+                                        </div>
+                                    </div>
+
+                                </div><!-- end of row -->
+                                <hr />
+
+
+                                <div class="button-row d-flex">
+                                    @Html.HiddenFor(model => model.PricingKey)
+                                    <a href="@Request.UrlReferrer" class="btn btn-default" title="Cancel">Cancel</a>
+
+                                    <input t class="btn btn-primary ml-auto" tabindex="8" id="btnUpdate" type="submit" onclick="return validation()" title="Update" value="Update" /><i class="fa fa-loppy-o"></i>&nbsp;
+                                    <a href="#" role="button" id="btndelete" tabindex="9" class="btn btn-icon btn-danger pull-right" style="margin-right:10px;"><i class="fe fe-trash"></i> Delete</a>
+                                </div>
+
+                            </div><!-- end of form-div  -->
+
+                        </div><!--end of card body -->
+                    </div>
+                </div>
+            </div>
+
+        }
+
+
+    </div><!--End side app-->
+    
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+
+<!-- End app-content-->
+<script>
+    $(document).ready(function () {
+        //$("#Pricing").closest('li').addClass('active');
+        //$("#Pricing3").addClass('active');
+        SetActiveMenu($("#Pricing"), false);
+        $('#loader').show();
+        $("#StartAmountDiv").hide();
+        $("#EndAmountDiv").hide();
+        $('.errormessage').html('');
+        $('#Error').hide();
+
+        $('#loader').hide();
+        $('#StartAmount').focus();
+
+
+
+        debugger;
+        FormatCurrencyonLoad($("#StartAmount"), $("#txtStartAmount"), 2);
+        FormatCurrencyonLoad($("#EndAmount"), $("#txtEndAmount"), 2);
+        FormatCurrencyonLoad($("#Fee"), $("#txtFee"), 0);
+
+        var pricetype = $("#PricingTypeKey").val();
+        if (pricetype == '1202')
+        {
+            BindPricingType(pricetype, "Bid Fee");
+        }
+        if (pricetype == '1200') {
+            BindPricingType(pricetype, "Membership Fee"); 
+        }
+        if (pricetype == '1201') {
+            BindPricingType(pricetype, "No Bid Fee");
+        }
+        if ($("#FeeType").val() == "Percentage")
+        {
+            $("#FeeType").val("Percentage");
+            $("#typesign").removeClass("fa-dollar");
+            $("#typesign").addClass("fa-percent");
+        }
+        //alert($("#FeeType").val()); 
+    });
+    $("#btncancel").click(function () {
+        var a = $("#PricingKey").val();
+
+        window.location.href = 'NewPricingView?PricingKey=' + $("#PricingKey").val();
+
+    });
+
+    $("#btnUpdate").click(function () {
+        debugger;
+        var a = $("#PricingKey").val();
+        var status = false;
+        status = validation();
+        if (status == true) {
+            window.location.href = 'NewPricingEdit?PricingKey=' + $("#PricingKey").val();
+        }
+        else {
+            return false;
+        }
+    });
+    $("#btndelete").click(function () {
+        debugger;
+
+        if (confirm('Are you sure you want to delete this record?')) {
+            window.location.href = 'Delete?PricingKey=' + $("#PricingKey").val();
+            return true;
+        }
+        else {
+            return false;
+        }
+    });
+
+    function Clear() {
+
+        document.getElementById("StartAmount").value = "";
+        document.getElementById("EndAmount").value = "";
+        document.getElementById("Fee").value = "";
+        document.getElementById("PricingTypeKey").value = "0";
+        document.getElementById("CompanyKey").value = "0";
+        document.getElementById("SortOrder").value = "";
+
+        $('#Error').hide();
+        $('.field-validation-error').html("");
+        $('.errormessage').html('');
+    }
+
+    function BindPricingType(PicingKey,PricingName) {
+        debugger;
+        var a = PicingKey;
+        var b = PricingName;
+        //alert(a +" = "+ b);
+        if (b === 'Bid Fee') {
+            $("#StartAmountDiv").show(100);
+            $("#EndAmountDiv").show(100);
+        } else {
+            $("#StartAmountDiv").hide(100);
+            $("#EndAmountDiv").hide(100);
+        }
+        $.ajax({
+            type: "GET",
+            url:'@Url.Action("GetFeeTypeFromPricingType","NewPricing")',
+            datatype: "json",
+            data: {
+                PricingTypeKey: a,
+                PricingType : b
+            },
+            success: function (response) {
+                debugger;
+                $("#feetypelist").html("");
+                if (response != null && response.length > 0) {
+                    for (var i = 0; i < response.length; i++) {
+                        var txt = response[i].Text;
+                        var OpVal = response[i].Value;
+                        var selected = "";
+                        if ($("#FeeType").val() == OpVal)
+                            selected = "Selected";
+                        $("#feetypelist").append('<option value="'+OpVal+'" '+ selected+'>'+txt+'</option>');
+                    }
+                }
+                else {
+                    $("#feetypelist").append('<option value="Fixed">Fixed Fee</option>');
+                }
+                $("#feetypelist").change();
+            },
+            error: function (response) {
+                debugger;
+            }
+        });
+    }
+
+    $("#PricingTypeKey").change(function () {
+        debugger;
+        var a = $("#PricingTypeKey").val();
+        var b = $("#PricingTypeKey").children("option:selected")[0].innerText;
+        alert(a +" = "+ b);
+        if (b === 'Bid Fee') {
+            $("#StartAmountDiv").show(100);
+            $("#EndAmountDiv").show(100);
+        } else {
+            $("#StartAmountDiv").hide(100);
+            $("#EndAmountDiv").hide(100);
+        }
+        $.ajax({
+            type: "GET",
+            url:'@Url.Action("GetFeeTypeFromPricingType","NewPricing")',
+            datatype: "json",
+            data: {
+                PricingTypeKey: a,
+                PricingType : b
+            },
+            success: function (response) {
+                debugger;
+                $("#feetypelist").html("");
+                if (response != null && response.length > 0) {
+                    for (var i = 0; i < response.length; i++) {
+                        var txt = response[i].Text;
+                        var OpVal = response[i].Value;
+                        var selected = "";
+                        if ($("#FeeType").val() == OpVal)
+                            selected = "Selected";
+                        $("#feetypelist").append('<option value="'+OpVal+'" '+ selected+'>'+txt+'</option>');
+                    }
+                }
+                else {
+                    $("#feetypelist").append('<option value="Fixed">Fixed Fee</option>');
+                }
+                $("#feetypelist").change();
+            },
+            error: function (response) {
+                debugger;
+            }
+        });
+    });
+    $("#feetypelist").change(function (e) {
+        var a = $("#feetypelist").val();
+        debugger;
+
+        if (a == "Fixed" || a == null) {
+            if(a != null)
+            $("#FeeType").val("Fixed");
+            $("#typesign").removeClass("fa-percent");
+            $("#typesign").addClass("fa-dollar");
+        } else {
+            $("#FeeType").val("Percentage");
+            $("#typesign").removeClass("fa-dollar");
+            $("#typesign").addClass("fa-percent");
+            if ($("#Fee").val() > 100) {
+                $("#Fee").val('100');
+                $("#txtFee").val('100');
+                return;
+            }
+        }
+    });
+
+    $("#txtStartAmount").on('keyup blur', function (evt) {
+        FormatCurrencyAsEntered(evt, $("#StartAmount"),$("#txtStartAmount"), 2);
+
+    });
+    $("#txtEndAmount").on('keyup blur', function (evt) {
+        FormatCurrencyAsEntered(evt, $("#EndAmount"), $("#txtEndAmount"), 2);
+
+    });
+    $("#txtFee").on('keyup blur', function (evt) {
+        debugger;
+        var a = $("#feetypelist").val();
+        if (a != 'Fixed') {
+            if ($(this).val() > 100) {
+                $(this).val('100');
+                return;
+            }
+        }
+        FormatCurrencyAsEntered(evt, $("#Fee"), $("#txtFee"), 2);
+
+    });
+    function FormatCurrencyonLoad(ctr, copyctr,dPoint) {
+        if(ctr.val() != '' && !isNaN(ctr.val())) {//not a fullstop
+            var n = parseFloat(ctr.val().replace(/\,/g, ''), 10);
+            copyctr.val(n.toLocaleString("en-US", { style: 'decimal', minimumFractionDigits: dPoint, maximumFractionDigits: dPoint}));
+        }
+    }
+    function FormatCurrencyAsEntered(evt, ctr, copyctr,dPoint) {
+        debugger;
+        if (copyctr.val().indexOf('.') == 0) {
+            copyctr.val(copyctr.val().replace(evt.key, ''));
+            return false;
+        }
+        var s = copyctr[0].selectionStart;
+        if (evt.which != 110 && copyctr.val() != '') {//not a fullstop
+            var n = parseFloat(copyctr.val().replace(/\,/g, ''), 10);
+            if ((evt.key >= 0 || evt.key <= 9 || evt.key == '.' || evt.key == 'Backspace' || evt.type != 'keyup')) {
+                copyctr.val(n.toLocaleString('en-US', { maximumFractionDigits: dPoint }));
+                s++;
+            }
+            else
+                copyctr.val(copyctr.val().split(evt.key).join(""));//ctr.val(ctr.val().replace(/evt.key/g, ''));
+        }
+        var pI = copyctr.val().indexOf('.');
+        if (pI != '-1') {
+            var v = copyctr.val().length - pI;
+            if (dPoint == 0) {
+                copyctr.val(ctr.val().replace('.', ''));
+                return;
+            }
+            if (v > dPoint + 1) {
+                var t = copyctr.val().substring(0, (ctr.val().length - 1));
+                copyctr.val(t);
+            }
+        }
+        if (evt.type != 'keyup' && evt.type != 'keydown') {
+            if (copyctr.val().indexOf('.') == copyctr.val().length - 1)
+                copyctr.val(copyctr.val().replace('.', ''));
+        }
+        copyctr[0].setSelectionRange(s, s);
+        ctr.val(copyctr.val().split(',').join(''));
+    }
+
+    function validation() {
+        debugger;
+        $('#loader').show();
+        $('.errormessage').html('');
+
+        //var s = $('#StartAmount').val().split(',','').join('');
+        //var e = $('#EndAmount').val().split(',', '').join('');
+        //var f = $('#EndAmount').val().split(',', '').join('');
+
+        var s = $('#StartAmount').val().replace(',', '');
+        var e = $('#EndAmount').val().replace(',', '');
+        var f = $('#EndAmount').val().replace(',', '');
+        var g = $('#Fee').val().replace(',', '');
+
+        if ($('#PricingTypeKey').val() == "0") {
+            $('.errormessage').html('Please Select Pricing Type.');
+            $('#Error').show();
+            $('#PricingTypeKey').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+        if ($('#PricingTypeKey').val() === '1202') {
+            if (isNaN(s)) {
+                $('.errormessage').html('Please Enter Valid Start Amount.');
+                $('#Error').show();
+                $('#StartAmount').focus();
+                $(window).scrollTop(0);
+                return false;
+            }
+
+            if (isNaN(e)) {
+                $('.errormessage').html('Please Enter Valid End Amount.');
+                $('#Error').show();
+                $('#EndAmount').focus();
+                $(window).scrollTop(0);
+                return false;
+            }
+            debugger;
+            //var StartAmount = $('#StartAmount').val();
+            //var EndAmount = $('#EndAmount').val();
+            var StartAmount = parseFloat(s);
+            var EndAmount = parseFloat(e);
+            var WinAmount = parseFloat(g);
+
+            if (EndAmount != '' && StartAmount != '' && EndAmount < StartAmount) {
+                $('.errormessage').html('End amount should be larger than Start amount.');
+                $('#Error').show();
+                $('#EndAmount').focus();
+                $(window).scrollTop(0);
+                return false;
+            }
+            if ($('#Fee').val() == "") {
+                $('.errormessage').html('Please Enter Fee.');
+                $('#Error').show();
+                $('#Fee').focus();
+                $(window).scrollTop(0);
+                return false;
+            }
+            if ($("#FeeType").val() != 'Percentage') {
+                if (WinAmount < StartAmount) {
+                    $('.errormessage').html('Win Amount is larger then start amount.');
+                    $('#Error').show();
+                    $('#Fee').focus();
+                    $(window).scrollTop(0);
+                    return false;
+                }
+                if (WinAmount > EndAmount) {
+                    $('.errormessage').html('Win Amount is less then End amount.');
+                    $('#Error').show();
+                    $('#Fee').focus();
+                    $(window).scrollTop(0);
+                    return false;
+                }
+            }
+        
+        }
+        if ($('#Fee').val() == "") {
+            $('.errormessage').html('Please Enter Fee.');
+            $('#Error').show();
+            $('#Fee').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+
+        if (isNaN(f)) {
+            $('.errormessage').html('Please Enter Valid Fee.');
+            $('#Error').show();
+            $('#EndAmount').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+
+        if ($("#FeeType").val() == 'Percentage') {
+            var fee = parseFloat($('#Fee').val());
+            if (fee > 100) {
+                $('.errormessage').html('Percentage must not greater than 100.');
+                $('#Error').show();
+                $('#Fee').focus();
+                $(window).scrollTop(0);
+                return false;
+            }
+        }
+        //if ($('#CompanyKey').val() == "0") {
+        //    $('.errormessage').html('Please Select Company.');
+        //    $('#Error').show();
+        //    $('#CompanyKey').focus();
+        //    $(window).scrollTop(0);
+        //    return false;
+        //}
+
+        var numbersOnly = /^\d+$/;
+
+        if (numbersOnly.test($('#SortOrder').val()) || ($('#SortOrder').val() == "")) { }
+        else {
+            $('.errormessage').html('Please Enter Valid Sort Order.');
+            $('#Error').show();
+            $('#SortOrder').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+
+        $('#loader').hide();
+
+        return true;
+    }
+
+</script>

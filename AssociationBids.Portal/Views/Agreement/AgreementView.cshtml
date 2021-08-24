@@ -1,0 +1,166 @@
+﻿@model AssociationBids.Portal.Model.AgreementModel
+
+@{
+    ViewBag.Title = "AgreementView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string Errormessage = Convert.ToString(TempData["ErrorMessage"]);
+    string SuccessMessage = Convert.ToString(TempData["SuccessMessage"]);
+}
+
+<h2>AgreementView</h2>
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="AgreementList">Agreements</a></li>
+                <li class="breadcrumb-item active" aria-current="page">View Agreements</li>
+            </ol><!-- End breadcrumb -->
+
+        </div>
+        <!-- End page-header -->
+        @if (!string.IsNullOrEmpty(Errormessage))
+        {
+        <p class="alert alert-success alert-dismissible">
+            @Errormessage
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        </p>
+        }
+        @if (!string.IsNullOrEmpty(SuccessMessage))
+        {
+        <p class="alert alert-success alert-dismissible">
+            @SuccessMessage
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        </p>
+        }
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div class="card-header">
+                            <h3 class="card-title">Agreement Detail</h3>
+                            <div class="card-options">
+                                <a onclick=" EditPage();" class="btn btn-primary ml-auto text-white pull-right" title="Edit"><i class="fa fa-pencil"></i> Edit</a>
+
+                                <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                            </div>
+
+                        </div>
+                        <hr />
+
+                        <div class="form-div">
+                            <div class="row">
+                                @Html.HiddenFor(model => model.AgreementKey)
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Title</label>
+                                        @Html.DisplayFor(item => Model.Title)
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Agreement Date</label>
+                                        @*@Html.Label(Model.AgreementDate.ToShortDateString())*@
+                                        @Html.Label(Model.AgreementDates)
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Status</label>
+                                        @*@Html.DisplayFor(item => Model.Status)*@
+                                        @if (Model.Status > 1)
+                                        {
+                                        <p>Inactive</p>
+                                        }
+                                        else
+                                        {
+                                        <p>Active</p>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label class="form-label">Description</label>
+                                        <p id="Description"></p>
+                                    </div>
+                                </div>
+
+                            </div><!-- end of row -->
+                            <hr />
+
+                        </div><!-- end of form-div  -->
+
+                    </div><!--end of card body -->
+                </div>
+            </div>
+        </div>
+
+    </div><!--End side app-->
+   
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+<!-- End app-content-->
+<!-- End Page -->
+<!-- Back to top -->
+<!-- Custom js-->
+<script src="../assets/js/custom.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$("#Agree").closest('li').addClass('active');
+        //$("#Agree1").addClass('active');
+
+        var Description = '@Model.Description';
+        var Descriptions = Description.replace(/&lt;br&gt;/g, "<br/>");
+        $('#Description').html(Descriptions);
+
+        SetActiveMenu($("#Agree"), false);
+        $(".advance_search").click(function () {
+            $("#advancesearch3").toggle(500);
+        });
+        $(".overlayclose").click(function () {
+            $("#advancesearch3").hide();
+        });
+    });
+
+
+
+</script>
+<script>
+    //debugger
+
+    $(function () {
+        $('#SelectedDate').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            format: "dd/mm/yyyy",
+            language: "tr",
+            maxDate: 0
+        });
+    });
+    function EditPage() {
+        var a = $("#AgreementKey").val();
+        window.location.href = 'AgreementEdit?AgreementKey=' + $("#AgreementKey").val();
+    }
+</script>
+

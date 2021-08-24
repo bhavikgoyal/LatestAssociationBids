@@ -1,0 +1,254 @@
+--------------------------------------------------
+7/4/2020 5:07:54 PM: Procedure site_User_GetForAdminMail has no parameters and arguments were supplied.
+--------------------------------------------------
+--------------------------------------------------
+7/6/2020 7:12:05 PM: Procedure or function 'site_EmailTemplate_SelectAll' expects parameter '@LookUpTitle', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+7/6/2020 7:12:30 PM: Procedure or function 'site_EmailTemplate_SelectAll' expects parameter '@LookUpTitle', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+7/7/2020 7:16:21 AM: TotalRecord
+--------------------------------------------------
+--------------------------------------------------
+7/7/2020 7:19:01 AM: Procedure or function 'site_EmailTemplate_SelectAll' expects parameter '@LookUpTitle', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+7/7/2020 7:35:33 AM: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+--------------------------------------------------
+--------------------------------------------------
+7/7/2020 7:38:31 AM: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+--------------------------------------------------
+--------------------------------------------------
+7/7/2020 7:39:38 AM: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+--------------------------------------------------
+--------------------------------------------------
+7/7/2020 7:41:57 AM: Timeout expired.  The timeout period elapsed prior to obtaining a connection from the pool.  This may have occurred because all pooled connections were in use and max pool size was reached.
+--------------------------------------------------
+--------------------------------------------------
+7/10/2020 9:31:54 PM: Procedure or function 'site_EmailTemplate_SelectAll' expects parameter '@LookUpTitle', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+7/10/2020 9:33:31 PM: Procedure or function 'site_EmailTemplate_SelectAll' expects parameter '@LookUpTitle', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+7/10/2020 9:34:00 PM: Procedure or function 'site_EmailTemplate_SelectAll' expects parameter '@LookUpTitle', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+7/11/2020 5:15:52 PM: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+--------------------------------------------------
+--------------------------------------------------
+7/11/2020 5:15:58 PM: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+--------------------------------------------------
+--------------------------------------------------
+7/11/2020 7:39:52 PM: Procedure or function 'site_EmailTemplate_SelectAll' expects parameter '@LookUpTitle', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+7/11/2020 8:10:57 PM: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+--------------------------------------------------
+--------------------------------------------------
+7/11/2020 9:00:50 PM: Timeout expired.  The timeout period elapsed prior to obtaining a connection from the pool.  This may have occurred because all pooled connections were in use and max pool size was reached.
+--------------------------------------------------
+--------------------------------------------------
+7/11/2020 9:01:05 PM: Timeout expired.  The timeout period elapsed prior to obtaining a connection from the pool.  This may have occurred because all pooled connections were in use and max pool size was reached.
+--------------------------------------------------
+--------------------------------------------------
+7/11/2020 9:01:20 PM: Timeout expired.  The timeout period elapsed prior to obtaining a connection from the pool.  This may have occurred because all pooled connections were in use and max pool size was reached.
+--------------------------------------------------
+--------------------------------------------------
+7/11/2020 9:05:46 PM: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+--------------------------------------------------
+--------------------------------------------------
+7/11/2020 9:05:52 PM: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+--------------------------------------------------
+--------------------------------------------------
+7/11/2020 9:10:14 PM: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+--------------------------------------------------
+--------------------------------------------------
+7/11/2020 9:10:20 PM: SqlDateTime overflow. Must be between 1/1/1753 12:00:00 AM and 12/31/9999 11:59:59 PM.
+--------------------------------------------------
+--------------------------------------------------
+7/17/2020 7:45:15 AM: Timeout expired.  The timeout period elapsed prior to obtaining a connection from the pool.  This may have occurred because all pooled connections were in use and max pool size was reached.
+--------------------------------------------------
+--------------------------------------------------
+7/17/2020 7:45:30 AM: Timeout expired.  The timeout period elapsed prior to obtaining a connection from the pool.  This may have occurred because all pooled connections were in use and max pool size was reached.
+--------------------------------------------------
+--------------------------------------------------
+7/20/2020 4:36:47 AM: vkey
+--------------------------------------------------
+--------------------------------------------------
+7/20/2020 4:36:50 AM: Procedure or function 'site_Errorlog_insert' expects parameter '@remarks', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+7/22/2020 7:02:56 PM: Input string was not in a correct format.
+--------------------------------------------------
+--------------------------------------------------
+7/22/2020 7:04:08 PM: Input string was not in a correct format.
+--------------------------------------------------
+--------------------------------------------------
+7/22/2020 7:06:35 PM: Input string was not in a correct format.
+--------------------------------------------------
+--------------------------------------------------
+7/22/2020 7:09:17 PM: Input string was not in a correct format.
+--------------------------------------------------
+--------------------------------------------------
+7/22/2020 7:14:05 PM: Input string was not in a correct format.
+--------------------------------------------------
+--------------------------------------------------
+7/22/2020 7:21:17 PM: Input string was not in a correct format.
+--------------------------------------------------
+--------------------------------------------------
+7/22/2020 10:07:47 PM: Procedure or function 'site_EmailTemplate_SelectAll' expects parameter '@LookUpTitle', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+7/22/2020 10:11:05 PM: Procedure or function 'site_EmailTemplate_SelectAll' expects parameter '@LookUpTitle', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+7/22/2020 10:11:32 PM: Procedure or function 'site_EmailTemplate_SelectAll' expects parameter '@LookUpTitle', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+7/23/2020 6:37:20 AM: Object reference not set to an instance of an object.
+--------------------------------------------------
+--------------------------------------------------
+7/23/2020 7:14:49 AM: Input string was not in a correct format.
+--------------------------------------------------
+--------------------------------------------------
+7/23/2020 7:16:03 AM: Input string was not in a correct format.
+--------------------------------------------------
+--------------------------------------------------
+7/23/2020 7:24:14 AM: Input string was not in a correct format.
+--------------------------------------------------
+--------------------------------------------------
+7/23/2020 7:24:47 AM: Procedure or function site_getvendorBidFeepaymentDetails has too many arguments specified.
+--------------------------------------------------
+--------------------------------------------------
+7/23/2020 7:24:47 AM: Object reference not set to an instance of an object.
+--------------------------------------------------
+--------------------------------------------------
+7/23/2020 7:29:39 AM: Input string was not in a correct format.
+--------------------------------------------------
+--------------------------------------------------
+7/24/2020 7:49:38 AM: Procedure or function 'site_User_GetForAdminMail' expects parameter '@BidVendorKey', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+7/24/2020 7:50:32 AM: Object reference not set to an instance of an object.
+--------------------------------------------------
+--------------------------------------------------
+7/26/2020 9:14:18 AM: Procedure or function 'site_User_GetForAdminMail' expects parameter '@BidVendorKey', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+7/27/2020 9:34:25 PM: TotalRecord
+--------------------------------------------------
+--------------------------------------------------
+7/27/2020 9:53:36 PM: Procedure or function 'site_EmailTemplate_SelectAll' expects parameter '@LookUpTitle', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+7/28/2020 3:04:47 AM: Procedure or function 'site_EmailTemplate_SelectAll' expects parameter '@LookUpTitle', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+7/28/2020 6:00:52 AM: Procedure or function 'site_User_GetForAdminMail' expects parameter '@BidVendorKey', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+7/28/2020 6:29:16 AM: Object reference not set to an instance of an object.
+--------------------------------------------------
+--------------------------------------------------
+7/28/2020 4:59:00 PM: Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.
+--------------------------------------------------
+--------------------------------------------------
+7/28/2020 5:00:48 PM: Could not find stored procedure 'site_GetallMembershipRenewal'.
+--------------------------------------------------
+--------------------------------------------------
+7/28/2020 5:01:06 PM: Could not find stored procedure 'site_GetallMembershipRenewal'.
+--------------------------------------------------
+--------------------------------------------------
+7/28/2020 5:01:26 PM: Could not find stored procedure 'site_GetallMembershipRenewal'.
+--------------------------------------------------
+--------------------------------------------------
+7/29/2020 9:39:04 PM: TotalRecord
+--------------------------------------------------
+--------------------------------------------------
+7/29/2020 9:39:10 PM: TotalRecord
+--------------------------------------------------
+--------------------------------------------------
+7/29/2020 11:27:16 PM: Procedure or function 'site_EmailTemplate_SelectAll' expects parameter '@LookUpTitle', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+7/29/2020 11:27:55 PM: Procedure or function 'site_EmailTemplate_SelectAll' expects parameter '@LookUpTitle', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+8/2/2020 12:22:16 AM: 'geography::Point' failed because parameter 1 is not allowed to be null.
+--------------------------------------------------
+--------------------------------------------------
+8/2/2020 12:22:19 AM: 'geography::Point' failed because parameter 1 is not allowed to be null.
+--------------------------------------------------
+--------------------------------------------------
+8/2/2020 12:22:31 AM: 'geography::Point' failed because parameter 1 is not allowed to be null.
+--------------------------------------------------
+--------------------------------------------------
+8/2/2020 12:22:35 AM: 'geography::Point' failed because parameter 1 is not allowed to be null.
+--------------------------------------------------
+--------------------------------------------------
+8/2/2020 12:24:25 AM: 'geography::Point' failed because parameter 1 is not allowed to be null.
+--------------------------------------------------
+--------------------------------------------------
+8/2/2020 12:24:25 AM: 'geography::Point' failed because parameter 1 is not allowed to be null.
+--------------------------------------------------
+--------------------------------------------------
+8/2/2020 1:05:46 AM: 'geography::Point' failed because parameter 1 is not allowed to be null.
+--------------------------------------------------
+--------------------------------------------------
+8/2/2020 1:05:46 AM: 'geography::Point' failed because parameter 1 is not allowed to be null.
+--------------------------------------------------
+--------------------------------------------------
+8/2/2020 1:10:51 AM: 'geography::Point' failed because parameter 1 is not allowed to be null.
+--------------------------------------------------
+--------------------------------------------------
+8/2/2020 1:10:55 AM: 'geography::Point' failed because parameter 1 is not allowed to be null.
+--------------------------------------------------
+--------------------------------------------------
+12/30/2020 6:30:44 AM: Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.
+--------------------------------------------------
+--------------------------------------------------
+12/30/2020 6:30:44 AM: Could not find stored procedure 'site_GetallMembershipRenewal'.
+--------------------------------------------------
+--------------------------------------------------
+12/30/2020 6:30:44 AM: Could not find stored procedure 'site_GetallMembershipRenewal'.
+--------------------------------------------------
+--------------------------------------------------
+12/30/2020 6:30:44 AM: Could not find stored procedure 'site_GetallMembershipRenewal'.
+--------------------------------------------------
+--------------------------------------------------
+12/30/2020 6:52:56 AM: Subquery returned more than 1 value. This is not permitted when the subquery follows =, !=, <, <= , >, >= or when the subquery is used as an expression.
+--------------------------------------------------
+--------------------------------------------------
+12/30/2020 6:52:56 AM: Could not find stored procedure 'site_GetallMembershipRenewal'.
+--------------------------------------------------
+--------------------------------------------------
+12/30/2020 6:52:56 AM: Could not find stored procedure 'site_GetallMembershipRenewal'.
+--------------------------------------------------
+--------------------------------------------------
+12/30/2020 6:52:56 AM: Could not find stored procedure 'site_GetallMembershipRenewal'.
+--------------------------------------------------
+--------------------------------------------------
+12/30/2020 9:26:34 AM: Procedure or function 'site_EmailTemplate_SelectAll' expects parameter '@LookUpTitle', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+12/30/2020 9:28:46 AM: Procedure or function 'site_EmailTemplate_SelectAll' expects parameter '@LookUpTitle', which was not supplied.
+--------------------------------------------------
+--------------------------------------------------
+12/30/2020 10:31:29 AM: The INSERT statement conflicted with the FOREIGN KEY constraint "FK__VendorSer__Servi__619B8048". The conflict occurred in database "AssociationBidsDemo", table "dbo.Service", column 'ServiceKey'.
+The statement has been terminated.
+--------------------------------------------------
+--------------------------------------------------
+12/30/2020 10:31:29 AM: The INSERT statement conflicted with the FOREIGN KEY constraint "FK__VendorSer__Servi__619B8048". The conflict occurred in database "AssociationBidsDemo", table "dbo.Service", column 'ServiceKey'.
+The statement has been terminated.
+--------------------------------------------------
+--------------------------------------------------
+12/30/2020 10:36:28 AM: Input string was not in a correct format.
+--------------------------------------------------
+--------------------------------------------------
+12/30/2020 10:36:50 AM: Input string was not in a correct format.
+--------------------------------------------------
+--------------------------------------------------
+1/20/2021 3:19:33 PM: TotalRecord
+--------------------------------------------------

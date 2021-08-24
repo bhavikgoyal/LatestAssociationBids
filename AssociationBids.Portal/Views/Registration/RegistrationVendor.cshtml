@@ -1,0 +1,884 @@
+﻿@model AssociationBids.Portal.Model.RegistrationModel
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="" name="description">
+    <meta content="Association Bids" name="author">
+    <meta name="keywords" content="" />
+    <!-- Favicon -->
+    <link rel="icon" href="~/Content/themes/assets/images/brand/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/themes/assets/images/brand/favicon.ico" />
+    <link href="~/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" />
+    <link href="~/Content/themes/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" />
+    <link href="~/assets/plugins/fileuploads/css/dropify.min.css" rel="stylesheet" />
+
+    <!-- Title -->
+    <title>Registration</title>
+    <!--Bootstrap.min css-->
+    <link rel="stylesheet" href="~/Content/themes/assets/plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Dashboard css -->
+    <link href="~/Content/themes/assets/css/style.css" rel="stylesheet" />
+    <!-- Perfect scroll bar css-->
+    <link href="~/Content/themes/assets/plugins/pscrollbar/perfect-scrollbar.css" rel="stylesheet" />
+    <!-- Sidemenu css -->
+    <link rel="stylesheet" href="~/Content/themes/assets/plugins/sidemenu/sidemenu-icon.css">
+    <!--Daterangepicker css-->
+    <link href="~/Content/themes/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+    <!-- Sidebar Accordions css -->
+    <link href="~/Content/themes/assets/plugins/sidemenu-responsive-tabs/css/easy-responsive-tabs.css" rel="stylesheet">
+    <!-- Rightsidebar css -->
+    <link href="~/Content/themes/assets/plugins/sidebar/sidebar.css" rel="stylesheet">
+    <!--News ticker css -->
+    <link href="~/Content/themes/assets/plugins/newsticker/breaking-news-ticker.css" rel="stylesheet" />
+    <!---Font icons css-->
+    <link href="~/Content/themes/assets/plugins/webfonts/plugin.css" rel="stylesheet" />
+    <link href="~/Content/themes/assets/plugins/webfonts/icons.css" rel="stylesheet" />
+    <link href="~/Content/themes/assets/fonts/fonts/font-awesome.min.css" rel="stylesheet">
+    <!--Select2 css -->
+    <link href="~/Content/themes/assets/plugins/select2/select2.min.css" rel="stylesheet" />
+    <!-- Time picker css-->
+    <link href="~/Content/themes/assets/plugins/time-picker/jquery.timepicker.css" rel="stylesheet" />
+    <!-- Date Picker css-->
+    <link href="~/Content/themes/assets/plugins/spectrum-date-picker/spectrum.css" rel="stylesheet" />
+    <!-- File Uploads css-->
+    <link href="~/Content/themes/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/Content/themes/assets/plugins/multipleselect/multiple-select.css">
+    <!-- Color-skins css -->
+    <link id="theme" rel="stylesheet" type="text/css" media="all" href="~/Content/themes/assets/colors/color-skins/color.css" />
+    <link rel="stylesheet" href="~/Content/themes/assets/css/demo-styles.css" />
+
+    <!-- Color-skins css -->
+    <style>
+
+
+        .validclasssizemm {
+            width: 58px !important;
+            margin-left: -40px !important;
+        }
+
+        .validclasssizeyy {
+            width: 58px !important;
+        }
+
+        input.default {
+            width: 120px !important;
+        }
+
+        div#ServiceChoosen_chosen {
+            width: 100% !important;
+        }
+
+        .chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+            background-image: url('../../Content/themes/cancel.png') !important;
+        }
+
+        .chosen-select placeholder_text {
+            padding: 5px;
+        }
+
+        .multisteps-form__progress-btn {
+            width: 12% !important;
+        }
+
+        .selector_ED {
+            width: auto !important;
+        }
+
+        .Error {
+            color: red;
+        }
+    </style>
+</head>
+<body class="bg-account">
+    <div id="global-loader">
+        <img src="~/Content/themes/assets/images/brand/icon.png" alt="loader" />
+
+    </div>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="registration-div">
+                    <div class="text-center mb-6">
+                        <img src="~/assets/images/brand/logo.png" width="200px" />
+                    </div>
+                    <h5>Registration</h5>
+                    <p class="text-muted">Please fill in the form below.</p>
+                    <hr />
+                    <br />
+                    <div class="cust-wizard">
+                        <!--multisteps-form-->
+                        <div class="multisteps-form">
+                            <!--progress bar-->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="multisteps-form__progress">
+                                        <button class="multisteps-form__progress-btn js-active" type="button" title="Company Information">Company Information</button>
+                                        <button class="multisteps-form__progress-btn" type="button" id="btntopprimary" title="Company Information">Primary Contact</button>
+                                        <button class="multisteps-form__progress-btn btnnextcls" id="btncompanyinfotop" type="button" title="Services">Services</button>
+                                        <button class="multisteps-form__progress-btn btnnextcls" id="btnserviceareatop" type="button" title="Service Area">Service Area</button>
+                                        <button class="multisteps-form__progress-btn btnnextcls" id="btnseviceareatop" type="button" title="Insurance">Insurance</button>
+                                        <button class="multisteps-form__progress-btn btnnextcls" id="btncreadtiocardtop" type="button" title="Credit Card">Credit Card</button>
+                                        <button class="multisteps-form__progress-btn btnnextcls" id="btnAgreementtop" type="button" title="User Agreement">User Agreement</button>
+                                        <button class="multisteps-form__progress-btn btnnextcls" id="btnconfirmtop" type="button" title="Confirm">Confirm</button>
+                                    </div>
+                                </div>
+                            </div>
+                            @if (TempData["Sucessmessage"] != null)
+                            {
+                                <p class="alert alert-success" id="sucesssave" style="margin-top: 20px;display:none;">
+                                    @TempData["Sucessmessage"]
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                </p>
+                            }
+                            @if (TempData["Errormessage"] != null)
+                            {
+                                <p class="alert alert-warning" id="errorssave" style="margin-top: 20px;display:none;">
+                                    @TempData["Errormessage"]
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                </p>
+                            }
+                            <div class="alert alert-danger" id="Error" style="display:block; margin-top: 20px;display:none;">
+                                <strong><span class="errormessage"></span></strong>
+                            </div>
+                            <div class="alert alert-success" id="sucess" style="display:block; margin-top: 20px;display:none;">
+                                <strong><span class="sucessmessage"></span></strong>
+                            </div>
+                            <!--form panels-->
+                            <div class="row">
+                                <div class="col-12">
+
+                                    @using (Html.BeginForm("Registration", "Registration", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        @Html.HiddenFor(model => model.CompanyKey)
+                                        @Html.HiddenFor(model => model.Resourcekey)
+                                        <div class="multisteps-form__form">
+                                            <!--single form panel-->
+                                            <div class="multisteps-form__panel p-4 rounded bg-white js-active" data-animation="scaleIn">
+                                                <div class="multisteps-form__content">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-3">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Company Name @Html.ValidationMessageFor(model => model.CompanyName, "*", new { @class = "text-danger" })</label>
+                                                                                @Html.EditorFor(model => model.CompanyName, "CompanyName", new { htmlAttributes = new { @id = "CompanyName", @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Company Name ", @onchange = "OnChangeCompany(this)" } })
+                                                                                @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-3">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Legal Name @Html.ValidationMessageFor(model => model.LegalName, "*", new { @class = "text-danger" })</label>
+                                                                                @Html.EditorFor(model => model.LegalName, new { htmlAttributes = new { @class = "form-control", @tabindex = "2", autocomplete = "off", placeholder = "Legal Name" } })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-3">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Tax ID @Html.ValidationMessageFor(model => model.TaxID, "*", new { @class = "text-danger" })</label>
+                                                                                @Html.EditorFor(model => model.TaxID, new { htmlAttributes = new { @class = "form-control", @tabindex = "3", autocomplete = "off", placeholder = "Tax ID" } })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                    </div>
+                                                                    <hr />
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Address 1 @Html.ValidationMessageFor(model => model.Address, "*", new { @class = "text-danger" })</label>
+                                                                                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @tabindex = "4", autocomplete = "off", placeholder = "Address" } })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Address 2</label>
+                                                                                @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control", @tabindex = "5", autocomplete = "off", placeholder = "Address2" } })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">City @Html.ValidationMessageFor(model => model.City, "*", new { @class = "text-danger" })</label>
+                                                                                @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @tabindex = "5", autocomplete = "off", placeholder = "City" } })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">State @Html.ValidationMessageFor(model => model.State, "*", new { @class = "text-danger" })</label>
+                                                                                @Html.DropDownListFor(model => model.State, new SelectList(ViewBag.lststate, "Value", "Text"), new { @tabindex = "6", @class = "form-control" })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-4">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Zip @Html.ValidationMessageFor(model => model.Zip, "*", new { @class = "text-danger" })</label>
+                                                                                @Html.EditorFor(model => model.Zip, new { htmlAttributes = new { @class = "form-control", @tabindex = "7", autocomplete = "off", placeholder = "Zip" } })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <hr />
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Work Phone 1</label>
+                                                                                @Html.EditorFor(model => model.Work, new { htmlAttributes = new { @class = "form-control", @tabindex = "8", autocomplete = "off", placeholder = "Work Phone 1" } })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Work Phone 2</label>
+                                                                                @Html.EditorFor(model => model.Work2, new { htmlAttributes = new { @class = "form-control", @tabindex = "9", autocomplete = "off", placeholder = "Work Phone 2" } })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Fax Number</label>
+                                                                                @Html.EditorFor(model => model.Fax, new { htmlAttributes = new { @class = "form-control", @tabindex = "10", autocomplete = "off", placeholder = "Fax Number" } })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Website</label>
+                                                                                @Html.EditorFor(model => model.Website, new { htmlAttributes = new { @class = "form-control", @tabindex = "11", autocomplete = "off", placeholder = "Website" } })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                    </div>
+
+                                                                </div><!-- end of card body -->
+                                                                <div class="card-footer">
+                                                                    <div class="button-row d-flex">
+                                                                        <button class="btn btn-info ml-auto js-btn-next" type="button" id="btnnextcompnay" onclick="return validation();" title="Next">Next <i class="fe fe-chevron-right"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- end of card -->
+                                                        </div><!-- end of col -->
+                                                    </div><!-- end of row -->
+
+                                                </div>
+                                            </div>
+                                            <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                                                <div class="multisteps-form__content">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-3">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">First Name @Html.ValidationMessageFor(model => model.FirstName, "*", new { @class = "text-danger" })</label>
+                                                                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "First Name " } })
+                                                                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-3">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Last Name @Html.ValidationMessageFor(model => model.LastName, "*", new { @class = "text-danger" })</label>
+                                                                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @tabindex = "2", autocomplete = "off", placeholder = "Last Name" } })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-3">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Email ID @Html.ValidationMessageFor(model => model.EmailId, "*", new { @class = "text-danger" })</label>
+                                                                                @Html.EditorFor(model => model.EmailId, new { htmlAttributes = new { @class = "form-control", @tabindex = "3", autocomplete = "off", placeholder = "Email ID", @onchange = "OnChangeEmail(this)", @type = "email" } })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                    </div>
+                                                                </div><!-- end of card body -->
+                                                                <div class="card-footer">
+                                                                    <div class="button-row d-flex">
+                                                                        <button class="btn btn-info ml-auto js-btn-next" type="button" id="btnnextemail" onclick="return primarycontectvalidation();" title="Next">Next <i class="fe fe-chevron-right"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- end of card -->
+                                                        </div><!-- end of col -->
+                                                    </div><!-- end of row -->
+
+                                                </div>
+                                            </div>
+                                            <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                                                <div class="multisteps-form__content">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Select Services @Html.ValidationMessageFor(model => model.ServiceTitle1, "*", new { @class = "text-danger" })</label>
+                                                                                <div class="input-group">
+                                                                                    @Html.DropDownList("ServiceChoosen", new SelectList(ViewBag.lstservice, "Value", "Text"), new { @data_rel = "chosen", @class = "form-control chosen-select", @multiple = "true" })
+                                                                                    @Html.HiddenFor(model => model.ServiceTitle1)
+                                                                                </div>
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+
+                                                                    </div><!-- end of row-->
+                                                                </div><!-- end of card body -->
+                                                                <div class="card-footer">
+                                                                    <div class="button-row d-flex">
+                                                                        <button class="btn btn-warning js-btn-prev" type="button" title="Prev"><i class="fe fe-chevron-left"></i> Prev</button>
+                                                                        <button class="btn btn-info ml-auto js-btn-next" type="button" id="btnnextservice" title="Next">Next <i class="fe fe-chevron-right"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- end of card -->
+                                                        </div><!-- end of col -->
+                                                    </div><!-- end of row -->
+                                                </div>
+                                            </div>
+                                            <!--single form panel-->
+                                            <!--single form panel-->
+                                            <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                                                <div class="multisteps-form__content">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-3">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Radius @Html.ValidationMessageFor(model => model.Radius, "*", new { @class = "text-danger" })</label>
+                                                                                @Html.DropDownListFor(model => model.Radius, new SelectList(ViewBag.lstRadius, "Value", "Text"), new { @tabindex = "6", @class = "form-control", })
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Address</label>
+                                                                                <p id="vServiceAddress"></p>
+                                                                                @Html.HiddenFor(model => model.ServiceAddress)
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-9">
+                                                                            <div class="form-group mapIframe">
+                                                                                <label class="form-label">Map</label>
+                                                                                <div id="map" style="width:100%;height:300px;"></div>
+                                                                                @*<iframe id="srcid"  width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>*@
+                                                                                @*<iframe id="srcid" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d93321.45784906122!2d-76.2093204565947!3d43.035212545342986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d9f39bbf979a0d%3A0xd50ce2d7ad9545!2sSyracuse%2C%20NY%2C%20USA!5e0!3m2!1sen!2sin!4v1583905479861!5m2!1sen!2sin&callback=initMap" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>*@
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- end of col -->
+                                                                    </div>
+                                                                    <div class="card-footer">
+                                                                        <div class="button-row d-flex">
+                                                                            <button class="btn btn-warning js-btn-prev" type="button" title="Prev"><i class="fe fe-chevron-left"></i> Prev</button>
+                                                                            <button class="btn btn-info ml-auto js-btn-next" type="button" id="btnnextservicearea" title="Next">Next <i class="fe fe-chevron-right"></i></button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div><!-- end of row-->
+                                                            </div><!-- end of card -->
+                                                        </div><!-- end of col -->
+                                                    </div><!-- end of row -->
+
+                                                </div>
+                                            </div>
+
+                                            <!--single form panel-->
+                                            <!--single form panel-->
+                                            <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                                                <div class="multisteps-form__content">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Upload Insurance Document</label>
+                                                                                @Html.TextBoxFor(model => model.Insurancefiles, "", new { @type = "file", @class = "dropify" })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Upload License</label>
+                                                                                @Html.TextBoxFor(model => model.licensefiles, "", new { @type = "file", @class = "dropify" })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+
+                                                                    </div><!-- end of row-->
+                                                                </div><!-- end of card body -->
+                                                                <div class="card-footer">
+                                                                    <div class="button-row d-flex">
+                                                                        <button class="btn btn-warning js-btn-prev" type="button" title="Prev"><i class="fe fe-chevron-left"></i> Prev</button>
+                                                                        <button class="btn btn-info ml-auto js-btn-next" type="button" title="Next">Next <i class="fe fe-chevron-right"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- end of card -->
+                                                        </div><!-- end of col -->
+                                                    </div><!-- end of row -->
+
+                                                </div>
+                                            </div>
+                                            <!--single form panel-->
+                                            <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                                                <div class="multisteps-form__content">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Name of Card </label>
+                                                                                @Html.EditorFor(model => model.NameOfCard, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Name of Card" } })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Card Number @Html.ValidationMessageFor(model => model.CardNumber, "*", new { @class = "text-danger" })</label>
+                                                                                @Html.EditorFor(model => model.CardNumber, new { htmlAttributes = new { @class = "form-control", @tabindex = "2", autocomplete = "off", placeholder = "Card Number", @maxlength = 19 } })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-2">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Valid Till @Html.ValidationMessageFor(model => model.ValidTillMM, "*", new { @class = "text-danger" })</label>
+                                                                                @Html.EditorFor(model => model.ValidTillMM, new { htmlAttributes = new { @class = "form-control", @tabindex = "3", autocomplete = "off", placeholder = "MM", @maxlength = 2 }
+
+                                                                           })
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- end of col -->
+                                                                        <div class="col-md-2">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">&nbsp; </label>
+                                                                                @Html.EditorFor(model => model.ValidTillYY, new { htmlAttributes = new { @class = "form-control", @tabindex = "4", autocomplete = "off", placeholder = "YY", @maxlength = 2 } })
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- end of col -->
+                                                                        <div class="col-md-2">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">CVV @Html.ValidationMessageFor(model => model.CVV, "*", new { @class = "text-danger" })</label>
+                                                                                @Html.EditorFor(model => model.CVV, new { htmlAttributes = new { @class = "form-control", @tabindex = "5", autocomplete = "off", placeholder = "CVV", @maxlength = 4 } })
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group ">
+                                                                                <label class="form-label">&nbsp;</label>
+                                                                                <button class="btn btn-primary" type="button" id="btnverifycard"> <i class="fa fa-credit-card"></i> Verify Card</button>
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                    </div><!-- end of row-->
+                                                                </div><!-- end of card body -->
+                                                                <div class="card-footer">
+                                                                    <div class="button-row d-flex">
+                                                                        <button class="btn btn-warning js-btn-prev" type="button" title="Prev"><i class="fe fe-chevron-left"></i> Prev</button>
+                                                                        <button class="btn btn-info ml-auto js-btn-next" type="button" id="btnnextcard" title="Next">Next <i class="fe fe-chevron-right"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- end of card -->
+                                                        </div><!-- end of col -->
+                                                    </div><!-- end of row -->
+
+                                                </div>
+                                            </div>
+                                            <!--single form panel-->
+                                            <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                                                <div class="multisteps-form__content">
+
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <div class="content scroll-1 h-200">
+                                                                                <p>Certain internet providers exploit the fact that fill text cannot be recognized by automatic search engines - meaningful information cannot be distinguished from meaningless: Target-generated dummy text mixed with a certain combination of search terms can lead to an increased frequency of visits by search machine users.</p>
+                                                                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum</p>
+                                                                                <p> you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc</p>
+                                                                                <p>omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,</p>
+                                                                                <p>adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur</p>
+                                                                                <p>explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure</p>
+                                                                            </div>
+                                                                            <br>
+                                                                            <label class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" id="chkagreement" name="example-checkbox4" onchange="return onchangecheckbox();" value="option4">
+                                                                                <span class="custom-control-label">I have read and agree to the Terms</span>@Html.ValidationMessageFor(model => model.CVV, "*", new { @class = "text-danger" })
+                                                                            </label>
+                                                                        </div><!-- end of col -->
+                                                                    </div><!-- end of row-->
+                                                                </div><!-- end of card body -->
+                                                                <div class="card-footer">
+                                                                    <div class="button-row d-flex">
+                                                                        <button class="btn btn-warning js-btn-prev" type="button" title="Prev"><i class="fe fe-chevron-left"></i> Prev</button>
+                                                                        <button class="btn btn-info ml-auto js-btn-next" type="button" id="btnnextagreement" title="Next">Next <i class="fe fe-chevron-right"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- end of card -->
+                                                        </div><!-- end of col -->
+                                                    </div><!-- end of row -->
+
+                                                </div>
+                                            </div>
+                                            <!--single form panel-->
+                                            <!--single form panel-->
+                                            <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                                                <div class="multisteps-form__content">
+
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 grid-margin stretch-card">
+                                                                            <div class="card">
+                                                                                <div class="card-header">
+                                                                                    <h3 class="card-title">Contact Information</h3>
+                                                                                    <div class="card-options">
+                                                                                        <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="card-body border-top">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Company Name</label>
+                                                                                                <p id="vCompanyName"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Legal Name</label>
+                                                                                                <p id="vLegalName"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Tax ID</label>
+                                                                                                <p id="vTaxID"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                    </div>
+                                                                                    <hr />
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Address 1</label>
+                                                                                                <p id="vAddress"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Address 2</label>
+                                                                                                <p id="vAddress2"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                        <div class="col-md-2">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">City</label>
+                                                                                                <p id="vCity"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                        <div class="col-md-2">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">State</label>
+                                                                                                <p id="vState"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                        <div class="col-md-2">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Zip</label>
+                                                                                                <p id="vZip"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                    </div>
+                                                                                    <hr />
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-2">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Work Phone 1</label>
+                                                                                                <p id="vWork"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                        <div class="col-md-2">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Work Phone 2</label>
+                                                                                                <p id="vWork2"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                        <div class="col-md-2">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Fax Number</label>
+                                                                                                <p id="vFax"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                        <div class="col-md-2">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Website</label>
+                                                                                                <p id="vWebsite"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                    </div><!-- end of row -->
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div><!-- end of row -->
+
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 grid-margin stretch-card">
+                                                                            <div class="card">
+                                                                                <div class="card-header">
+                                                                                    <h3 class="card-title">Primary Contact Information</h3>
+                                                                                    <div class="card-options">
+                                                                                        <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="card-body border-top">
+
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">First Name</label>
+                                                                                                <p id="vfirstname"></p>
+
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Last Name</label>
+                                                                                                <p id="vlastname"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+
+
+                                                                                        <div class="col-md-4">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Email</label>
+                                                                                                <p id="vEmail"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+
+
+
+
+
+                                                                                    </div><!-- end of row-->
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div><!-- end of row -->
+
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 grid-margin stretch-card">
+                                                                            <div class="card">
+                                                                                <div class="card-header">
+                                                                                    <h3 class="card-title">Services</h3>
+                                                                                    <div class="card-options">
+                                                                                        <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="card-body border-top">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12">
+                                                                                            <div class="form-group" id="Servicediv">
+                                                                                                <table id="dataTableExample" class="table table-striped table-bordered w-100 dataTable no-footer">
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th>Selected Services</th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    <tbody>
+                                                                                                        <tr>
+                                                                                                            <td><span class="Servicespan"></span></td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div><!-- end of row -->
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 grid-margin stretch-card">
+                                                                            <div class="card">
+                                                                                <div class="card-header">
+                                                                                    <h3 class="card-title">Radius</h3>
+                                                                                    <div class="card-options">
+                                                                                        <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="card-body border-top">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Radius</label>
+                                                                                                <p id="vRadius"></p>
+                                                                                            </div>
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Address</label>
+                                                                                                <p id="vserviceaddressc"></p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-9">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Map</label>
+                                                                                                <div id="map1" style="width:100%;height:300px;"></div>
+                                                                                                @*<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d93321.45784906122!2d-76.2093204565947!3d43.035212545342986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d9f39bbf979a0d%3A0xd50ce2d7ad9545!2sSyracuse%2C%20NY%2C%20USA!5e0!3m2!1sen!2sin!4v1583905479861!5m2!1sen!2sin" width="100%" height="200" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>*@
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div><!-- end of row -->
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 grid-margin stretch-card">
+                                                                            <div class="card">
+                                                                                <div class="card-header">
+                                                                                    <h3 class="card-title">Payment Method</h3>
+                                                                                    <div class="card-options">
+                                                                                        <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="card-body border-top">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Card Name</label>
+                                                                                                <p id="vNameOfCard"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Card Number</label>
+                                                                                                <p id="vCardNumber"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">Valid Till</label>
+                                                                                                <p id="vFullValidTill"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+                                                                                        <div class="col-md-3">
+                                                                                            <div class="form-group">
+                                                                                                <label class="form-label">CVV</label>
+                                                                                                <p id="vCVV"></p>
+                                                                                            </div>
+                                                                                        </div><!-- end of col -->
+
+                                                                                    </div><!-- end of row-->
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div><!-- end of row -->
+                                                                    <div class="button-row d-flex">
+                                                                        <button class="btn btn-warning js-btn-prev" type="button" title="Prev"><i class="fe fe-chevron-left"></i> Prev</button>
+                                                                        <button class="btn btn-info ml-auto js-btn-next" type="submit" data-dismiss="modal" id="btnsubmit" title="Next">Submit <i class="fe fe-chevron-right"></i></button>
+                                                                    </div>
+                                                                </div><!-- end of card body -->
+                                                            </div><!-- end of card -->
+                                                        </div><!-- end of col -->
+                                                    </div><!-- end of row -->
+
+                                                </div>
+                                            </div>
+                                            <!--single form panel-->
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- end of cust-wizard-->
+
+
+                </div><!-- end of registration-div -->
+
+            </div><!-- end of col -->
+        </div>
+        <footer class="footer">
+            <div class="container">
+                <div class="row align-items-center flex-row-reverse">
+                    <div class="col-lg-12 col-sm-12   text-center">
+                        Copyright © 2020 Association Bids. All rights reserved.
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Back to top -->
+    <a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+    <script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXnGGS4mlkx0DnmdnFUVLQ-0i58GSknZ8&sensor=true"></script>
+    
+    <script src="~/Scripts/Registration/RegistrationValidation.js"></script>
+    <script src="~/Content/themes/chosen.jquery.min.js"></script>
+    <link href="~/Content/themes/chosen.min.css" rel="stylesheet" />
+    <script src="~/assets/plugins/fileuploads/js/dropify.js"></script>
+    <script src="~/assets/plugins/fileuploads/js/dropify-demo.js"></script>
+    <script src="~/assets/plugins/fileuploads/js/dropify.min.js"></script>
+    <script src="~/Content/themes/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <!--Jquery Sparkline js-->
+    <script src="~/Content/themes/assets/js/vendors/jquery.sparkline.min.js"></script>
+    <!-- Chart Circle js-->
+    <script src="~/Content/themes/assets/js/vendors/circle-progress.min.js"></script>
+    <!-- Star Rating js-->
+    <script src="~/Content/themes/assets/plugins/rating/jquery.rating-stars.js"></script>
+    <!--Moment js-->
+    <script src="~/Content/themes/assets/plugins/moment/moment.min.js"></script>
+    <!-- Daterangepicker js-->
+    <script src="~/Content/themes/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!--Side-menu js-->
+    <script src="~/Content/themes/assets/plugins/sidemenu/sidemenu-icon.js"></script>
+    <!--News Ticker js-->
+    <script src="~/Content/themes/assets/plugins/newsticker/breaking-news-ticker.min.js"></script>
+    <script src="~/Content/themes/assets/plugins/newsticker/newsticker.js"></script>
+    <!-- Sidebar Accordions js -->
+    <script src="~/Content/themes/assets/plugins/sidemenu-responsive-tabs/js/easyResponsiveTabs.js"></script>
+    <!-- Perfect scroll bar js-->
+    <script src="~/Content/themes/assets/plugins/pscrollbar/perfect-scrollbar.js"></script>
+    <script src="~/Content/themes/assets/plugins/pscrollbar/p-scroll.js"></script>
+    <!-- Rightsidebar js -->
+    <script src="~/Content/themes/assets/plugins/sidebar/sidebar.js"></script>
+    <!-- File uploads js -->
+    <script src="~/Content/themes/assets/plugins/fileuploads/js/dropify.js"></script>
+    <script src="~/Content/themes/assets/plugins/fileuploads/js/dropify-demo.js"></script>
+    <!--Select2 js -->
+    <script src="~/Content/themes/assets/plugins/select2/select2.full.min.js"></script>
+    <script src="~/Content/themes/assets/js/select2.js"></script>
+    <!--Time Counter js-->
+    <script src="~/Content/themes/assets/plugins/counters/jquery.missofis-countdown.js"></script>
+    <script src="~/Content/themes/assets/plugins/counters/counter.js"></script>
+    <!-- Timepicker js -->
+    <script src="~/Content/themes/assets/plugins/time-picker/jquery.timepicker.js"></script>
+    <script src="~/Content/themes/assets/plugins/time-picker/toggles.min.js"></script>
+    <link rel="stylesheet" href="~/Content/themes/assets/css/cust-wizard.css">
+    <script src="~/Content/themes/assets/js/cust-wizard.js"></script>
+    <!-- Datepicker js -->
+    <script src="~/Content/themes/assets/plugins/spectrum-date-picker/spectrum.js"></script>
+    <script src="~/Content/themes/assets/plugins/spectrum-date-picker/jquery-ui.js"></script>
+    <script src="~/Content/themes/assets/plugins/input-mask/jquery.maskedinput.js"></script>
+
+    <link rel="stylesheet" href="~/Content/themes/assets/plugins/multipleselect/multiple-select.css">
+    <!--MutipleSelect js-->
+    <script src="~/Content/themes/assets/plugins/multipleselect/multiple-select.js"></script>
+    <script src="~/Content/themes/assets/plugins/multipleselect/multi-select.js"></script>
+
+    <!-- Custom scroll bar css-->
+    <link href="~/Content/themes/assets/plugins/mcustomscrollbar/jquery.mCustomScrollbar.css" rel="stylesheet" />
+    <!-- Perfect scroll bar css-->
+    <link href="~/Content/themes/assets/plugins/pscrollbar/perfect-scrollbar.css" rel="stylesheet" />
+    <!-- Perfect scroll bar js-->
+    <script src="~/Content/themes/assets/plugins/pscrollbar/perfect-scrollbar.js"></script>
+    <script src="~/Content/themes/assets/plugins/pscrollbar/p-scroll.js"></script>
+    <!-- Custom scroll bar js-->
+    <script src="~/Content/themes/assets/plugins/mcustomscrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="~/Content/themes/assets/plugins/mcustomscrollbar/scroll.js"></script>
+    <!-- Custom js-->
+    <script src="~/Content/themes/assets/js/custom.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+            $(".advance_search").click(function () {
+                $("#advancesearch3").toggle(500);
+            });
+            $(".overlayclose").click(function () {
+                $("#advancesearch3").hide();
+            });
+        });</script>
+</body>
+</html>

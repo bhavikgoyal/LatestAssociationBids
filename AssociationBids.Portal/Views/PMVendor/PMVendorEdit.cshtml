@@ -1,0 +1,334 @@
+﻿@model AssociationBids.Portal.Model.VendorModel
+@{
+    ViewBag.Title = "PMVendorEdit";
+    Layout = "~/Views/Shared/_PropertyManagerLayout.cshtml";
+}
+
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<script src="~/JSControllers/Commonfunction.js"></script>
+
+<h2>PMVendorEdit</h2>
+
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item ">
+
+                    @Html.ActionLink("Vendors", "PMVendorlist", "PMVendor", null, new { })
+                </li>
+                <li class="breadcrumb-item ">
+                <li class="breadcrumb-item active" aria-current="page" onclick="VendorDetailsPage();"><a href="#">Vendor Details</a></li>
+
+                </li>
+                <li class="breadcrumb-item active text-left">Edit Vendor</li>
+
+            </ol><!-- End breadcrumb -->
+
+        </div>
+
+
+
+
+
+        <div class="row">
+
+            <div class="col-12">
+                <div class="card">
+
+                    @using (Html.BeginForm("PMVendorEdit", "PMVendor", FormMethod.Post))
+                    {
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="text-right">
+                                        @*<input class="btn btn-icon btn-danger" id="btndelete" type="button" value="Delete" title="Delete" />*@
+                                    </div>
+                                    @Html.HiddenFor(model => model.CompanyKey)
+                                    @Html.HiddenFor(model => model.VendorKey)
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Company Name @Html.ValidationMessageFor(model => model.LegalName, "*", new { @class = "text-danger" })</label>
+                                        @Html.EditorFor(model => model.CompanyName, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "CompanyName" } })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Address 1
+                                            @*@Html.ValidationMessageFor(model => model.Address, "*", new { @class = "text-danger" })*@
+                                        </label>
+                                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @tabindex = "4", autocomplete = "off", placeholder = "Address" } })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Address 2</label>
+                                        @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control", @tabindex = "5", autocomplete = "off", placeholder = "Address2" } })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            City
+                                            @*@Html.ValidationMessageFor(model => model.City, "*", new { @class = "text-danger" })*@
+                                        </label>
+                                        @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @tabindex = "5", autocomplete = "off", placeholder = "City" } })
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            State
+                                            @*@Html.ValidationMessageFor(model => model.State, "*", new { @class = "text-danger" })*@
+                                        </label>
+                                        @Html.DropDownListFor(model => model.State, new SelectList(ViewBag.lststate, "Value", "Text"), new { @tabindex = "6", @class = "form-control" })
+                                    </div>
+                                </div><!-- end of col -->
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Zip
+                                            @*@Html.ValidationMessageFor(model => model.Zip, "*", new { @class = "text-danger" })*@
+                                        </label>
+                                        @Html.EditorFor(model => model.Zip, new { htmlAttributes = new { @class = "form-control", @tabindex = "7", autocomplete = "off", placeholder = "Zip" } })
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Contact Person</label>
+                                        @Html.EditorFor(model => model.Work, new { htmlAttributes = new { @class = "form-control", @tabindex = "2", autocomplete = "off", placeholder = "Contact Person" } })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Phone
+
+                                        </label>
+                                        @Html.EditorFor(model => model.CellPhone, new { htmlAttributes = new { @class = "form-control FormatPhoneNumber", @tabindex = "3", autocomplete = "off", placeholder = "Phone" } })
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            Email
+                                            @Html.ValidationMessageFor(model => model.Email, "*", new { @class = "text-danger" })
+                                        </label>
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @tabindex = "3", autocomplete = "off", placeholder = "Email" } })
+                                    </div>
+                                </div>
+
+                            </div><!-- end of row -->
+
+                        </div><!--end of card body -->
+
+                        <div class="card-footer">
+                            <div class="button-row d-flex">
+                                @Html.HiddenFor(model => model.CompanyKey)
+                                @Html.HiddenFor(model => model.VendorKey)
+                                <a href="@Request.UrlReferrer" class="btn btn-default" title="Cancel">Cancel</a>
+                                <button class="btn btn-sm btn-primary ml-auto" id="btnUpdate" type="submit" onclick="return validation()" title="Update"><i class="fa fa-check-circle-o "></i> Update</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div><!--End side app-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+<!-- End app-content-->
+
+
+<script type="text/javascript">
+
+    $(document).ready(function ()
+    {
+        $('#Error').hide();
+          $('#loader').show();
+        $('.errormessage').html('');
+        $("#PMVen").closest('li').addClass('active');
+        $("#PMVed1").addClass('active');
+
+        $('#loader').hide();
+        var val = '@ViewBag.ErrorMessage';
+        if (val != "") {
+
+            $('.errormessage').html('Email are Already Exists');
+            $('#Error').show();
+            $('#Email').focus();
+
+        }
+        checkPoratl()
+
+    });
+
+
+    function checkPoratl()
+         {
+         $.ajax({
+            url: '@Url.Action("checkPortal", "PMProperties")',
+            cache: false,
+             data:
+             {
+              PropertyKey: $('#PropertyKey').val()
+            },
+            success: function (response)
+            {
+                debugger;
+
+                if (response == false) {
+                     window.location.href = '@Url.Action("Index", "Login")';
+                }
+
+                else {
+
+                }
+
+            }
+        });
+    }
+
+    $("#btndelete").click(function () {
+
+        if (confirm('Are you sure you want to delete this record?')) {
+
+            $.ajax({
+                url: '/PMVendor/Delete',
+                cache: false,
+                data: {
+                    CompanyKey: $('#CompanyKey').val()
+                },
+                success: function (response) {
+
+                }
+            });
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    });
+
+     function VendorDetailsPage()
+                {
+                var CompanyKey = $('#CompanyKey').val();
+                window.location.href = '@Url.Action("VendorView", "PMVendor")' + "?CompanyKey=" + CompanyKey;
+
+                }
+
+
+
+    function validateEmail(sEmail) {
+        var filter = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        var expr = /^[a-zA-Z0-9._]+[a-zA-Z0-9]+@@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
+        if (filter.test(sEmail)) {
+            return false;
+        }
+        else {
+            return true;
+        }
+
+    $("#btnUpdate").click(function () {
+        var a = $("#CompanyKey").val();
+        var status = false;
+        status = validation();
+        window.location.href = 'PMVendorEdit?CompanyKey=' + $("#CompanyKey").val();
+
+    });
+
+        function validation() {
+            $('#loader').show();
+            $('.errormessage').html('');
+
+            if ($('#CompanyName').val() == "") {
+                $('.errormessage').html('Please Enter Mandatory Fields.');
+                $('#Error').show();
+                $(window).scrollTop(0);
+                return false;
+            }
+
+            else if ($('#Address').val() == "")
+            {
+                $('.errormessage').html('Please Enter Mandatory Fields.');
+                $('#Error').show();
+                $(window).scrollTop(0);
+                return false;
+            }
+            else if ($('#City').val() == "") {
+                $('.errormessage').html('Please Enter Mandatory Fields.');
+                $(window).scrollTop(0);
+                return false;
+            }
+            else if ($('#State').val() == "0") {
+                $('.errormessage').html('Please Enter Mandatory Fields.');
+                $(window).scrollTop(0);
+                return false;
+            }
+            else if ($('#Zip').val() == "") {
+                $('.errormessage').html('Please Enter Mandatory Fields.');
+                $(window).scrollTop(0);
+                return false;
+            }
+
+            else if ($('#Email').val() == "") {
+                $('.errormessage').html('Please Enter Mandatory Fields.');
+                $('#Error').show();
+                $('#Email').focus();
+                $(window).scrollTop(0);
+                return false;
+            }
+            else if (validateEmail($('#Email').val())) {
+                $('.errormessage').html('Please Enter Valid Email.');
+                //alert("Please Enter Valid Email.");
+                $('#Error').show();
+                $('#Email').focus();
+                $(window).scrollTop(0);
+                return false;
+            }
+
+            else {
+                $('#Error').hide();
+                return true;
+            }
+        }
+
+
+
+
+
+
+
+
+    }
+</script>

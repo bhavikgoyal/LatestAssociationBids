@@ -1,0 +1,718 @@
+﻿
+@{
+    ViewBag.Title = "Insurance Policy List";
+    Layout = "~/Views/Shared/_VendorLayout.cshtml";
+}
+<style type="text/css">
+    *.a {
+        cursor: pointer !important;
+    }
+</style>
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="../vDashboard/Index">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Policy List</li>
+            </ol><!-- End breadcrumb -->
+
+        </div>
+
+        <div role="alert">
+
+            @if (TempData["Success"] != null)
+            {
+                <p class="alert alert-success alert-dismissible" id="successMessage">
+                    @TempData["Success"]
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </p>
+            }
+            @if (TempData["Error"] != null)
+            {
+                <p class="alert alert-danger alert-dismissible" id="successMessage">
+                    @TempData["Error"]
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </p>
+            }
+
+
+            <div class="alert alert-danger" id="Error" style="display: none;margin-top: 20px;">
+                <strong><span class="errormessage"></span></strong>
+            </div>
+        </div>
+        <!-- End page-header -->
+
+
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <input type="text" id="txtsearch" class="form-control" placeholder="Search For...">
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <a class="btn btn-secondary text-white" id="btnsearch" onclick="GetRecords()" role="button">Search</a>
+                                </div>
+                                <div class="pull-right col-md-4">
+                                    <a href="~/VendorPolicy/AddPolicy" class="btn btn-primary pull-right">Add Policy</a>
+                                </div>
+                            </div>
+                        </div><!-- end of form group -->
+
+                        <hr />
+
+                        <div id="RawDatas" class="table-responsive">
+                            <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                <thead>
+                                    <tr>
+
+                                        <th width="30%" onclick="SortingFun('PolicyNumber');" style="cursor: pointer;">
+                                            <i id="Namei" class="fa fa-sort-asc pull-right"></i>
+                                            Policy No
+                                        </th>
+                                        <th width="30%" onclick="SortingFun('InsuranceAmount');" style="cursor: pointer;">
+                                            <i id="Worki" class="fa fa-sort-asc pull-right"></i>
+                                            Amount
+                                        </th>
+                                        <th width="30%" style="cursor: pointer" onclick="SortingFun('EndDate');">
+                                            <i id="Titlei" class="fa fa-sort-asc pull-right"></i>
+                                            End Date
+                                        </th>
+                                        <th width="20%">
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="policy"></span></td>
+                                        <td><span class="amount"></span></td>
+                                        <td><span class="edate"></span></td>
+                                        <td align="center"><a id="viewdata" title="View Details" style="cursor:pointer" role="button"></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="pull-left">
+                                <label><span class="spnToRecs">0</span> to <span class="spnOfRecs">0</span> out of <span class="spnTotalRecs">0</span>&nbsp; Records </label>
+                            </div>
+                            <div class="dataTables_paginate paging_simple_numbers" id="pagin">
+                                <ul class="pagination"></ul>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="viewinsurance" tabindex="-1" role="dialog" aria-labelledby="uploadmodalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="uploadmodalLabel">View Insurance</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+                                    <a id="PolicyEdit" onclick="EditUserPage()" class="btn btn-primary pull-right" title="Edit"><i class="fa fa-pencil"></i> Edit</a>
+                                    <input type="hidden" id="InsuranceKey" />
+                                    <div class="row col-md-12" id="errorDiv">
+                                        <span class="alert" id="errorMsg"></span>
+                                    </div>
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">Policy Number</label>
+                                                    <span id="policynumber"></span>
+                                                    @*@Model.Vendor.PolicyNumber*@
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">Amount</label>
+                                                    <span id="amount"></span>
+                                                    @*@Model.Vendor.InsuranceAmount*@
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">Start Date</label>
+                                                    <span id="startdate"></span>
+                                                    @*@Model.Vendor.StartDate*@
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">End Date</label>
+                                                    <span id="enddate"></span>
+                                                    @*@Model.Vendor.EndDate*@
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="form-label">Renewal Date</label>
+                                                    <span id="renewaldate"></span>
+                                                    @*@Model.Vendor.RenewalDate*@
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="table-responsive" id="divdoc">
+                                                    <table id="dataTableExample" class="table table-striped table-bordered w-100 dataTable no-footer">
+                                                        <thead>
+                                                            <tr>
+                                                                <th width="30%" ('Documents') style="cursor: pointer;">
+
+                                                                    Documents
+                                                                </th>
+                                                                @*
+                                                                    <th width="5%"></th>*@
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>
+                                                                    <a target="_blank" href="#" class="docname" style="cursor: pointer;text-decoration:none;"></a>
+                                                                    
+                                                                </td>
+                                                                @*
+                                                                    <td align="center"><a id="viewdata1" class="badge badge-primary pull-right" data-toggle="modal" data-target="#viewinsurance"><i class="fa fa-certificate"></i> View Insurance</a></td>*@
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div><!-- end of table responsive -->
+                                            </div><!-- end of col -->
+                                        </div>
+                                        <hr />
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pagination" style="display:none;">
+                        <input type="hidden" id="HdnSortValue" value="order by PolicyNumber asc" />
+                        <input type="hidden" id="HdnPageIndex" value="1" />
+                        <input type="hidden" id="PageSize" value="100" />
+                        <input type="hidden" id="Namehdn" value="asc" />
+                        <input type="hidden" id="Workhdn" value="asc" />
+                        <input type="hidden" id="Titlehdn" value="asc" />
+                        <input type="hidden" id="TotalPageRecord" value='0' />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--End side app-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+<!-- End app-content-->
+
+<script>
+
+    $(document).ready(function () {
+        LoadPagingSortTableFill();
+        document.getElementById("PolicyEdit").style.color = "White";
+    });
+    function LoadPagingSortTableFill(pageIndex)
+    {
+        $("#RawDatas table tbody tr:eq(0)").hide();
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        var pageindex = $("#HdnPageIndex").val();
+        debugger;
+        if(pageIndex == '' || pageIndex == null || pageIndex == undefined)
+            $('#HdnPageIndex').val(pageindex);
+        else
+            $('#HdnPageIndex').val(pageIndex);
+        $.ajax({
+            url: '@Url.Action("IndexinsurancePaging", "VendorPolicy")',
+            cache: false,
+            type:"post",
+            data: {
+                PageSize: pageSize,
+                PageIndex: $('#HdnPageIndex').val(),
+                Search: $("#txtsearch").val(),
+                Sort: $("#HdnSortValue").val()
+            },
+            success: function (response)
+            {
+                debugger;
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+                    debugger;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+
+                } else {
+
+                }
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                //$("#RawDatas table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $(".policy", table).html(response[i].PolicyNumber);
+                    $(".amount", table).html("$" + response[i].InsuranceAmount.toFixed(2));
+                    $(".edate", table).html(getDateNew(response[i].EndDate));
+                    debugger;
+                    if (response[i].priority == '1') {
+                        $("#viewdata", table).append('<i class="fa fa-bell faa-ring animated redtxt font18"></i>');
+                        $("#viewdata", table).attr('onclick', 'openModal(' + response[i].InsuranceKey + ',"' + response[i].NotificationType + '")');
+                    }
+                    else {
+                        $("#viewdata", table).append('<i class="fe fe-eye font18"></i>');
+                        $("#viewdata", table).attr('onclick', 'openModal(' + response[i].InsuranceKey + ')');
+                    }
+
+                    $("#RawDatas table").append(table);
+                    table.show();
+                    spnToRecs++;
+                }
+                $("#RawDatas table tbody tr:eq(0)").hide();
+
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                }
+                updatePaging(response[0].TotalRecords);
+                $("#loading1").hide();
+            }
+        });
+    }
+
+    function SortingFun(val) {
+
+        $('#HdnPageIndex').val('1');
+        var Sort = $('#SortValue').val();
+        debugger;
+        var ascdesc = 'fa-sort-asc';
+        var ascdesc1 = 'fa-sort-desc';
+        var ascdesc3 = 'fa-sort-asc';
+        var ascdesc4 = 'fa-sort-desc';
+
+        $('.loader-wrapper').show();
+        var Sort = '';
+        $('#HdnPageIndex').val('1');
+        $('#Namei').removeClass(ascdesc4);
+        $('#Namei').addClass(ascdesc3);
+
+        $('#Worki').removeClass(ascdesc4);
+        $('#Worki').addClass(ascdesc3);
+
+        $('#Titlei').removeClass(ascdesc4);
+        $('#Titlei').addClass(ascdesc3);
+
+        debugger;
+        //-----------------------------------------------------------
+        if (val == 'PolicyNumber') {
+            if ($('#Namehdn').val() == 'asc') {
+                Sort = 'order by u.PolicyNumber desc';
+                $('#Namehdn').val('desc');
+                $('#Namei').removeClass(ascdesc);
+                $('#Namei').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by u.PolicyNumber asc';
+                $('#Namehdn').val('asc');
+                $('#Namei').removeClass(ascdesc1);
+                $('#Namei').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------
+        if (val == 'InsuranceAmount') {
+            if ($('#Workhdn').val() == 'asc') {
+                Sort = 'order by u.InsuranceAmount desc';
+                $('#Workhdn').val('desc');
+                $('#Worki').removeClass(ascdesc);
+                $('#Worki').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by u.InsuranceAmount asc';
+                $('#Workhdn').val('asc');
+                $('#Worki').removeClass(ascdesc1);
+                $('#Worki').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------------
+        if (val == 'EndDate') {
+            if ($('#Titlehdn').val() == 'asc') {
+                Sort = 'order by u.EndDate desc';
+                $('#Titlehdn').val('desc');
+                $('#Titlei').removeClass(ascdesc);
+                $('#Titlei').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by u.EndDate asc';
+                $('#Titlehdn').val('asc');
+                $('#Titlei').removeClass(ascdesc1);
+                $('#Titlei').addClass(ascdesc);
+            }
+        }
+
+
+        $("#HdnSortValue").val(Sort);
+        $('.loader-wrapper').show();
+        LoadSortTableFill();
+    }
+    function LoadSortTableFill() {
+        debugger;
+        $("#RawDatas table tbody tr:eq(0)").hide();
+      var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+
+        $.ajax({
+            url: '@Url.Action("IndexinsurancePaging", "VendorPolicy")',
+            cache: false,
+            type: "post",
+            data: {
+                PageSize: pageSize,
+                PageIndex: $('#HdnPageIndex').val(),
+                Search: $('#txtsearch').val(),
+                Sort: $("#HdnSortValue").val()
+            },
+            success: function (response)
+            {
+                debugger;
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+                    debugger;
+
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    alert(curRecords);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+
+                } else {
+
+                }
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                //$("#RawDatas table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $(".policy", table).html(response[i].PolicyNumber);
+                    $(".amount", table).html("$" + response[i].InsuranceAmount.toFixed(2));
+                    $(".edate", table).html(getDateNew(response[i].EndDates));
+                    if (response[i].priority == '1') {
+                        $("#viewdata", table).append('<i class="fa fa-bell faa-ring animated redtxt font18"></i>');
+                        $("#viewdata", table).attr('onclick', 'openModal(' + response[i].InsuranceKey + ',"' + response[i].NotificationType + '")');
+                    }
+                    else {
+                        $("#viewdata", table).append('<i class="fe fe-eye font18"></i>');
+                        $("#viewdata", table).attr('onclick', 'openModal(' + response[i].InsuranceKey + ')');
+                    }
+
+                    $("#RawDatas table").append(table);
+                    table.show();
+                    spnToRecs++;
+                }
+                $("#RawDatas table tbody tr:eq(0)").hide();
+
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                    $(".pagination").show();
+                    $('#Error').hide();
+                }
+                else {
+                    alert("this");
+                    $('.spnToRecs').text(0);
+                    updatePaging(TotalRecs);
+                    if (TotalRecs = 'undefined') {
+                        $('.errormessage').html('Data Not Found.');
+                        $('#Error').show();
+                        $("#RawDatas table thead tr:eq(0)").hide();
+                        $("#RawDatas table tbody tr:eq(0)").hide();
+                        $(".pagination").hide();
+                    }
+                }
+
+                updatePaging(TotalRecs);
+                $("#loading1").hide();
+            }
+        });
+
+    }
+
+    function updatePaging(TotalRecs) {
+            $('ul.pagination').html('');
+            var liClone = $('ul.pagination');
+     debugger;
+     var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+            var pageSize = $('#PageSize').val();
+            var NoPage = 1;
+            if (parseInt(TotalRecs) > parseInt(pageSize)) {
+                NoPage = parseInt(parseInt(TotalRecs) / parseInt(pageSize));
+                if (parseFloat(parseInt(parseInt(TotalRecs) / parseInt(pageSize))) < parseFloat(parseInt(TotalRecs) / parseInt(pageSize))) {
+                    NoPage = (parseInt(parseInt(TotalRecs) / parseInt(pageSize)) + 1);
+                }
+            }
+
+            var lp = 0;//parseFloat(parseInt($('#HdnPageIndex').val()) / 5);
+            if (parseFloat(parseInt($('#HdnPageIndex').val()) % 5) == 0) {
+                lp = ((parseInt(parseInt($('#HdnPageIndex').val()) / 5) - 1) * 5);
+            } else {
+                lp = parseInt(parseInt($('#HdnPageIndex').val()) / 5) * 5;
+            }
+
+            var ind = 0;
+            for (var i = 1; i <= NoPage; i++) {
+                if ((parseInt(lp)) < i) {
+                    if (parseInt($('#HdnPageIndex').val()) > 5 && $(liClone).find('li.previous').length == 0) {
+                        $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')"><a href="#">Previous</a></li>');
+                    }
+                    if (ind < 5) {
+                        if (i == parseInt($('#HdnPageIndex').val())) {
+                            $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current">' + i + '</a></li>');
+                        } else {
+                            $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')">' + i + '</a></li>');
+                        }
+                    } else if ($(liClone).find('li.next').length == 0) {
+                        $(liClone).append('<li class="paginate_button next " aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')"><a href="#">Next</a></li>');
+                    }
+                    ind = ind + 1;
+                }
+            }
+
+
+
+    }
+
+    function openModal(insuranceKey,notiType = '') {
+        debugger;
+        $("#divdoc table tbody tr:eq(0)").hide();
+        $.ajax({
+            url: '@Url.Action("GetInsuranceDetails", "VendorPolicy")',
+            cache: false,
+            data:
+            {
+                InsuranceKey: insuranceKey
+            },
+            success: function (response) {
+                debugger;   
+                if (response != null && response.length > 0) {
+
+                    $("#InsuranceKey").val(insuranceKey);
+                    //alert($("#InsuranceKey").val());
+                    $("#policynumber").text(response[0].Insurance.PolicyNumber);
+                    $("#amount").text("$" + response[0].Insurance.InsuranceAmount.toFixed(2));
+                    $("#startdate").text(response[0].Insurance.StartDates);
+                    $("#enddate").text(response[0].Insurance.EndDates);
+                    $("#renewaldate").text(response[0].Insurance.RenewalDates);
+                    if (response[0].Insurance.priority == '1') {
+                        if (response[0].Insurance.NotificationType == 'InsuranceExpiry') {
+                            $("#errorDiv").show();
+                            $("#errorMsg").html("<i class='fa fa-info-circle'></i> Your Insurance is about to expire.");
+                            $("#errorMsg").removeClass("alert-danger form-control");
+                            $("#errorMsg").addClass("alert-warning form-control");
+                        } else if(response[0].Insurance.NotificationType == 'InsuranceExpired') {
+                            $("#errorDiv").show();
+                            $("#errorMsg").html("<i class='fa fa fa-warning'></i> Your Insurance is Expired.");
+                            $("#errorMsg").removeClass("alert-warning form-control");
+                            $("#errorMsg").addClass("alert-danger form-control");
+                        }
+                    }
+                    $("#divdoc table tbody tr:not(:first)").remove();
+                    //$("#divdoc table tbody tr:eq(0)").show();
+                    
+                    for (var i = 0; i < response.length; i++) {
+                        if (response[i].Document.FileName != "") {
+                            var cln = $("#divdoc table tbody tr:eq(0)").clone(true);
+                            //var filelink = "<a href='/VendorPolicy/DownloadFile?DocumentKey="+ response[i].Document.DocumentKey + "&CompanyKey=" + response[i].Vendor.CompanyKey + "&InsuranceKey=" + response[i].Insurance.InsuranceKey+"'>" + response[i].Document.FileName + "</a>";
+                            //$(".docname", cln).html(filelink);
+                            //$(cln).append("<input type='hidden' name='vsk' value='" + response[i].VendorServiceKey + "'/>");
+                            //$("#divdoc table").append(cln);
+                            $(".docname", cln).attr('href', "../Document/Insurance/"+response[i].Insurance.InsuranceKey+response[i].Document.FileName);
+                            // $(".upd-fl", table).attr('onclick', "download('../Document/Insurance/" + $('#Insurance_InsuranceKey').val()+" " + response[i].Document.FileName + "')");
+                            $(".docname", cln).html(response[i].Document.FileName);
+                            $(cln).append("<input type='hidden' name='vsk' value='" + response[i].VendorServiceKey + "'/>");
+                            $("#divdoc table").append(cln);
+
+                            cln.show();
+                        }
+                    }
+                    if(notiType != null && notiType != '')
+                        notificationClick(insuranceKey, notiType);
+                    $("#divdoc table tbody tr:eq(0)").hide();
+                    $("#viewinsurance").modal('toggle');
+                }
+            }
+        });
+    }
+    function GetRecords() {
+        debugger;
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        var CountVal = (parseInt($('#HdnPageIndex').val()) + 1);
+        $('#HdnPageIndex').val();
+        pageSize = parseInt(pageSize * CountVal);
+
+        $("#loading1").show();
+        $.ajax({
+            type: "post",
+            url: '@Url.Action("IndexinsurancePaging", "VendorPolicy")',
+            data:
+            {
+                PageSize: pageSize,
+                PageIndex: $('#HdnPageIndex').val(),
+                Search: $('#txtsearch').val(),
+                Sort: $("#HdnSortValue").val()
+            },
+            success: OnSuccess,
+            failure: function (response) {
+            },
+            error: function (response) {
+            }
+        });
+    }
+
+    function OnSuccess(response) {
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        debugger;
+        if (parseInt(response.length) > 0) {
+            var curRecords = 0;
+            var TotalRecs = 0;
+            var spnToRecs = 0;
+            debugger;
+            curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+            curRecords = curRecords - (pageSize - parseInt(response.length));
+            TotalRecs = parseInt(response[0].TotalRecords);
+            $('.spnOfRecs').text(curRecords);
+            $('.spnTotalRecs').text(TotalRecs);
+
+
+        } else {
+
+        }
+        $("#RawDatas table tbody tr:not(:first)").remove();
+        //$("#RawDatas table tbody tr:eq(0)").show();
+        for (var i = 0; i < response.length; i++) {
+            var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+            $(".policy", table).html(response[i].PolicyNumber);
+            $(".amount", table).html("$" +response[i].InsuranceAmount.toFixed(2));
+            $(".edate", table).html(getDateNew(response[i].EndDates));
+            if (response[i].priority == '1') {
+                $("#viewdata", table).append('<i class="fa fa-bell faa-ring animated redtxt font18"></i>');
+                $("#viewdata", table).attr('onclick', 'openModal(' + response[i].InsuranceKey + ',"' + response[i].NotificationType + '")');
+            }
+            else {
+                $("#viewdata", table).append('<i class="fe fe-eye font18"></i>');
+                $("#viewdata", table).attr('onclick', 'openModal(' + response[i].InsuranceKey + ')');
+            }
+
+            $("#RawDatas table").append(table);
+            table.show();
+            spnToRecs++;
+        }
+        $("#RawDatas table tbody tr:eq(0)").hide();
+
+        spnToRecs = (curRecords - spnToRecs) + 1;
+        if (spnToRecs > 0) {
+
+            $('.spnToRecs').text(spnToRecs);
+            $(".pagination").show();
+            $('#Error').hide();
+        }
+        else {
+            $('.spnToRecs').text(0);
+            updatePaging(TotalRecs);
+            if (TotalRecs = 'undefined') {
+                $('.errormessage').html('Data Not Found.');
+                $('#Error').show();
+                $("#RawDatas table thead tr:eq(0)").hide();
+                $("#RawDatas table tbody tr:eq(0)").hide();
+                $(".pagination").hide();
+            }
+        }
+
+        updatePaging(TotalRecs);
+        $("#loading1").hide();
+    }
+
+    //function getDate(datestring) {
+
+    //    var milli = datestring.replace(/\/Date\((-?\d+)\)\//, '$1');
+    //    var date1 = new Date(parseInt(milli)).toLocaleDateString();
+    //    var mon = date1.split('/')[0];
+    //    var day = date1.split('/')[1];
+    //    var year = date1.split('/')[2];
+    //    if (mon.length == 1)
+    //        mon = "0" + mon;
+    //    if (day.length == 1)
+    //        day = "0" + day;
+    //    return mon + "/" + day + "/" + year;
+    //}
+    function getDateNew(datestring) {
+        var milli = datestring.replace(/\/Date\((-?\d+)\)\//, '$1');
+        var date = new Date(parseInt(milli));
+        return(((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear());
+    }
+    function notificationClick(nid, type) {
+        debugger;
+        $.ajax({
+            url: '/ABNotification/NotificationUpdate',
+            cache: false,
+            data: {
+                NotiId: nid,
+                Status: 'read',
+                NotiType: type,
+                ByObj: true
+            },
+            success: function (response) {
+                debugger;
+                if (response == 'true' || response == true) {
+                    LoadPagingSortTableFill();
+                    $(".header-notify").load("/ABNotification/Notification");
+                    LoadCountNewMsg();
+                }
+            }
+        });
+    }
+
+    function EditUserPage() {
+        window.location.href = 'EditPolicy?InsuranceKey=' + $("#InsuranceKey").val();
+    }
+</script>

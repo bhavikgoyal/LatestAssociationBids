@@ -1,0 +1,682 @@
+﻿
+@{
+    ViewBag.Title = "UserList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string Errormessage = Convert.ToString(ViewData["Errormessage"]);
+}
+<h2>UserList</h2>
+
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="#" onclick="homepage()">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Users</li>
+            </ol><!-- End breadcrumb -->
+
+        </div>
+        @if (TempData["Sucessmessage"] != null)
+        {
+            <p class="alert alert-success alert-dismissible" id="successMessage">
+                @TempData["Sucessmessage"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        @if (TempData["delete"] != null)
+        {
+            <p class="alert alert-danger alert-dismissible" id="successMessage">
+                @TempData["delete"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+
+        <div role="alert">
+            <div class="alert alert-danger" id="Error" style="display: none;margin-top: 20px;">
+                <strong><span class="errormessage"></span></strong>
+            </div>
+            @if (!string.IsNullOrEmpty(Errormessage))
+            {
+                <div class="alert alert-danger" style="margin-top: 20px;">
+                    <strong><span>@Errormessage</span></strong>
+                </div>
+            }
+        </div>
+        <!-- End page-header -->
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-4 col-xl-4 mb15">
+                                    <input type="text" class="form-control" id="txtsearch" placeholder="Search for...">
+                                </div>
+                                <div class="col-lg-4 col-xl-4">
+                                    <input type="button" class="btn btn-secondary" id="btnsearch" value="Search">
+                                    @*<a class="btn btn-secondary" href="#" role="button">Search</a>*@
+                                    <span class="advance_search btn_advsearch" onclick="toggle_visibility('advancesearch2');"><i class="fe fe-chevron-down"></i></span>
+                                </div>
+                                <div class="col-lg-4 col-xl-4">
+                                    <div class="btn_group_div text-right">
+                                        <a href="~/User/UserAdd" class="btn btn-primary">+ Add User</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end of form group -->
+
+                        <div id="advancesearch3">
+                            <div class="overlayclose"><i class="fa fa-times"></i></div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+
+                                        <label class="form-label">Status</label>
+                                        <select class="form-control">
+                                            <option value="1">Pending</option>
+                                            <option value="1">Approve</option>
+                                            <option value="1">Unapprove</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">&nbsp;</label>
+                                        <input class="form-control" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-label">&nbsp;</label>
+                                        <button type="button" class="btn btn-primary btn-icon-text">
+                                            Search
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="table-responsive" id="RawDatas">
+                            <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                <thead>
+                                    <tr>
+                                        <th width="15%" onclick="SortingFun('FirstName');" style="cursor: pointer;">
+                                            <i id="FirstNamei" class="fa fa-sort-asc"></i>
+                                            First Name
+                                        </th>
+                                        <th width="15%" onclick="SortingFun('LastName');" style="cursor: pointer;">
+                                            <i id="LastNamei" class="fa fa-sort-asc"></i>
+                                            Last Name
+                                        </th>
+                                        <th width="15%" onclick="SortingFun('Email');" style="cursor: pointer;">
+                                            <i id="Emaili" class="fa fa-sort-asc"></i>
+                                            Email
+                                        </th>
+                                        <th width="15%" onclick="SortingFun('cIty');" style="cursor: pointer;">
+                                            <i id="Cityi" class="fa fa-sort-asc"></i>
+                                            City
+                                        </th>
+                                        <th width="15%" onclick="SortingFun('State');" style="cursor: pointer;">
+                                            <i id="Statei" class="fa fa-sort-asc"></i>
+                                            State
+                                        </th>
+                                        <th width="15%" onclick="SortingFun('CompanyName');" style="cursor: pointer;">
+                                            <i id="CompanyNamei" class="fa fa-sort-asc"></i>
+                                            Company Name
+                                        </th>
+                                        <th width="5%">&nbsp;</th>
+                                        <th width="5%">&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="firstname"></span></td>
+                                        <td><span class="lastname"></span></td>
+                                        <td><span class="email"></span></td>
+                                        <td><span class="city"></span></td>
+                                        <td><span class="state"></span></td>
+                                        <td><span class="company"></span></td>
+                                        <td align="center"><a id="ResetPassword" role="button">Password Reset</a></td>
+                                        <td align="center"><a id="viewdata" role="button"><i class="fe fe-eye font18"></i></a></td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                            <div class="pull-left">
+                                <label><span class="spnToRecs">0</span> to <span class="spnOfRecs">0</span> out of <span class="spnTotalRecs">0</span>&nbsp; Records </label>
+                            </div>
+                            <div class="dataTables_paginate paging_simple_numbers" id="pagin">
+                                <ul class="pagination">
+                                 
+                                </ul>
+                               
+                            </div>
+                        </div>
+                      
+                    </div>
+                    
+                    <div class="pagination" style="display:none;">
+                        <input type="hidden" id="HdnSortValue" value="order by rc.FirstName asc" />
+                        <input type="hidden" id="HdnPageIndex" value="1" />
+                        <div style="float: right; line-height: 13px; padding: 1px 10px 1px 5px;">
+                            <select id="PageSize">
+                                <option selected="selected" value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                            <span style="line-height: 25px; vertical-align: top;">Records/Page</span>
+                        </div>
+                        <input type="hidden" id="FirstNamehdn" value="asc" />
+                        <input type="hidden" id="LastNamehdn" value="asc" />
+                        <input type="hidden" id="Emailhdn" value="asc" />
+                        <input type="hidden" id="Cityhdn" value="asc" />
+                        <input type="hidden" id="Statehdn" value="asc" />
+                        <input type="hidden" id="CompanyNamehdn" value="asc" />
+                        <input type="hidden" id="UserKeyHdn" value="asc" />
+                        <input type="hidden" id="incremSlide" value='5' />
+                        <input type="hidden" id="startPage" value='0' />
+                        <input type="hidden" id="numberPage" value='0' />
+                        <input type="hidden" id="TotalPageRecord" value='0' />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--End side app-->
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+
+<!-- End app-content-->
+
+<script>
+
+    function updatePaging(TotalRecs) {
+        $('ul.pagination').html('');
+        var liClone = $('ul.pagination'); 
+        debugger;
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        //var pageSize = $('#PageSize').val();
+        var NoPage = 1;
+        if (parseInt(TotalRecs) > parseInt(pageSize)) {
+            NoPage = parseInt(parseInt(TotalRecs) / parseInt(pageSize));
+            if (parseFloat(parseInt(parseInt(TotalRecs) / parseInt(pageSize))) < parseFloat(parseInt(TotalRecs) / parseInt(pageSize))) {
+                NoPage = (parseInt(parseInt(TotalRecs) / parseInt(pageSize))+1);
+            }
+        }
+
+        var lp = 0;//parseFloat(parseInt($('#HdnPageIndex').val()) / 5);
+        if (parseFloat(parseInt($('#HdnPageIndex').val()) % 5) == 0) {
+            lp = ((parseInt(parseInt($('#HdnPageIndex').val()) / 5) - 1) * 5);
+        } else {
+            lp = parseInt(parseInt($('#HdnPageIndex').val()) / 5) * 5;
+        }
+
+        var ind = 0;
+        for (var i = 1; i <= NoPage; i++) {
+            if ((parseInt(lp)) < i) {
+                if (parseInt($('#HdnPageIndex').val()) > 5 && $(liClone).find('li.previous').length == 0) {
+                    $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')"><a href="#">Previous</a></li>');
+                }
+                if (ind < 5) {
+                    if (i == parseInt($('#HdnPageIndex').val())) {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current">' + i + '</a></li>');
+                    } else {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')">' + i + '</a></li>');
+                    }
+                } else if ($(liClone).find('li.next').length == 0) {
+                    $(liClone).append('<li class="paginate_button next " aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')"><a href="#">Next</a></li>');
+                }
+                ind = ind + 1;
+            }
+        }
+
+
+
+    }
+
+    $(document).ready(function ()
+    {
+        LoadSortTableFill();
+        $('#divSuccess').hide();
+        //$('#divSuccess').show();
+    });
+
+    $("#btnsearch").click(function ()
+    {
+        LoadSortTableFill();
+    });
+
+
+    
+    
+
+    
+   function LoadPagingSortTableFill(pageIndex) {
+
+       debugger;
+       var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+       $('#HdnPageIndex').val(pageIndex);
+
+        $.ajax({
+            url: '@Url.Action("IndexreUserPaging", "User")',
+            cache: false,
+            data: {
+                PageSize: pageSize,
+                PageIndex: pageIndex,
+                Search: $('#txtsearch').val(),
+                Sort: $("#HdnSortValue").val()
+            },
+            success: function (response)
+            {
+
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('#TotalPageRecord').val(parseInt(response[0].TotalRecords)) ;
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                } else {
+                    $("#ddlload").hide();
+                }
+
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $(".firstname", table).html(response[i].FirstName);
+                    $(".lastname", table).html(response[i].LastName);
+                    $(".email", table).html(response[i].Email);
+                    $(".city", table).html(response[i].City);
+                    $(".state", table).html(response[i].State);
+                    $(".company", table).html(response[i].Company);
+                    $("#viewdata", table).attr('href', '/User/UserView?ResourceKey=' + response[i].ResourceKey);
+                    $("#RawDatas table").append(table);
+                    spnToRecs++;
+                }
+                $("#RawDatas table tbody tr:eq(0)").hide();
+
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                }
+                else {
+                  
+                    $('.spnToRecs').text(0);
+                    updatePaging(TotalRecs);
+                    if (TotalRecs = 'undefined') {
+                        $('.errormessage').html('Data Is Not Found.');
+                        $('#Error').show();
+                        $("#RawDatas table thead tr:eq(0)").hide();
+                        $("#RawDatas table tbody tr:eq(0)").hide();
+                        $(".pagination").hide();
+                    }
+                }
+
+                updatePaging(response[0].TotalRecords);
+
+            }
+        });
+    }
+
+
+
+   function LoadSortTableFill() {
+       var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        $.ajax({
+            url: '@Url.Action("IndexreUserPaging", "User")',
+            cache: false,
+            data: {
+                PageSize: pageSize,
+                PageIndex: $('#HdnPageIndex').val(),
+                Search: $('#txtsearch').val(),
+                Sort: $("#HdnSortValue").val()
+            },
+            success: function (response)
+            {
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(pageSize));
+                    curRecords = curRecords - (pageSize - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('#TotalPageRecord').val(parseInt(response[0].TotalRecords)) ;
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                } else {
+                    $("#ddlload").hide();
+                }
+
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $(".firstname", table).html(response[i].FirstName);
+                    $(".lastname", table).html(response[i].LastName);
+                    $(".email", table).html(response[i].Email);
+                    $(".city", table).html(response[i].City);
+                    $(".state", table).html(response[i].State);
+                    $(".company", table).html(response[i].Company);
+                    $("#viewdata", table).attr('href', '/User/UserView?ResourceKey=' + response[i].ResourceKey);
+                    $("#RawDatas table").append(table);
+                    spnToRecs++;
+                }
+                $("#RawDatas table tbody tr:eq(0)").hide();
+
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                }
+                else {
+                    
+                    $('.spnToRecs').text(0);
+                    updatePaging(TotalRecs);
+                    if (TotalRecs = 'undefined') {
+                        $('.errormessage').html('Data Is Not Found.');
+                        $('#Error').show();
+                        $("#RawDatas table thead tr:eq(0)").hide();
+                        $("#RawDatas table tbody tr:eq(0)").hide();
+                        $(".pagination").hide();
+                    }
+                }
+             
+                updatePaging(response[0].TotalRecords);
+               
+
+            }
+        });
+    }
+
+
+    function Getdata() {
+
+        $("#divSucces").hide();
+        $("#divSucces").html('');
+        $("#divError").hide();
+        $("#divError").html('');
+        $("#loading1").show();
+        $("#hdnload").val("1");
+        $("#ddlload").hide();
+        GetRecords();
+    }
+
+    function GetRecords() {
+        var SearchVal = $('#SearchVal').val();
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        //SearchVal = SearchVal.replace("'", "''");
+
+        $("#divSucces").hide();
+        $("#divSucces").html('');
+        $("#divError").hide();
+        $("#divError").html('');
+        var hdnPageIndex = parseInt($('#HdnPageIndex').val());
+
+        var CountVal = hdnPageIndex + 1;
+
+        var Index = (parseInt(pageSize) * CountVal);
+
+        $('#HdnPageIndex').val(CountVal);
+        //var sort = $("#HdnSortValue").val();
+        $("#loading1").show();
+
+        $.ajax({
+            type: "Get",
+            url: "/User/IndexreUserPaging",
+            data: {
+                PageSize: Index,
+                PageIndex: 1,
+                Search: $('#txtsearch').val(),
+                Sort: $("#HdnSortValue").val()
+            },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: OnSuccess,
+            failure: function (response) {
+            },
+            error: function (response) {
+            }
+        });
+    }
+
+    function OnSuccess(response) {
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+
+        $('.spnOfRecs').text(0);
+        $('.spnTotalRecs').text(0);
+        $('.spnToRecs').text(0);
+
+        if (parseInt(response.length) > 0) {
+
+            var curRecords = 0;
+            var TotalRecs = 0;
+            var spnToRecs = 0;
+            curRecords = parseInt(1 * parseInt(pageSize));
+            curRecords = curRecords - (pageSize - parseInt(response.length));
+            TotalRecs = parseInt(response[0].TotalRecords);
+            $('.spnOfRecs').text(curRecords);
+            $('.spnTotalRecs').text(TotalRecs);
+
+            if (curRecords === 0 || curRecords === TotalRecs) {
+                $("#ddlload").hide();
+            }
+            else {
+                $("#ddlload").show();
+            }
+        } else {
+            $("#ddlload").hide();
+        }
+        $("#RawDatas table tbody tr:not(:first)").remove();
+        $("#RawDatas table tbody tr:eq(0)").show();
+        for (var i = 0; i < response.length; i++) {
+            var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+            $(".firstname", table).html(response[i].FirstName);
+            $(".lastname", table).html(response[i].LastName);
+            $(".email", table).html(response[i].Email);
+            $(".city", table).html(response[i].City);
+            $(".state", table).html(response[i].State);
+            $(".company", table).html(response[i].Company);
+            $("#viewdata", table).attr('href', '/User/UserView?ResourceKey=' + response[i].ResourceKey);
+            $("#RawDatas table").append(table);
+            spnToRecs++;
+        }
+        $("#RawDatas table tbody tr:eq(0)").hide();
+
+        spnToRecs = (curRecords - spnToRecs) + 1;
+        if (spnToRecs > 0) {
+            $('.spnToRecs').text(spnToRecs);
+        }
+        else {
+            
+            $('.spnToRecs').text(0);
+            updatePaging(TotalRecs);
+            if (TotalRecs = 'undefined') {
+                $('.errormessage').html('Data Is Not Found.');
+                $('#Error').show();
+                $("#RawDatas table thead tr:eq(0)").hide();
+                $("#RawDatas table tbody tr:eq(0)").hide();
+                $(".pagination").hide();
+            }
+        }
+
+        updatePaging(response[0].TotalRecords);
+        $("#loading1").hide();
+    }
+
+
+
+        function homepage()
+        {
+            window.location.href = '@Url.Action("Dashboard", "Dashboard")';
+        }
+
+    function SortingFun(val) {
+        debugger;
+        var ascdesc = 'fa-sort-asc';
+        var ascdesc1 = 'fa-sort-desc';
+        var ascdesc3 = 'fa-sort-asc';
+        var ascdesc4 = 'fa-sort-desc';
+
+        $('.loader-wrapper').show();
+        var Sort = '';
+        $('#HdnPageIndex').val('1');
+        $('#FirstNamei').removeClass(ascdesc4);
+        $('#FirstNamei').addClass(ascdesc3);
+
+        $('#LastNamei').removeClass(ascdesc4);
+        $('#LastNamei').addClass(ascdesc3);
+
+        $('#Emaili').removeClass(ascdesc4);
+        $('#Emaili').addClass(ascdesc3);
+
+        $('#Cityi').removeClass(ascdesc4);
+        $('#Cityi').addClass(ascdesc3);
+
+
+        $('#Statei').removeClass(ascdesc4);
+        $('#Statei').addClass(ascdesc3);
+
+
+        $('#CompanyNamei').removeClass(ascdesc4);
+        $('#CompanyNamei').addClass(ascdesc3);
+
+        debugger;
+        //-----------------------------------------------------------
+        if (val == 'FirstName') {
+            if ($('#FirstNamehdn').val() == 'asc')
+            {
+                Sort = 'order by rc.FirstName desc';
+                $('#FirstNamehdn').val('desc');
+                $('#FirstNamei').removeClass(ascdesc);
+                $('#FirstNamei').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rc.FirstName asc';
+                $('#FirstNamehdn').val('asc');
+                $('#FirstNamei').removeClass(ascdesc1);
+                $('#FirstNamei').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------
+        if (val == 'LastName') {
+            if ($('#LastNamehdn').val() == 'asc') {
+                Sort = 'order by rc.LastName desc';
+                $('#LastNamehdn').val('desc');
+                $('#LastNamei').removeClass(ascdesc);
+                $('#LastNamei').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rc.LastName asc';
+                $('#LastNamehdn').val('asc');
+                $('#LastNamei').removeClass(ascdesc1);
+                $('#LastNamei').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------------
+        if (val == 'Email') {
+            if ($('#Emailhdn').val() == 'asc') {
+                Sort = 'order by rc.Email desc';
+                $('#Emailhdn').val('desc');
+                $('#Emaili').removeClass(ascdesc);
+                $('#Emaili').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rc.Email asc';
+                $('#Emailhdn').val('asc');
+                $('#Emaili').removeClass(ascdesc1);
+                $('#Emaili').addClass(ascdesc);
+            }
+        }
+        //----------------------------------------------------
+        if (val == 'cIty') {
+            if ($('#Cityhdn').val() == 'asc') {
+                Sort = 'order by rc.cIty desc';
+                $('#Cityhdn').val('desc');
+                $('#Cityi').removeClass(ascdesc);
+                $('#Cityi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rc.cIty asc';
+                $('#Cityhdn').val('asc');
+                $('#Cityi').removeClass(ascdesc1);
+                $('#Cityi').addClass(ascdesc);
+            }
+        }
+        //---------------------------------------------------------
+        if (val == 'State') {
+            if ($('#Statehdn').val() == 'asc') {
+                Sort = 'order by s.Title desc';
+                $('#Statehdn').val('desc');
+                $('#Statei').removeClass(ascdesc);
+                $('#Statei').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by s.Title asc';
+                $('#Statehdn').val('asc');
+                $('#Statei').removeClass(ascdesc1);
+                $('#Statei').addClass(ascdesc);
+            }
+        }
+        //--------------------------------------------------------------
+        if (val == 'CompanyName') {
+            if ($('#CompanyNamehdn').val() == 'asc') {
+                Sort = 'order by c.Name desc';
+                $('#CompanyNamehdn').val('desc');
+                $('#CompanyNamei').removeClass(ascdesc);
+                $('#CompanyNamei').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by c.Name asc';
+                $('#CompanyNamehdn').val('asc');
+                $('#CompanyNamei').removeClass(ascdesc1);
+                $('#CompanyNamei').addClass(ascdesc);
+            }
+        }
+
+        $("#HdnSortValue").val(Sort);
+        $('.loader-wrapper').show();
+        LoadSortTableFill();
+
+       
+    }
+</script>
+

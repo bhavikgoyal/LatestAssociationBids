@@ -1,0 +1,1692 @@
+﻿@model AssociationBids.Portal.Model.VendorModel
+@using AssociationBids.Portal.Common
+@{
+    ViewBag.Title = "VendorView";
+    Layout = "~/Views/Shared/_PropertyManagerLayout.cshtml";
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<h2>VendorView</h2>
+
+<!-- app-content-->
+
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item ">
+
+                    @Html.ActionLink("Vendors", "PMVendorlist", "PMVendor", null, new { })
+                </li>
+
+                <li class="breadcrumb-item active text-left">Vendors Detail</li>
+
+            </ol><!-- End breadcrumb -->
+
+        </div>
+        <!-- End page-header -->
+
+        <div class="row">
+            <div class="col-12">
+                <div id="notinvited" style="display:none">
+                    <div class="card">
+                        @Html.HiddenFor(model => model.CompanyKey)
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="~/PMWorkOrders/PMWorkOrdersAdd" class="btn btn-info " title="Add work order"><i class="fe fe-plus"></i> Add Work Order</a>
+
+                                </div>
+
+                            </div>
+                            <br>
+
+                            <div class="form-div">
+
+
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="tabs-menu1 ">
+                                            <!-- Tabs -->
+                                            <ul class="nav panel-tabs">
+                                                <li class=""><a href="#detail" class="active" data-toggle="tab">Details</a></li>
+                                                <li><a href="#history" id="bidrequest" data-toggle="tab">History</a></li>
+                                                <li><a href="#feedback" id="starvendor" data-toggle="tab">Feedback</a></li>
+
+                                            </ul>
+
+
+
+                                        </div>
+                                    </div>
+                                    @if (Model.Status == 104)
+                                    {
+
+                                    }
+                                    else
+                                    {
+
+
+                                    <div class="col-md-2">
+                                        @if (Model.starvenor == false)
+                                        {
+                                            //@Html.CheckBoxFor(model => model.PrimaryContact, new { @class = "custom-control-input", @tabindex = "1" })
+                                            //@Html.LabelFor(model => model.PrimaryContact, new { @class = "custom-control-label" })
+                                            @*<label class="form-label">Mark as star&nbsp;   <input type="checkbox" id="starvenor" /></label>*@
+                                            <a role="button" id="starvenor">
+                                                <span class="text-success" title=""><i  class="fa fa-star-o" style="cursor:pointer; font-size:44px;margin-left:120px;" title="Mark as star"></i></span>
+
+
+                                            </a>
+
+                                        }
+                                        @if (Model.starvenor == true)
+                                        {
+                                            <a role="button" id="starvenor">
+                                                <span class="text-success" title=""><i class="fa fa-star" style="cursor:pointer; color:green; font-size:44px;margin-left:120px;" title="Mark as unstar"></i></span>
+
+
+                                            </a>
+
+                                        }
+
+
+
+                                    </div>
+                                    }
+                                </div>
+
+                                <div class="tab-content">
+                                    <div class="tab-pane active " id="detail">
+
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Company Information</h3>
+                                                        <div class="card-options">
+                                                            <a onclick=" EditPage();" class="btn btn-sm btn-primary ml-auto  pull-right" style="display:none;" title="Edit"><i class="fa fa-pencil"></i> Edit</a>
+                                                            <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border-top">
+                                                        </h4>
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Company Name</label>
+                                                                    <p>@Model.CompanyName</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Work Phone 1</label>
+                                                                    <p>@Utility.FormatPhoneNumberHelper(Model.Work)</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Work Phone 2</label>
+                                                                    <p>@Utility.FormatPhoneNumberHelper(Model.Work2)</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Fax</label>
+                                                                    <p>@Utility.FormatPhoneNumberHelper(Model.Fax)</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Website</label>
+                                                                    <p>@Model.Website</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Address 1</label>
+                                                                    <p>@Model.Address</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Address 2</label>
+                                                                    <p>@Model.Address2</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">City</label>
+                                                                    @Model.City
+                                                                </div>
+                                                            </div><!-- end of col -->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">State</label>
+                                                                    @Model.State
+                                                                </div>
+                                                            </div><!-- end of col -->
+
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Zip</label>
+                                                                    @Model.Zip
+                                                                </div>
+                                                            </div><!-- end of col -->
+
+                                                        </div><!-- end of row -->
+
+                                                    </div><!-- card body end -->
+                                                </div><!-- card end -->
+                                            </div><!-- col end -->
+                                        </div><!-- row end -->
+
+
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Contact Information</h3>
+                                                        <div class="card-options">
+                                                            <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border-top">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Name</label>
+                                                                    @Model.Name
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Work Phone 1</label>
+                                                                    @Utility.FormatPhoneNumberHelper(Model.Work)
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Work Phone 2</label>
+                                                                    @Utility.FormatPhoneNumberHelper(Model.Work2)
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Cell Phone</label>
+                                                                    @Utility.FormatPhoneNumberHelper(Model.CellPhone)
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Email</label>
+                                                                    @Model.Email
+                                                                </div>
+                                                            </div>
+
+                                                        </div><!-- end of row -->
+
+                                                    </div><!-- card body end -->
+                                                </div><!-- card end -->
+                                            </div><!-- col end -->
+                                        </div>
+
+
+
+
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Services</h3>
+                                                        <div class="card-options">
+                                                            <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border-top">
+                                                        <div id="divservc" class="table-responsive">
+                                                            <div class="alert alert-danger" id="Error" style="display:none; margin-top: 20px;">
+                                                                <span class="errormessage"></span>
+                                                            </div>
+                                                            <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                                                <thead>
+                                                                    <tr>
+
+
+                                                                        <th>Title</th>
+                                                                        @*<th width="5%"></th>*@
+
+
+
+
+                                                                    </tr>
+
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>
+
+                                                                            <span class="ser-fl"></span>
+                                                                        </td>
+                                                                        @*<td align="center">
+
+                                                <a title="Delete" onclick="removeser(this);"><i class="fe fe-trash redtxt font18"></i></a>
+                                            </td>*@
+
+                                                                    </tr>
+
+
+
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                    </div><!-- card body end -->
+
+                                                    <div class="pagination" style="display:none;">
+
+                                                        <input type="hidden" id="HdnPageIndex" value="1" />
+                                                        <input type="hidden" id="PageSize" value="1000" />
+                                                        <input type="hidden" id="TotalPageRecord" value='0' />
+                                                    </div>
+                                                </div><!-- card end -->
+                                            </div><!-- col end -->
+                                        </div>
+
+
+
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Insurance</h3>
+                                                        @*<div class="card-options">
+                                <a href="/../VendorManager/AddPolicy?CompanyKey=@Model.Vendor.CompanyKey" class="btn btn-success ml-auto text-white  pull-right" title="Add Insurance"><i class="fa fa-plus"></i></a>
+
+                                <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                            </div>*@
+                                                    </div>
+                                                    <div class="card-body border-top">
+                                                        <div id="RawDatas" class="table-responsive">
+
+                                                            <div class="table-responsive" id="divFileUploader1">
+                                                                <table id="dataTableExample" class="table table-striped table-bordered w-100 dataTable no-footer">
+                                                                    <thead>
+                                                                        <tr>
+
+                                                                            <th width="30%" style="cursor: pointer;">
+                                                                                Policy Number
+                                                                            </th>
+                                                                            <th width="20%">Amount</th>
+                                                                            <th width="20%">EXPIRATION</th>
+                                                                            <th width="10%"></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+
+                                                                        <tr>
+                                                                            <td><span class="PolicyNumber"></span></td>
+
+                                                                            <td>$<span class="InsuranceAmount"></span></td>
+                                                                            <td><span class="EndDate"></span></td>
+                                                                            @*<td>
+                                                    @{ string name = ViewBag.InsuranceDocs[doc].Document.FileName;}
+
+
+                                                    @Html.ActionLink(" " + name, "DownloadFile", "VendorManager", new { DocumentKey = ViewBag.InsuranceDocs[doc].Document.DocumentKey, CompanyKey = Model.Vendor.CompanyKey, InsuranceKey = ViewBag.InsuranceDocs[doc].Insurance.InsuranceKey }, new { @class = "ion-link link text-azure" })
+                                                </td>*@
+
+
+                                                                            <td class="text-center"><a id="viewdata1" title="View Details"><i class="fe fe-eye font18" style="cursor:pointer;"></i></a></td>
+
+                                                                        </tr>
+
+                                                                    </tbody>
+                                                                </table>
+
+                                                            </div><!-- end of table responsive -->
+                                                        </div><!-- end of col -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="viewinsurance" tabindex="-1" role="dialog" aria-labelledby="uploadmodalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="uploadmodalLabel">View Insurance</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Policy Number</label>
+                                                                    <span id="policynumberView"></span>
+                                                                    @*@Model.Vendor.PolicyNumber*@
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Amount</label>
+                                                                    <span id="amountView"></span>
+                                                                    @*@Model.Vendor.InsuranceAmount*@
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Start Date</label>
+                                                                    <span id="startdateView"></span>
+                                                                    @*@Model.Vendor.StartDate*@
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">End Date</label>
+                                                                    <span id="enddateView"></span>
+                                                                    @*@Model.Vendor.EndDate*@
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Renewal Date</label>
+                                                                    <span id="renewaldateView"></span>
+                                                                    @*@Model.Vendor.RenewalDate*@
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body col-md-12">  @*border-top*@
+                                                                <div id="RawDatas1" class="table-responsive">
+
+                                                                    <div class="table-responsive" id="divFileUploader1">
+                                                                        @if (ViewBag.InsuranceDocs != null && ViewBag.InsuranceDocs.Count > 0)
+                                                                        {
+                                                                            <table id="dataTableExample" class="table table-striped table-bordered w-100 dataTable no-footer">
+                                                                                <thead>
+                                                                                    <tr>
+
+                                                                                        <th width="30%" style="cursor: pointer;">
+                                                                                            Document
+                                                                                        </th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    @if (ViewBag.InsuranceDocs[0].Document.DocumentKey > 0)
+                                                                                    {
+                                                                                        for (int doc = 0; doc < ViewBag.InsuranceDocs.Count; doc++)
+                                                                                        {
+
+                                                                                        <tr>
+
+                                                                                            <td>
+                                                                                                @{ string name = ViewBag.InsuranceDocs[doc].Document.FileName;}
+
+
+                                                                                                @Html.ActionLink(" " + name, "DownloadFile", "VendorManager", new { DocumentKey = ViewBag.InsuranceDocs[doc].Document.DocumentKey, CompanyKey = Model.CompanyKey, InsuranceKey = ViewBag.InsuranceDocs[doc].Insurance.InsuranceKey }, new { @class = "link", target = "_blank" })
+                                                                                            </td>
+
+
+                                                                                            @*<td class="text-center"><a id="viewdata1" onclick="toggleModal('@ViewBag.InsuranceDocs[doc].Insurance.InsuranceKey')"><i class="fe fe-eye font18"></i></a></td>*@
+
+                                                                                        </tr>
+                                                                                        }
+                                                                                     }
+                                                                                </tbody>
+                                                                            </table>
+                                                                        }
+                                                                    </div><!-- end of table responsive -->
+                                                                </div><!-- end of col -->
+                                                            </div>
+                                                        </div>
+                                                        <hr />
+
+
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- row end -->
+                                    <div class="tab-pane " id="history">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Bid Requests</h3>
+                                                        <div class="card-options">
+                                                            <a href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border-top">
+
+                                                        <div id="RawDatabid" class="table-responsive">
+                                                            <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                                                <thead>
+                                                                    <tr>
+
+                                                                        <th width="auto" onclick="SortingFun('TITLE');" style="cursor: pointer;">
+                                                                            TITLE
+                                                                            <i id="TITLEi" class="fa fa-sort-asc pull-right"></i>
+                                                                        </th>
+                                                                        <th width="auto" " onclick="SortingFun('RESPONSEDATE');" style="cursor: pointer;">
+
+                                                                            RESPONSE DATE
+                                                                            <i id="RESPONSEDATEi" class="fa fa-sort-asc pull-right"></i>
+                                                                        </th>
+                                                                        <th width="auto" onclick="SortingFun('BIDDUEDATE');" style="cursor: pointer;">
+
+                                                                            BID DUE DATE
+                                                                            <i id="BIDDUEDATEi" class="fa fa-sort-asc pull-right"></i>
+                                                                        </th>
+                                                                        <th width="auto" onclick="SortingFun('NOOFBIDS');" style="cursor: pointer;">
+
+                                                                            # NO OF BIDS
+                                                                            <i id="NOOFBIDSi" class="fa fa-sort-asc pull-right"></i>
+                                                                        </th>
+                                                                        <th width="auto" onclick="SortingFun('BIDREQUESTSTATUS');" style="cursor: pointer;">
+
+                                                                            BID REQUEST STATUS
+                                                                            <i id="BIDREQUESTSTATUSi" class="fa fa-sort-asc pull-right"></i>
+                                                                        </th>
+                                                                        <th style="cursor: pointer;">
+
+                                                                            AcTION
+
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td><span class="TITLE"></span></td>
+                                                                        <td><span class="RESPONSEDATE"></span></td>
+                                                                        <td><span class="BIDDUEDATE"></span></td>
+                                                                        <td><span class="NOOFBIDS"></span></td>
+                                                                        <td><span class="BIDREQUESTSTATUS"></span></td>
+                                                                        <td align="center"><a id="viewdata" title="View Details" role="button"><i class="fe fe-eye font18" style="cursor:pointer;"></i></a></td>
+
+                                                                    </tr>
+
+
+                                                                </tbody>
+
+
+
+
+                                                            </table>
+
+
+                                                        </div>
+                                                    </div><!-- end of card body -->
+                                                </div><!-- end of card -->
+                                            </div><!-- end of col -->
+                                        </div><!-- end of row -->
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Work Orders</h3>
+                                                        <div class="card-options">
+                                                            <a href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border-top">
+                                                        <div id="RawDatawork" class="table-responsive">
+                                                            <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                                                <thead>
+                                                                    <tr>
+
+
+                                                                        <th width="auto" onclick="SortingFunworkorder('TITLEWork');" style="cursor: pointer;">
+                                                                            TITLE
+                                                                            <i id="TITLEWorki" class="fa fa-sort-asc pull-right"></i>
+                                                                        </th>
+                                                                        <th width="auto" onclick="SortingFunworkorder('PROPERTYNAME');" style="cursor: pointer;">
+
+                                                                            PROPERTY NAME
+                                                                            <i id="PROPERTYNAMEi" class="fa fa-sort-asc pull-right"></i>
+                                                                        </th>
+                                                                        <th width="auto" onclick="SortingFunworkorder('WORKORDERSTARTDATE');" style="cursor: pointer;">
+
+                                                                            WORK ORDER START DATE
+                                                                            <i id="WORKORDERSTARTDATEi" class="fa fa-sort-asc pull-right"></i>
+                                                                        </th>
+                                                                        <th width="auto" onclick="SortingFunworkorder('WORKORDERDUEDATE');" style="cursor: pointer;">
+
+                                                                            WORK ORDER DUE DATE
+                                                                            <i id="WORKORDERDUEDATEi" class="fa fa-sort-asc pull-right"></i>
+                                                                        </th>
+                                                                        <th width="auto" onclick="SortingFunworkorder('WORKORDERSTATUS');" style="cursor: pointer;">
+
+                                                                            WORK ORDER STATUS
+                                                                            <i id="WORKORDERSTATUSi" class="fa fa-sort-asc pull-right"></i>
+                                                                        </th>
+                                                                        <th style="cursor: pointer;">
+
+                                                                            ACTION
+
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td><span class="TITLE"></span></td>
+                                                                        <td><span class="PROPERTYNAME"></span></td>
+                                                                        <td><span class="WORKORDERSTARTDATE"></span></td>
+                                                                        <td><span class="WORKORDERDUEDATE"></span></td>
+                                                                        <td><span class="WORKORDERSTATUS"></span></td>
+                                                                        <td align="center"><a id="viewdata" title="View Details" role="button"><i class="fe fe-eye font18" style="cursor:pointer;"></i></a></td>
+                                                                    </tr>
+
+
+                                                                </tbody>
+
+
+
+
+                                                            </table>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div><!-- end of card -->
+                                            </div><!-- end of col -->
+                                        </div><!-- end of row -->
+                                    </div><!-- end of tab -->
+                                    <div class="tab-pane " id="feedback">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Feedback</h3>
+                                                        <div class="card-options">
+                                                            <a href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border-top">
+
+
+
+                                                        <div id="RawDataRating" class="table-responsive">
+                                                            <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th width="20%" onclick="SortingFeedback('RATING1');" style="cursor: pointer;">
+                                                                            RATINGS
+                                                                            <i id="RATING1i" class="fa fa-sort-asc pull-right"></i>
+                                                                        </th>
+                                                                        @*<th width="20%" onclick="SortingFeedback('RATING2');" style="cursor: pointer;">
+                                                RATING 2
+                                                <i id="RATING2i" class="fa fa-sort-asc pull-right"></i>
+                                            </th>
+                                            <th width="20%" onclick="SortingFeedback('RATING3');" style="cursor: pointer;">
+                                                RATING 3
+                                                <i id="RATING3i" class="fa fa-sort-asc pull-right"></i>
+                                            </th>*@
+                                                                        <th width="auto" onclick="SortingFeedback('MESSAGE');" style="cursor: pointer;">
+                                                                            MESSAGE
+                                                                        </th>
+
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td><span class="RATING1"></span></td>
+                                                                        @*<td><span class="RATING2"></span></td>
+                                            <td><span class="RATING3"></span></td>*@
+                                                                        <td><span class="MESSAGE"></span></td>
+
+                                                                    </tr>
+
+
+                                                                </tbody>
+
+
+
+
+                                                            </table>
+
+
+                                                        </div>
+
+                                                    </div><!-- end of card body -->
+                                                </div><!-- end of card -->
+                                            </div><!-- end of col -->
+                                        </div><!-- end of row -->
+
+                                    </div><!-- end of tab -->
+                                </div><!-- end of form-div  -->
+
+                            </div><!--end of card body -->
+                        </div>
+                    </div>
+                </div>
+                <div id="invited" style="display:none">
+                    <div class="card">
+                        @Html.HiddenFor(model => model.CompanyKey)
+
+                        <div class="card-body">
+
+
+                            <div class="form-div">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="tabs-menu1 ">
+                                            <!-- Tabs -->
+                                            <ul class="nav panel-tabs">
+                                                <li class=""><a href="#detail" class="active" data-toggle="tab">Details</a></li>
+                                            </ul>
+
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="tab-content">
+                                    <div class="tab-pane active " id="detail">
+
+
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h3 class="card-title">Company Information</h3>
+                                                        <div class="card-options">
+                                                            <a onclick=" EditPage();" class="btn btn-primary ml-auto  pull-right text-white" style="display:block;" title="Edit"><i class="fa fa-pencil"></i> Edit & Resend Invitation</a>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body border-top">
+                                                        </h4>
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Company Name</label>
+                                                                    <p>@Model.CompanyName</p>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Address 1</label>
+                                                                    <p>@Model.Address</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Address 2</label>
+                                                                    <p>@Model.Address2</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">City</label>
+                                                                    @Model.City
+                                                                </div>
+                                                            </div><!-- end of col -->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">State</label>
+                                                                    @Model.State
+                                                                </div>
+                                                            </div><!-- end of col -->
+
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Zip</label>
+                                                                    @Model.Zip
+                                                                </div>
+                                                            </div><!-- end of col -->
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Name</label>
+                                                                    @Model.Work
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Phone</label>
+                                                               @Model.CellPhone
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-md-4">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Email</label>
+                                                                    @Model.Email
+                                                                </div>
+                                                            </div>
+
+
+
+                                                        </div><!-- end of row -->
+
+                                                    </div><!-- card body end -->
+                                                </div><!-- card end -->
+                                            </div><!-- col end -->
+                                        </div><!-- row end -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                    </div>
+
+                                    <!-- row end -->
+
+
+                                </div><!-- end of form-div  -->
+
+                            </div><!--end of card body -->
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="pagination" style="display:none;">
+                <input type="hidden" id="HdnSortValue" value="order by rs.Title asc" />
+                <input type="hidden" id="HdnSortValueRatingOne" value="order by rs.RatingOne asc" />
+                <input type="hidden" id="HdnPageIndex" value="1" />
+                <input type="hidden" id="PageSize" value="1000" />
+                <input type="hidden" id="TITLEhdn" value="asc" />
+                <input type="hidden" id="RESPONSEDATEhdn" value="asc" />
+                <input type="hidden" id="BIDDUEDATEhdn" value="asc" />
+                <input type="hidden" id="NOOFBIDShdn" value="asc" />
+                <input type="hidden" id="BIDREQUESTSTATUShdn" value="asc" />
+                <input type="hidden" id="TITLEWorkhdn" value="asc" />
+                <input type="hidden" id="PROPERTYNAMEhdn" value="asc" />
+                <input type="hidden" id="WORKORDERSTARTDATEhdn" value="asc" />
+                <input type="hidden" id="WORKORDERDUEDATEhdn" value="asc" />
+                <input type="hidden" id="WORKORDERSTATUShdn" value="asc" />
+                <input type="hidden" id="RATING1hdn" value="asc" />
+                <input type="hidden" id="RATING2hdn" value="asc" />
+                <input type="hidden" id="RATING3hdn" value="asc" />
+            </div>
+
+
+        </div>
+    </div>
+
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+</div>
+<!-- End app-content-->
+
+
+<script>
+
+    $(document).ready(function () {
+        debugger;
+        bindservice();
+        bindDocument();
+        insurancetableFill();
+        $("#PMVen").closest('li').addClass('active');
+        $("#PMVed1").addClass('active');
+        var sorted = '';
+        $("#SortValuee").val(sorted);
+        $("#ddlload").hide();
+        $(".advance_search").click(function () {
+            $("#advancesearch3").toggle(500);
+        });
+        $(".overlayclose").click(function () {
+            $("#advancesearch3").hide();
+        });
+        $('.loader-wrapper').show();
+        $.get('/PMVendor/IndexinsurancePaging', { PageSize: 0, PageIndex: 1, Search: '', Sort: sorted }, function (response) {
+            $("#RawDatas table tbody tr:eq(0)").hide();
+            $(".loader-wrapper").hide();
+        });
+        checkPoratl();
+        checkInvitedOrNot()
+    });
+
+
+
+
+      function checkPoratl()
+         {
+         $.ajax({
+            url: '@Url.Action("checkPortal", "PMVendor")',
+            cache: false,
+             data:
+             {
+              PropertyKey: $('#PropertyKey').val()
+            },
+            success: function (response)
+            {
+                debugger;
+
+                if (response == false) {
+                     window.location.href = '@Url.Action("Index", "Login")';
+                }
+
+                else {
+
+                }
+
+            }
+        });
+    }
+
+     function checkInvitedOrNot()
+     {
+
+         $.ajax({
+            url: '@Url.Action("checkInvitedOrNot", "PMVendor")',
+            cache: false,
+             data:
+             {
+                 CompanyKey: $("#CompanyKey").val()
+            },
+            success: function (response)
+            {
+                debugger;
+
+                if (response == true) {
+                    $("#invited").show();
+                    $("#notinvited").hide();
+                }
+                else {
+                    $("#invited").hide();
+                    $("#notinvited").show();
+                }
+
+            }
+        });
+    }
+
+    function LoadSortTableFill() {
+        //debugger;
+        var  a =
+        $.ajax({
+            url: '@Url.Action("IndexvendorBidREquestPaging", "PMVendor")',
+            cache: false,
+            data: {
+                PageSize: $('#PageSize').val(),
+                PageIndex: $('#HdnPageIndex').val(),
+                Sort: $("#HdnSortValue").val(),
+                CompanyKey: $('#CompanyKey').val()
+            },
+            success: function (response)
+            {
+                debugger;
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    //debugger;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt($('#PageSize').val()));
+                    curRecords = curRecords - ($('#PageSize').val() - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+
+                } else {
+
+                }
+                $("#RawDatabid table tbody tr:not(:first)").remove();
+                $("#RawDatabid table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    debugger;
+                    var table = $("#RawDatabid table tbody tr:eq(0)").clone(true);
+                    $(".TITLE", table).html(response[i].Title);
+
+
+                    if (response[i].sstartddate == "01/01/00") {
+                        $(".RESPONSEDATE", table).html();
+
+                    }
+                    else {
+                        $(".RESPONSEDATE", table).html(response[i].sstartddate);
+                    }
+                    $(".BIDDUEDATE", table).html(response[i].BidDueDate);
+                    $(".NOOFBIDS", table).html(formatNumber(response[i].NoofBid,false));
+                    $(".BIDREQUESTSTATUS", table).html(response[i].BidRequestStatus);
+
+                    $("#viewdata", table).attr('href', '/PMVendor/PMVendorBidRequestDetails?BidRequestKey=' + response[i].BidRequestKey + '&ComapanyKey=' + response[i].CompanyKey);
+
+                    $("#RawDatabid table").append(table);
+                }
+                $("#RawDatabid table tbody tr:eq(0)").hide();
+
+                $("#loading1").hide();
+            }
+        });
+    }
+
+
+
+    function LoadSortTableFillforWorkOrder() {
+        //debugger;
+
+        $.ajax({
+            url: '@Url.Action("IndexvendorWorkOrderPaging", "PMVendor")',
+            cache: false,
+            data: {
+                PageSize: $('#PageSize').val(),
+                PageIndex: $('#HdnPageIndex').val(),
+                Sort: $("#HdnSortValue").val(),
+                CompanyKey: $('#CompanyKey').val()
+            },
+            success: function (response)
+            {
+                debugger;
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    //debugger;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt($('#PageSize').val()));
+                    curRecords = curRecords - ($('#PageSize').val() - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+
+                } else {
+
+                }
+                $("#RawDatawork table tbody tr:not(:first)").remove();
+                $("#RawDatawork table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    debugger;
+                    var table = $("#RawDatawork table tbody tr:eq(0)").clone(true);
+                    $(".TITLE", table).html(response[i].Title);
+                    $(".PROPERTYNAME", table).html(response[i].Propertyname);
+
+
+
+                    if (response[i].sstartddate == "01/01/00") {
+                        $(".WORKORDERSTARTDATE", table).html();
+
+                    }
+                    else {
+                        $(".WORKORDERSTARTDATE", table).html(response[i].sstartddate);
+                    }
+                    $(".WORKORDERDUEDATE", table).html(response[i].BidDueDate);
+                    $(".WORKORDERSTATUS", table).html(response[i].BidRequestStatus);
+
+                    $("#viewdata", table).attr('href', '/PMVendor/PMVendorBidRequestDetails?BidRequestKey=' + response[i].BidRequestKey + '&ComapanyKey=' + response[i].CompanyKey);
+
+                    $("#RawDatawork table").append(table);
+                }
+                $("#RawDatawork table tbody tr:eq(0)").hide();
+
+                $("#loading1").hide();
+            }
+        });
+    }
+
+     function LoadSortTableFillforVendorFeedback() {
+        //debugger;
+
+        $.ajax({
+            url: '@Url.Action("IndexvendorFeedBackPaging", "PMVendor")',
+            cache: false,
+            data: {
+                PageSize: $('#PageSize').val(),
+                PageIndex: $('#HdnPageIndex').val(),
+                Sort: $("#HdnSortValueRatingOne").val(),
+                CompanyKey: $('#CompanyKey').val()
+            },
+            success: function (response)
+            {
+                debugger;
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    //debugger;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt($('#PageSize').val()));
+                    curRecords = curRecords - ($('#PageSize').val() - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+
+                }
+                else {
+
+                }
+                $("#RawDataRating table tbody tr:not(:first)").remove();
+                $("#RawDataRating table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    debugger;
+                    var table = $("#RawDataRating table tbody tr:eq(0)").clone(true);
+                    $(".RATING1", table).html(response[i].RatingOne);
+                    $(".RATING2", table).html(response[i].RatingTwo);
+                    $(".RATING3", table).html(response[i].RatingThree);
+                    $(".MESSAGE", table).html(response[i].Message);
+
+
+                    $("#RawDataRating table").append(table);
+                }
+                $("#RawDataRating table tbody tr:eq(0)").hide();
+
+
+                $("#loading1").hide();
+            }
+        });
+    }
+
+
+
+    $("#bidrequest").click(function () {
+
+        LoadSortTableFill();
+        LoadSortTableFillforWorkOrder();
+    });
+
+
+
+    $("#starvendor").click(function () {
+
+        LoadSortTableFillforVendorFeedback();
+    });
+
+
+    $("#starvenor").click(function () {
+
+
+
+
+      
+
+        var a = $("#CompanyKey").val();
+
+        window.location.href = 'MarkstarOrNot?CompanyKey=' + $("#CompanyKey").val();
+
+    });
+
+
+    function SortingFun(val) {
+
+        $('#HdnPageIndex').val('1');
+        var Sort = $('#SortValue').val();
+        //debugger;
+        var ascdesc = 'fa-sort-asc';
+        var ascdesc1 = 'fa-sort-desc';
+        var ascdesc3 = 'fa-sort-asc';
+        var ascdesc4 = 'fa-sort-desc';
+
+        $('.loader-wrapper').show();
+        var Sort = '';
+        $('#HdnPageIndex').val('1');
+        $('#TITLEi').removeClass(ascdesc4);
+        $('#TITLEi').addClass(ascdesc3);
+
+        $('#RESPONSEDATEi').removeClass(ascdesc4);
+        $('#RESPONSEDATEi').addClass(ascdesc3);
+
+        $('#BIDDUEDATEi').removeClass(ascdesc4);
+        $('#BIDDUEDATEi').addClass(ascdesc3);
+
+
+
+        $('#NOOFBIDSi').removeClass(ascdesc4);
+        $('#NOOFBIDSi').addClass(ascdesc3);
+
+
+
+        $('#BIDREQUESTSTATUSi').removeClass(ascdesc4);
+        $('#BIDREQUESTSTATUSi').addClass(ascdesc3);
+        //debugger;
+        //-----------------------------------------------------------
+        if (val == 'TITLE') {
+            if ($('#TITLEhdn').val() == 'asc') {
+                Sort = 'order by rs.Title desc';
+                $('#TITLEhdn').val('desc');
+                $('#TITLEi').removeClass(ascdesc);
+                $('#TITLEi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.Title asc';
+                $('#TITLEhdn').val('asc');
+                $('#TITLEi').removeClass(ascdesc1);
+                $('#TITLEi').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------
+        if (val == 'RESPONSEDATE') {
+            if ($('#RESPONSEDATEhdn').val() == 'asc') {
+                Sort = 'order by rs.StartDate desc';
+                $('#RESPONSEDATEhdn').val('desc');
+                $('#RESPONSEDATEi').removeClass(ascdesc);
+                $('#RESPONSEDATEi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.StartDate asc';
+                $('#RESPONSEDATEhdn').val('asc');
+                $('#RESPONSEDATEi').removeClass(ascdesc1);
+                $('#RESPONSEDATEi').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------------
+        if (val == 'BIDDUEDATE') {
+            if ($('#BIDDUEDATEhdn').val() == 'asc') {
+                Sort = 'order by rs.BidDueDate desc';
+                $('#BIDDUEDATEhdn').val('desc');
+                $('#BIDDUEDATEi').removeClass(ascdesc);
+                $('#BIDDUEDATEi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.BidDueDate asc';
+                $('#BIDDUEDATEhdn').val('asc');
+                $('#BIDDUEDATEi').removeClass(ascdesc1);
+                $('#BIDDUEDATEi').addClass(ascdesc);
+            }
+        }
+        if (val == 'NOOFBIDS') {
+
+
+            if ($('#NOOFBIDShdn').val() == 'asc') {
+                Sort = 'order by NoofBid desc';
+                $('#BIDDUEDATEhdn').val('desc');
+                $('#NOOFBIDSi').removeClass(ascdesc);
+                $('#NOOFBIDSi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by NoofBid asc';
+                $('#NOOFBIDShdn').val('asc');
+                $('#NOOFBIDSi').removeClass(ascdesc1);
+                $('#NOOFBIDSi').addClass(ascdesc);
+            }
+        }
+       if (val == 'BIDREQUESTSTATUS') {
+                    if ($('#BIDREQUESTSTATUShdn').val() == 'asc') {
+                        Sort = 'order by rs.BidRequestStatus desc';
+                        $('#BIDREQUESTSTATUShdn').val('desc');
+                        $('#BIDREQUESTSTATUSi').removeClass(ascdesc);
+                        $('#BIDREQUESTSTATUSi').addClass(ascdesc1);
+                    }
+                    else {
+                        Sort = 'order by rs.BidRequestStatus asc';
+                        $('#BIDREQUESTSTATUShdn').val('asc');
+                        $('#BIDREQUESTSTATUSi').removeClass(ascdesc1);
+                        $('#BIDREQUESTSTATUSi').addClass(ascdesc);
+                    }
+
+
+
+        }
+
+
+        $("#HdnSortValue").val(Sort);
+        $('.loader-wrapper').show();
+        LoadSortTableFill();
+    }
+
+
+    function SortingFunworkorder(val) {
+
+        $('#HdnPageIndex').val('1');
+        var Sort = $('#SortValue').val();
+        //debugger;
+        var ascdesc = 'fa-sort-asc';
+        var ascdesc1 = 'fa-sort-desc';
+        var ascdesc3 = 'fa-sort-asc';
+        var ascdesc4 = 'fa-sort-desc';
+
+        $('.loader-wrapper').show();
+        var Sort = '';
+        $('#HdnPageIndex').val('1');
+        $('#TITLEWorki').removeClass(ascdesc4);
+        $('#TITLEWorki').addClass(ascdesc3);
+
+        $('#PROPERTYNAMEi').removeClass(ascdesc4);
+        $('#PROPERTYNAMEi').addClass(ascdesc3);
+
+        $('#WORKORDERSTARTDATEi').removeClass(ascdesc4);
+        $('#WORKORDERSTARTDATEi').addClass(ascdesc3);
+
+
+
+        $('#WORKORDERDUEDATEi').removeClass(ascdesc4);
+        $('#WORKORDERDUEDATEi').addClass(ascdesc3);
+
+
+
+        $('#WORKORDERSTATUSi').removeClass(ascdesc4);
+        $('#WORKORDERSTATUSi').addClass(ascdesc3);
+        //debugger;
+        //-----------------------------------------------------------
+        if (val == 'TITLEWork') {
+            if ($('#TITLEWorkhdn').val() == 'asc') {
+                Sort = 'order by rs.Title desc';
+                $('#TITLEWorkhdn').val('desc');
+                $('#TITLEWorki').removeClass(ascdesc);
+                $('#TITLEWorki').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.Title asc';
+                $('#TITLEWorkhdn').val('asc');
+                $('#TITLEWorki').removeClass(ascdesc1);
+                $('#TITLEWorki').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------
+        if (val == 'PROPERTYNAME') {
+            if ($('#PROPERTYNAMEhdn').val() == 'asc') {
+                Sort = 'order by p.title desc';
+                $('#PROPERTYNAMEhdn').val('desc');
+                $('#PROPERTYNAMEi').removeClass(ascdesc);
+                $('#PROPERTYNAMEi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by p.title asc';
+                $('#PROPERTYNAMEhdn').val('asc');
+                $('#PROPERTYNAMEi').removeClass(ascdesc1);
+                $('#PROPERTYNAMEi').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------------
+        if (val == 'WORKORDERSTARTDATE') {
+            if ($('#WORKORDERSTARTDATEhdn').val() == 'asc') {
+                Sort = 'order by rs.StartDate desc';
+                $('#WORKORDERSTARTDATEhdn').val('desc');
+                $('#WORKORDERSTARTDATEi').removeClass(ascdesc);
+                $('#WORKORDERSTARTDATEi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.StartDate asc';
+                $('#WORKORDERSTARTDATEhdn').val('asc');
+                $('#WORKORDERSTARTDATEi').removeClass(ascdesc1);
+                $('#WORKORDERSTARTDATEi').addClass(ascdesc);
+            }
+        }
+        if (val == 'WORKORDERDUEDATE') {
+
+
+            if ($('#WORKORDERDUEDATEhdn').val() == 'asc') {
+                Sort = 'order by rs.BidDueDate desc';
+                $('#WORKORDERDUEDATEhdn').val('desc');
+                $('#WORKORDERDUEDATEi').removeClass(ascdesc);
+                $('#WORKORDERDUEDATEi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.BidDueDate asc';
+                $('#WORKORDERDUEDATEhdn').val('asc');
+                $('#WORKORDERDUEDATEi').removeClass(ascdesc1);
+                $('#WORKORDERDUEDATEi').addClass(ascdesc);
+            }
+        }
+        if (val == 'WORKORDERSTATUS') {
+            if ($('#WORKORDERSTATUShdn').val() == 'asc') {
+                Sort = 'order by rs.BidRequestStatus desc';
+                $('#WORKORDERSTATUShdn').val('desc');
+                $('#WORKORDERSTATUSi').removeClass(ascdesc);
+                $('#WORKORDERSTATUSi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.BidRequestStatus asc';
+                $('#WORKORDERSTATUShdn').val('asc');
+                $('#WORKORDERSTATUSi').removeClass(ascdesc1);
+                $('#WORKORDERSTATUSi').addClass(ascdesc);
+            }
+
+
+
+        }
+
+
+        $("#HdnSortValue").val(Sort);
+        $('.loader-wrapper').show();
+        LoadSortTableFillforWorkOrder();
+    }
+
+
+
+    function SortingFeedback(val) {
+
+        $('#HdnPageIndex').val('1');
+        var Sort = $('#SortValue').val();
+        //debugger;
+        var ascdesc = 'fa-sort-asc';
+        var ascdesc1 = 'fa-sort-desc';
+        var ascdesc3 = 'fa-sort-asc';
+        var ascdesc4 = 'fa-sort-desc';
+
+        $('.loader-wrapper').show();
+        var Sort = '';
+        $('#HdnPageIndex').val('1');
+        $('#RATING1i').removeClass(ascdesc4);
+        $('#RATING1i').addClass(ascdesc3);
+
+        $('#RATING2i').removeClass(ascdesc4);
+        $('#RATING2i').addClass(ascdesc3);
+
+        $('#RATING3i').removeClass(ascdesc4);
+        $('#RATING3i').addClass(ascdesc3);
+
+        //-----------------------------------------------------------
+        if (val == 'RATING1') {
+            if ($('#RATING1hdn').val() == 'asc') {
+                Sort = 'order by rs.RatingOne desc';
+                $('#RATING1hdn').val('desc');
+                $('#RATING1i').removeClass(ascdesc);
+                $('#RATING1i').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.RatingOne asc';
+                $('#RATING1hdn').val('asc');
+                $('#RATING1i').removeClass(ascdesc1);
+                $('#RATING1i').addClass(ascdesc);
+            }
+        }
+
+        if (val == 'RATING2') {
+            if ($('#RATING2hdn').val() == 'asc') {
+                Sort = 'order by rs.RatingTwo desc';
+                $('#RATING2hdn').val('desc');
+                $('#RATING2i').removeClass(ascdesc);
+                $('#RATING2i').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.RatingTwo asc';
+                $('#RATING2hdn').val('asc');
+                $('#RATING2i').removeClass(ascdesc1);
+                $('#RATING2i').addClass(ascdesc);
+            }
+        }
+
+        if (val == 'RATING3') {
+            if ($('#RATING3hdn').val() == 'asc') {
+                Sort = 'order by rs.RatingThree desc';
+                $('#RATING3hdn').val('desc');
+                $('#RATING3i').removeClass(ascdesc);
+                $('#RATING3i').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.RatingThree asc';
+                $('#RATING3hdn').val('asc');
+                $('#RATING3i').removeClass(ascdesc1);
+                $('#RATING3i').addClass(ascdesc);
+            }
+        }
+
+        $("#HdnSortValueRatingOne").val(Sort);
+        $('.loader-wrapper').show();
+        LoadSortTableFillforVendorFeedback();
+    }
+
+
+
+    function insurancetableFill()
+    {
+        debugger;
+        $.ajax({
+
+            url: '@Url.Action("bindDocument12", "PMVendor")',
+            cache: false,
+            data:
+            {
+                //CompanyKey: $('#CompanyKey').val()
+                CompanyKey: $('#CompanyKey').val()
+            },
+            success: function (response) {
+
+                if (parseInt(response.length) > 0) {
+                    if (response.do) {
+
+                    }
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    debugger;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt($('#PageSize').val()));
+                    curRecords = curRecords - ($('#PageSize').val() - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                } else {
+                    $("#ddlload").hide();
+                }
+
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                $("#RawDatas table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++) {
+                    //InsuranceAmount EndDate
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    //alert(response[i].PolicyNumber);
+                    $(".PolicyNumber", table).html(response[i].Insurance.PolicyNumber);
+                    $(".InsuranceAmount", table).html(response[i].Insurance.InsuranceAmount+".00");
+                    $(".EndDate", table).html(response[i].Insurance.EndDates);
+                    //$("#viewdata", table).attr('href', '/VendorManager/VendorView?CompanyKey=' + response[i].InsuranceKey);
+                    $("#viewdata1", table).attr("onclick", "toggleModal(" + response[i].Insurance.InsuranceKey + ")");
+                    $("#RawDatas table").append(table);
+                }
+                $("#RawDatas table tbody tr:eq(0)").hide();
+                $("#loading1").hide();
+            }
+        });
+    }
+
+    function ToJavaScriptDate(value) {
+        var pattern = /Date\(([^)]+)\)/;
+        var results = pattern.exec(value);
+        var dt = new Date(parseFloat(results[1]));
+        return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+    }
+    function EditPage()
+    {
+        var a = $("#CompanyKey").val();
+        window.location.href = 'PMVendorEdit?CompanyKey=' + $("#CompanyKey").val();
+    }
+
+
+
+    function removeser(me) {
+        debugger;
+        var m = $(me).parent("td").parent("tr").find('.ser-fl').text();
+
+        var a = $("#CompanyKey").val();
+        var b = $(me).parent("td").parent("tr").find('.ser-fl').text();
+
+        var r = confirm('Are you sure you want to delete this record?');
+        if (r == true)
+        {
+            window.location.href = "DeleteService?CompanyKey=" + a + "&servicename=" + b;
+        }
+
+
+    }
+    function removedocu(me) {
+        debugger;
+        var m = $(me).parent("td").parent("tr").find('.documentid').val();
+
+        var a = $("#CompanyKey").val();
+
+
+        var r = confirm('Are you sure you want to delete this record?');
+        if (r == true) {
+            window.location.href = "Deletedocument?CompanyKey=" + a + "&documentid=" + m;
+        }
+
+
+    }
+
+    $("#btnadd").click(function () {
+
+        $("#vendordiv table tbody tr:eq(0)").show();
+        var vendor = $("#ServiceTitle1 option:selected").map(function () {
+            var cln = $("#vendordiv table tbody tr:eq(0)").clone(true);
+            $(".venspan", cln).html($(this).text());
+            $("#vendordiv table").append(cln);
+
+        }).get();
+
+        $("#vendordiv table tbody tr:eq(0)").hide();
+
+        if ($('#ServiceTitle1_chosen').find('.chosen-choices').find('.search-choice').length == 0) {
+            $('.errormessage').html('Please select vendor.');
+            $('#Errormanager').show();
+            return false;
+        }
+        else {
+            var vendor = $("#Choosen option:selected").map(function () {
+                return $(this).val();
+            }).get().join(',');
+            $('#ServiceKey').val(vendor);
+        }
+
+    });
+
+
+
+      function bindDocument()
+      {
+         $.ajax({
+            url: '@Url.Action("bindDocument", "PMVendor")',
+            cache: false,
+             data:
+              {
+                 CompanyKey: $('#CompanyKey').val()
+              },
+            success: function (response)
+            {
+                debugger;
+                $("#divFileUploader table tbody tr:not(:first)").remove();
+                $("#divFileUploader table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    var cln = $("#divFileUploader table tbody tr:eq(0)").clone(true);
+                    $(".upd-fl", cln).html(response[i].FileName);
+                    $("#divFileUploader table").append(cln);
+                }
+                $("#divFileUploader table tbody tr:eq(0)").hide();
+            }
+        });
+    }
+
+
+   function bindservice()
+   {
+       debugger;
+       $.ajax({
+
+            url: '@Url.Action("bindservice", "PMVendor")',
+            cache: false,
+             data:
+              {
+                 CompanyKey: $('#CompanyKey').val()
+              },
+            success: function (response)
+            {
+                debugger;
+                $("#divservc table tbody tr:not(:first)").remove();
+                $("#divservc table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    var cln = $("#divservc table tbody tr:eq(0)").clone(true);
+                    $(".ser-fl", cln).html(response[i].Title);
+                    $("#divservc table").append(cln);
+                }
+                $("#divservc table tbody tr:eq(0)").hide();
+                var a = $("#dataTableExample tr").length
+
+                if ($("#dataTableExample tr").length == 8) {
+                    $('.errormessage').html('Data Is Not Found.');
+                    $('#Error').show();
+                    $("#divservc table thead tr:eq(0)").hide();
+                    $("#divservc table tbody tr:eq(0)").hide();
+                }
+
+            }
+        });
+    }
+
+    function toggleModal(insuranceKey) {
+            var companyKey = $('#CompanyKey').val();
+            $.ajax({
+                url: '@Url.Action("GetInsuranceDetails", "PMVendor")',
+                cache: false,
+                data:
+                {
+                    CompanyKey: companyKey,
+                    InsuranceKey: insuranceKey
+                },
+                success: function (response) {
+                    debugger;
+                    if (response != null && response.length > 0) {
+                        //alert("for" + response[0].PolicyNumber);
+                        $("#policynumberView").text(response[0].Insurance.PolicyNumber);
+                        //alert("for" + response[0].InsuranceAmount);
+                        $("#amountView").text("$" + response[0].Insurance.InsuranceAmount+".00");
+                        //alert("for" + response[0].StartDates);
+                        $("#startdateView").text(response[0].Insurance.StartDates);
+                        //alert("for" + response[0].EndDate);
+                        $("#enddateView").text(response[0].Insurance.EndDates);
+                        //alert("for" + response[0].RenewalDates);
+                        $("#renewaldateView").text(response[0].Insurance.RenewalDates);
+
+                        //alert("for");
+                        $("#viewinsurance").modal('toggle');
+
+                        //for(var doc = 0; doc < response.Document.Count; doc++)
+                        //{
+                            //$("#DocumentName").text(response[0].Document.FileName);
+                        //}
+                       
+                        
+
+
+                    }
+                }
+            });
+    }
+
+    function someFunction()
+    {
+        alert("");
+    }
+
+</script>

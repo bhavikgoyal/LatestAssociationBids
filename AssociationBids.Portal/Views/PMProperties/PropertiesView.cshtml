@@ -1,0 +1,1707 @@
+﻿@model AssociationBids.Portal.Model.PropertyModel
+@using AssociationBids.Portal.Common
+@{
+    /**/
+
+    ViewBag.Title = "PropertiesView";
+    Layout = "~/Views/Shared/_PropertyManagerLayout.cshtml";
+
+    string Errormessage = Convert.ToString(TempData["ErrorMessage"]);
+    string SuccessMessage = Convert.ToString(TempData["SuccessMessage"]);
+}
+
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<link href="~/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" />
+<link href="~/Content/themes/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" />
+<link href="~/assets/plugins/fileuploads/css/dropify.min.css" rel="stylesheet" />
+<script src="~/assets/plugins/fileuploads/js/dropify.js"></script>
+<script src="~/assets/plugins/fileuploads/js/dropify-demo.js"></script>
+<script src="~/assets/plugins/fileuploads/js/dropify.min.js"></script>
+<style>
+    div#ManagerChoosen_chosen {
+        width: 100% !important;
+    }
+
+    .selector_ED {
+        width: auto !important;
+    }
+
+    .chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+        background: url('../../Content/themes/cancelimg.jpg');
+    }
+
+    .chosen-select placeholder_text {
+        padding: 5px;
+    }
+
+    .Error {
+        color: red;
+    }
+
+    @@media (min-width: 768px) and (max-width: 991px) {
+        /* Show 4th slide on md if col-md-4*/
+        .carousel-inner .active.col-md-4.carousel-item + .carousel-item + .carousel-item + .carousel-item {
+            position: absolute;
+            top: 0;
+            right: -33.3333%; /*change this with javascript in the future*/
+            z-index: -1;
+            display: block;
+            visibility: visible;
+        }
+    }
+
+    @@media (min-width: 576px) and (max-width: 768px) {
+        /* Show 3rd slide on sm if col-sm-6*/
+        .carousel-inner .active.col-sm-6.carousel-item + .carousel-item + .carousel-item {
+            position: absolute;
+            top: 0;
+            right: -50%; /*change this with javascript in the future*/
+            z-index: -1;
+            display: block;
+            visibility: visible;
+        }
+    }
+
+    @@media (min-width: 576px) {
+        .carousel-item {
+            margin-right: 0;
+        }
+        /* show 2 items */
+        .carousel-inner .active + .carousel-item {
+            display: block;
+        }
+
+        .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
+        .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item {
+            transition: none;
+        }
+
+        .carousel-inner .carousel-item-next {
+            position: relative;
+            transform: translate3d(0, 0, 0);
+        }
+        /* left or forward direction */
+        .active.carousel-item-left + .carousel-item-next.carousel-item-left,
+        .carousel-item-next.carousel-item-left + .carousel-item,
+        .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item {
+            position: relative;
+            transform: translate3d(-100%, 0, 0);
+            visibility: visible;
+        }
+        /* farthest right hidden item must be also positioned for animations */
+        .carousel-inner .carousel-item-prev.carousel-item-right {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            display: block;
+            visibility: visible;
+        }
+        /* right or prev direction */
+        .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
+        .carousel-item-prev.carousel-item-right + .carousel-item,
+        .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item {
+            position: relative;
+            transform: translate3d(100%, 0, 0);
+            visibility: visible;
+            display: block;
+            visibility: visible;
+        }
+    }
+    /* MD */
+    @@media (min-width: 768px) {
+        /* show 3rd of 3 item slide */
+        .carousel-inner .active + .carousel-item + .carousel-item {
+            display: block;
+        }
+
+        .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item {
+            transition: none;
+        }
+
+        .carousel-inner .carousel-item-next {
+            position: relative;
+            transform: translate3d(0, 0, 0);
+        }
+        /* left or forward direction */
+        .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item {
+            position: relative;
+            transform: translate3d(-100%, 0, 0);
+            visibility: visible;
+        }
+        /* right or prev direction */
+        .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item {
+            position: relative;
+            transform: translate3d(100%, 0, 0);
+            visibility: visible;
+            display: block;
+            visibility: visible;
+        }
+    }
+    /* LG */
+    @@media (min-width: 991px) {
+        /* show 4th item */
+        .carousel-inner .active + .carousel-item + .carousel-item + .carousel-item {
+            display: block;
+        }
+
+        .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item {
+            transition: none;
+        }
+        /* Show 5th slide on lg if col-lg-3 */
+        .carousel-inner .active.col-lg-3.carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+            position: absolute;
+            top: 0;
+            right: -25%; /*change this with javascript in the future*/
+            z-index: -1;
+            display: block;
+            visibility: visible;
+        }
+        /* left or forward direction */
+        .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+            position: relative;
+            transform: translate3d(-100%, 0, 0);
+            visibility: visible;
+        }
+        /* right or prev direction //t - previous slide direction last item animation fix */
+        .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+            position: relative;
+            transform: translate3d(100%, 0, 0);
+            visibility: visible;
+            display: block;
+            visibility: visible;
+        }
+    }
+</style>
+<h2>PropertiesView</h2>
+
+
+
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item active" aria-current="page"><a href="PMPropertiesList">Properties</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Property Details</li>
+            </ol><!-- End breadcrumb -->
+
+        </div>
+        <!-- End page-header -->
+        @if (!string.IsNullOrEmpty(Errormessage))
+        {
+            <p class="alert alert-success alert-dismissible">
+                @Errormessage
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        @if (!string.IsNullOrEmpty(SuccessMessage))
+        {
+            <p class="alert alert-success alert-dismissible">
+                @SuccessMessage
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-body">
+
+                        <div class="form-div">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a href="~/PMBidRequests/PMBidRequestAdd?propertykey=@ViewBag.PropertyKey" class="btn btn-info " title="Add Bid Request"><i class="fe fe-plus"></i> Add Bid Request</a>
+                                    <a href="~/PMWorkOrders/PMWorkOrdersAdd?propertykey=@ViewBag.PropertyKey" class="btn btn-info " title="Add work order"><i class="fe fe-plus"></i> Add Work Order</a>
+                                </div>
+                                <div class="col-md-10 mt-4">
+                                    <div class="tabs-menu1 ">
+                                        <!-- Tabs -->
+                                        <ul class="nav panel-tabs">
+                                            <li class=""><a href="#detail" class="active" data-toggle="tab">Details</a></li>
+                                            <li><a href="#history" id="bidrequest" data-toggle="tab">History</a></li>
+
+
+                                        </ul>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="tab-content">
+                                <div class="tab-pane active " id="detail">
+
+                                    <div class="row">
+                                        @Html.HiddenFor(Model => Model.RKey)
+                                        <div class="col-12">
+                                            <div class="card">
+
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Property Detail</h3>
+                                                    <div class="card-options">
+                                                        <a onclick="EditPage();" class="btn btn-primary ml-auto text-white pull-right" title="Edit"><i class="fa fa-pencil"></i> Edit</a>
+                                                        <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                    </div>
+
+                                                </div>
+                                                <div class="card-body border-top">
+
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Title</label>
+                                                                        @Html.Label("", Model.Title)
+                                                                        @Html.HiddenFor(model => model.PropertyKey)
+
+                                                                    </div>
+                                                                </div><!-- end of col -->
+
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label"># No. of Units</label>
+                                                                        <p>@Utility.FormatNumberHelper(Model.NumberOfUnits,false)</p>
+
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="form-label">Description</label>
+                                                                        <p id="Description"></p>
+                                                                    </div>
+                                                                </div><!-- end of col -->
+                                                            </div><!--end of row -->
+                                                        </div><!-- end of col -->
+                                                        <div class="col-md-6">
+                                                            <div class="bidreq-box">
+                                                                <div class="row">
+                                                                    <h4 class="box-title">Default Bid Request Amount</h4>
+
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Bid Request Amount</label>
+                                                                            <p>@Utility.FormatNumberHelper(Model.BidRequestAmount,true)</p>
+                                                                        </div>
+                                                                    </div><!-- end of col -->
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-group">
+                                                                            <label class="form-label">Min. Insurance Amount</label>
+                                                                            <p>@Utility.FormatNumberHelper(Model.MinimumInsuranceAmount,true)</p>
+                                                                        </div>
+                                                                    </div><!-- end of col -->
+
+                                                                </div><!-- end of row-->
+                                                            </div><!-- end of bidreq-box -->
+                                                        </div><!-- end of col -->
+                                                    </div><!-- end of row -->
+
+                                                    <hr />
+                                                    <div class="row">
+
+
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Address 1</label>
+                                                                <p>@Model.Address</p>
+                                                            </div>
+                                                        </div><!-- end of col -->
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Address 2</label>
+                                                                <p>@Model.Address2</p>
+                                                            </div>
+                                                        </div><!-- end of col -->
+
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label">City</label>
+                                                                @Html.Label("", Model.City)
+                                                            </div>
+                                                        </div><!-- end of col -->
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label">State</label>
+                                                                @Html.Label("", Model.State)
+                                                            </div>
+                                                        </div><!-- end of col -->
+
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label class="form-label">Zip</label>
+                                                                @Html.Label("", Model.Zip)
+                                                            </div>
+                                                        </div><!-- end of col -->
+                                                    </div>
+                                                </div><!-- card body end -->
+                                            </div><!-- card end -->
+                                        </div><!-- col end -->
+                                    </div><!-- row end -->
+
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Photo</h3>
+                                                    <div class="popback" style="height:auto;width:70%; background-color:whitesmoke;position:absolute;top:50px; left:170px; z-index:100;padding-bottom: 31px; ">
+                                                        <button type="button" class="btn btn-md btn-danger closepop pull-right" style=" font-size:10px;" onclick="myclick()" id="btnclose">&times;</button>
+
+                                                        <div id="image"></div>
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="card-body border-top">
+
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="row">
+                                                                @foreach (var images in Model.img)
+                                                                {
+
+                                                                    if (images == null)
+
+                                                                    {
+
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <a target="_blank" href="@Url.Content(images)" class="" style="cursor: pointer;text-decoration:none;">
+
+
+                                                                            <img src="@Url.Content(images)" alt="Hejsan" style="width:200px; padding-top:26px; padding-left:26px; cursor:pointer;" />
+
+                                                                        </a>
+                                                                    }
+
+                                                                }
+
+
+                                                            </div><!--end of row -->
+                                                        </div><!-- end of col -->
+
+                                                    </div><!-- end of row -->
+
+                                                </div><!-- card body end -->
+                                            </div><!-- card end -->
+                                        </div><!-- col end -->
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="button-row d-flex">
+                                                        <button class="btn btn-primary ml-auto" type="button" data-toggle="modal" data-target="#uploadmodal" title="Upload">+ Add <i class="fe fe-upload"></i></button>
+                                                    </div>
+                                                    <hr />
+                                                    <div class="table-responsive" id="divFileUploader">
+                                                        <table id="dataTableExample" class="table table-striped table-bordered w-100 dataTable no-footer">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Document</th>
+                                                                    <th width="5%"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr id="HeaderId">
+                                                                    <td>
+
+                                                                        <a target="_blank" href="#" class="upd-fl" style="cursor: pointer;text-decoration:none;"></a>
+
+                                                                    </td>
+
+
+                                                                    <td align="center">
+                                                                        <a title="Delete" onclick="removeDoc(this);"><i class="fe fe-trash redtxt font18"></i></a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div><!-- end of table responsive -->
+                                                    <!-- Modal -->
+
+
+                                                    <div class="modal fade" id="uploadmodal" tabindex="-1" role="dialog" aria-labelledby="uploadmodalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="uploadmodalLabel">Upload</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">×</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <div class="form-group">
+                                                                                <label class="form-label">Upload Files</label>
+                                                                                @*<input type="file" id="Files" class="dropify" multiple />*@
+                                                                                <input id="txtfile1" type="file" accept=".pdf, .txt, .doc, .docx, .xls,.xlsx, .jpg,.jpeg, .png, .tif, .bmp" multiple="true" placeholder="Browse your files" class="dropify" />
+                                                                                @*<input id="Files" type="file" class="dropify" accept=".pdf, .txt, .doc, .docx, .xls,.xlsx, .jpg,.jpeg, .png, .tif, .bmp,.html" multiple />*@
+                                                                            </div>
+                                                                        </div><!-- end of col -->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                    <button type="button" class="btn btn-primary" id="btnUpload" data-dismiss="modal">Upload</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- end Modal -->
+
+
+
+
+                                                </div><!-- end of card body -->
+                                                <div class="card-footer">
+                                                    <div class="button-row d-flex">
+
+                                                    </div>
+                                                </div>
+                                            </div><!-- end of card -->
+                                        </div><!-- end of col -->
+                                    </div><!-- end of row -->
+                                    <!--single form panel-->
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="clearfix">
+                                                        <a href="javascript:void(0);" class="btn btn-primary pull-right" data-toggle="modal" id="btnaddmanager" data-target="#addmanagers" title="Add Manager" onclick="return Manager()">+Add Manager</a>
+                                                        @*<a onclick=" Editmanager();" class="btn btn-primary ml-auto text-white pull-right" title="Edit"><i class="fa fa-pencil"></i> Edit Manager</a>*@
+
+                                                    </div>
+                                                    <br />
+                                                    <div class="table-responsive" id="managerdiv">
+                                                        <div class="alert alert-danger" id="Error1" style="display:none; margin-top: 20px;">
+                                                            <span class="errormessage1"></span>
+                                                        </div>
+                                                        <table id="dataTableExample1" class="table table-striped table-bordered w-100 dataTable no-footer">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Assigned Managers</th>
+                                                                    <th width="5%" class="delcls"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>
+
+                                                                        <span class="manspan"></span>
+                                                                        <span class="manspanId" id="manspanidVal" style="display:none;"></span>
+                                                                    </td>
+                                                                    <td align="center" class="delcls"><a title="Delete" onclick="removemanager(this);"><i class="fe fe-trash redtxt font18"></i></a></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        @*<a onclick="Updatemanager();" class="btn btn-primary ml-auto  pull-right" title="Edit"><i class="fa fa-upload"></i>Update</a>*@
+
+                                                    </div><!-- end of table responsive -->
+                                                    <hr />
+                                                </div><!-- end of card body -->
+                                                <div class="card-footer">
+                                                    <div class="button-row d-flex">
+
+                                                    </div>
+                                                </div>
+                                            </div><!-- end of card -->
+                                        </div><!-- end of card -->
+                                    </div>
+                                    <!-- end of col -->
+                                    <!-- Message Modal -->
+                                    <div class="modal fade" id="addmanagers" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="addmanagers3">Assigned Managers</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    @*<form>*@
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="alert alert-danger" id="Errorformanagerpopup" style="display:none; margin-top: 20px;">
+                                                                <strong><span class="errormessage"></span></strong>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="form-label">Managers @Html.ValidationMessageFor(model => model.MinimumInsuranceAmount, "*", new { @class = "text-danger" })</label>
+                                                                @Html.HiddenFor(model => model.ResourceKey)
+                                                                @Html.DropDownList("ManagerChoosen", new SelectList(ViewBag.lstmanager, "Value", "Text"), new { @data_rel = "Choose_one", @class = "form-control chosen-select", @placeholder = "Please Select...", @multiple = "true", @onchange = "AddMan()" })
+                                                                @Html.DropDownList("ManagerChoosen1", new SelectList(ViewBag.lstmanager, "Value", "Text"), new { @data_rel = "form-control Choose_one", @class = "form-control chosen-select", @placeholder = "Please Select...", @multiple = "true" })
+                                                                @*@Html.DropDownList("ManagerChoosen", (List<SelectListItem>)ViewBag.lstmanager, new { @class = "form-control chosen-select", multiple = "multiple" })*@
+                                                                @*@html.dropdownlist("managerchoosen", new selectlist(viewbag.lstmanager, "value", "text"), new { @class = "form-control chosen-select", @multiple = "true", placeholder = "please choose " })*@
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- end of row -->
+                                                    @*</form>*@
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnadd">+ Add</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!
+                                </div>
+
+
+                                <!-- end of tab -->
+
+
+
+                            </div>
+                            <div class="tab-pane " id="history">
+                                <div class="row">
+                                    @Html.HiddenFor(Model => Model.BidRequestKey);
+                                    <div class="col-12">
+                                        <div class="card">
+
+                                            <div class="card-header">
+                                                <h3 class="card-title">Bid Requests</h3>
+                                                <div class="card-options">
+                                                    <a href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="card-body border-top">
+
+                                                <div id="RawDatabid" class="table-responsive">
+                                                  
+                                                    <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                                        <thead>
+                                                            <tr>
+
+                                                                <th width="auto" onclick="SortingFun('TITLE');" style="cursor: pointer;">
+                                                                    TITLE
+                                                                    <i id="TITLEi" class="fa fa-sort-asc pull-right"></i>
+                                                                </th>
+                                                                <th width="auto" " onclick="SortingFun('RESPONSEDATE');" style="cursor: pointer;">
+
+                                                                    RESPONSE DATE
+                                                                    <i id="RESPONSEDATEi" class="fa fa-sort-asc pull-right"></i>
+                                                                </th>
+                                                                <th width="auto" onclick="SortingFun('BIDDUEDATE');" style="cursor: pointer;">
+
+                                                                    BID DUE DATE
+                                                                    <i id="BIDDUEDATEi" class="fa fa-sort-asc pull-right"></i>
+                                                                </th>
+                                                                <th width="auto" onclick="SortingFun('NOOFBIDS');" style="cursor: pointer;">
+
+                                                                    # NO OF BIDS
+                                                                    <i id="NOOFBIDSi" class="fa fa-sort-asc pull-right"></i>
+                                                                </th>
+                                                                <th width="auto" onclick="SortingFun('BIDREQUESTSTATUS');" style="cursor: pointer;">
+
+                                                                    BID REQUEST STATUS
+                                                                    <i id="BIDREQUESTSTATUSi" class="fa fa-sort-asc pull-right"></i>
+                                                                </th>
+                                                                <th width="auto" onclick="SortingFun('BIDREQUESTSTATUS');" style="cursor: pointer;">
+
+                                                                    AcTION
+                                                                    <i id="BIDREQUESTSTATUSi" class="fa fa-sort-asc pull-right"></i>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><span class="TITLE"></span></td>
+                                                                <td><span class="RESPONSEDATE"></span></td>
+                                                                <td><span class="BIDDUEDATE"></span></td>
+                                                                <td><span class="NOOFBIDS"></span></td>
+                                                                <td><span class="BIDREQUESTSTATUS"></span></td>
+                                                                <td align="center"><a id="viewdata" title="View Details" role="button"><i class="fe fe-eye font18" style="cursor:pointer;"></i></a></td>
+                                                            </tr>
+
+
+                                                        </tbody>
+
+
+
+
+                                                    </table>
+
+
+                                                </div>
+                                            </div><!-- end of card body -->
+                                        </div><!-- end of card -->
+                                    </div><!-- end of col -->
+                                </div><!-- end of row -->
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Work Orders</h3>
+                                                <div class="card-options">
+                                                    <a href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="card-body border-top">
+                                                <div id="RawDatawork" class="table-responsive">
+                                                    <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                                        <thead>
+                                                            <tr>
+
+
+                                                                <th width="auto" onclick="SortingFunworkorder('TITLEWork');" style="cursor: pointer;">
+                                                                    TITLE
+                                                                    <i id="TITLEWorki" class="fa fa-sort-asc pull-right"></i>
+                                                                </th>
+                                                                <th width="auto" onclick="SortingFunworkorder('PROPERTYNAME');" style="cursor: pointer;">
+
+                                                                    PROPERTY NAME
+                                                                    <i id="PROPERTYNAMEi" class="fa fa-sort-asc pull-right"></i>
+                                                                </th>
+                                                                <th width="auto" onclick="SortingFunworkorder('WORKORDERSTARTDATE');" style="cursor: pointer;">
+
+                                                                    WORK ORDER START DATE
+                                                                    <i id="WORKORDERSTARTDATEi" class="fa fa-sort-asc pull-right"></i>
+                                                                </th>
+                                                                <th width="auto" onclick="SortingFunworkorder('WORKORDERDUEDATE');" style="cursor: pointer;">
+
+                                                                    WORK ORDER DUE DATE
+                                                                    <i id="WORKORDERDUEDATEi" class="fa fa-sort-asc pull-right"></i>
+                                                                </th>
+                                                                <th width="auto" onclick="SortingFunworkorder('WORKORDERSTATUS');" style="cursor: pointer;">
+
+                                                                    WORK ORDER STATUS
+                                                                    <i id="WORKORDERSTATUSi" class="fa fa-sort-asc pull-right"></i>
+                                                                </th>
+                                                                <th style="cursor: pointer;">
+
+                                                                    AcTION
+
+                                                                </th>
+
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><span class="TITLE"></span></td>
+                                                                <td><span class="PROPERTYNAME"></span></td>
+                                                                <td><span class="WORKORDERSTARTDATE"></span></td>
+                                                                <td><span class="WORKORDERDUEDATE"></span></td>
+                                                                <td><span class="WORKORDERSTATUS"></span></td>
+                                                                <td align="center"><a id="viewdata" title="View Details" role="button"><i class="fe fe-eye font18" style="cursor:pointer;"></i></a></td>
+                                                            </tr>
+
+
+                                                        </tbody>
+
+
+
+
+                                                    </table>
+
+
+                                                </div>
+                                            </div>
+                                        </div><!-- end of card -->
+                                    </div><!-- end of col -->
+                                </div><!-- end of row -->
+                            </div>
+                        </div><!-- end of row -->
+                        <!-- row end -->
+                    </div><!-- end of form-div  -->
+
+                </div><!--end of card body -->
+                <div class="pagination" style="display:none;">
+                    <input type="hidden" id="HdnSortValue" value="order by rs.Title asc" />
+                    <input type="hidden" id="HdnSortValueRatingOne" value="order by rs.RatingOne asc" />
+                    <input type="hidden" id="HdnPageIndex" value="1" />
+                    <input type="hidden" id="PageSize" value="1000" />
+                    <input type="hidden" id="TITLEhdn" value="asc" />
+                    <input type="hidden" id="RESPONSEDATEhdn" value="asc" />
+                    <input type="hidden" id="BIDDUEDATEhdn" value="asc" />
+                    <input type="hidden" id="NOOFBIDShdn" value="asc" />
+                    <input type="hidden" id="BIDREQUESTSTATUShdn" value="asc" />
+                    <input type="hidden" id="TITLEWorkhdn" value="asc" />
+                    <input type="hidden" id="PROPERTYNAMEhdn" value="asc" />
+                    <input type="hidden" id="WORKORDERSTARTDATEhdn" value="asc" />
+                    <input type="hidden" id="WORKORDERDUEDATEhdn" value="asc" />
+                    <input type="hidden" id="WORKORDERSTATUShdn" value="asc" />
+                    <input type="hidden" id="RATINGhdn" value="asc" />
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+    
+    <a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+    <link rel="stylesheet" href="../assets/css/cust-wizard.css">
+    <link href="../assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
+    <script src="../assets/js/cust-wizard.js"></script>
+    <script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+    <script src="../assets/plugins/fileuploads/js/dropify.js"></script>
+    <script src="../assets/plugins/fileuploads/js/dropify-demo.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            debugger;
+            var Description = '@Model.Description';
+            var Descriptions = Description.replace(/&lt;br&gt;/g, "<br/>");
+            $('#Description').html(Descriptions);
+           
+            $('#loader').show();
+        $("#Pmpro").closest('li').addClass('active');
+        $("#Pmpro1").addClass('active');
+         bindDocument();
+         bindmanager();
+         checkPoratl();
+         $('#Latitude').val('');
+         $('#Longitude').val('');
+         $(".chosen-select").chosen();
+
+         $('.errormessage').html('');
+        $("#Error").hide();
+        $('.errormessage1').html('');
+        $("#Error1").hide();
+        $(".popback").hide();
+        $(".fullblack").hide();
+         $('#HeaderId').hide();
+         $('#DocumentId').hide();
+         $("#news_date").datepicker();
+         $("#Errorformanager").hide();
+         $('#Errorformanagerpopup').hide();
+         $('#loader').hide();
+
+         $('#Errorformanagerpopup').hide();
+        $(".advance_search").click(function () {
+            $("#advancesearch3").toggle(500);
+        });
+        $(".overlayclose").click(function () {
+            $("#advancesearch3").hide();
+        });
+
+    });
+
+
+    function AddMan() {
+        if ($('.search-choice').length != 0) {
+
+            $('#btnadd').prop('disabled', false);
+        }
+    }
+
+    function EditPage() {
+        window.location.href = 'PMPropertyEdit?PropertyKey=' + $("#PropertyKey").val();
+
+    }
+
+
+    $("#bidrequest").click(function () {
+
+        LoadSortTableFill();
+        LoadSortTableFillforWorkOrder();
+    });
+
+
+
+
+      function checkPoratl()
+    {
+
+         $.ajax({
+            url: '@Url.Action("checkPortal", "PMProperties")',
+            cache: false,
+             data:
+             {
+              PropertyKey: $('#PropertyKey').val()
+            },
+            success: function (response)
+            {
+                debugger;
+
+                if (response == false) {
+                     window.location.href = '@Url.Action("Index", "Login")';
+                }
+
+                else {
+
+                }
+
+            }
+        });
+    }
+
+
+
+    function Editmanager() {
+        window.location.href = 'PMAcessEdit?PropertyKey=' + $("#PropertyKey").val();
+
+    }
+    $("#btncancel").click(function () {
+        var a = $("#PropertyKey").val();
+
+        window.location.href = 'PropertiesView?PropertyKey=' + $("#PropertyKey").val();
+
+    });
+
+
+    $("#btnUpload").click(function () {
+
+        debugger;
+        $('#loader').show();
+        var formData = new FormData();
+        var totalFiles = document.getElementById("txtfile1").files.length;
+        for (var i = 0; i < totalFiles; i++) {
+            var file = document.getElementById("txtfile1").files[i];
+            formData.append("Files", file);
+        }
+        formData.append("PropertyKey", $("#PropertyKey").val());
+
+        $.ajax({
+            type: 'POST',
+            datatype: 'json',
+            url: '@Url.Action("DocUpload", "PMProperties")',
+            data: formData,
+             contentType:false,
+             processData: false,
+          success: function (respo)
+          {
+              debugger;
+            if (respo == true)
+            {
+                $('#loader').hide();
+                window.location.href = 'PropertiesView?PropertyKey=' + $("#PropertyKey").val();
+
+            }
+            else if (respo == false)
+            {
+                $('#loader').hide();
+                window.location.href = 'PropertiesView?PropertyKey=' + $("#PropertyKey").val();
+
+            }
+          },
+        });
+
+    });
+
+
+    $("#btnaddmanager").click(function () {
+        debugger;
+        $('#ManagerChoosen1_chosen').hide();
+        if ($(".manspan").text() == $('#ManagerChoosen_chosen').text());
+        {
+            $('#btnadd').prop('disabled', true);
+        }
+;
+    });
+
+
+    $("#btndelete").click(function () {
+        window.location.href = 'Delete?PropertyKey=' + $("#PropertyKey").val();
+
+    });
+
+    //$("#viewdata").click(function () {
+    //    var a = $("#BidRequestKey").val();
+    //    alert(a);
+    //    window.location.href = 'PMPropertiesBidRequestView?BidRequestKey=' + $("#BidRequestKey").val();
+
+    //});
+
+
+
+
+        $("#btnadd").click(function () {
+            $('#loader').show();
+        $('#ManagerChoosen1_chosen').hide();
+          $("#managerdiv table tbody tr:eq(0)").show();
+           var SelectedManager = $("#ManagerChoosen option:selected").map(function () {
+            var cln = $("#managerdiv table tbody tr:eq(0)").clone(true);
+            $(".manspan", cln).html($(this).text());
+            $(".manspanId", cln).html($(this).val());
+            $("#managerdiv table").append(cln);
+
+        }).get();
+
+        $("#managerdiv table tbody tr:eq(0)").hide();
+
+        if ($('#ManagerChoosen_chosen').find('.chosen-choices').find('.search-choice').length == 0) {
+            $('.errormessage').html('Please select manager.');
+            $('#Errormanager').show();
+            return false;
+        }
+        else {
+            var SelectedManager = $("#ManagerChoosen option:selected").map(function () {
+                return $(this).val();
+            }).get().join(',');
+            $('#ResourceKey').val(SelectedManager);
+        }
+            $('#loader').hide();
+        Updatemanager();
+    });
+
+
+    $("#AddImages").click(function () {
+
+        $("#managerdiv table tbody tr:eq(0)").show();
+        var SelectedManager = $("#ManagerChoosen option:selected").map(function () {
+            var cln = $("#managerdiv table tbody tr:eq(0)").clone(true);
+            $(".manspan", cln).html($(this).text());
+            $("#managerdiv table").append(cln);
+
+        }).get();
+
+        $("#managerdiv table tbody tr:eq(0)").hide();
+
+        if ($('#ManagerChoosen_chosen').find('.chosen-choices').find('.search-choice').length == 0) {
+            $('.errormessage').html('Please select manager.');
+            $('#Errormanager').show();
+            return false;
+        }
+        else {
+            var SelectedManager = $("#ManagerChoosen option:selected").map(function () {
+                return $(this).val();
+            }).get().join(',');
+            $('#ResourceKey').val(SelectedManager);
+        }
+
+    });
+
+
+     function LoadSortTableFill() {
+        debugger;
+
+        $.ajax({
+            url: '@Url.Action("IndexvendorBidREquestPaging", "PMProperties")',
+            cache: false,
+            data: {
+                PageSize: $('#PageSize').val(),
+                PageIndex: $('#HdnPageIndex').val(),
+                Sort: $("#HdnSortValue").val(),
+                PropertyKey: $('#PropertyKey').val()
+            },
+            success: function (response)
+            {
+                debugger;
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    //debugger;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt($('#PageSize').val()));
+                    curRecords = curRecords - ($('#PageSize').val() - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+
+                } else {
+
+                }
+                $("#RawDatabid table tbody tr:not(:first)").remove();
+                $("#RawDatabid table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    debugger;
+                    var table = $("#RawDatabid table tbody tr:eq(0)").clone(true);
+                    $(".TITLE", table).html(response[i].Title);
+
+
+                    if (response[i].sstartddate == "01/01/00") {
+                        $(".RESPONSEDATE", table).html();
+
+                    }
+                    else {
+                        $(".RESPONSEDATE", table).html(response[i].sstartddate);
+                    }
+                    $(".BIDDUEDATE", table).html(response[i].BidDueDate);
+                    $(".NOOFBIDS", table).html(formatNumber(response[i].NoofBid,false));
+                    $(".BIDREQUESTSTATUS", table).html(response[i].BidRequestStatus);
+                    $("#viewdata", table).attr('href', '/PMProperties/PMPropertiesBidRequestView?BidRequestKey=' + response[i].BidRequestKey);
+
+                    $("#RawDatabid table").append(table);
+                }
+                $("#RawDatabid table tbody tr:eq(0)").hide();
+
+                $("#loading1").hide();
+            }
+        });
+    }
+
+
+
+
+        function LoadSortTableFillforWorkOrder() {
+        //debugger;
+
+        $.ajax({
+            url: '@Url.Action("IndexvendorWorkOrderPaging", "PMProperties")',
+            cache: false,
+            data: {
+                PageSize: $('#PageSize').val(),
+                PageIndex: $('#HdnPageIndex').val(),
+                Sort: $("#HdnSortValue").val(),
+                PropertyKey: $('#PropertyKey').val()
+            },
+            success: function (response)
+            {
+                debugger;
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    //debugger;
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt($('#PageSize').val()));
+                    curRecords = curRecords - ($('#PageSize').val() - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+
+                } else {
+
+                }
+                $("#RawDatawork table tbody tr:not(:first)").remove();
+                $("#RawDatawork table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    debugger;
+                    var table = $("#RawDatawork table tbody tr:eq(0)").clone(true);
+                    $(".TITLE", table).html(response[i].Title);
+                    $(".PROPERTYNAME", table).html(response[i].Propertyname);
+
+
+
+                    if (response[i].sstartddate == "01/01/00") {
+                        $(".WORKORDERSTARTDATE", table).html();
+
+                    }
+                    else {
+                        $(".WORKORDERSTARTDATE", table).html(response[i].sstartddate);
+                    }
+                    $(".WORKORDERDUEDATE", table).html(response[i].BidDueDate);
+                    $(".WORKORDERSTATUS", table).html(response[i].BidRequestStatus);
+                    $("#viewdata", table).attr('href', '/PMProperties/PMPropertiesBidRequestView?BidRequestKey=' + response[i].BidRequestKey);
+
+                    $("#RawDatawork table").append(table);
+                }
+                $("#RawDatawork table tbody tr:eq(0)").hide();
+
+                $("#loading1").hide();
+            }
+        });
+    }
+
+
+
+
+    function SortingFun(val) {
+
+        $('#HdnPageIndex').val('1');
+        var Sort = $('#SortValue').val();
+        //debugger;
+        var ascdesc = 'fa-sort-asc';
+        var ascdesc1 = 'fa-sort-desc';
+        var ascdesc3 = 'fa-sort-asc';
+        var ascdesc4 = 'fa-sort-desc';
+
+        $('.loader-wrapper').show();
+        var Sort = '';
+        $('#HdnPageIndex').val('1');
+        $('#TITLEi').removeClass(ascdesc4);
+        $('#TITLEi').addClass(ascdesc3);
+
+        $('#RESPONSEDATEi').removeClass(ascdesc4);
+        $('#RESPONSEDATEi').addClass(ascdesc3);
+
+        $('#BIDDUEDATEi').removeClass(ascdesc4);
+        $('#BIDDUEDATEi').addClass(ascdesc3);
+
+
+
+        $('#NOOFBIDSi').removeClass(ascdesc4);
+        $('#NOOFBIDSi').addClass(ascdesc3);
+
+
+
+        $('#BIDREQUESTSTATUSi').removeClass(ascdesc4);
+        $('#BIDREQUESTSTATUSi').addClass(ascdesc3);
+        //debugger;
+        //-----------------------------------------------------------
+        if (val == 'TITLE') {
+            if ($('#TITLEhdn').val() == 'asc') {
+                Sort = 'order by rs.Title desc';
+                $('#TITLEhdn').val('desc');
+                $('#TITLEi').removeClass(ascdesc);
+                $('#TITLEi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.Title asc';
+                $('#TITLEhdn').val('asc');
+                $('#TITLEi').removeClass(ascdesc1);
+                $('#TITLEi').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------
+        if (val == 'RESPONSEDATE') {
+            if ($('#RESPONSEDATEhdn').val() == 'asc') {
+                Sort = 'order by rs.StartDate desc';
+                $('#RESPONSEDATEhdn').val('desc');
+                $('#RESPONSEDATEi').removeClass(ascdesc);
+                $('#RESPONSEDATEi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.StartDate asc';
+                $('#RESPONSEDATEhdn').val('asc');
+                $('#RESPONSEDATEi').removeClass(ascdesc1);
+                $('#RESPONSEDATEi').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------------
+        if (val == 'BIDDUEDATE') {
+            if ($('#BIDDUEDATEhdn').val() == 'asc') {
+                Sort = 'order by rs.BidDueDate desc';
+                $('#BIDDUEDATEhdn').val('desc');
+                $('#BIDDUEDATEi').removeClass(ascdesc);
+                $('#BIDDUEDATEi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.BidDueDate asc';
+                $('#BIDDUEDATEhdn').val('asc');
+                $('#BIDDUEDATEi').removeClass(ascdesc1);
+                $('#BIDDUEDATEi').addClass(ascdesc);
+            }
+        }
+        if (val == 'NOOFBIDS') {
+
+
+            if ($('#NOOFBIDShdn').val() == 'asc') {
+                Sort = 'order by NoofBid desc';
+                $('#BIDDUEDATEhdn').val('desc');
+                $('#NOOFBIDSi').removeClass(ascdesc);
+                $('#NOOFBIDSi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by NoofBid asc';
+                $('#NOOFBIDShdn').val('asc');
+                $('#NOOFBIDSi').removeClass(ascdesc1);
+                $('#NOOFBIDSi').addClass(ascdesc);
+            }
+        }
+        if (val == 'BIDREQUESTSTATUS') {
+            if ($('#BIDREQUESTSTATUShdn').val() == 'asc') {
+                Sort = 'order by rs.BidRequestStatus desc';
+                $('#BIDREQUESTSTATUShdn').val('desc');
+                $('#BIDREQUESTSTATUSi').removeClass(ascdesc);
+                $('#BIDREQUESTSTATUSi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.BidRequestStatus asc';
+                $('#BIDREQUESTSTATUShdn').val('asc');
+                $('#BIDREQUESTSTATUSi').removeClass(ascdesc1);
+                $('#BIDREQUESTSTATUSi').addClass(ascdesc);
+            }
+
+
+
+        }
+
+
+        $("#HdnSortValue").val(Sort);
+        $('.loader-wrapper').show();
+        LoadSortTableFill();
+    }
+
+        function download(src) {
+            alert(src);
+            var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
+           window.open(src, "_blank", strWindowFeatures);
+        }
+
+
+
+
+
+
+
+    function SortingFunworkorder(val) {
+
+        $('#HdnPageIndex').val('1');
+        var Sort = $('#SortValue').val();
+        //debugger;
+        var ascdesc = 'fa-sort-asc';
+        var ascdesc1 = 'fa-sort-desc';
+        var ascdesc3 = 'fa-sort-asc';
+        var ascdesc4 = 'fa-sort-desc';
+
+        $('.loader-wrapper').show();
+        var Sort = '';
+        $('#HdnPageIndex').val('1');
+        $('#TITLEWorki').removeClass(ascdesc4);
+        $('#TITLEWorki').addClass(ascdesc3);
+
+        $('#PROPERTYNAMEi').removeClass(ascdesc4);
+        $('#PROPERTYNAMEi').addClass(ascdesc3);
+
+        $('#WORKORDERSTARTDATEi').removeClass(ascdesc4);
+        $('#WORKORDERSTARTDATEi').addClass(ascdesc3);
+
+
+
+        $('#WORKORDERDUEDATEi').removeClass(ascdesc4);
+        $('#WORKORDERDUEDATEi').addClass(ascdesc3);
+
+
+
+        $('#WORKORDERSTATUSi').removeClass(ascdesc4);
+        $('#WORKORDERSTATUSi').addClass(ascdesc3);
+        //debugger;
+        //-----------------------------------------------------------
+        if (val == 'TITLEWork') {
+            if ($('#TITLEWorkhdn').val() == 'asc') {
+                Sort = 'order by rs.Title desc';
+                $('#TITLEWorkhdn').val('desc');
+                $('#TITLEWorki').removeClass(ascdesc);
+                $('#TITLEWorki').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.Title asc';
+                $('#TITLEWorkhdn').val('asc');
+                $('#TITLEWorki').removeClass(ascdesc1);
+                $('#TITLEWorki').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------
+        if (val == 'PROPERTYNAME') {
+            if ($('#PROPERTYNAMEhdn').val() == 'asc') {
+                Sort = 'order by p.title desc';
+                $('#PROPERTYNAMEhdn').val('desc');
+                $('#PROPERTYNAMEi').removeClass(ascdesc);
+                $('#PROPERTYNAMEi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by p.title asc';
+                $('#PROPERTYNAMEhdn').val('asc');
+                $('#PROPERTYNAMEi').removeClass(ascdesc1);
+                $('#PROPERTYNAMEi').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------------
+        if (val == 'WORKORDERSTARTDATE') {
+            if ($('#WORKORDERSTARTDATEhdn').val() == 'asc') {
+                Sort = 'order by rs.StartDate desc';
+                $('#WORKORDERSTARTDATEhdn').val('desc');
+                $('#WORKORDERSTARTDATEi').removeClass(ascdesc);
+                $('#WORKORDERSTARTDATEi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.StartDate asc';
+                $('#WORKORDERSTARTDATEhdn').val('asc');
+                $('#WORKORDERSTARTDATEi').removeClass(ascdesc1);
+                $('#WORKORDERSTARTDATEi').addClass(ascdesc);
+            }
+        }
+        if (val == 'WORKORDERDUEDATE') {
+
+
+            if ($('#WORKORDERDUEDATEhdn').val() == 'asc') {
+                Sort = 'order by rs.BidDueDate desc';
+                $('#WORKORDERDUEDATEhdn').val('desc');
+                $('#WORKORDERDUEDATEi').removeClass(ascdesc);
+                $('#WORKORDERDUEDATEi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.BidDueDate asc';
+                $('#WORKORDERDUEDATEhdn').val('asc');
+                $('#WORKORDERDUEDATEi').removeClass(ascdesc1);
+                $('#WORKORDERDUEDATEi').addClass(ascdesc);
+            }
+        }
+        if (val == 'WORKORDERSTATUS') {
+            if ($('#WORKORDERSTATUShdn').val() == 'asc') {
+                Sort = 'order by rs.BidRequestStatus desc';
+                $('#WORKORDERSTATUShdn').val('desc');
+                $('#WORKORDERSTATUSi').removeClass(ascdesc);
+                $('#WORKORDERSTATUSi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by rs.BidRequestStatus asc';
+                $('#WORKORDERSTATUShdn').val('asc');
+                $('#WORKORDERSTATUSi').removeClass(ascdesc1);
+                $('#WORKORDERSTATUSi').addClass(ascdesc);
+            }
+
+
+
+        }
+
+
+        $("#HdnSortValue").val(Sort);
+        $('.loader-wrapper').show();
+        LoadSortTableFillforWorkOrder();
+    }
+
+
+
+    function viewimage(imgsrc) {
+        debugger;
+
+        $(".popback").show();
+        $(".fullblack").show();
+
+        $('#image').html("<img src='" + imgsrc + "' style= 'width:85%; margin-left:49px;margin-top:31px;' />");
+
+    }
+
+    function myclick() {
+
+        $(".popback").hide();
+        $(".fullblack").hide();
+
+        }
+        function validation() {
+        debugger;
+
+        var IsValid = true;
+        $('.errormessage').html('');
+        var errormessage = '';
+
+        if ($("#Title").val() == "") {
+
+            errormessage = $('.errormessage').html();
+            $('#Error').show();
+            IsValid = false;
+        }
+
+        if ($('#NumberOfUnits').val() == "0") {
+
+
+            $('#Error').show();
+            IsValid = false;
+        }
+
+        if ($('#Description').val() == "") {
+
+            IsValid = false;
+            $('#Error').show();
+        }
+
+        if ($('#Address').val() == "") {
+
+            IsValid = false;
+            $('#Error').show();
+        }
+
+
+        if ($('#Address2').val() == "") {
+
+            $('#Error').show();
+            IsValid = false;
+        }
+
+        if ($('#City').val() == "") {
+
+            $('#Error').show();
+            IsValid = false;
+        }
+
+        if ($('#State').val() == "") {
+
+            IsValid = false;
+            $('#Error').show();
+        }
+
+        if ($('#Zip').val() == "") {
+
+            IsValid = false;
+            $('#Error').show();
+        }
+
+        if ($('#BidRequestAmount').val() == "") {
+
+            IsValid = false;
+            $('#Error').show();
+        }
+
+        if ($('#MinimumInsuranceAmount').val() == "") {
+
+            IsValid = false;
+            $('#Error').show();
+        }
+        if (!IsValid)
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+
+        $('#loader').hide();
+        return IsValid;
+    }
+
+
+        function removeDoc(me) {
+
+        debugger;
+        var m = $(me).parent("td").parent("tr").find('.upd-fl').text();
+
+        var a = $("#PropertyKey").val();
+         var b = $(me).parent("td").parent("tr").find('.upd-fl').text();
+
+            if (confirm('Are you sure you want to delete this record?')) {
+                window.location.href = "DocumentDelete?PropertyKey=" + a + "&Docname=" + b;
+                return true;
+            }
+            else {
+                return false;
+            }
+
+    }
+
+
+    function removemanager(me) {
+
+        debugger;
+        var m = $(me).parent("td").parent("tr").find('.manspan').text();
+
+        var a = $("#PropertyKey").val();
+        var b = $(me).parent("td").parent("tr").find('.manspan').text();
+        var id = $(me).parent("td").parent("tr").find('.manspanId').text();
+
+        if (confirm('Are you sure you want to delete this record?')) {
+            window.location.href = "ManagerDelete?PropertyKey=" + a + "&managername=" + b + "&ResourceKey=" + id;
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+
+
+        function Updatemanager_Old() {
+            $('#loader').show();
+          debugger;
+          $('#ManagerChoosen1_chosen').hide();
+        var SelectedManager = $("#ManagerChoosen option:selected").map(function () {
+            return $(this).val();
+        }).get().join(',');
+        $('#ResourceKey').val(SelectedManager);
+        var b = $('#ResourceKey').val(SelectedManager);
+
+        var a = $("#PropertyKey").val();
+        var b = $('#ResourceKey').val();
+            window.location.href = "UpdateManager?PropertyKey=" + a + "&managername=" + b;
+            $('#loader').hide();
+    }
+
+        function Updatemanager() {
+            $('#loader').show();
+            debugger;
+            $('#ManagerChoosen1_chosen').hide();
+            var SelectedManager = $("#ManagerChoosen option:selected").map(function () {
+                return $(this).val();
+            }).get().join(',');
+            $('#ResourceKey').val(SelectedManager);
+            var b = $('#ResourceKey').val(SelectedManager);
+
+            var a = $("#PropertyKey").val();
+            var b = $('#ResourceKey').val();
+            $.ajax({
+                type: "GET",
+                datatype: 'json',
+                url: '@Url.Action("JsonUpdatemanager", "PMProperties")',
+                data: { PropertyKey: a, managername: b },
+                success: function (response) {
+                    if (response.value != "0") {
+                        bindmanager();
+                    } else {
+
+                    }
+                }
+            });
+            $('#loader').hide();
+        }
+
+
+    function bindmanager()
+    {
+
+         $.ajax({
+            url: '@Url.Action("GetAllGroup", "PMProperties")',
+            cache: false,
+             data:
+             {
+              PropertyKey: $('#PropertyKey').val()
+            },
+            success: function (response)
+            {
+                debugger;
+                $("#managerdiv table tbody tr:not(:first)").remove();
+                $("#managerdiv table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    var cln = $("#managerdiv table tbody tr:eq(0)").clone(true);
+                    $(".manspan", cln).html(response[i].Name);
+                    $(".manspanId", cln).html(response[i].ResourceKey);
+                    $("#managerdiv table").append(cln);
+                }
+                if (response.length <= 1)
+                    $(".delcls").hide();
+                $("#managerdiv table tbody tr:eq(0)").hide();
+                //var totalRowCount = $("#dataTableExample1 tbody th").length
+
+                if ($("#dataTableExample1 tr").length == 2)
+                {
+                    $('.errormessage1').html('Add Property Manager.');
+                    $('#Error1').show();
+                    $("#managerdiv table thead tr:eq(0)").hide();
+                    $("#managerdiv table tbody tr:eq(0)").hide();
+                }
+
+            }
+        });
+    }
+    function Manager()
+    {
+        setTimeout(function () {
+            var options = [];
+            options.push('0');
+            $('#btnadd').prop('disabled', true);
+            $('#ManagerChoosen1_chosen').hide();
+            // $('.chosen-choices').hide();
+            $('#managerdiv table tbody tr:not(:first-child)').each(function (i, e) {
+                options.push($(e).find('td:eq(0)').find('span.manspanId').html());
+            });
+            $('#ManagerChoosen').val(options).trigger("liszt:updated");
+            $('#ManagerChoosen').val(options).trigger("chosen:updated");
+        }, 200);
+
+    }
+      function bindDocument()
+      {
+         $.ajax({
+            url: '@Url.Action("bindDocument", "PMProperties")',
+            cache: false,
+             data:
+              {
+                PropertyKey: $('#PropertyKey').val()
+              },
+            success: function (response)
+            {
+                debugger;
+
+                var a = $("#RKey").val();
+                  
+                $("#divFileUploader table tbody tr:not(:first)").remove();
+                $("#divFileUploader table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++)
+                {
+                    debugger;
+                    var namearray = response[i].split($("#RKey").val());
+                    var datearray = response[i].split($('#PropertyKey').val());
+                    var name = namearray[1];
+                    if (name == undefined || name == '')
+                        name = datearray[1];
+                    var extension = $('#PropertyKey').val() + datearray[1];
+
+
+                    //if (extension === 'jpg' || extension === 'png' || extension === 'gif') {
+                        var table = $("#divFileUploader table tbody tr:eq(0)").clone(true);
+                         $(".upd-fl", table).html(name);
+                        $(".upd-fl", table).attr('src', response[i]);
+                        $(".upd-fl", table).attr('href', "../Document/Properties/" + extension);
+                        $(".upd-fl", table).attr('onclick', "download('../Document/Properties/" + extension + "')");
+                        $("#divFileUploader table").append(table);
+
+                    //} else {
+                    //    var table = $(4444444"#divFileUploader table tbody tr:eq(0)").clone(true);
+                    //    //$("#docname", table).html(response[i].FileName);
+                    //    $(".upd-fl", table).html(response[i].FileName);
+                    //    $(".upd-fl", table).attr('href', response[i]);
+                    //    //$("#docname", table).attr('onclick', "ViewDoc(" + response[i].DocumentKey + "," + response[i].ObjectKey + ",'" + response[i].FileName + "')");
+                    //    $("#divFileUploader table").append(table);
+                    //}
+
+
+
+                }
+                $("#divFileUploader table tbody tr:eq(0)").hide();
+
+
+
+            }
+        });
+    }
+
+
+
+
+    function readURL(input) {
+
+
+        $("#divFileUploader table tbody tr:eq(0)").show();
+        for (var i = 0; i < input.files.length; i++) {
+            var cln = $("#divFileUploader table tbody tr:eq(0)").clone(true);
+            $(".upd-fl", cln).html(input.files[i].name);
+            $("#divFileUploader table").append(cln);
+        }
+        $("#divFileUploader table tbody tr:eq(0)").hide();
+    }
+
+
+    $("#txtfile1").change(function () {
+
+        readURL(this);
+    });
+
+    $('#carousel-example').on('slide.bs.carousel', function (e) {
+        /*
+            CC 2.0 License Iatek LLC 2018 - Attribution required
+        */
+        var $e = $(e.relatedTarget);
+        var idx = $e.index();
+        var itemsPerSlide = 5;
+        var totalItems = $('.carousel-item').length;
+
+        if (idx >= totalItems - (itemsPerSlide - 1)) {
+            var it = itemsPerSlide - (totalItems - idx);
+            for (var i = 0; i < it; i++) {
+                // append slides to end
+                if (e.direction == "left") {
+                    $('.carousel-item').eq(i).appendTo('.carousel-inner');
+                }
+                else {
+                    $('.carousel-item').eq(0).appendTo('.carousel-inner');
+                }
+            }
+        }
+    });
+        function formatNumber(num) {
+            debugger;
+            return new Number(num).toLocaleString('en-US', {
+                maximumFractionDigits: 2
+            });
+        }
+    </script>
+
+

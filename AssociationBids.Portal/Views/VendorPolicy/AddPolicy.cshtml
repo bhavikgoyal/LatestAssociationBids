@@ -1,0 +1,326 @@
+﻿@model AssociationBids.Portal.Model.VendorManagerModel
+@{
+    ViewBag.Title = "AddPolicy";
+    Layout = "~/Views/Shared/_VendorLayout.cshtml";
+
+    if (Session["PortalKey"] == null)
+    { Response.Redirect("~/", true); }
+    else if (Session["PortalKey"].ToString() == "2")
+    { Response.Redirect("~/PMDashboard/Dashboard", true); }
+    else if (Session["PortalKey"].ToString() == "1")
+    { Response.Redirect("~/Dashboard/DashBoard", true); }
+}
+
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="../vDashboard/Index">Home</a></li>
+                <li class="breadcrumb-item"><a href="~/VendorPolicy/PolicyList">Policy List</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add Policy</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+        <div class="alert alert-danger" id="Error" style="display:block; margin-top: 20px;display:none;">
+            <strong><span class="errormessage"></span></strong>
+        </div>
+        <div class="alert alert-success" id="sucess" style="display:block; margin-top: 20px;display:none;">
+            <strong><span class="sucessmessage"></span></strong>
+        </div>
+
+        <!-- End page-header -->
+        @using (Html.BeginForm("AddPolicy", "VendorPolicy", new { CompanyKey = ViewBag.cid }, FormMethod.Post, new { enctype = "multipart/form-data",onsubmit= "return validationInsuranceNew()" }))
+        {
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+
+                        <div class="card-body">
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="expanel expanel-default">
+                                        <div class="expanel-body">
+                                            <div>
+                                                <div class="form-group">
+                                                    <label class="form-label">Policy Number <span class="text-danger">*</span></label>
+                                                    @Html.TextBoxFor(model => model.Insurance.PolicyNumber, new { @class = "form-control", PlaceHolder = "Policy Number" })
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label">Amount <span class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <i class="fa fa-dollar tx-16 lh-0 op-6"></i>
+                                                            </div>
+                                                        </div>@Html.TextBoxFor(model => model.Insurance.InsuranceAmount, new { @class = "form-control", PlaceHolder = "Insurance Amount" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label">Start Date <span class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                                            </div>
+                                                        </div>@Html.TextBoxFor(model => model.Insurance.StartDate, new { @class = "form-control fc-datepicker", placeholder = "MM/DD/YYYY", autocomplete = "off" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="form-label">End Date <span class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                                            </div>
+                                                        </div>@Html.TextBoxFor(model => model.Insurance.EndDate, new { @class = "form-control fc-datepicker", placeholder = "MM/DD/YYYY", autocomplete = "off" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label">Renewal Date <span class="text-danger">*</span></label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                                            </div>
+                                                        </div>@Html.TextBoxFor(model => model.Insurance.RenewalDate, new { @class = "form-control fc-datepicker", placeholder = "MM/DD/YYYY", autocomplete = "off" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="expanel expanel-default">
+                                        <div class="expanel-body">
+                                            <div class="form-group">
+                                                <label class="form-label">Upload New Insurance</label>
+                                                <input type="file" name="files" class="dropify" multiple="multiple" />
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                        </div><!-- end of card body -->
+                        <div class="card-footer">
+                            <div class="button-row d-flex">
+                                <button class="btn btn-info ml-auto" title="Add Policy"><i class="fa fa-check"></i> Add Policy</button>
+                            </div>
+                        </div>
+                    </div><!-- end of card -->
+                </div><!-- end of col -->
+            </div>
+        }
+
+
+
+
+
+
+    </div><!--End side app-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+</div>
+<!-- End app-content-->
+
+<script>
+    $(document).ready(function () {
+
+        $("#PolicyList1").closest('li').addClass('active');
+        $("#PolicyList").addClass('active');
+        $('#loader').show();
+        $('.errormessage').html('');
+        $('#Error').hide();
+
+        $('#loader').hide();
+
+    });
+
+    $("#Insurance_EndDate").change("click", function () {
+        debugger;
+        var EndDate = new Date($("#Insurance_EndDate").val());
+        var StartDate = new Date($("#Insurance_StartDate").val());
+
+        if (EndDate < StartDate) {
+            $('.errormessage').html('End Date must be greater than Start Date.');
+            $('#Error').show();
+            $("#Insurance_EndDate").val("");
+            $(window).scrollTop(0);
+            //event.preventDefault();
+            return false;
+        }
+
+        $('#Error').hide();
+        return true;
+
+    }
+    );
+    $("#Insurance_RenewalDate").change("click", function () {
+        debugger;
+        var RenewalDate = new Date($("#Insurance_RenewalDate").val());
+        var StartDate = new Date($("#Insurance_StartDate").val());
+        var EndDate = new Date($("#Insurance_EndDate").val());
+        debugger;
+        if (RenewalDate <= StartDate) {
+            $('.errormessage').html('Renewal Date must be greater than Start Date and less than or equal to End date.');
+            $('#Error').show();
+            $("#Insurance_RenewalDate").val("");
+            $(window).scrollTop(0);
+            //event.preventDefault();
+            return false;
+        }
+        else if (RenewalDate > EndDate) {
+            $('.errormessage').html('Renewal Date must be equal or less than End Date.');
+            $('#Error').show();
+            $("#Insurance_RenewalDate").val("");
+            $(window).scrollTop(0);
+            //event.preventDefault();
+            return false;
+        }
+        $('#Error').hide();
+        return true;
+
+    }
+    );
+
+    function validationInsurance() {
+        var EndDate = new Date($("#Insurance_EndDate").val());
+        var StartDate = new Date($("#Insurance_StartDate").val());
+        var RenewalDate = new Date($("#Insurance_RenewalDate").val());
+        debugger;
+        $('#sucess').hide();
+        $('#Error').hide();
+        $('#sucessmessage').hide();
+        $('#errrorsmessage').hide();
+
+        //$("#Insurancefiles")[0].files.length > 0 &&
+        if ($("#Insurance_PolicyNumber").val() != '') {
+            if ($("#Insurance_StartDate").val() != "" && $("#Insurance_StartDate").val().split(" ")[0].split("/")[2] > '1900') {
+                if (EndDate != "" && EndDate <= StartDate) {
+                    if (RenewalDate != "" && RenewalDate <= StartDate && RenewalDate < EndDate) {
+
+                        if (!isNAN($("#Insurance_InsuranceAmount").val()) && $("#Insurance_InsuranceAmount").val() > 0) {
+                            return true;
+                        }
+                        else {
+                            $('.errormessage').html('Please enter mandatory fields.');
+                            $('#Error').show();
+                            $(window).scrollTop(0);
+                        }
+                    }
+                    else {
+                        $('.errormessage').html('Renewal Date must be equal or greater than End Date.');
+                        $('#Error').show();
+                        $(window).scrollTop(0);
+                    }
+                } else {
+                    $('.errormessage').html('End Date must be greater than Start Date.');
+                    $('#Error').show();
+                    $(window).scrollTop(0);
+                }
+            } else {
+                $('.errormessage').html('Please enter mandatory fields.');
+                $('#Error').show();
+                $(window).scrollTop(0);
+            }
+        }
+        else {
+            $('.errormessage').html('Please enter mandatory fields.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+        }
+        return false;
+    }
+
+
+    function validationInsuranceNew() {
+
+        debugger;
+        var EndDate = new Date($("#Insurance_EndDate").val());
+        var StartDate = new Date($("#Insurance_StartDate").val());
+        var RenewalDate = new Date($("#Insurance_RenewalDate").val());
+        $('#sucess').hide();
+        $('#Error').hide();
+        $('#sucessmessage').hide();
+        $('#errrorsmessage').hide();
+        var amt = $("#Insurance_InsuranceAmount").val();
+        if (isNaN(amt) || amt == undefined || amt == '') {
+            amt = 0;
+        }
+        var st = false;
+        //$("#Insurancefiles")[0].files.length > 0 &&
+
+        if ($("#Insurance_PolicyNumber").val() == '') {
+            $('.errormessage').html('Please enter mandatory fields.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else if (isNaN($("#Insurance_InsuranceAmount").val()) || $("#Insurance_InsuranceAmount").val() <= 0) {
+            $('.errormessage').html('Please enter mandatory fields.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else if ($("#Insurance_StartDate").val() == "") {
+            $('.errormessage').html('Please enter mandatory fields.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else if ($("#Insurance_EndDate").val() == "") {
+            $('.errormessage').html('Please enter mandatory fields.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else if ($("#Insurance_RenewalDate").val() == "") {
+            $('.errormessage').html('Please enter mandatory fields.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else if ($("#Insurance_StartDate").val().split(" ")[0].split("/")[2] <= '1900') {
+            $('.errormessage').html('Please enter valid Start Date.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+        }
+
+        else if (EndDate < StartDate) {
+            $('.errormessage').html('End Date must be greater than Start Date.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+        }
+
+        else if (RenewalDate <= StartDate || RenewalDate > EndDate) {
+            $('.errormessage').html('Renewal Date must be equal or less than End Date.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+        }
+        return true;
+    }
+</script>

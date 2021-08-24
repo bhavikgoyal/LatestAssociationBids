@@ -1,0 +1,240 @@
+﻿
+
+@model AssociationBids.Portal.Model.VendorInvoiceModal
+@{
+    ViewBag.Title = "View Vendor Invoice";
+    Layout = "~/Views/Shared/_VendorLayout.cshtml";
+    string Sucessmessage = Convert.ToString(ViewData["Sucessmessage"]);
+}
+<script src="../assets/js/vendors/jquery-3.2.1.min.js"></script>
+<h2>Invoice</h2>
+
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="~/PMDashboard/Dashboard">Home</a></li>
+                <li class="breadcrumb-item"><a href="~/VendorInvoice/Index">Invoice List</a></li>
+             
+                <li class="breadcrumb-item active" aria-current="page">View Invoice</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+
+        @if (TempData["Sucessmessage"] != null)
+        {
+            <p class="alert alert-warning alert-dismissible" id="successMessage">
+                @TempData["Sucessmessage"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+
+      
+       
+        <!-- End page-header -->
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        @Html.HiddenFor(Model => Model.InvoiceKey)
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-info mb-1" onclick="javascript:window.print();"><i class="si si-printer"></i> Print Invoice</button>
+                            </div>
+                            @if (Model.Status == false && Model.RefundRequestKey == 0 && Model.Balance == "$0.00")
+                            {
+                                <div class="col-md-6">
+                                    <a class="btn btn-primary pull-right text-white" onclick="RefundRequest();"><i class="si si-wallet"></i> Request Refund</a>
+                                </div>
+                            }
+                            @if (Model.Status == false && Model.RefundRequestKey != 0)
+                            {
+                                <div class="col-md-6">
+                                    <label class="form-label font18 pull-right">
+                                        Status : Refund Requested
+                                    </label>
+                                </div>
+                            }
+                            @if (Model.Status == true)
+                            {
+                                <div class="col-md-6">
+                                    <label class="form-label font18 text-right">
+                                        @*Status : Done*@
+                                        Status : Refund Processed
+                                    </label>
+                                    </div>
+                                    }
+                                </div>
+
+                                <hr />
+
+
+
+
+
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <a class="header-brand" href="index.html">
+                                            <img alt="logo" class="header-brand-img" src="../assets/images/brand/logo.png">
+                                        </a>
+                                        <div class="text-right ml-auto">
+                                            <p class="h3">Invoice No: <b class="mb-1"><span>@Html.DisplayFor(Model => Model.RefrenceNumber)</span></b></p>
+                                            
+                                            <p class="mb-1"><span class="font-weight-semibold">Invoice Date :</span> @Html.DisplayFor(Model => Model.InvoiceDate)</p>
+                                            <p><span class="font-weight-semibold">Due Date :</span>  @Html.DisplayFor(Model => Model.InvoiceDate)</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-lg-6 ">
+                                            <p class="h3">Invoice From:</p>
+                                            <address>
+                                                Association Bids Team
+                                            </address>
+                                        </div>
+                                        <div class="col-lg-6 text-right">
+                                            <p class="h3">Invoice To: @Html.DisplayFor(Model => Model.CompanyName)</p>
+                                            <div class="text-right ml-auto">
+
+                                                <p class="mb-1"><span class="font-weight-semibold"></span> @Html.DisplayFor(Model => Model.Address1), @Html.DisplayFor(Model => Model.Address2)</p>
+                                                <p class="mb-1"><span class="font-weight-semibold"></span> @Html.DisplayFor(Model => Model.City), @Html.DisplayFor(Model => Model.State)</p>
+                                                <p class="mb-1"><span class="font-weight-semibold"></span> Zip : @Html.DisplayFor(Model => Model.PostalCode)</p>
+                                                <p class="mb-1"><span class="font-weight-semibold"></span> @Html.DisplayFor(Model => Model.Email)</p>
+
+                                            </div>
+
+
+
+
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive push">
+                                        <table class="table table-bordered table-hover mb-0">
+                                            <tbody>
+                                                <tr class=" ">
+                                                    <th class="text-center " style="width: 1%"></th>
+                                                    <th>Item</th>
+                                                    <th class="text-center" style="width: 1%">Quantity</th>
+                                                    <th class="text-right">Unit Price</th>
+                                                    <th class="text-right">Sub Total</th>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">1</td>
+                                                    @if (Model.Memberfeekey != 0)
+                                                    {
+                                                    <td>
+                                                        <p class="font-w600 mb-1"><span>Membership Fee</span></p>
+
+                                                    </td>
+                                                    }
+                                                    @if (Model.Memberfeekey == 0)
+                                                    {
+                                                    <td>
+                                                        <p class="font-w600 mb-1"><span>@Html.DisplayFor(Model => Model.Title)</span></p>
+
+                                                    </td>
+                                                    }
+
+
+                                                    <td class="text-center"><span>1</span></td>
+                                                    <td class="text-right"><span>@Html.DisplayFor(Model => Model.AmtTotal)</span></td>
+                                                    <td class="text-right">@Html.DisplayFor(Model => Model.AmtTotal)</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="4" class="font-weight-bold text-uppercase text-right">Total</td>
+                                                    <td class="font-weight-bold text-right h4">@Html.DisplayFor(Model => Model.AmtTotal)</td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td colspan="4" class="font-weight-bold text-uppercase text-right">Payment Applied</td>
+                                                    <td class="font-weight-bold text-right h4">@Html.DisplayFor(Model => Model.PaymentApplied)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4" class="font-weight-bold text-uppercase text-right">Balance</td>
+                                                    <td class="font-weight-bold text-right h4">@Html.DisplayFor(Model => Model.Balance)</td>
+                                                </tr>
+                                                @if(Model.MarkasRefund == 1){
+                                                <tr>
+                                                    <td colspan="4" class="font-weight-bold text-uppercase text-right">Refund</td>
+                                                    <td class="font-weight-bold text-right h4">@Html.DisplayFor(Model => Model.RefundAmount)</td>
+                                                </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!--End side app-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+<!-- End app-content-->
+<script>
+    $(document).ready(function ()
+    {
+
+        $("#Invoices").closest('li').addClass('active');
+        $("#Invoices1").addClass('active');
+
+    });
+
+    function RefundRequest() {
+
+        window.location.href = 'RequestRefundView?InvoiceKey=' + $("#InvoiceKey").val();
+    }
+
+
+    function backedit() {
+        window.location.href = "VendorInvoiceView?InvoiceKey=" + $("#InvoiceKey").val();
+    }
+
+      function checkPoratl()
+      {
+          debugger;
+          var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+         $.ajax({
+            url: '@Url.Action("checkPortal", "PMProperties")',
+            cache: false,
+             data:
+             {
+              PropertyKey: $('#PropertyKey').val()
+            },
+            success: function (response)
+            {
+                debugger;
+
+                if (response == false) {
+                     window.location.href = '@Url.Action("Index", "Login")';
+                }
+
+                else {
+
+                }
+
+            }
+        });
+    }
+
+
+
+</script>

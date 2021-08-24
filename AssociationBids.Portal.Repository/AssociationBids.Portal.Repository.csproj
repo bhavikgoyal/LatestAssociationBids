@@ -1,0 +1,417 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A19764DE-7C40-4121-A3F8-C9A144D8D4D0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AssociationBids.Portal.Repository</RootNamespace>
+    <AssemblyName>AssociationBids.Portal.Repository</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Stripe.net">
+      <HintPath>..\..\..\dlls\Stripe.net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\AssociationBids.Portal\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Admin\Code\AgreementRepository.cs" />
+    <Compile Include="Admin\Code\BaseRepository.cs" />
+    <Compile Include="Admin\Code\BidRepository.cs" />
+    <Compile Include="Admin\Code\BidRequestRepository.cs" />
+    <Compile Include="Admin\Code\BidVendorRepository.cs" />
+    <Compile Include="Admin\Code\CalendarRepository.cs" />
+    <Compile Include="Admin\Code\CompanyRepository.cs" />
+    <Compile Include="Admin\Code\CompanyVendorRepository.cs" />
+    <Compile Include="Admin\Code\DocumentRepository.cs" />
+    <Compile Include="Admin\Code\EmailRepository.cs" />
+    <Compile Include="Admin\Code\ErrorLogRepository.cs" />
+    <Compile Include="Admin\Code\GroupMemberRepository.cs" />
+    <Compile Include="Admin\Code\GroupModuleAccessRepository.cs" />
+    <Compile Include="Admin\Code\GroupRepository.cs" />
+    <Compile Include="Admin\Code\InsuranceRepository.cs" />
+    <Compile Include="Admin\Code\InvoiceLineRepository.cs" />
+    <Compile Include="Admin\Code\InvoiceRepository.cs" />
+    <Compile Include="Admin\Code\LoginHistoryRepository.cs" />
+    <Compile Include="Admin\Code\LookUpRepository.cs" />
+    <Compile Include="Admin\Code\LookUpTypeRepository.cs" />
+    <Compile Include="Admin\Code\MembershipRepository.cs" />
+    <Compile Include="Admin\Code\MessageRepository.cs" />
+    <Compile Include="Admin\Code\ModuleRepository.cs" />
+    <Compile Include="Admin\Code\NoteRepository.cs" />
+    <Compile Include="Admin\Code\PaymentAppliedRepository.cs" />
+    <Compile Include="Admin\Code\PaymentRepository.cs" />
+    <Compile Include="Admin\Code\PortalRepository.cs" />
+    <Compile Include="Admin\Code\PricingRepository.cs" />
+    <Compile Include="Admin\Code\PromotionRepository.cs" />
+    <Compile Include="Admin\Code\PropertyRepository.cs" />
+    <Compile Include="Admin\Code\PropertyResourceRepository.cs" />
+    <Compile Include="Admin\Code\PropertyVendorDistanceRepository.cs" />
+    <Compile Include="Admin\Code\ReminderRepository.cs" />
+    <Compile Include="Admin\Code\ResourceRepository.cs" />
+    <Compile Include="Admin\Code\ServiceAreaRepository.cs" />
+    <Compile Include="Admin\Code\ServiceRepository.cs" />
+    <Compile Include="Admin\Code\SessionRepository.cs" />
+    <Compile Include="Admin\Code\StateRepository.cs" />
+    <Compile Include="Admin\Code\TaskRepository.cs" />
+    <Compile Include="Admin\Code\UserAgreementRepository.cs" />
+    <Compile Include="Admin\Code\UserRepository.cs" />
+    <Compile Include="Admin\Code\VendorRatingRepository.cs" />
+    <Compile Include="Admin\Code\VendorServiceRepository.cs" />
+    <Compile Include="Admin\Interface\IAgreementRepository.cs" />
+    <Compile Include="Admin\Interface\IBaseRepository.cs" />
+    <Compile Include="Admin\Interface\IBidRepository.cs" />
+    <Compile Include="Admin\Interface\IBidRequestRepository.cs" />
+    <Compile Include="Admin\Interface\IBidVendorRepository.cs" />
+    <Compile Include="Admin\Interface\ICalendarRepository.cs" />
+    <Compile Include="Admin\Interface\ICompanyRepository.cs" />
+    <Compile Include="Admin\Interface\ICompanyVendorRepository.cs" />
+    <Compile Include="Admin\Interface\IDocumentRepository.cs" />
+    <Compile Include="Admin\Interface\IEmailRepository.cs" />
+    <Compile Include="Admin\Interface\IErrorLogRepository.cs" />
+    <Compile Include="Admin\Interface\IGroupMemberRepository.cs" />
+    <Compile Include="Admin\Interface\IGroupModuleAccessRepository.cs" />
+    <Compile Include="Admin\Interface\IGroupRepository.cs" />
+    <Compile Include="Admin\Interface\IInsuranceRepository.cs" />
+    <Compile Include="Admin\Interface\IInvoiceLineRepository.cs" />
+    <Compile Include="Admin\Interface\IInvoiceRepository.cs" />
+    <Compile Include="Admin\Interface\ILoginHistoryRepository.cs" />
+    <Compile Include="Admin\Interface\ILookUpRepository.cs" />
+    <Compile Include="Admin\Interface\ILookUpTypeRepository.cs" />
+    <Compile Include="Admin\Interface\IMembershipRepository.cs" />
+    <Compile Include="Admin\Interface\IMessageRepository.cs" />
+    <Compile Include="Admin\Interface\IModuleRepository.cs" />
+    <Compile Include="Admin\Interface\INoteRepository.cs" />
+    <Compile Include="Admin\Interface\IPaymentAppliedRepository.cs" />
+    <Compile Include="Admin\Interface\IPaymentRepository.cs" />
+    <Compile Include="Admin\Interface\IPortalRepository.cs" />
+    <Compile Include="Admin\Interface\IPricingRepository.cs" />
+    <Compile Include="Admin\Interface\IPromotionRepository.cs" />
+    <Compile Include="Admin\Interface\IPropertyRepository.cs" />
+    <Compile Include="Admin\Interface\IPropertyResourceRepository.cs" />
+    <Compile Include="Admin\Interface\IPropertyVendorDistanceRepository.cs" />
+    <Compile Include="Admin\Interface\IReminderRepository.cs" />
+    <Compile Include="Admin\Interface\IResourceRepository.cs" />
+    <Compile Include="Admin\Interface\IServiceAreaRepository.cs" />
+    <Compile Include="Admin\Interface\IServiceRepository.cs" />
+    <Compile Include="Admin\Interface\ISessionRepository.cs" />
+    <Compile Include="Admin\Interface\IStateRepository.cs" />
+    <Compile Include="Admin\Interface\ITaskRepository.cs" />
+    <Compile Include="Admin\Interface\IUserAgreementRepository.cs" />
+    <Compile Include="Admin\Interface\IUserRepository.cs" />
+    <Compile Include="Admin\Interface\IVendorRatingRepository.cs" />
+    <Compile Include="Admin\Interface\IVendorServiceRepository.cs" />
+    <Compile Include="Base\Code\ABNotificationRepository.cs" />
+    <Compile Include="Base\Code\AcitivitybyManagementCompanyRepository.cs" />
+    <Compile Include="Base\Code\ACompanymangRepository.cs" />
+    <Compile Include="Base\Code\AgreementRepository.cs" />
+    <Compile Include="Base\Code\APIRepositery.cs" />
+    <Compile Include="Base\Code\AStaffDirectoryRepository.cs" />
+    <Compile Include="Base\Code\BaseRepository.cs" />
+    <Compile Include="Base\Code\BidReportRepository.cs" />
+    <Compile Include="Base\Code\BidRepository.cs" />
+    <Compile Include="Base\Code\BidRequestRepository.cs" />
+    <Compile Include="Base\Code\BidVendorRepository.cs" />
+    <Compile Include="Base\Code\CalendarRepository.cs" />
+    <Compile Include="Base\Code\ChangePasswordRepository.cs" />
+    <Compile Include="Base\Code\CompanyRepository.cs" />
+    <Compile Include="Base\Code\CompanyVendorRepository.cs" />
+    <Compile Include="Base\Code\DashboardRepository.cs" />
+    <Compile Include="Base\Code\Database.cs" />
+    <Compile Include="Base\Code\DocumentRepository.cs" />
+    <Compile Include="Base\Code\EmailRepository.cs" />
+    <Compile Include="Base\Code\EmailTempletRepository.cs" />
+    <Compile Include="Base\Code\ErrorLogRepository.cs" />
+    <Compile Include="Base\Code\ForgotPasswordRepository.cs" />
+    <Compile Include="Base\Code\GroupMemberRepository.cs" />
+    <Compile Include="Base\Code\GroupModuleAccessRepository.cs" />
+    <Compile Include="Base\Code\GroupRepository.cs" />
+    <Compile Include="Base\Code\InsuranceRepository.cs" />
+    <Compile Include="Base\Code\InvoiceLineRepository.cs" />
+    <Compile Include="Base\Code\InvoiceRepository.cs" />
+    <Compile Include="Base\Code\LoginHistoryRepository.cs" />
+    <Compile Include="Base\Code\LoginRepository.cs" />
+    <Compile Include="Base\Code\LookUpRepository.cs" />
+    <Compile Include="Base\Code\LookUpTypeRepository.cs" />
+    <Compile Include="Base\Code\MembershipRepository.cs" />
+    <Compile Include="Base\Code\MessageRepository.cs" />
+    <Compile Include="Base\Code\ModuleRepository.cs" />
+    <Compile Include="Base\Code\NewPricingRepository.cs" />
+    <Compile Include="Base\Code\NoteRepository.cs" />
+    <Compile Include="Base\Code\NotificationTemplateRepository.cs" />
+    <Compile Include="Base\Code\AssoBidsUtility.cs" />
+    <Compile Include="Base\Code\PaymentAppliedRepository.cs" />
+    <Compile Include="Base\Code\PaymentRepository.cs" />
+    <Compile Include="Base\Code\PMPropertiesRepository.cs" />
+    <Compile Include="Base\Code\PMVendorRepository.cs" />
+    <Compile Include="Base\Code\PortalRepository.cs" />
+    <Compile Include="Base\Code\PricingRepository.cs" />
+    <Compile Include="Base\Code\PromotionRepository.cs" />
+    <Compile Include="Base\Code\PropertyRepository.cs" />
+    <Compile Include="Base\Code\PropertyResourceRepository.cs" />
+    <Compile Include="Base\Code\PropertyVendorDistanceRepository.cs" />
+    <Compile Include="Base\Code\PushNotificationRepository.cs" />
+    <Compile Include="Base\Code\RegistrationRepository.cs" />
+    <Compile Include="Base\Code\ReminderRepository.cs" />
+    <Compile Include="Base\Code\ResourceRepository.cs" />
+    <Compile Include="Base\Code\ServiceAreaRepository.cs" />
+    <Compile Include="Base\Code\ServiceRepository.cs" />
+    <Compile Include="Base\Code\SessionRepository.cs" />
+    <Compile Include="Base\Code\StaffDirectoryRepository.cs" />
+    <Compile Include="Base\Code\StateRepository.cs" />
+    <Compile Include="Base\Code\SupportRepository.cs" />
+    <Compile Include="Base\Code\TaskRepository.cs" />
+    <Compile Include="Base\Code\UserAgreementRepository.cs" />
+    <Compile Include="Base\Code\UserRepository.cs" />
+    <Compile Include="Base\Code\vBillingRepository.cs" />
+    <Compile Include="Base\Code\VendorInvoiceRepositery.cs" />
+    <Compile Include="Base\Code\VendorManagerRepository.cs" />
+    <Compile Include="Base\Code\VendorPolicyRepository.cs" />
+    <Compile Include="Base\Code\VendorRatingRepository.cs" />
+    <Compile Include="Base\Code\VendorServiceRepository.cs" />
+    <Compile Include="Base\Code\ConnectionCls.cs" />
+    <Compile Include="Base\Code\VendorwithOpeninvoiceRepository.cs" />
+    <Compile Include="Base\Interface\IABNotificationRepository.cs" />
+    <Compile Include="Base\Interface\IAcitivitybyManagementCompanyRepository.cs" />
+    <Compile Include="Base\Interface\IACompanymangRepository.cs" />
+    <Compile Include="Base\Interface\IAgreementRepository.cs" />
+    <Compile Include="Base\Interface\IAPIRepositery.cs" />
+    <Compile Include="Base\Interface\IAStaffDirectoryRepository.cs" />
+    <Compile Include="Base\Interface\IBaseRepository.cs" />
+    <Compile Include="Base\Interface\IBidReportRepository.cs" />
+    <Compile Include="Base\Interface\IBidRepository.cs" />
+    <Compile Include="Base\Interface\IBidRequestRepository.cs" />
+    <Compile Include="Base\Interface\IBidVendorRepository.cs" />
+    <Compile Include="Base\Interface\ICalendarRepository.cs" />
+    <Compile Include="Base\Interface\IChangePasswordRepository.cs" />
+    <Compile Include="Base\Interface\ICompanyRepository.cs" />
+    <Compile Include="Base\Interface\ICompanyVendorRepository.cs" />
+    <Compile Include="Base\Interface\IDashboardRepository.cs" />
+    <Compile Include="Base\Interface\IDatabase.cs" />
+    <Compile Include="Base\Interface\IDocumentRepository.cs" />
+    <Compile Include="Base\Interface\IEmailRepository.cs" />
+    <Compile Include="Base\Interface\IEmailTemplateRepository.cs" />
+    <Compile Include="Base\Interface\IErrorLogRepository.cs" />
+    <Compile Include="Base\Interface\IForgotPasswordRepository.cs" />
+    <Compile Include="Base\Interface\IGroupMemberRepository.cs" />
+    <Compile Include="Base\Interface\IGroupModuleAccessRepository.cs" />
+    <Compile Include="Base\Interface\IGroupRepository.cs" />
+    <Compile Include="Base\Interface\IInsuranceRepository.cs" />
+    <Compile Include="Base\Interface\IInvoiceLineRepository.cs" />
+    <Compile Include="Base\Interface\IInvoiceRepository.cs" />
+    <Compile Include="Base\Interface\ILoginHistoryRepository.cs" />
+    <Compile Include="Base\Interface\ILoginRepository.cs" />
+    <Compile Include="Base\Interface\ILookUpRepository.cs" />
+    <Compile Include="Base\Interface\ILookUpTypeRepository.cs" />
+    <Compile Include="Base\Interface\IMembershipRepository.cs" />
+    <Compile Include="Base\Interface\IMessageRepository.cs" />
+    <Compile Include="Base\Interface\IModuleRepository.cs" />
+    <Compile Include="Base\Interface\INewPricingRepository.cs" />
+    <Compile Include="Base\Interface\INoteRepository.cs" />
+    <Compile Include="Base\Interface\INotificationTemplateRepository.cs" />
+    <Compile Include="Base\Interface\IPaymentAppliedRepository.cs" />
+    <Compile Include="Base\Interface\IPaymentRepository.cs" />
+    <Compile Include="Base\Interface\IPMPropertiesRepository.cs" />
+    <Compile Include="Base\Interface\IPMVendorRepository.cs" />
+    <Compile Include="Base\Interface\IPortalRepository.cs" />
+    <Compile Include="Base\Interface\IPricingRepository.cs" />
+    <Compile Include="Base\Interface\IPromotionRepository.cs" />
+    <Compile Include="Base\Interface\IPropertyRepository.cs" />
+    <Compile Include="Base\Interface\IPropertyResourceRepository.cs" />
+    <Compile Include="Base\Interface\IPropertyVendorDistanceRepository.cs" />
+    <Compile Include="Base\Interface\IPushNotificationRepository.cs" />
+    <Compile Include="Base\Interface\IRegistrationRepository.cs" />
+    <Compile Include="Base\Interface\IReminderRepository.cs" />
+    <Compile Include="Base\Interface\IResourceRepository.cs" />
+    <Compile Include="Base\Interface\IServiceAreaRepository.cs" />
+    <Compile Include="Base\Interface\IServiceRepository.cs" />
+    <Compile Include="Base\Interface\ISessionRepository.cs" />
+    <Compile Include="Base\Interface\IStaffDirectoryRepository.cs" />
+    <Compile Include="Base\Interface\IStateRepository.cs" />
+    <Compile Include="Base\Interface\ISupportRepository.cs" />
+    <Compile Include="Base\Interface\ITaskRepository.cs" />
+    <Compile Include="Base\Interface\IUserAgreementRepository.cs" />
+    <Compile Include="Base\Interface\IUserRepository.cs" />
+    <Compile Include="Base\Interface\IvBillingRepository.cs" />
+    <Compile Include="Base\Interface\IVendorInvoiceRepositery.cs" />
+    <Compile Include="Base\Interface\IVendorManagerRepository.cs" />
+    <Compile Include="Base\Interface\IVendorPolicyRepository.cs" />
+    <Compile Include="Base\Interface\IVendorRatingRepository.cs" />
+    <Compile Include="Base\Interface\IVendorServiceRepository.cs" />
+    <Compile Include="Base\Interface\IVendorswithopeninvoiceRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource\IResourceRepository.cs" />
+    <Compile Include="Site\Code\AgreementRepository.cs" />
+    <Compile Include="Site\Code\BaseRepository.cs" />
+    <Compile Include="Site\Code\BidRepository.cs" />
+    <Compile Include="Site\Code\BidRequestRepository.cs" />
+    <Compile Include="Site\Code\BidVendorRepository.cs" />
+    <Compile Include="Site\Code\CalendarRepository.cs" />
+    <Compile Include="Site\Code\CompanyRepository.cs" />
+    <Compile Include="Site\Code\CompanyVendorRepository.cs" />
+    <Compile Include="Site\Code\DocumentRepository.cs" />
+    <Compile Include="Site\Code\EmailRepository.cs" />
+    <Compile Include="Site\Code\ErrorLogRepository.cs" />
+    <Compile Include="Site\Code\GroupMemberRepository.cs" />
+    <Compile Include="Site\Code\GroupModuleAccessRepository.cs" />
+    <Compile Include="Site\Code\GroupRepository.cs" />
+    <Compile Include="Site\Code\InsuranceRepository.cs" />
+    <Compile Include="Site\Code\InvoiceLineRepository.cs" />
+    <Compile Include="Site\Code\InvoiceRepository.cs" />
+    <Compile Include="Site\Code\LoginHistoryRepository.cs" />
+    <Compile Include="Site\Code\LookUpRepository.cs" />
+    <Compile Include="Site\Code\LookUpTypeRepository.cs" />
+    <Compile Include="Site\Code\MembershipRepository.cs" />
+    <Compile Include="Site\Code\MessageRepository.cs" />
+    <Compile Include="Site\Code\ModuleRepository.cs" />
+    <Compile Include="Site\Code\NoteRepository.cs" />
+    <Compile Include="Site\Code\PaymentAppliedRepository.cs" />
+    <Compile Include="Site\Code\PaymentRepository.cs" />
+    <Compile Include="Site\Code\PortalRepository.cs" />
+    <Compile Include="Site\Code\PricingRepository.cs" />
+    <Compile Include="Site\Code\PromotionRepository.cs" />
+    <Compile Include="Site\Code\PropertyRepository.cs" />
+    <Compile Include="Site\Code\PropertyResourceRepository.cs" />
+    <Compile Include="Site\Code\PropertyVendorDistanceRepository.cs" />
+    <Compile Include="Site\Code\ReminderRepository.cs" />
+    <Compile Include="Site\Code\ResourceRepository.cs" />
+    <Compile Include="Site\Code\ServiceAreaRepository.cs" />
+    <Compile Include="Site\Code\ServiceRepository.cs" />
+    <Compile Include="Site\Code\SessionRepository.cs" />
+    <Compile Include="Site\Code\StateRepository.cs" />
+    <Compile Include="Site\Code\TaskRepository.cs" />
+    <Compile Include="Site\Code\UserAgreementRepository.cs" />
+    <Compile Include="Site\Code\UserRepository.cs" />
+    <Compile Include="Site\Code\VendorRatingRepository.cs" />
+    <Compile Include="Site\Code\VendorServiceRepository.cs" />
+    <Compile Include="Site\Interface\IAgreementRepository.cs" />
+    <Compile Include="Site\Interface\IBaseRepository.cs" />
+    <Compile Include="Site\Interface\IBidRepository.cs" />
+    <Compile Include="Site\Interface\IBidRequestRepository.cs" />
+    <Compile Include="Site\Interface\IBidVendorRepository.cs" />
+    <Compile Include="Site\Interface\ICalendarRepository.cs" />
+    <Compile Include="Site\Interface\ICompanyRepository.cs" />
+    <Compile Include="Site\Interface\ICompanyVendorRepository.cs" />
+    <Compile Include="Site\Interface\IDocumentRepository.cs" />
+    <Compile Include="Site\Interface\IEmailRepository.cs" />
+    <Compile Include="Site\Interface\IErrorLogRepository.cs" />
+    <Compile Include="Site\Interface\IGroupMemberRepository.cs" />
+    <Compile Include="Site\Interface\IGroupModuleAccessRepository.cs" />
+    <Compile Include="Site\Interface\IGroupRepository.cs" />
+    <Compile Include="Site\Interface\IInsuranceRepository.cs" />
+    <Compile Include="Site\Interface\IInvoiceLineRepository.cs" />
+    <Compile Include="Site\Interface\IInvoiceRepository.cs" />
+    <Compile Include="Site\Interface\ILoginHistoryRepository.cs" />
+    <Compile Include="Site\Interface\ILookUpRepository.cs" />
+    <Compile Include="Site\Interface\ILookUpTypeRepository.cs" />
+    <Compile Include="Site\Interface\IMembershipRepository.cs" />
+    <Compile Include="Site\Interface\IMessageRepository.cs" />
+    <Compile Include="Site\Interface\IModuleRepository.cs" />
+    <Compile Include="Site\Interface\INoteRepository.cs" />
+    <Compile Include="Site\Interface\IPaymentAppliedRepository.cs" />
+    <Compile Include="Site\Interface\IPaymentRepository.cs" />
+    <Compile Include="Site\Interface\IPortalRepository.cs" />
+    <Compile Include="Site\Interface\IPricingRepository.cs" />
+    <Compile Include="Site\Interface\IPromotionRepository.cs" />
+    <Compile Include="Site\Interface\IPropertyRepository.cs" />
+    <Compile Include="Site\Interface\IPropertyResourceRepository.cs" />
+    <Compile Include="Site\Interface\IPropertyVendorDistanceRepository.cs" />
+    <Compile Include="Site\Interface\IReminderRepository.cs" />
+    <Compile Include="Site\Interface\IResourceRepository.cs" />
+    <Compile Include="Site\Interface\IServiceAreaRepository.cs" />
+    <Compile Include="Site\Interface\IServiceRepository.cs" />
+    <Compile Include="Site\Interface\ISessionRepository.cs" />
+    <Compile Include="Site\Interface\IStateRepository.cs" />
+    <Compile Include="Site\Interface\ITaskRepository.cs" />
+    <Compile Include="Site\Interface\IUserAgreementRepository.cs" />
+    <Compile Include="Site\Interface\IUserRepository.cs" />
+    <Compile Include="Site\Interface\IVendorRatingRepository.cs" />
+    <Compile Include="Site\Interface\IVendorServiceRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AssociationBids.Common\AssociationBids.Portal.Common.csproj">
+      <Project>{D62DAE21-8146-4729-81DF-60BB78EE9226}</Project>
+      <Name>AssociationBids.Portal.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AssociationBids.Portal.Model\AssociationBids.Portal.Model.csproj">
+      <Project>{dbbf86bf-6071-4fea-8545-dbbbf9177fd0}</Project>
+      <Name>AssociationBids.Portal.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="obj\Debug\AssociationBids.Portal.Repository.csproj.CopyComplete" />
+    <None Include="obj\Debug\AssociationBids.Portal.Repository.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\Debug\AssociationBids.Portal.Repository.csprojAssemblyReference.cache" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Release\AssociationBids.Portal.Repository.csproj.CoreCompileInputs.cache" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\AssociationBids.Portal.Common.dll" />
+    <Content Include="bin\Debug\AssociationBids.Portal.Common.pdb" />
+    <Content Include="bin\Debug\AssociationBids.Portal.Model.dll" />
+    <Content Include="bin\Debug\AssociationBids.Portal.Model.pdb" />
+    <Content Include="bin\Debug\AssociationBids.Portal.Repository.dll" />
+    <Content Include="bin\Debug\AssociationBids.Portal.Repository.pdb" />
+    <Content Include="bin\Debug\Newtonsoft.Json.dll" />
+    <Content Include="bin\Debug\Newtonsoft.Json.xml" />
+    <Content Include="bin\Debug\System.Net.Http.Formatting.dll" />
+    <Content Include="bin\Debug\System.Net.Http.Formatting.xml" />
+    <Content Include="bin\Debug\System.Web.Http.dll" />
+    <Content Include="bin\Debug\System.Web.Http.xml" />
+    <Content Include="obj\Debug\AssociationBids.Portal.Repository.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\AssociationBids.Portal.Repository.dll" />
+    <Content Include="obj\Debug\AssociationBids.Portal.Repository.pdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
+    <Folder Include="obj\Debug\TempPE\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

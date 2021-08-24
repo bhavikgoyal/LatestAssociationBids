@@ -1,0 +1,226 @@
+﻿@model AssociationBids.Portal.Model.ChangePasswordModel
+
+@{
+    ViewBag.Title = "User Aggreement";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Reset Password</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="" name="description">
+    <meta content="Association Bids" name="author">
+    <meta name="keywords" content="" />
+    <!-- Favicon -->
+    <link rel="icon" href="~/Content/themes/assets/images/brand/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/brand/favicon.ico" />
+
+    <!-- Title -->
+    <title>User Aggreement - Association Bids</title>
+
+    <!--Bootstrap.min css-->
+    <link rel="stylesheet" href="~/Content/themes/assets/plugins/bootstrap/css/bootstrap.min.css">
+
+    <!-- Dashboard css -->
+    <link href="~/Content/themes/assets/css/style.css" rel="stylesheet" />
+
+    <!-- Perfect scroll bar css-->
+    <link href="~/Content/themes/assets/plugins/pscrollbar/perfect-scrollbar.css" rel="stylesheet" />
+
+    <!-- Sidemenu css -->
+    <link rel="stylesheet" href="~/Content/themes/assets/plugins/sidemenu/sidemenu-icon.css">
+
+    <!--Daterangepicker css-->
+    <link href="~/Content/themes/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+
+    <!-- Sidebar Accordions css -->
+    <link href="~/Content/themes/assets/plugins/sidemenu-responsive-tabs/css/easy-responsive-tabs.css" rel="stylesheet">
+
+    <!-- Rightsidebar css -->
+    <link href="~/Content/themes/assets/plugins/sidebar/sidebar.css" rel="stylesheet">
+
+    <!---Font icons css-->
+
+    <link href="~/Content/themes/assets/plugins/webfonts/plugin.css" rel="stylesheet" />
+    <link href="~/Content/themes/assets/plugins/webfonts/icons.css" rel="stylesheet" />
+    <link href="~/Content/themes/assets/fonts/fonts/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Color-skins css -->
+    <link id="theme" rel="stylesheet" type="text/css" media="all" href="~/Content/themes/assets/colors/color-skins/color.css" />
+    <link rel="stylesheet" href="~/Content/themes/assets/css/demo-styles.css" />
+
+    <script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+
+    <style>
+
+        .diverr {
+            /*border-style: solid;*/
+            border-width: thin;
+            border-color: rgb(201, 76, 76);
+            vertical-align: middle;
+            align-content: center
+            /*text-align:center;*/
+        }
+    </style>
+</head>
+<body>
+
+    <!-- page -->
+
+    @Html.HiddenFor(Model => Model.AggrementKey)
+    <div class="modal fade" id="AccpectUserTerms" tabindex="-1" role="dialog" aria-labelledby="AccpectUserTerms" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addvendor1" style="font-weight:200;">User Aggreement</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span class="alert alert-danger form-control" id="popupError" style="display:none"></span>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="content scroll-1 h-200" style="Overflow-y: scroll;">
+                                                <label id="Agreement"></label>
+                                                @Html.TextAreaFor(model => model.BindAgreementDetails, new { @class = "form-control", placeholder = "Description", @tabindex = "1", @Rows = "20", @spellcheck = "false", disabled = "disabled" })
+                                            </div>
+                                            <br>
+                                            <label class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="chkagreement" name="example-checkbox4" value="option4">
+                                                <span class="custom-control-label">I have read and agree to the Terms & Conditions</span>
+                                            </label>
+                                        </div><!-- end of col -->
+                                    </div><!-- end of row-->
+
+                                </div><!-- end of card body -->
+                                <div class="card-footer">
+                                    <div>
+                                        <button type="submit" class="btn btn-primary" id="btnSave" onclick="takechange();">Accept</button>
+                                        <button type="submit" class="btn btn-danger" id="btncancel" onclick="CancelAccpectUserAggrement();">Cancel</button>
+                                    </div>
+                                </div>
+                            </div><!-- end of card -->
+                        </div><!-- end of col -->
+                    </div><!-- end of row -->
+                    <!-- end of row-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- page-content end -->
+    <!-- page End-->
+    <!-- Jquery js-->
+    <script type="text/javascript">
+
+        $(document).ready(function ()
+        {
+            var val = '@ViewBag.UserKey';
+            $("#AccpectUserTerms").modal("show");
+            $("#PolicyList1").closest('li').addClass('active');
+            $("#PolicyList").addClass('active');
+        });
+
+
+
+        function takechange() {
+            debugger;
+            if ($("#chkagreement").prop("checked") === true)
+            {
+             $("#popupError").hide();
+             window.location.href = '@Url.Action("UpdateTerm", "ChangePassword")';
+            }
+            else
+            {
+                $("#popupError").html("Please Accept All Terms & Conditions.");
+                $("#popupError").show();
+
+            }
+        }
+
+        @*function UpdateTerms() {
+                var val = '@ViewBag.UserKey';
+                $.ajax({
+                    url: '@Url.Action("UpdateTerm", "ChangePassword")',
+                    cache: false,
+                    data:
+                    {
+                        Terms: "", UserKey: val
+                    },
+                    success: function (response) {
+                        debugger;
+
+                        if (response == true) {
+
+                           $("#AccpectUserTerms").modal("hide");
+                            window.location.href = '@Url.Action("Dashboard", "PMDashboard")';
+                        }
+
+                        else {ssss
+                            $("#AccpectUserTerms").modal("show");
+                            $("#popupError").html("Try Again.");
+                            $("#popupError").show();
+                        }
+
+                    }
+                });
+
+        }*@
+
+        function CancelAccpectUserAggrement() {
+             $("#AccpectUserTerms").modal("hide");
+             window.location.href = '@Url.Action("Index", "Login")';
+        }
+    </script>
+
+
+    <!--Bootstrap.min js-->
+    <script src="~/Content/themes/assets/plugins/bootstrap/popper.min.js"></script>
+    <script src="~/Content/themes/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--Jquery Sparkline js-->
+    <script src="~/Content/themes/assets/js/vendors/jquery.sparkline.min.js"></script>
+
+    <!-- Chart Circle js-->
+    <script src="~/Content/themes/assets/js/vendors/circle-progress.min.js"></script>
+
+    <!-- Star Rating js-->
+    <script src="~/Content/themes/assets/plugins/rating/jquery.rating-stars.js"></script>
+
+    <!-- Sidebar Accordions js -->
+    <script src="~/Content/themes/assets/plugins/sidemenu-responsive-tabs/js/easyResponsiveTabs.js"></script>
+
+    <!--Moment js-->
+    <script src="~/Content/themes/assets/plugins/moment/moment.min.js"></script>
+
+    <!-- Daterangepicker js-->
+    <script src="~/Content/themes/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Perfect scroll bar js-->
+    <script src="~/Content/themes/assets/plugins/pscrollbar/perfect-scrollbar.js"></script>
+    <script src="~/Content/themes/assets/plugins/pscrollbar/p-scroll.js"></script>
+
+    <!-- Custom js-->
+    <script src="~/Content/themes/assets/js/custom.js"></script>
+</body>
+</html>
+
+
+
+

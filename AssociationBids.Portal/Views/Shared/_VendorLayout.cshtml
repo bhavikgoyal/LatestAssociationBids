@@ -1,0 +1,1004 @@
+﻿@{ 
+    if (Session["PortalKey"] == null)
+    { Response.Redirect("~/", true); }
+    else if (Session["PortalKey"].ToString() == "2")
+    { Response.Redirect("~/PMDashboard/Dashboard", true); }
+    else if (Session["PortalKey"].ToString() == "1")
+    { Response.Redirect("~/Dashboard/Dashboard", true); }
+}
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+<head>
+    <style>
+        ul.pagination .current {
+            background-color: #467fcf !important;
+            color: #fff !important;
+        }
+
+        .dataTables_info {
+            float: left;
+        }
+
+        .pagination {
+            display: -ms-flexbox;
+            display: flex;
+            padding-left: 0;
+            list-style: none;
+            border-radius: 3px;
+            float: right;
+        }
+
+            .pagination > li:first-child > a, .pagination > li:first-child > span {
+                margin-left: 0;
+                border-top-left-radius: 4px;
+                border-bottom-left-radius: 4px;
+            }
+
+            .pagination > .disabled > a, .pagination > .disabled > a:focus, .pagination > .disabled > a:hover, .pagination > .disabled > span, .pagination > .disabled > span:focus, .pagination > .disabled > span:hover {
+                color: #777;
+                cursor: not-allowed;
+                background-color: #fff;
+                border-color: #ddd;
+            }
+
+            .pagination > li > a, .pagination > li > span {
+                position: relative;
+                float: left;
+                padding: 6px 12px;
+                margin-left: -1px;
+                line-height: 1.42857143;
+                color: #337ab7;
+                text-decoration: none;
+                background-color: #fff;
+                border: 1px solid #ddd;
+            }
+        .noti-count {
+            position: absolute !important;
+            /*            left: 53px;*/
+            right: 0px;
+            font-family: monospace;
+            font-size: 11px !important;
+        }
+        .bell-count {
+            position: absolute !important;
+            top: 6px;
+            border-radius: 100%;
+            right: 6px;
+            font-size: 11px !important;
+            width: 15px
+        }
+
+        .div-icon-noti {
+            position: relative;
+            margin-right: 7px !important;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="" name="description">
+    <meta content="Association Bids" name="author">
+    <meta name="keywords" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="~/Content/themes/assets/images/brand/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/themes/assets/images/brand/favicon.ico" />
+
+    <!-- Title -->
+    <title>Vendor- @ViewBag.Title</title>
+    <!--Bootstrap.min css-->
+    <link rel="stylesheet" href="~/Content/themes/assets/plugins/bootstrap/css/bootstrap.min.css">
+
+    <!-- Dashboard css -->
+    <link href="~/Content/themes/assets/css/style.css" rel="stylesheet" />
+
+    <!-- Perfect scroll bar css-->
+    <link href="~/Content/themes/assets/plugins/pscrollbar/perfect-scrollbar.css" rel="stylesheet" />
+
+    <!-- Sidemenu css -->
+    <link rel="stylesheet" href="~/Content/themes/assets/plugins/sidemenu/sidemenu-icon.css">
+
+    <!-- File Uploads css-->
+    <link href="~/Content/themes/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
+
+
+    <!--Select2 css -->
+    <link href="~/Content/themes/assets/plugins/select2/select2.min.css" rel="stylesheet" />
+
+    <!--Daterangepicker css-->
+    <link href="~/Content/themes/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+
+    <!-- Sidebar Accordions css -->
+    <link href="~/Content/themes/assets/plugins/sidemenu-responsive-tabs/css/easy-responsive-tabs.css" rel="stylesheet">
+
+    <!-- Rightsidebar css -->
+    <link href="~/Content/themes/assets/plugins/sidebar/sidebar.css" rel="stylesheet">
+
+    <!--News ticker css -->
+    <link href="~/Content/themes/assets/plugins/newsticker/breaking-news-ticker.css" rel="stylesheet" />
+
+    <!---Font icons css-->
+    <link href="~/Content/themes/assets/plugins/webfonts/plugin.css" rel="stylesheet" />
+    <link href="~/Content/themes/assets/plugins/webfonts/icons.css" rel="stylesheet" />
+    <link href="~/Content/themes/assets/fonts/fonts/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Time picker css-->
+    <link href="~/Content/themes/assets/plugins/time-picker/jquery.timepicker.css" rel="stylesheet" />
+
+    <!-- Date Picker css-->
+    <link href="~/Content/themes/assets/plugins/spectrum-date-picker/spectrum.css" rel="stylesheet" />
+
+    <!-- Color-skins css -->
+    <link id="theme" rel="stylesheet" type="text/css" media="all" href="~/Content/themes/assets/colors/color-skins/color.css" />
+    <link rel="stylesheet" href="~/Content/themes/assets/css/demo-styles.css" />
+    <script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+
+    <!-- Font Awsome Animation css-->
+    <link rel="stylesheet" href="~/assets/css/font-awesome-animation.min.css"/>
+
+</head>
+<body class="app sidebar-mini vendorpages">
+    <!--Global-Loader-->
+    <div id="global-loader">
+        <img src="~/Content/themes/assets/images/brand/icon.png" alt="loader">
+    </div>
+
+    <script>
+        $(document).ready(function () {
+
+         if ('@Session["PortalKey"]' != '3')
+        {
+             if ('@Session["PortalKey"]' == '1')
+        {
+            window.location.href = '@Url.Action("Dashboard", "Dashboard")';
+        }
+         else if ('@Session["PortalKey"]' == '2')
+        {
+            window.location.href = '@Url.Action("Dashboard", "PMDashboard")';
+        }
+        }
+            $("#Vpr1").hide();
+
+            LoadCountNewMsg();
+        });
+        function LoadCountNewMsg() {
+            $.ajax({
+                url: '../VenderBidrequest/MessageNewCount',
+                cache: false,
+                data: {
+                    ObjectKey: 0,
+                    ResourceKey: 0,
+                    ModuleKeyName: $("#HdnModuleKeyName").val(),
+                },
+                success: function (response) {
+                    response = JSON.parse(response);
+                    var b = 0;
+                    var w = 0;
+                    if (parseInt(response.length) > 0) {
+                        if (response[0].TotalOpenBidRequest !== "0") {
+                          //  b = response[0].NewMessagecnt;
+                            b = response[0].TotalOpenBidRequest;
+                            $("#BidRequestsMenu").html("Bid Requests (" + b + ")");
+
+                        } else { $("#BidRequestsMenu").html("Bid Requests"); }
+                        if (response[0].TotalWorkOrder !== "0") {
+                          //  w = response[0].NewMessagecntWO;
+                            w = response[0].TotalWorkOrder;                            
+                            $("#WorkOrderMenu").html("Work Order (" + w + ")");
+                        } else { $("#WorkOrderMenu").html("Work Order"); }
+                    }
+                    //GetNotificationCount(b,w);
+                    $(".loader-wrapper").hide();
+                },
+                error: function () {
+                    //GetNotificationCount();
+                }
+            });
+        }
+    </script>
+    <div class="page">
+        <div class="page-main">
+            <!--app-header-->
+            <input id="HdnModuleKeyName" type="hidden" value="PMBidRequests">
+            <div class="app-header header d-flex">
+                <div class="container-fluid">
+                    <div class="d-flex">
+                        <a class="header-brand" href="~/Dashboard/Dashboard">
+                            <img src="~/Content/themes/assets/images/brand/logo.png" class="header-brand-img main-logo" alt="Sparic logo">
+                            <img src="~/Content/themes/assets/images/brand/icon.png" class="header-brand-img icon-logo" alt="Sparic logo">
+                        </a><!-- logo-->
+                        <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-toggle="sidebar" href="#"></a>
+                        <a href="#" data-toggle="search" class="nav-link nav-link  navsearch"><i class="fa fa-search"></i></a><!-- search icon -->
+
+                        <div class="header-top-txt">
+                            <h2>@Convert.ToString(Session["Companyname"])</h2>
+                            @*<h3>Vendor Portal</h3>*@
+                        </div>
+
+                        <div class="d-flex order-lg-2 ml-auto header-rightmenu">
+
+                            <div class="dropdown">
+                                <a class="nav-link icon full-screen-link" id="fullscreen-button">
+                                    <i class="fe fe-maximize-2"></i>
+                                </a>
+                            </div><!-- full-screen -->
+                            <div class="dropdown header-notify">
+                            @Html.Action("Notification","ABNotification")
+                                @*<a class="nav-link icon" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fe fe-bell "></i>
+                                    <span class="pulse bg-success"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow ">
+                                    <a href="#" class="dropdown-item text-center">4 New Notifications</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="dropdown-item d-flex pb-3">
+                                        <div class="notifyimg bg-green">
+                                            <i class="fe fe-mail"></i>
+                                        </div>
+                                        <div>
+                                            <strong>Message Sent.</strong>
+                                            <div class="small text-muted">12 mins ago</div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="dropdown-item d-flex pb-3">
+                                        <div class="notifyimg bg-pink">
+                                            <i class="fe fe-shopping-cart"></i>
+                                        </div>
+                                        <div>
+                                            <strong>Order Placed</strong>
+                                            <div class="small text-muted">2  hour ago</div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="dropdown-item d-flex pb-3">
+                                        <div class="notifyimg bg-blue">
+                                            <i class="fe fe-calendar"></i>
+                                        </div>
+                                        <div>
+                                            <strong> Event Started</strong>
+                                            <div class="small text-muted">1  hour ago</div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="dropdown-item d-flex pb-3">
+                                        <div class="notifyimg bg-orange">
+                                            <i class="fe fe-monitor"></i>
+                                        </div>
+                                        <div>
+                                            <strong>Your Admin Lanuch</strong>
+                                            <div class="small text-muted">2  days ago</div>
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a href="#" class="dropdown-item text-center">View all Notifications</a>
+                                </div>*@
+                            </div><!-- notifications -->
+                            <div class="dropdown header-user">
+                                <a class="nav-link leading-none siderbar-link" data-toggle="sidebar-right" data-target=".sidebar-right">
+                                    <span class="mr-3 d-none d-lg-block ">
+                                        <span class="text-gray-white"><span class="ml-2">@Convert.ToString(Session["username"])</span></span>
+                                    </span>
+                                    <span class="avatar avatar-md brround"><img src='@Convert.ToString(Session["ProfileImageBase64"])' error="~/Content/themes/assets/images/users/avatars/19.png" alt="Profile-img" class="avatar avatar-md brround"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                    <div class="header-user text-center mt-4 pb-4">
+                                        <span class="avatar avatar-xxl brround"><img src="~/Content/themes/assets/images/users/avatars/19.png" alt="Profile-img" class="avatar avatar-xxl brround"></span>
+                                        <a href="#" class="dropdown-item text-center font-weight-semibold user h3 mb-0">@Convert.ToString(Session["username"])</a>
+
+                                    </div>
+
+                                    <div class="card-body border-top">
+                                        <div class="row">
+
+                                            <div class="col-6 text-center">
+                                                <a class="" href="~/Login/Index"><i class="dropdown-icon mdi mdi-logout-variant fs-30 m-0 leading-tight"></i></a>
+                                                <div>Sign out</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><!-- profile -->
+
+                            <div class="dropdown">
+                                <a class="nav-link icon siderbar-link" data-toggle="sidebar-right" data-target=".sidebar-right">
+                                    <i class="fe fe-more-horizontal"></i>
+                                </a>
+                            </div><!-- Right-siebar-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/app-header-->
+            <!-- Sidebar menu-->
+            <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+            <aside class="app-sidebar toggle-sidebar">
+
+                <ul class="side-menu toggle-menu" id="PMVen773">
+                    @*
+                        <li class="slide" id="Vende">
+                            <a class="side-menu__item" id="Vende1" href="~/VenderBidrequest/Index"><i class="side-menu__icon typcn typcn-device-desktop"></i><span class="side-menu__label">Home</span></a>
+                        </li>*@
+
+                    <li class="slide">
+                        <a class="side-menu__item" href="~/VenderBidrequest/Index"><i class="side-menu__icon typcn typcn-device-desktop"></i><span class="side-menu__label">Home</span></a>
+                    </li>
+                    <li id="BidRe">
+                        <a class="side-menu__item" id="BidRe1" href="../VenderBidrequest/BidRequests"><i class="side-menu__icon fa fa-gavel"></i><span id="BidRequestsMenu" class="side-menu__label">Bid Requests </span></a>
+                    </li>
+                    <li class="slide" id="VenderW">
+                        <a class="side-menu__item" id="VenderW1" href="../VenderWorkOrders/VenderWorkorder"><i class="side-menu__icon fa fa-briefcase"></i><span id="WorkOrderMenu" class="side-menu__label">Work Orders</span></a>
+                    </li>
+
+                    <li class="slide">
+                        <a class="side-menu__item"  data-toggle="slide" href="#"><i class="side-menu__icon fa fa-gears"></i><span class="side-menu__label" id="accmnt">Account Management</span><i class="angle fa fa-angle-right"></i></a>
+                        <ul class="slide-menu">
+
+                            <li><a href="~/vBilling/vBillingList" id="bill" class="slide-item"> Billing</a></li>
+                            <li><a href="~/VendorPolicy/PolicyList" id="PolicyList" class="slide-item"> Insurance</a></li>
+                            <li><a href="~/VendorPolicy/AddPolicy" id="PolicyList1" class="slide-item"> Insurance</a></li>
+                            @*~/VendorPolicy/PolicyList*@
+                            <li><a href="~/VendorMembership/MemberShipFind" class="slide-item" id="mship"> Membership</a></li>
+                            <li><a href="~/vprofile/VprofileView" id="Vpr" class="slide-item"> Profile</a></li>
+                            <li><a href="~/vprofile/vProfile" id="Vpr1" class="slide-item"> Profile</a></li>
+                           
+                            <li><a href="~/VendorInvoice/Index" id="Invoices" class="slide-item"> Invoices</a></li>
+                            <li><a href="~/VendorInvoice/VendorInvoiceView" id="Invoices1" class="slide-item"> Invoices</a></li>
+                        </ul>
+                    </li>
+                    <li class="slide" id="PMReport">
+                        <a class="side-menu__item" id="VProReport1" data-toggle="slide" href="#"><i class="side-menu__icon fa fa-gears"></i><span class="side-menu__label">Reports</span><i class="angle fa fa-angle-right"></i></a>
+                        <ul class="slide-menu">
+                            <li id="Vend"><a href="~/AcitivitybyManagementCompany/VDActivitybyVendorList" id="Report" class="slide-item"> Activity by Vendor</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </aside>
+            <!--sidemenu end-->
+            <!-- Right-sidebar-->
+            <div class="sidebar sidebar-right sidebar-animate">
+
+                <div class="panel-body tabs-menu-body side-tab-body p-0 border-0 ">
+                    <div class="tab-content border-top">
+                        <div class="tab-pane active " id="tab">
+                            <div class="card-body p-0">
+                                <div class="header-user text-center mt-4 pb-4">
+                                    <span class="avatar avatar-xxl brround"><img src='@Convert.ToString(Session["ProfileImageBase64"])' alt="Profile-img" class="avatar avatar-xxl brround"></span>
+                                    <div class="dropdown-item text-center font-weight-semibold user h3 mb-0">@Convert.ToString(Session["username"])</div>
+
+                                    <div class="card-body">
+
+                                    </div>
+                                </div>
+
+                                <div class="card-body border-top">
+                                    <div class="row">
+
+                                        <div class="col-6 text-center">
+                                            <a class="" href="~/ChangePassword/Edit"><i class="dropdown-icon mdi mdi-tune fs-30 m-0 leading-tight"></i></a>
+                                            <div>Change Password</div>
+                                        </div>
+                                        <div class="col-6 text-center">
+                                            <a onclick="signout();" href="~/Login/Index"><i class="dropdown-icon mdi mdi-logout-variant fs-30 m-0 leading-tight"></i></a>
+                                            <div>Sign out</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab1">
+                            <div class="chat">
+                                <div class="contacts_card">
+                                    <div class="input-group p-3">
+                                        <input type="text" placeholder="Search..." class="form-control search">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text search_btn  "><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                    <ul class="contacts mb-0">
+                                        <li class="active">
+                                            <div class="d-flex bd-highlight">
+                                                <div class="img_cont">
+                                                    <img src="../assets/images/users/male/3.jpg" class="rounded-circle user_img" alt="img">
+                                                    <span class="online_icon"></span>
+                                                </div>
+                                                <div class="user_info">
+                                                    <h6 class="mt-1 mb-0 ">Maryam Naz</h6>
+                                                    <small class="text-muted">Maryam is online</small>
+                                                </div>
+                                                <div class="float-right text-right ml-auto mt-auto mb-auto"><small>01-02-2019</small></div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="d-flex bd-highlight">
+                                                <div class="img_cont">
+                                                    <img src="../assets/images/users/female/1.jpg" class="rounded-circle user_img" alt="img">
+
+                                                </div>
+                                                <div class="user_info">
+                                                    <h6 class="mt-1 mb-0 ">Sahar Darya</h6>
+                                                    <small class="text-muted">Sahar left 7 mins ago</small>
+                                                </div>
+                                                <div class="float-right text-right ml-auto mt-auto mb-auto"><small>01-02-2019</small></div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="d-flex bd-highlight">
+                                                <div class="img_cont">
+                                                    <img src="../assets/images/users/female/9.jpg" class="rounded-circle user_img" alt="img">
+                                                    <span class="online_icon"></span>
+                                                </div>
+                                                <div class="user_info">
+                                                    <h6 class="mt-1 mb-0 ">Maryam Naz</h6>
+                                                    <small class="text-muted">Maryam is online</small>
+                                                </div>
+                                                <div class="float-right text-right ml-auto mt-auto mb-auto"><small>01-02-2019</small></div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="d-flex bd-highlight">
+                                                <div class="img_cont">
+                                                    <img src="../assets/images/users/female/12.jpg" class="rounded-circle user_img" alt="img">
+
+                                                </div>
+                                                <div class="user_info">
+                                                    <h6 class="mt-1 mb-0 ">Yolduz Rafi</h6>
+                                                    <small class="text-muted">Yolduz is online</small>
+                                                </div>
+                                                <div class="float-right text-right ml-auto mt-auto mb-auto"><small>02-02-2019</small></div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="d-flex bd-highlight">
+                                                <div class="img_cont">
+                                                    <img src="../assets/images/users/male/15.jpg" class="rounded-circle user_img" alt="img">
+                                                    <span class="online_icon"></span>
+                                                </div>
+                                                <div class="user_info">
+                                                    <h6 class="mt-1 mb-0 ">Nargis Hawa</h6>
+                                                    <small class="text-muted">Nargis left 30 mins ago</small>
+                                                </div>
+                                                <div class="float-right text-right ml-auto mt-auto mb-auto"><small>02-02-2019</small></div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="d-flex bd-highlight">
+                                                <div class="img_cont">
+                                                    <img src="../assets/images/users/male/17.jpg" class="rounded-circle user_img" alt="img">
+                                                    <span class="online_icon"></span>
+                                                </div>
+                                                <div class="user_info">
+                                                    <h6 class="mt-1 mb-0 ">Khadija Mehr</h6>
+                                                    <small class="text-muted">Khadija left 50 mins ago</small>
+                                                </div>
+                                                <div class="float-right text-right ml-auto mt-auto mb-auto"><small>03-02-2019</small></div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="d-flex bd-highlight">
+                                                <div class="img_cont">
+                                                    <img src="../assets/images/users/female/18.jpg" class="rounded-circle user_img" alt="img">
+
+                                                </div>
+                                                <div class="user_info">
+                                                    <h6 class="mt-1 mb-0 ">Khadija Mehr</h6>
+                                                    <small class="text-muted">Khadija left 50 mins ago</small>
+                                                </div>
+                                                <div class="float-right text-right ml-auto mt-auto mb-auto"><small>03-02-2019</small></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane  " id="tab2">
+                            <div class="list d-flex align-items-center border-bottom p-4">
+                                <div class="">
+                                    <span class="avatar bg-primary brround avatar-md">CH</span>
+                                </div>
+                                <div class="wrapper w-100 ml-3">
+                                    <p class="mb-0 d-flex">
+                                        <b>New Websites is Created</b>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <i class="mdi mdi-clock text-muted mr-1"></i>
+                                            <small class="text-muted ml-auto">30 mins ago</small>
+                                            <p class="mb-0"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list d-flex align-items-center border-bottom p-4">
+                                <div class="">
+                                    <span class="avatar bg-danger brround avatar-md">N</span>
+                                </div>
+                                <div class="wrapper w-100 ml-3">
+                                    <p class="mb-0 d-flex">
+                                        <b>Prepare For the Next Project</b>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <i class="mdi mdi-clock text-muted mr-1"></i>
+                                            <small class="text-muted ml-auto">2 hours ago</small>
+                                            <p class="mb-0"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list d-flex align-items-center border-bottom p-4">
+                                <div class="">
+                                    <span class="avatar bg-info brround avatar-md">S</span>
+                                </div>
+                                <div class="wrapper w-100 ml-3">
+                                    <p class="mb-0 d-flex">
+                                        <b>Decide the live Discussion Time</b>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <i class="mdi mdi-clock text-muted mr-1"></i>
+                                            <small class="text-muted ml-auto">3 hours ago</small>
+                                            <p class="mb-0"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list d-flex align-items-center border-bottom p-4">
+                                <div class="">
+                                    <span class="avatar bg-warning brround avatar-md">K</span>
+                                </div>
+                                <div class="wrapper w-100 ml-3">
+                                    <p class="mb-0 d-flex">
+                                        <b>Team Review meeting at yesterday at 3:00 pm</b>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <i class="mdi mdi-clock text-muted mr-1"></i>
+                                            <small class="text-muted ml-auto">4 hours ago</small>
+                                            <p class="mb-0"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list d-flex align-items-center border-bottom p-4">
+                                <div class="">
+                                    <span class="avatar bg-success brround avatar-md">R</span>
+                                </div>
+                                <div class="wrapper w-100 ml-3">
+                                    <p class="mb-0 d-flex">
+                                        <b>Prepare for Presentation</b>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <i class="mdi mdi-clock text-muted mr-1"></i>
+                                            <small class="text-muted ml-auto">1 days ago</small>
+                                            <p class="mb-0"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list d-flex align-items-center  border-bottom p-4">
+                                <div class="">
+                                    <span class="avatar bg-pink brround avatar-md">MS</span>
+                                </div>
+                                <div class="wrapper w-100 ml-3">
+                                    <p class="mb-0 d-flex">
+                                        <b>Prepare for Presentation</b>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <i class="mdi mdi-clock text-muted mr-1"></i>
+                                            <small class="text-muted ml-auto">1 days ago</small>
+                                            <p class="mb-0"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list d-flex align-items-center border-bottom p-4">
+                                <div class="">
+                                    <span class="avatar bg-purple brround avatar-md">L</span>
+                                </div>
+                                <div class="wrapper w-100 ml-3">
+                                    <p class="mb-0 d-flex">
+                                        <b>Prepare for Presentation</b>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <i class="mdi mdi-clock text-muted mr-1"></i>
+                                            <small class="text-muted ml-auto">45 mintues ago</small>
+                                            <p class="mb-0"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list d-flex align-items-center p-4">
+                                <div class="">
+                                    <span class="avatar bg-blue brround avatar-md">U</span>
+                                </div>
+                                <div class="wrapper w-100 ml-3">
+                                    <p class="mb-0 d-flex">
+                                        <b>Prepare for Presentation</b>
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <i class="mdi mdi-clock text-muted mr-1"></i>
+                                            <small class="text-muted ml-auto">2 days ago</small>
+                                            <p class="mb-0"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab3">
+                            <div class="">
+                                <div class="d-flex p-3 border-top">
+                                    <label class="custom-control custom-checkbox mb-0">
+                                        <input type="checkbox" class="custom-control-input" name="example-checkbox1" value="option1" checked="">
+                                        <span class="custom-control-label">Do Even More..</span>
+                                    </label>
+                                    <span class="ml-auto">
+                                        <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                        <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                                    </span>
+                                </div>
+                                <div class="d-flex p-3 border-top">
+                                    <label class="custom-control custom-checkbox mb-0">
+                                        <input type="checkbox" class="custom-control-input" name="example-checkbox2" value="option2" checked="">
+                                        <span class="custom-control-label">Find an idea.</span>
+                                    </label>
+                                    <span class="ml-auto">
+                                        <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                        <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                                    </span>
+                                </div>
+                                <div class="d-flex p-3 border-top">
+                                    <label class="custom-control custom-checkbox mb-0">
+                                        <input type="checkbox" class="custom-control-input" name="example-checkbox3" value="option3" checked="">
+                                        <span class="custom-control-label">Hangout with friends</span>
+                                    </label>
+                                    <span class="ml-auto">
+                                        <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                        <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                                    </span>
+                                </div>
+                                <div class="d-flex p-3 border-top">
+                                    <label class="custom-control custom-checkbox mb-0">
+                                        <input type="checkbox" class="custom-control-input" name="example-checkbox4" value="option4">
+                                        <span class="custom-control-label">Do Something else</span>
+                                    </label>
+                                    <span class="ml-auto">
+                                        <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                        <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                                    </span>
+                                </div>
+                                <div class="d-flex p-3 border-top">
+                                    <label class="custom-control custom-checkbox mb-0">
+                                        <input type="checkbox" class="custom-control-input" name="example-checkbox5" value="option5">
+                                        <span class="custom-control-label">Eat healthy, Eat Fresh..</span>
+                                    </label>
+                                    <span class="ml-auto">
+                                        <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                        <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                                    </span>
+                                </div>
+                                <div class="d-flex p-3 border-top">
+                                    <label class="custom-control custom-checkbox mb-0">
+                                        <input type="checkbox" class="custom-control-input" name="example-checkbox6" value="option6" checked="">
+                                        <span class="custom-control-label">Finsh something more..</span>
+                                    </label>
+                                    <span class="ml-auto">
+                                        <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                        <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                                    </span>
+                                </div>
+                                <div class="d-flex p-3 border-top">
+                                    <label class="custom-control custom-checkbox mb-0">
+                                        <input type="checkbox" class="custom-control-input" name="example-checkbox7" value="option7" checked="">
+                                        <span class="custom-control-label">Do something more</span>
+                                    </label>
+                                    <span class="ml-auto">
+                                        <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                        <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                                    </span>
+                                </div>
+                                <div class="d-flex p-3 border-top">
+                                    <label class="custom-control custom-checkbox mb-0">
+                                        <input type="checkbox" class="custom-control-input" name="example-checkbox8" value="option8">
+                                        <span class="custom-control-label">Updated more files</span>
+                                    </label>
+                                    <span class="ml-auto">
+                                        <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                        <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                                    </span>
+                                </div>
+                                <div class="d-flex p-3 border-top">
+                                    <label class="custom-control custom-checkbox mb-0">
+                                        <input type="checkbox" class="custom-control-input" name="example-checkbox9" value="option9">
+                                        <span class="custom-control-label">System updated</span>
+                                    </label>
+                                    <span class="ml-auto">
+                                        <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                        <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                                    </span>
+                                </div>
+                                <div class="d-flex p-3 border-top border-bottom">
+                                    <label class="custom-control custom-checkbox mb-0">
+                                        <input type="checkbox" class="custom-control-input" name="example-checkbox10" value="option10">
+                                        <span class="custom-control-label">Settings Changings...</span>
+                                    </label>
+                                    <span class="ml-auto">
+                                        <i class="si si-pencil text-primary mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Edit"></i>
+                                        <i class="si si-trash text-danger mr-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="Delete"></i>
+                                    </span>
+                                </div>
+                                <div class="text-center p-4">
+                                    <a href="#" class="btn btn-sm btn-primary btn-block">Upgrade more</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Rightsidebar-->
+            @RenderBody()
+        </div>
+    </div>
+    <!-- End Page -->
+    <!-- Back to top -->
+    <a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+    <!--Bootstrap.min js-->
+    <script src="~/Content/themes/assets/plugins/bootstrap/popper.min.js"></script>
+    <script src="~/Content/themes/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    
+
+    <!--Jquery Sparkline js-->
+    <script src="~/Content/themes/assets/js/vendors/jquery.sparkline.min.js"></script>
+
+    <!-- Chart Circle js-->
+    <script src="~/Content/themes/assets/js/vendors/circle-progress.min.js"></script>
+
+    <!-- Star Rating js-->
+    <script src="~/Content/themes/assets/plugins/rating/jquery.rating-stars.js"></script>
+
+    <!--Moment js-->
+    <script src="~/Content/themes/assets/plugins/moment/moment.min.js"></script>
+
+    <!-- File uploads js -->
+    <script src="~/Content/themes/assets/plugins/fileuploads/js/dropify.js"></script>
+    <script src="~/Content/themes/assets/plugins/fileuploads/js/dropify-demo.js"></script>
+
+    <!--Select2 js -->
+    <script src="~/Content/themes/assets/plugins/select2/select2.full.min.js"></script>
+    <script src="~/Content/themes/assets/js/select2.js"></script>
+    <!-- Daterangepicker js-->
+    <script src="~/Content/themes/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!--Side-menu js-->
+    <script src="~/Content/themes/assets/plugins/sidemenu/sidemenu-icon.js"></script>
+
+    <!--News Ticker js-->
+    <script src="~/Content/themes/assets/plugins/newsticker/breaking-news-ticker.min.js"></script>
+    <script src="~/Content/themes/assets/plugins/newsticker/newsticker.js"></script>
+
+    <!-- Sidebar Accordions js -->
+    <script src="~/Content/themes/assets/plugins/sidemenu-responsive-tabs/js/easyResponsiveTabs.js"></script>
+
+    <!-- Perfect scroll bar js-->
+    <script src="~/Content/themes/assets/plugins/pscrollbar/perfect-scrollbar.js"></script>
+    <script src="~/Content/themes/assets/plugins/pscrollbar/p-scroll.js"></script>
+
+    <!-- Rightsidebar js -->
+    <script src="~/Content/themes/assets/plugins/sidebar/sidebar.js"></script>
+    <!--Time Counter js-->
+    <script src="~/Content/themes/assets/plugins/counters/jquery.missofis-countdown.js"></script>
+    <script src="~/Content/themes/assets/plugins/counters/counter.js"></script>
+    <!-- ApexChart -->
+    <script src="~/Content/themes/assets/js/apexcharts.js"></script>
+    <!-- Charts js-->
+    <script src="~/Content/themes/assets/plugins/chart/chart.bundle.js"></script>
+    <script src="~/Content/themes/assets/plugins/chart/utils.js"></script>
+    <!--Peitychart js-->
+    <script src="~/Content/themes/assets/plugins/peitychart/jquery.peity.min.js"></script>
+    <script src="~/Content/themes/assets/plugins/peitychart/peitychart.init.js"></script>
+
+    <!-- Custom-charts js-->
+    <script src="~/Content/themes/assets/js/index1.js"></script>
+    <!-- Custom js-->
+    <script src="~/Content/themes/assets/js/custom.js"></script>
+    <link rel="stylesheet" href="../assets/css/cust-wizard.css">
+    <script src="../assets/js/cust-wizard.js"></script>
+
+    <script src="~/Content/themes/chosen.jquery.min.js"></script>
+    <link href="~/Content/themes/chosen.min.css" rel="stylesheet" />
+
+    <!-- Timepicker js -->
+    <script src="~/Content/themes/assets/plugins/time-picker/jquery.timepicker.js"></script>
+    <script src="~/Content/themes/assets/plugins/time-picker/toggles.min.js"></script>
+
+    <!-- Datepicker js -->
+    <script src="~/Content/themes/assets/plugins/spectrum-date-picker/spectrum.js"></script>
+    <script src="~/Content/themes/assets/plugins/spectrum-date-picker/jquery-ui.js"></script>
+    <script src="~/Content/themes/assets/plugins/input-mask/jquery.maskedinput.js"></script>
+
+
+
+    @*<link href="../assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+        <link href="~/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+
+        <!--Daterangepicker css-->
+        <link href="../assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+
+        <!-- Daterangepicker js-->
+        <script src="../assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+        <!-- Datepicker js -->
+        <script src="../assets/plugins/spectrum-date-picker/spectrum.js"></script>
+        <script src="../assets/plugins/spectrum-date-picker/jquery-ui.js"></script>
+        <script src="../assets/plugins/input-mask/jquery.maskedinput.js"></script>
+
+        <!-- Timepicker js -->
+        <script src="~/Content/themes/assets/plugins/time-picker/jquery.timepicker.js"></script>
+        <script src="~/Content/themes/assets/plugins/time-picker/toggles.min.js"></script>
+
+        <!-- Datepicker js -->
+        <script src="~/Content/themes/assets/plugins/spectrum-date-picker/spectrum.js"></script>
+        <script src="~/Content/themes/assets/plugins/spectrum-date-picker/jquery-ui.js"></script>
+        <script src="~/Content/themes/assets/plugins/input-mask/jquery.maskedinput.js"></script>
+
+        <!--MutipleSelect js-->
+        <script src="~/Content/themes/assets/plugins/multipleselect/multiple-select.js"></script>
+        <script src="~/Content/themes/assets/plugins/multipleselect/multi-select.js"></script>
+
+        <!-- File uploads js -->
+        <script src="~/Content/themes/assets/plugins/fileuploads/js/dropify.js"></script>
+        <script src="~/Content/themes/assets/plugins/fileuploads/js/dropify-demo.js"></script>
+
+        <!--Select2 js -->
+        <script src="~/Content/themes/assets/plugins/select2/select2.full.min.js"></script>
+        <script src="~/Content/themes/assets/js/select2.js"></script>*@
+
+
+    <!--Daterangepicker css-->
+    <link href="~/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+    <script src="~/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+
+
+    @*<!--Select2 css -->
+        <link href="~/Content/themes/assets/plugins/select2/select2.min.css" rel="stylesheet" />
+
+        <!-- Time picker css-->
+        <link href="~/Content/themes/assets/plugins/time-picker/jquery.timepicker.css" rel="stylesheet" />
+
+        <!-- Date Picker css-->
+        <link href="~/Content/themes/assets/plugins/spectrum-date-picker/spectrum.css" rel="stylesheet" />
+
+        <!-- File Uploads css-->
+        <link href="~/Content/themes/assets/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
+
+        <!--Mutipleselect css-->
+        <link rel="stylesheet" href="~/Content/themes/assets/plugins/multipleselect/multiple-select.css">*@
+
+</body>
+</html>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        debugger;
+
+
+
+        $(".advance_search").click(function () {
+            $("#advancesearch3").toggle(500);
+        });
+        $(".overlayclose").click(function () {
+            $("#advancesearch3").hide();
+        });
+    });
+
+    $("#PolicyList1").hide();
+    $("#Invoices1").hide();
+    $("#Vpr1").hide();
+
+    function formatPhoneNumber(phoneNumberString) {
+        debugger;
+        var x = phoneNumberString;
+        if (phoneNumberString.toString().length == 10) {
+            //var x = phoneNumberString.replace(/[^\d]+/g, '').replace(/(\d{1})(\d{3})(\d{3})(\d{4})/, '+$1 ($2) $3-$4');
+            x = phoneNumberString.replace(/[^\d]+/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+        }
+        return x;
+    }
+    function formatNumber(num, isCurrency = false) {
+        debugger;
+        if (isCurrency) {
+            return new Number(num).toLocaleString('en-US', {
+                maximumFractionDigits: 2,
+                minimumFractionDigits: 2
+            });
+        }
+        return new Number(num).toLocaleString('en-US', {
+            maximumFractionDigits: 2
+        });
+    }
+
+    function SetActiveMenu(menu, isMainMenu = true) {
+        debugger;
+        var p = 0
+        var c = menu;
+        if (isMainMenu == false) {
+            while (c[0].className != "slide") {
+                c.addClass("active");
+                c = c.parent();
+                if (c[0].className == 'slide') {
+                    c.addClass("is-expanded");
+                    c.children().closest('a').addClass("active");
+                }
+                p++;
+                if (p > 5)
+                    break;
+
+            }
+        } else {
+            c.addClass("active");
+        }
+    }
+    function GetNotificationCount(bmsg = 0, wmsg = 0) {
+        debugger;
+        $.ajax({
+            url: '/ABNotification/GetNotificationCount',
+            success: function (response) {
+                if (response.length > 0) {
+                    debugger;
+                    var bidcount = 0;
+                    var workcount = 0;
+                    var pcount = 0;
+                    var ccount = 0;
+                    var mcount = 0;
+                    var acCount = 0;
+                    for (var i = 0; i < response.length; i++) {
+                        if (response[i].ModuleKey == 100) {
+                            bidcount += response[i].NewNotificationCount;
+                        }
+                        else if (response[i].ModuleKey == 106) {
+                            workcount += response[i].NewNotificationCount;
+                        }
+                        else if (response[i].ModuleKey == 300) {
+                            mcount += response[i].NewNotificationCount;
+                        }
+                        else if (response[i].ModuleKey == 301) {
+                            ccount   += response[i].NewNotificationCount;
+                        }
+                        else if (response[i].ModuleKey == 302) {
+                            pcount += response[i].NewNotificationCount;
+                        }
+                    }
+                    acCount = pcount + mcount + ccount;
+                    if (bidcount > 0) {
+                        var b = 'Bid Requests';
+                        if (bmsg > 0)
+                            b += ' (' + bmsg + ')';
+                        $("#BidRequestsMenu").html(b + " (" + bidcount + ")");
+                    }
+                    if (workcount > 0) {
+                        var w = 'Work Order';
+                        if (wmsg > 0)
+                            w += ' (' + wmsg + ')';
+                        $("#WorkOrderMenu").html(w + " (" + workcount + ")");
+                    }
+                    //if (pcount > 0) {
+                    //    $("#PolicyList").html("Insurance (" + pcount + ")");
+                    //}
+                    //if (ccount > 0) {
+                    //    $("#bill").html("Billing (" + ccount + ")");
+                    //}
+                    //if (mcount > 0) {
+                    //    $("#mship").html("Membership (" + mcount + ")");
+                    //}
+                    //if (acCount > 0) {
+                    //    $("#accmnt").html("Account Management (" + acCount + ")");
+                    //}
+                }
+            }
+        });
+    }
+</script>

@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30621.155
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssociationBids.Portal", "AssociationBids.Portal\AssociationBids.Portal.csproj", "{9C8B1807-6D02-4038-B38E-A11597DEC82D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssociationBids.Portal.Common", "AssociationBids.Common\AssociationBids.Portal.Common.csproj", "{D62DAE21-8146-4729-81DF-60BB78EE9226}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssociationBids.Portal.Model", "AssociationBids.Portal.Model\AssociationBids.Portal.Model.csproj", "{DBBF86BF-6071-4FEA-8545-DBBBF9177FD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssociationBids.Portal.Repository", "AssociationBids.Portal.Repository\AssociationBids.Portal.Repository.csproj", "{A19764DE-7C40-4121-A3F8-C9A144D8D4D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssociationBids.Portal.Service", "AssociationBids.Portal.Service\AssociationBids.Portal.Service.csproj", "{DDF82EC3-4BB1-4B56-9508-36309D94BDC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssociationBids.Portal.Web", "AssociationBids.Web\AssociationBids.Portal.Web.csproj", "{5F1C1EC6-2E06-4899-8DE5-4663E3D2CDDB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C8B1807-6D02-4038-B38E-A11597DEC82D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C8B1807-6D02-4038-B38E-A11597DEC82D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C8B1807-6D02-4038-B38E-A11597DEC82D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C8B1807-6D02-4038-B38E-A11597DEC82D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D62DAE21-8146-4729-81DF-60BB78EE9226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D62DAE21-8146-4729-81DF-60BB78EE9226}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D62DAE21-8146-4729-81DF-60BB78EE9226}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D62DAE21-8146-4729-81DF-60BB78EE9226}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBBF86BF-6071-4FEA-8545-DBBBF9177FD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBBF86BF-6071-4FEA-8545-DBBBF9177FD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBBF86BF-6071-4FEA-8545-DBBBF9177FD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBBF86BF-6071-4FEA-8545-DBBBF9177FD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A19764DE-7C40-4121-A3F8-C9A144D8D4D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A19764DE-7C40-4121-A3F8-C9A144D8D4D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A19764DE-7C40-4121-A3F8-C9A144D8D4D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A19764DE-7C40-4121-A3F8-C9A144D8D4D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDF82EC3-4BB1-4B56-9508-36309D94BDC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDF82EC3-4BB1-4B56-9508-36309D94BDC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDF82EC3-4BB1-4B56-9508-36309D94BDC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDF82EC3-4BB1-4B56-9508-36309D94BDC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F1C1EC6-2E06-4899-8DE5-4663E3D2CDDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F1C1EC6-2E06-4899-8DE5-4663E3D2CDDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F1C1EC6-2E06-4899-8DE5-4663E3D2CDDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F1C1EC6-2E06-4899-8DE5-4663E3D2CDDB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2C0BBB24-2339-4DA1-BC20-919B70D4C7CC}
+	EndGlobalSection
+EndGlobal

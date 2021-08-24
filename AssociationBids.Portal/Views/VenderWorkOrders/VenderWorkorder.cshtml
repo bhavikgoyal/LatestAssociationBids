@@ -1,0 +1,1018 @@
+﻿
+@{
+    ViewBag.Title = "VenderWorkorder";
+    Layout = "~/Views/Shared/_VendorLayout.cshtml";
+
+}
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<script src="~/JSControllers/VenderWorkOrder.js"></script>
+<style>
+    .ui-datepicker {
+        background-color: #f9f9f9;
+        border: 1px solid #ced4da;
+        font-family: inherit;
+        font-size: inherit;
+        padding: 10px;
+        margin: 1px 0 0;
+        display: none;
+        width: auto !important;
+        z-index: 1112 !important;
+    }
+</style>
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="~/VDashboard/index">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Work Order
+                </li>
+            </ol><!-- End breadcrumb -->
+        </div>
+        <!-- End page-header -->
+        <div class="alert alert-danger" id="Error" style="display: none;margin-top: 20px;">
+            <strong><span class="errormessage"></span></strong>
+        </div>
+        <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-lg-4 col-xl-4 mb15">
+                                    <input id="SearchVal" type="text" class="form-control" placeholder="Search for...">
+                                </div>
+                                <div class="col-lg-4 col-xl-4">
+                                    <a class="btn btn-secondary" href="#" role="button" onclick="return LoadSortTableFillWithSearch();">Search</a>
+                                    <span class="advance_search btn_advsearch" onclick="toggle_visibility('advancesearch2');"><i class="fe fe-chevron-down"></i></span>
+                                </div>
+                                <div class="col-lg-4 col-xl-4">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end of form group -->
+                        <div id="advancesearch3">
+                            <div class="overlayclose"><i class="fa fa-times"></i></div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Work Order Request Status</label>
+                                        @Html.DropDownList("BidRequestStatus", new SelectList(ViewBag.StatusListForDDL, "Value", "Text"), new { @tabindex = "1", @data_rel = "Choose_one", @class = "form-control", placeholder = "Select Service..." })
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Work Order due Date From </label>
+                                        @Html.Editor("BiddueDateFrom", new { htmlAttributes = new { @class = "form-control fc-datepicker", @tabindex = "1", autocomplete = "off", placeholder = "MM/DD/YYYY" } })
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Work Order due Date To </label>
+                                        @Html.Editor("BiddueDateTo", new { htmlAttributes = new { @style = "z-index:1112 !important;", @class = "form-control fc-datepicker", @tabindex = "1", autocomplete = "off", placeholder = "MM/DD/YYYY" } })
+                                    </div>
+                                    <div class="col-md-1">
+                                        <label class="form-label">&nbsp;</label>
+                                        <button type="button" id="btnsearchVendor" class="btn btn-primary btn-icon-text">
+                                            Search
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div id="RawDatas" class="table-responsive">
+                            <table class="table table-bordered text-nowrap w-100 dataTable no-footer">
+                                <thead>
+                                    <tr>
+                                        <th onclick="SortingFun('Title');" style="cursor: pointer;">Title <i id="Titlei" class="fa fa-sort-asc pull-right reseti"></i></th>
+                                        <th onclick="SortingFun('Property');" style="cursor: pointer;">Property Name <i id="Propertyi" class="fa fa-sort-asc pull-right reseti"></i></th>
+                                        <th width="21%" onclick="SortingFun('StartDate');" style="cursor: pointer;">Work Order Start Date<i id="StartDatei" class="fa fa-sort-asc pull-right reseti"></i></th>
+                                        <th width="20%" onclick="SortingFun('BidDueDate');" style="cursor: pointer;">Work Order Due Date <i id="BidDueDatei" class="fa fa-sort-asc pull-right reseti"></i></th>
+                                        <th  onclick="SortingFun('Amount');" style="cursor: pointer;">Amount <i id="Amounti" class="fa fa-sort-asc pull-right reseti"></i></th>
+
+                                        <th width="20%" onclick="SortingFun('Statuslookup');" style="cursor: pointer;">Work Order Status <i id="BidRequestStatusi" class="fa fa-sort-asc pull-right reseti"></i></th>
+                                        <th width="8%" align="center" class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div id="tbodytitle"></div>
+                                        </td>
+                                        <td>
+                                            <div id="tpropertyname"></div>
+                                        </td>
+                                        <td>
+                                            <div id="tstartdate"></div>
+                                        </td>
+                                        <td>
+                                            <div id="tbodyBidDueDate"></div>
+                                        </td>
+
+                                        <td>
+                                            <div id="tbodyAmount"></div>
+                                        </td>
+                                        <td id="blue" style="display:none">
+                                            <span id="tbodyBidRequestStatus" class="badge badge-primary  mr-1 mb-1 mt-1"></span>
+
+                                        </td>
+                                        <td id="red" style="display:none">
+                                            <span id="tbodyBidRequestStatus" class="badge badge-danger  mr-1 mb-1 mt-1"></span>
+
+                                        </td>
+                                        <td id="green" style="display:none">
+                                            <span id="tbodyBidRequestStatus" class="badge badge-success  mr-1 mb-1 mt-1"></span>
+
+                                        </td>
+                                        <td id="yellow" style="display:none">
+                                            <span id="tbodyBidRequestStatus" class="badge badge-warning  mr-1 mb-1 mt-1"></span>
+
+                                        </td>
+
+                                        <td align="center" class="text-center">
+                                            <a id="linkviewmore" title="View Details"><i class="fe fe-eye font18"></i></a>
+                                            <a id="linkview" title="View Details" role="button"><i class="fe fe-eye font18"></i></a>
+                                            <a id="linkviewreject" title="View Details"><i class="fa fa-bell faa-ring animated redtxt"></i></a>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="pull-left">
+                                <label><span class="spnToRecs">0</span> to <span class="spnOfRecs">0</span> out of <span class="spnTotalRecs">0</span>&nbsp; Records </label>
+                            </div>
+                            <div class="dataTables_paginate paging_simple_numbers" id="pagin">
+                                <ul class="pagination"></ul>
+                            </div>
+                            <div class="pagination" style="display:none;">
+                                <input type="hidden" id="HdnSortValue" value="order by Title asc" />
+                                <input type="hidden" id="HdnPageIndex" value="1" />
+
+                                <input type="hidden" id="Titlehdn" value="asc" />
+                                <input type="hidden" id="BidDueDatehdn" value="asc" />
+                                <input type="hidden" id="BidRequestStatushdn" value="asc" />
+                                <input type="hidden" id="Amounthdn" value="asc" />
+                                <input type="hidden" id="Propertyhdn" value="asc" />
+                                <input type="hidden" id="StartDatehdn" value="asc" />
+
+                                <input type="hidden" id="ModuleControllerhdn" value="WorkOrder" />
+
+                                <input type="hidden" id="incremSlide" value='5' />
+                                <input type="hidden" id="startPage" value='0' />
+                                <input type="hidden" id="numberPage" value='0' />
+                                <input type="hidden" id="TotalPageRecord" value='0' />
+                                <input type="hidden" id="priorityrecord" value='true' />
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--End side app-->
+    <!-- Right-sidebar-->
+    <!-- End Rightsidebar-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+<!-- End app-content-->
+<script>
+
+    $(document).ready(function () {
+        debugger;
+        $('#BidRequestStatus').val('700, 701, 702');
+        LoadSortTableFill();
+        LoadCountNewMsg();
+        checkPoratl()
+    });
+    function LoadPagingSortTableFill(pageIndex) {
+        $('#HdnPageIndex').val(pageIndex);
+        LoadSortTableFill();
+    }
+
+
+
+    function checkPoratl() {
+        $.ajax({
+            url: '@Url.Action("checkPortal", "PMProperties")',
+            cache: false,
+            data:
+            {
+                PropertyKey: $('#PropertyKey').val()
+            },
+            success: function (response) {
+                debugger;
+
+                if (response == false) {
+                    window.location.href = '@Url.Action("Index", "Login")';
+                }
+
+                else {
+
+                }
+
+            }
+        });
+    }
+
+    $("#btnsearchVendor").click(function () {
+        //LoadSortTableFillWithSearch();
+        $("#advancesearch3").hide();
+        LoadSortTableFill();
+    });
+
+
+
+
+
+    function updatePagingsearch(TotalRecs, pd) {
+        debugger;
+
+        $('ul.pagination').html('');
+        var liClone = $('ul.pagination');
+
+
+
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        //var pageSize = $('#PageSize').val();
+        var NoPage = 1;
+        if (parseInt(TotalRecs) > parseInt(pageSize)) {
+            NoPage = parseInt(parseInt(TotalRecs) / parseInt(pageSize));
+            if (parseFloat(parseInt(parseInt(TotalRecs) / parseInt(pageSize))) < parseFloat(parseInt(TotalRecs) / parseInt(pageSize))) {
+                NoPage = (parseInt(parseInt(TotalRecs) / parseInt(pageSize)) + 1);
+            }
+        }
+
+        var lp = 0;//parseFloat(parseInt($('#HdnPageIndex').val()) / 5);
+        if (parseFloat(parseInt(pd) % 5) == 0) {
+            lp = ((parseInt(parseInt(pd) / 5) - 1) * 5);
+        }
+        else {
+            lp = parseInt(parseInt(pd) / 5) * 5;
+        }
+
+        var ind = 0;
+        for (var i = 1; i <= NoPage; i++) {
+            if ((parseInt(lp)) < i) {
+                if (parseInt(pd) > 5 && $(liClone).find('li.previous').length == 0) {
+                    $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')"><a href="#">Previous</a></li>');
+                }
+                if (ind < 5) {
+                    if (i == parseInt(pd)) {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current">' + i + '</a></li>');
+                    } else {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')">' + i + '</a></li>');
+                    }
+                } else if ($(liClone).find('li.next').length == 0) {
+                    $(liClone).append('<li class="paginate_button next " aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')"><a href="#">Next</a></li>');
+                }
+                ind = ind + 1;
+            }
+        }
+
+
+
+    }
+
+
+    function LoadSortTableFillWithSearch() {
+        debugger;
+        var k = "10";
+        var pd = "1";
+        var BidStatus = $("#BidRequestStatus").val();
+        $.ajax({
+            url: '@Url.Action("GetVenderBidRequestListJson", "VenderBidrequest")',
+            cache: false,
+            data: {
+                PageSize: k,
+                PageIndex: $('#HdnPageIndex').val(),
+                Search: $('#SearchVal').val(),
+                Sort: $("#HdnSortValue").val(),
+                BidVendorKey: 0,
+                BidRequestStatus: $("#BidRequestStatus").val(),
+                BiddueDateFrom: $("#BiddueDateFrom").val(),
+                BiddueDateTo: $("#BiddueDateTo").val(),
+                ModuleController: $("#ModuleControllerhdn").val()
+            },
+            success: function (response) {
+                debugger;
+                response = JSON.parse(response);
+                //if (parseInt(response.length) > 0) {
+                //    if (parseInt(($('#HdnPageIndex').val()) * parseInt($('#PageSize').val())) > parseInt(response[0].TotalRecords)) {
+                //        $("#ddlload").hide();
+                //    } else {
+                //        $("#ddlload").show();
+                //    }
+                //} else {
+                //    $("#ddlload").hide();
+                //}
+
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+
+                    curRecords = parseInt((pd) * parseInt(k));
+                    curRecords = curRecords - (k - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                }
+
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                //$("#RawDatas table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++) {
+                    debugger;
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $("#tbodytitle", table).html(response[i].Title);
+                    $("#tpropertyname", table).html(response[i].Property);
+                    //$("#tstartdate", table).html(response[i].StartDate);
+                    if (response[i].StartDate !== '01/01/1900' || response[i].StartDate == '') {
+                        $("#tstartdate", table).html((response[i].StartDate));
+                    }
+                    else { $("#tstartdate", table).html(''); }
+
+                    // $("#tbodyBidDueDate", table).html(ConvertJsonDateToDateTime(response[i].DateAdded));
+                    if (response[i].BidDueDate !== '01/01/1900' || response[i].BidDueDate == '') {
+                        $("#tbodyBidDueDate", table).html((response[i].BidDueDate));
+                    }
+                    else { $("#tbodyBidDueDate", table).html(''); }
+
+                    if (response[i].ActAmount !== null || response[i].ActAmount == "") {
+                        $("#tbodyAmount", table).html((response[i].ActAmount));
+                    }
+                    else {
+                        $("#tbodyAmount", table).html('');
+                    }
+
+
+
+                    if (response[i].Statuslookup == "Accepted" && response[i].BidRequestStatus == 602) {
+                        response[i].Statuslookup = "Completed"
+                    }
+                    if (response[i].Statuslookup == "Accepted" && response[i].BidRequestStatus == 601) {
+                        response[i].Statuslookup = "Accepted"
+                    }
+                    if (response[i].Statuslookup == "Accepted" && response[i].BidRequestStatus == 603) {
+                        response[i].Statuslookup = "Closed"
+                    }
+                    if (response[i].Statuslookup == "Accepted" && response[i].BidRequestStatus == 604) {
+                        response[i].Statuslookup = "canceled"
+                    }
+
+
+                    $("#tbodyBidRequestStatus", table).html(response[i].Statuslookup);
+
+                    if (response[i].Statuslookup == "Completed" || response[i].Statuslookup == "Submitted" || response[i].BidReqStatus == "Completed") {
+                        $("#blue", table).css("display", "none");
+                        $("#red", table).css("display", "none");
+                        $("#yellow", table).css("display", "none");
+                        $("#green", table).css("display", "block");
+
+                    }
+                    if (response[i].Statuslookup == "Accepted" || response[i].Statuslookup == "Submitted" || response[i].BidReqStatus == "Completed") {
+                        $("#blue", table).css("display", "none");
+                        $("#red", table).css("display", "none");
+                        $("#yellow", table).css("display", "none");
+                        $("#green", table).css("display", "block");
+
+                    }
+
+
+
+                    if (response[i].Statuslookup == "In Progress") {
+                        $("#blue", table).css("display", "block");
+                        $("#red", table).css("display", "none");
+                        $("#yellow", table).css("display", "none");
+                        $("#green", table).css("display", "none");
+
+                    }
+                    if (response[i].Statuslookup == "Rejected" || response[i].Statuslookup == "Not Interested") {
+                        $("#blue", table).css("display", "none");
+                        $("#red", table).css("display", "block");
+                        $("#yellow", table).css("display", "none");
+                        $("#green", table).css("display", "none");
+
+                    }
+                    if (response[i].Statuslookup == "Closed") {
+                        $("#blue", table).css("display", "none");
+                        $("#red", table).css("display", "block");
+                        $("#yellow", table).css("display", "none");
+                        $("#green", table).css("display", "none");
+
+                    }
+
+
+                    if (response[i].Statuslookup == "Interested") {
+                        $("#blue", table).css("display", "none");
+                        $("#red", table).css("display", "none");
+                        $("#yellow", table).css("display", "block");
+                        $("#green", table).css("display", "none");
+
+                    }
+
+
+                    if (response[i].NewMsg === 0 && (response[i].priority == null || response[i].priority == '0')) {
+                        $("#linkview i", table).removeClass("fa fa-bell faa-ring animated redtxt");
+                        $("#linkviewmore i", table).removeClass("fa fa-bell faa-ring animated redtxt");
+                        $("#linkviewreject i", table).removeClass("fa fa-bell faa-ring animated redtxt");
+                        $("#linkview i", table).removeClass("fe fe-eye font18");
+                        $("#linkviewmore i", table).removeClass("fe fe-eye font18");
+                        $("#linkviewreject i", table).removeClass("fe fe-eye font18");
+
+                        $("#linkview i", table).addClass("fe fe-eye font18");
+                        $("#linkviewmore i", table).addClass("fe fe-eye font18");
+                        $("#linkviewreject i", table).addClass("a fa fa-eye  text-danger");
+                    }
+                    else {
+                        $("#linkview i", table).removeClass("fa fa-spinner faa-spin animated redtxt");
+                        $("#linkviewreject i", table).removeClass("a fa fa-eye  text-danger");
+                        $("#linkview i", table).removeClass("fa fa-bell faa-ring animated redtxt");
+                        $("#linkviewmore i", table).removeClass("fa fa-bell faa-ring animated redtxt");
+                        $("#linkviewreject i", table).removeClass("fa fa-bell faa-ring animated redtxt");
+
+                        $("#linkview i", table).removeClass("fe fe-eye font18");
+                        $("#linkviewmore i", table).removeClass("fe fe-eye font18");
+                        $("#linkviewreject i", table).removeClass("fe fe-eye font18");
+
+                        $("#linkview i", table).addClass("fa fa-bell faa-ring animated redtxt");
+                        $("#linkviewmore i", table).addClass("fa fa-bell faa-ring animated redtxt");
+                        $("#linkviewreject i", table).addClass("fa fa-bell faa-ring animated redtxt");
+                    }
+
+                    if (response[i].Statuslookup == "In Progress") {
+                        //$("#tbodyBidRequestStatus", table).html("Approve");
+                        $("#linkview", table).attr('href', "../VenderWorkOrders/VenderWorkorderView?BidVendorKey=" + response[i].BidVendorKey + "&ResourceKey=" + response[i].ResourceKey + "&BidStartDate=" + response[i].StartDate + "");
+                        $("#linkview", table).show();
+                        $("#linkviewmore", table).hide();
+                        $("#linkviewreject", table).hide();
+                    }
+                    else if (response[i].Statuslookup === "Accepted" || response[i].Statuslookup === "Interested" || response[i].Statuslookup === 'Submitted') {
+                        // $("#tbodyBidRequestStatus", table).html("Pending");
+                        $("#linkview", table).hide();
+                        $("#linkviewreject", table).hide();
+                        $("#linkviewmore", table).show();
+                        $("#linkviewmore", table).attr('href', "../VenderWorkOrders/VenderWorkorderView?BidVendorKey=" + response[i].BidVendorKey + "&ResourceKey=" + response[i].ResourceKey + "&BidStartDate=" + response[i].StartDate + "");
+
+                    } else if (response[i].Statuslookup == "Not Interested") {
+                        $("#linkview", table).hide();
+                        $("#linkviewmore", table).hide();
+                        $("#linkviewreject", table).show();
+                        // $("#linkviewreject", table).attr('href', "../VenderBidrequest/ViewBidrequest?BidVendorKey=" + response[i].BidVendorKey + "&ResourceKey=" + response[i].ResourceKey + "& BidStartDate=" + response[i].StartDate + "");
+                        $("#linkviewreject", table).attr('href', "#");
+                    }
+                    else {
+                        $("#linkviewreject", table).hide();
+                        $("#linkview", table).hide();
+                        $("#linkviewmore", table).hide();
+                        debugger;
+                        if (response[i].NotificationType != null) {
+                            if (response[i].NotificationType.includes('RejByAccept') || response[i].NotificationType.includes('BidReqStatusReject')) {
+                                $("#linkviewreject", table).attr('href', '#');
+                                $("#linkviewreject", table).attr('title', 'Mark as Read');
+                                $("#linkviewreject", table).html('');
+                                $("#linkviewreject", table).append('<i class="fa fa-check-circle font18 text-info"></i>')
+                                $("#linkviewreject", table).show();
+                            }
+                        }
+                    }
+                    if (response[i].NotificationType != null) {
+                        var bidtype = response[i].NotificationType.split(',');
+                        var bidNid = response[i].NotificationId.split(',');
+                        var ismatch = false;
+                        var index = -1;
+                        for (var r = 0; r < bidtype.length; r++) {
+                            if (bidtype[r] == 'BidReqStatus') {
+                                ismatch = true;
+                                index = r;
+                            }
+                        }
+                        if (ismatch) {
+                            $("#linkview", table).attr('onclick', 'notificationClick(' + bidNid[index] + ',"BidReqStatus")');
+                            $("#linkviewmore", table).attr('onclick', 'notificationClick(' + bidNid[index] + ',"BidReqStatus")');
+                            $("#linkviewreject", table).attr('onclick', 'notificationClick(' + bidNid[index] + ',"BidReqStatus")');
+                        }
+                    }
+
+                    debugger;
+                    if (BidStatus == "703, 704, 803" && response[i].Statuslookup == "Accepted" && response[i].BidRequestStatus == 601) {
+
+                    }
+                    else
+                    {
+                        $("#RawDatas table").append(table);
+                    }
+                   
+                    table.show();
+                    spnToRecs++;
+                }
+                if (response.length > 0)
+                    $("#priorityrecord").val(response[0].priorityrecord);
+                //$("#RawDatas table tbody tr:eq(0)").hide();
+
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    debugger;
+                    $('.spnToRecs').text(spnToRecs);
+                    $(".pagination").show();
+                    $("#RawDatas table thead tr:eq(0)").show();
+                    updatePagingsearch(TotalRecs, pd);
+                    $('#Error').hide();
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                    updatePagingsearch(TotalRecs, pd);
+                    if (TotalRecs = 'undefined') {
+                        $('.errormessage').html('Data Not Found.');
+                        $('#Error').show();
+                        $("#RawDatas table thead tr:eq(0)").hide();
+                        $("#RawDatas table tbody tr:eq(0)").hide();
+                        $(".pagination").hide();
+                    }
+                }
+
+
+                if (curRecords.text == "NaN") {
+                    $('.spnToRecs').text(0);
+                    updatePagingsearch(TotalRecs, pd);
+                    if (TotalRecs = 'undefined') {
+                        $('.errormessage').html('Data Not Found.');
+                        $('#Error').show();
+                        $("#RawDatas table thead tr:eq(0)").hide();
+                        $("#RawDatas table tbody tr:eq(0)").hide();
+                        $(".pagination").hide();
+                    }
+
+                }
+            }
+        });
+    }
+
+    function LoadSortTableFill(issort = false) {
+
+
+        var BidStauts = $("#BidRequestStatus").val();
+        $("#RawDatas table tbody tr:eq(0)").hide();
+        var k = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        var url1 = '';
+        if ($("#priorityrecord").val() == 'true' && issort == false) {
+            url1 = '@Url.Action("GetVenderBidRequestListJsonPriority", "VenderBidrequest")';
+        }
+        else {
+            url1 = '@Url.Action("GetVenderBidRequestListJson", "VenderBidrequest")';
+        }
+        $.ajax({
+            url: url1,
+            cache: false,
+            data: {
+                PageSize: k,
+                PageIndex: $('#HdnPageIndex').val(),
+                Search: $('#SearchVal').val(),
+                Sort: $("#HdnSortValue").val(),
+                BidVendorKey: 0,
+                BidRequestStatus: $("#BidRequestStatus").val(),
+                BiddueDateFrom: $("#BiddueDateFrom").val(),
+                BiddueDateTo: $("#BiddueDateTo").val(),
+                ModuleController: $("#ModuleControllerhdn").val()
+            },
+            success: function (response) {
+                debugger;
+                response = JSON.parse(response);
+                //if (parseInt(response.length) > 0) {
+                //    if (parseInt(($('#HdnPageIndex').val()) * parseInt($('#PageSize').val())) > parseInt(response[0].TotalRecords)) {
+                //        $("#ddlload").hide();
+                //    } else {
+                //        $("#ddlload").show();
+                //    }
+                //} else {
+                //    $("#ddlload").hide();
+                //}
+
+                $('.spnOfRecs').text(0);
+                $('.spnTotalRecs').text(0);
+                $('.spnToRecs').text(0);
+                if (parseInt(response.length) > 0) {
+
+                    var curRecords = 0;
+                    var TotalRecs = 0;
+                    var spnToRecs = 0;
+
+                    curRecords = parseInt(($('#HdnPageIndex').val()) * parseInt(k));
+                    curRecords = curRecords - (k - parseInt(response.length));
+                    TotalRecs = parseInt(response[0].TotalRecords);
+                    $('.spnOfRecs').text(curRecords);
+                    $('.spnTotalRecs').text(TotalRecs);
+                    if (curRecords === 0 || curRecords === TotalRecs) {
+                        $("#ddlload").hide();
+                    }
+                    else {
+                        $("#ddlload").show();
+                    }
+                } else {
+                    $("#ddlload").hide();
+                }
+
+
+                $("#RawDatas table tbody tr:not(:first)").remove();
+                //$("#RawDatas table tbody tr:eq(0)").show();
+                for (var i = 0; i < response.length; i++) {
+                    debugger;
+                    var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
+                    $("#tbodytitle", table).html(response[i].Title);
+                    $("#tpropertyname", table).html(response[i].Property);
+
+                    //$("#tstartdate", table).html(response[i].StartDate);
+                    if (response[i].StartDate !== '01/01/1900' || response[i].StartDate == '') {
+                        $("#tstartdate", table).html((response[i].StartDate));
+                    }
+                    else { $("#tstartdate", table).html(''); }
+
+                    // $("#tbodyBidDueDate", table).html(ConvertJsonDateToDateTime(response[i].DateAdded));
+                    if (response[i].BidDueDate !== '01/01/1900' || response[i].BidDueDate == '') {
+                        $("#tbodyBidDueDate", table).html((response[i].BidDueDate));
+                    }
+                    else {
+                        $("#tbodyBidDueDate", table).html('');
+                    }
+
+                    if (response[i].ActAmount !== null || response[i].ActAmount == "")
+                    {
+                        $("#tbodyAmount", table).html((response[i].ActAmount));
+                    }
+                    else {
+                        $("#tbodyAmount", table).html('');
+                    }
+                    if (response[i].Statuslookup == "Accepted" && response[i].BidRequestStatus == 602) {
+                        response[i].Statuslookup = "Completed"
+                    }
+                    if (response[i].Statuslookup == "Accepted" && response[i].BidRequestStatus == 601) {
+                        response[i].Statuslookup = "Accepted"
+                    }
+                    if (response[i].Statuslookup == "Accepted" && response[i].BidRequestStatus == 603) {
+                        response[i].Statuslookup = "Closed"
+                    }
+                    if (response[i].Statuslookup == "Accepted" && response[i].BidRequestStatus == 604) {
+                        response[i].Statuslookup = "canceled"
+                    }
+                
+                    $("#tbodyBidRequestStatus", table).html(response[i].Statuslookup);
+                    
+                    if (response[i].Statuslookup == "Completed" || response[i].Statuslookup == "Submitted" || response[i].BidReqStatus == "Completed") {
+                        $("#blue", table).css("display", "none");
+                        $("#red", table).css("display", "none");
+                        $("#yellow", table).css("display", "none");
+                        $("#green", table).css("display", "block");
+
+                    }
+                    if (response[i].Statuslookup == "In Progress") {
+                        $("#blue", table).css("display", "block");
+                        $("#red", table).css("display", "none");
+                        $("#yellow", table).css("display", "none");
+                        $("#green", table).css("display", "none");
+
+                    }
+                    if (response[i].Statuslookup == "Accepted" || response[i].Statuslookup == "Submitted" || response[i].BidReqStatus == "Completed") {
+                        $("#blue", table).css("display", "none");
+                        $("#red", table).css("display", "none");
+                        $("#yellow", table).css("display", "none");
+                        $("#green", table).css("display", "block");
+
+                    }
+
+                    if (response[i].Statuslookup == "Rejected" || response[i].Statuslookup == "Not Interested") {
+                        $("#blue", table).css("display", "none");
+                        $("#red", table).css("display", "block");
+                        $("#yellow", table).css("display", "none");
+                        $("#green", table).css("display", "none");
+
+                    }
+                    if (response[i].Statuslookup == "Closed") {
+                        $("#blue", table).css("display", "none");
+                        $("#red", table).css("display", "block");
+                        $("#yellow", table).css("display", "none");
+                        $("#green", table).css("display", "none");
+
+                    }
+
+
+                    if (response[i].Statuslookup == "Interested") {
+                        $("#blue", table).css("display", "none");
+                        $("#red", table).css("display", "none");
+                        $("#yellow", table).css("display", "block");
+                        $("#green", table).css("display", "none");
+
+                    }
+
+
+                    if (response[i].NewMsg === 0 && (response[i].priority == null || response[i].priority == '0')) {
+                        $("#linkview i", table).removeClass("fa fa-bell faa-ring animated redtxt");
+                        $("#linkviewmore i", table).removeClass("fa fa-bell faa-ring animated redtxt");
+                        $("#linkviewreject i", table).removeClass("fa fa-bell faa-ring animated redtxt");
+                        $("#linkview i", table).removeClass("fe fe-eye font18");
+                        $("#linkviewmore i", table).removeClass("fe fe-eye font18");
+                        $("#linkviewreject i", table).removeClass("fe fe-eye font18");
+
+                        $("#linkview i", table).addClass("fe fe-eye font18");
+                        $("#linkviewmore i", table).addClass("fe fe-eye font18");
+                        $("#linkviewreject i", table).addClass("a fa fa-eye  text-danger");
+                    }
+                    else {
+                        $("#linkview i", table).removeClass("fa fa-spinner faa-spin animated redtxt");
+                        $("#linkviewreject i", table).removeClass("a fa fa-eye  text-danger");
+                        $("#linkview i", table).removeClass("fa fa-bell faa-ring animated redtxt");
+                        $("#linkviewmore i", table).removeClass("fa fa-bell faa-ring animated redtxt");
+                        $("#linkviewreject i", table).removeClass("fa fa-bell faa-ring animated redtxt");
+
+                        $("#linkview i", table).removeClass("fe fe-eye font18");
+                        $("#linkviewmore i", table).removeClass("fe fe-eye font18");
+                        $("#linkviewreject i", table).removeClass("fe fe-eye font18");
+
+                        $("#linkview i", table).addClass("fa fa-bell faa-ring animated redtxt");
+                        $("#linkviewmore i", table).addClass("fa fa-bell faa-ring animated redtxt");
+                        $("#linkviewreject i", table).addClass("fa fa-bell faa-ring animated redtxt");
+                    }
+
+                    if (response[i].Statuslookup == "In Progress") {
+                        //$("#tbodyBidRequestStatus", table).html("Approve");
+                        $("#linkview", table).attr('href', "../VenderWorkOrders/VenderWorkorderView?BidVendorKey=" + response[i].BidVendorKey + "&ResourceKey=" + response[i].ResourceKey + "&BidStartDate=" + response[i].StartDate + "");
+                        $("#linkview", table).show();
+                        $("#linkviewmore", table).hide();
+                        $("#linkviewreject", table).hide();
+                    }
+                    else if (response[i].Statuslookup === "Accepted" || response[i].Statuslookup === "Interested" || response[i].Statuslookup === 'Submitted') {
+                        // $("#tbodyBidRequestStatus", table).html("Pending");
+                        $("#linkview", table).hide();
+                        $("#linkviewreject", table).hide();
+                        $("#linkviewmore", table).show();
+                        $("#linkviewmore", table).attr('href', "../VenderWorkOrders/VenderWorkorderView?BidVendorKey=" + response[i].BidVendorKey + "&ResourceKey=" + response[i].ResourceKey + "&BidStartDate=" + response[i].StartDate + "");
+
+                    } else if (response[i].Statuslookup == "Not Interested") {
+                        $("#linkview", table).hide();
+                        $("#linkviewmore", table).hide();
+                        $("#linkviewreject", table).show();
+                        // $("#linkviewreject", table).attr('href', "../VenderBidrequest/ViewBidrequest?BidVendorKey=" + response[i].BidVendorKey + "&ResourceKey=" + response[i].ResourceKey + "& BidStartDate=" + response[i].StartDate + "");
+                        $("#linkviewreject", table).attr('href', "#");
+                    }
+                    else {
+                        $("#linkviewreject", table).hide();
+                        $("#linkview", table).hide();
+                        $("#linkviewmore", table).hide();
+                        debugger;
+                        if (response[i].NotificationType != null) {
+                            if (response[i].NotificationType.includes('RejByAccept') || response[i].NotificationType.includes('BidReqStatusReject')) {
+                                $("#linkviewreject", table).attr('href', '#');
+                                $("#linkviewreject", table).attr('title', 'Mark as Read');
+                                $("#linkviewreject", table).html('');
+                                $("#linkviewreject", table).append('<i class="fa fa-check-circle font18 text-info"></i>')
+                                $("#linkviewreject", table).show();
+                            }
+                        }
+                    }
+                    debugger;
+                    if (response[i].NotificationType != null) {
+                        var bidtype = response[i].NotificationType.split(',');
+                        var bidNid = response[i].NotificationId.split(',');
+                        var ismatch = false;
+                        var index = -1;
+                        for (var r = 0; r < bidtype.length; r++) {
+                            if (bidtype[r] == 'BidReqStatus' || bidtype[r] == 'BidReqStatusAccept' || bidtype[r] == 'BidReqStatusReject' || bidtype[r] == 'BidReqStatusRejByAcceptOther') {
+                                ismatch = true;
+                                index = r;
+                            }
+                        }
+                        if (ismatch) {
+                            $("#linkview", table).attr('onclick', 'notificationClick(' + bidNid[index] + ',"' + bidtype[index]+'")');
+                            $("#linkviewmore", table).attr('onclick', 'notificationClick(' + bidNid[index] + ',"' + bidtype[index] +'")');
+                            $("#linkviewreject", table).attr('onclick', 'notificationClick(' + bidNid[index] + ',"' + bidtype[index] +'")');
+                        }
+                    }
+
+                    debugger;
+                    if (BidStauts == "703, 803" && response[i].Statuslookup == "Accepted" && response[i].BidRequestStatus == 601) {
+
+                    }
+                    else {
+                        $("#RawDatas table").append(table);
+                    }
+
+
+
+                      
+                  
+                  
+                    table.show();
+
+                    spnToRecs++;
+                }
+                if (response.length > 0)
+                    $("#priorityrecord").val(response[0].priorityrecord);
+                $("#RawDatas table tbody tr:eq(0)").hide();
+                debugger;
+                spnToRecs = (curRecords - spnToRecs) + 1;
+                if (spnToRecs > 0) {
+                    $('.spnToRecs').text(spnToRecs);
+                }
+                else {
+                    $('.spnToRecs').text(0);
+                }
+
+                if (parseInt(response.length) > 0) {
+                    updatePaging1(response[0].TotalRecords);
+                }
+                $(".loader-wrapper").hide();
+            }
+        });
+    }
+    function SortingFun(val) {
+        debugger;
+        var ascdesc = 'fa-sort-asc';
+        var ascdesc1 = 'fa-sort-desc';
+        var ascdesc3 = 'fa-sort-asc';
+        var ascdesc4 = 'fa-sort-desc';
+
+        $('.loader-wrapper').show();
+        var Sort = '';
+        $('#HdnPageIndex').val('1');
+        $('.reseti').removeClass(ascdesc4);
+        $('.reseti').addClass(ascdesc3);
+        debugger;
+        //-----------------------------------------------------------
+        if (val == 'Title') {
+            if ($('#Titlehdn').val() == 'asc') {
+                Sort = 'order by Title desc';
+                $('#Titlehdn').val('desc');
+                $('#Titlei').removeClass(ascdesc);
+                $('#Titlei').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by Title asc';
+                $('#Titlehdn').val('asc');
+                $('#Titlei').removeClass(ascdesc1);
+                $('#Titlei').addClass(ascdesc);
+            }
+        }
+
+        if (val == "StartDate") {
+            if ($('#StartDatehdn').val() == 'asc') {
+                Sort = 'order by StartDate desc';
+                $('#StartDatehdn').val('desc');
+                $('#StartDatei').removeClass(ascdesc);
+                $('#StartDatei').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by StartDate asc';
+                $('#StartDatehdn').val('asc');
+                $('#StartDatei').removeClass(ascdesc1);
+                $('#StartDatei').addClass(ascdesc);
+            }
+        }
+        if (val == "Property") {
+            if ($('#Propertyhdn').val() == 'asc') {
+                Sort = 'order by Property desc';
+                $('#Propertyhdn').val('desc');
+                $('#Propertyi').removeClass(ascdesc);
+                $('#Propertyi').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by Property asc';
+                $('#Propertyhdn').val('asc');
+                $('#Propertyi').removeClass(ascdesc1);
+                $('#Propertyi').addClass(ascdesc);
+            }
+        }
+        //-------------------------------------------------
+        if (val == 'BidDueDate') {
+            if ($('#BidDueDatehdn').val() == 'asc') {
+                Sort = 'order by BidDueDate desc';
+                $('#BidDueDatehdn').val('desc');
+                $('#BidDueDatei').removeClass(ascdesc);
+                $('#BidDueDatei').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by BidDueDate asc';
+                $('#BidDueDatehdn').val('asc');
+                $('#BidDueDatei').removeClass(ascdesc1);
+                $('#BidDueDatei').addClass(ascdesc);
+            }
+        }
+
+        if (val == 'Amount') {
+            if ($('#Amounthdn').val() == 'asc') {
+                Sort = 'order by TotalamountAccpect desc';
+                $('#Amounthdn').val('desc');
+                $('#Amounti').removeClass(ascdesc);
+                $('#Amounti').addClass(ascdesc1);
+            }
+            else {
+                Sort = 'order by TotalamountAccpect asc';
+                $('#Amounthdn').val('asc');
+                $('#Amounti').removeClass(ascdesc1);
+                $('#Amounti').addClass(ascdesc);
+            }
+        }
+
+
+
+        //-------------------------------------------------------
+        if (val == 'Statuslookup') {
+            if ($('#BidRequestStatushdn').val() == 'asc') {
+                //Sort = 'order by Statuslookup desc';
+                Sort = 'order by Statuslook desc';
+                $('#BidRequestStatushdn').val('desc');
+                $('#BidRequestStatusi').removeClass(ascdesc);
+                $('#BidRequestStatusi').addClass(ascdesc1);
+            }
+            else {
+                //Sort = 'order by Statuslookup asc';
+                Sort = 'order by Statuslook asc';
+                $('#BidRequestStatushdn').val('asc');
+                $('#BidRequestStatusi').removeClass(ascdesc1);
+                $('#BidRequestStatusi').addClass(ascdesc);
+            }
+        }
+        if (val !== "") {
+            $("#HdnSortValue").val(Sort);
+            $('.loader-wrapper').show();
+            LoadSortTableFill(true);
+        }
+    }
+
+    function updatePaging1(TotalRecs) {
+        $('ul.pagination').html('');
+        var liClone = $('ul.pagination');
+        debugger;
+        var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+        //var pageSize = $('#PageSize').val();
+        var NoPage = 1;
+        if (parseInt(TotalRecs) > parseInt(pageSize)) {
+            NoPage = parseInt(parseInt(TotalRecs) / parseInt(pageSize));
+            if (parseFloat(parseInt(parseInt(TotalRecs) / parseInt(pageSize))) < parseFloat(parseInt(TotalRecs) / parseInt(pageSize))) {
+                NoPage = (parseInt(parseInt(TotalRecs) / parseInt(pageSize)) + 1);
+            }
+        }
+
+        var lp = 0;//parseFloat(parseInt($('#HdnPageIndex').val()) / 5);
+        if (parseFloat(parseInt($('#HdnPageIndex').val()) % 5) == 0) {
+            lp = ((parseInt(parseInt($('#HdnPageIndex').val()) / 5) - 1) * 5);
+        } else {
+            lp = parseInt(parseInt($('#HdnPageIndex').val()) / 5) * 5;
+        }
+
+        var ind = 0;
+        for (var i = 1; i <= NoPage; i++) {
+            if ((parseInt(lp)) < i) {
+                if (parseInt($('#HdnPageIndex').val()) > 5 && $(liClone).find('li.previous').length == 0) {
+                    $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')"><a href="#">Previous</a></li>');
+                }
+                if (ind < 5) {
+                    if (i == parseInt($('#HdnPageIndex').val())) {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current">' + i + '</a></li>');
+                    } else {
+                        $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')">' + i + '</a></li>');
+                    }
+                } else if ($(liClone).find('li.next').length == 0) {
+                    $(liClone).append('<li class="paginate_button next " aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')"><a href="#">Next</a></li>');
+                }
+                ind = ind + 1;
+            }
+        }
+    }
+    function notificationClick(nid, type) {
+        debugger;
+        $.ajax({
+            url: '/ABNotification/NotificationUpdate',
+            cache: false,
+            data: {
+                NotiId: nid,
+                Status: 'read',
+                NotiType: type,
+                ByObj: false
+            },
+            success: function (response) {
+                if (type.includes('RejByAccept') || type.includes('BidReqStatusReject')) {
+                    LoadSortTableFill();
+                }
+            }
+        });
+    }
+</script>
+

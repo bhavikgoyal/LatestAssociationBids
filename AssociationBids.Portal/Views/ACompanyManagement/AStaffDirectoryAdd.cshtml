@@ -1,0 +1,624 @@
+﻿@model AssociationBids.Portal.Model.StaffDirectoryModel
+@{
+    ViewBag.Title = "AStaffDirectoryAdd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>StaffDirectoryAdd</h2>
+
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="staffdirectory.html">Staff Directory</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add Staff</li>
+            </ol><!-- End breadcrumb -->
+        </div>
+        <div class="alert alert-danger" id="Error" style="display:block; margin-top: 20px;">
+            <strong><span class="errormessage"></span></strong>
+        </div>
+
+        <!-- End page-header -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="cust-wizard">
+                            <!--multisteps-form-->
+                            <div class="multisteps-form">
+                                <!--progress bar-->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="multisteps-form__progress">
+                                            <button class="multisteps-form__progress-btn js-active" type="button" title="Staff Details">Staff Details</button>
+                                            <button class="multisteps-form__progress-btn" id="btnGroup" type="button" title="Groups">Groups</button>
+                                            <button class="multisteps-form__progress-btn" id="btnUser" type="button" title="User Account">User Account</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--form panels-->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="multisteps-form__form">
+                                            @using (Html.BeginForm("AStaffDirectoryAdd", "ACompanyManagement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                            {
+                                                <!--single form panel-->
+                                                <div class="multisteps-form__panel p-4 rounded bg-white js-active" data-animation="scaleIn">
+                                                    <div class="multisteps-form__content">
+                                                        <div class="form-div">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <div class="card">
+                                                                        <div class="card-body">
+                                                                            <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+
+                                                                                        <label class="form-label">
+                                                                                            First Name
+                                                                                            @Html.ValidationMessageFor(model => model.FirstName, "*", new { @class = "text-danger" })
+                                                                                        </label>
+                                                                                        @*<input type="text" class="form-control" name="input" placeholder="First Name">*@
+                                                                                        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "First Name" } })
+
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+
+                                                                                        <label class="form-label">
+                                                                                            Last Name
+                                                                                            @Html.ValidationMessageFor(model => model.LastName, "*", new { @class = "text-danger" })
+                                                                                        </label>
+                                                                                        @*<input type="text" class="form-control" name="input" placeholder="Last Name">*@
+                                                                                        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Last Name" } })
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label">
+                                                                                            Email
+                                                                                            @Html.ValidationMessageFor(model => model.Email, "*", new { @class = "text-danger" })
+                                                                                        </label>
+                                                                                        @*<input type="text" class="form-control" name="input" placeholder="Enter Email">*@
+                                                                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Email", @type = "email" } })
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label">Secondary Email</label>
+                                                                                        @*<input type="text" class="form-control" name="input" placeholder="Enter Secondary Email">*@
+                                                                                        @Html.EditorFor(model => model.Email2, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Secondary Email", @type = "email" } })
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label">Work Phone 1</label>
+                                                                                        @*<input type="text" class="form-control" name="input" placeholder="Work Phone 1">*@
+                                                                                        @Html.EditorFor(model => model.Work, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Work Phone 1" } })
+                                                                                    </div>
+                                                                                </div><!-- end of col -->
+                                                                                <div class="col-md-3">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label">Work Phone 2</label>
+                                                                                        @*<input type="text" class="form-control" name="input" placeholder="Work Phone 2">*@
+                                                                                        @Html.EditorFor(model => model.Work2, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Work Phone 2" } })
+                                                                                    </div>
+                                                                                </div><!-- end of col -->
+                                                                                <div class="col-md-3">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label">Cell Phone</label>
+                                                                                        @*<input type="text" class="form-control" name="input" placeholder="Cell Phone">*@
+                                                                                        @Html.EditorFor(model => model.CellPhone, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Cell Phone" } })
+                                                                                    </div>
+                                                                                </div><!-- end of col -->
+                                                                                <div class="col-md-3">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label">Fax</label>
+                                                                                        @*<input type="text" class="form-control" name="input" placeholder="Fax">*@
+                                                                                        @Html.EditorFor(model => model.Fax, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Fax" } })
+
+                                                                                    </div>
+                                                                                </div><!-- end of col -->
+                                                                                <div class="col-md-3">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label">Is Primary Contact</label>
+                                                                                        <label class="custom-control custom-checkbox">
+                                                                                            @*<input type="checkbox" class="custom-control-input" name="example-checkbox2" value="option2">
+                                                                                                <span class="custom-control-label">Primary Contact</span>*@
+                                                                                            @Html.CheckBoxFor(model => model.PrimaryContact, new { @class = "custom-control-input", @tabindex = "1" })
+                                                                                            @Html.LabelFor(model => model.PrimaryContact, new { @class = "custom-control-label" })
+
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div><!-- end of col -->
+                                                                                <div class="col-md-3">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label">Status</label>
+                                                                                        <label class="custom-control custom-checkbox">
+                                                                                            @Html.CheckBoxFor(model => model.Status, new { @class = "custom-control-input", @tabindex = "1" })
+                                                                                            @Html.LabelFor(model => model.Status, new { @class = "custom-control-label" })
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div><!-- end of col -->
+                                                                            </div><!-- end of row-->
+
+                                                                            <hr />
+                                                                            <div class="row">
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label">Address 1</label>
+                                                                                        @*<input type="text" class="form-control" name="input" placeholder="Address 1">*@
+                                                                                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Address 1" } })
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-6">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label">Address 2</label>
+                                                                                        @*<input type="text" class="form-control" name="input" placeholder="Address 2">*@
+                                                                                        @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Address 2" } })
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label">City</label>
+                                                                                        @*<input type="text" class="form-control" name="input" placeholder="City">*@
+                                                                                        @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "City" } })
+                                                                                    </div>
+                                                                                </div><!-- end of col -->
+                                                                                <div class="col-md-4">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label">
+                                                                                            State
+                                                                                            @Html.ValidationMessageFor(model => model.State, "*", new { @class = "text-danger" })
+                                                                                        </label>
+                                                                                        @Html.DropDownList("State", new SelectList(ViewBag.lststate, "Value", "Text"), new { @tabindex = "1", @data_rel = "Choose_one", @class = "form-control", placeholder = "Please Select..." })
+                                                                                    </div>
+                                                                                </div><!-- end of col -->
+
+                                                                                <div class="col-md-4">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label">Zip</label>
+                                                                                        @*<input type="text" class="form-control" name="input" placeholder="Zip">*@
+                                                                                        @Html.EditorFor(model => model.Zip, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Zip" } })
+                                                                                    </div>
+                                                                                </div><!-- end of col -->
+                                                                            </div><!-- end of row -->
+                                                                            <hr />
+                                                                            <div class="row">
+                                                                                <div class="col-md-12">
+                                                                                    <div class="form-group">
+                                                                                        <label class="form-label">Description</label>
+                                                                                        @*<textarea class="form-control" placeholder="Description"></textarea>*@
+                                                                                        @*@Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Description" } })*@
+                                                                                        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", placeholder = "Description", @tabindex = "1" })
+                                                                                    </div>
+                                                                                </div><!-- end of col -->
+                                                                            </div><!-- end of row -->
+                                                                        </div><!-- end of card body -->
+                                                                        <div class="card-footer">
+                                                                            <div class="button-row d-flex">
+                                                                                <button class="btn btn-info ml-auto js-btn-next" id="btnNext" type="button" title="Next">Next <i class="fe fe-chevron-right"></i></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div><!-- end of card  -->
+                                                                </div><!-- end of col -->
+                                                            </div><!-- end of row -->
+                                                        </div><!-- end of form-div  -->
+                                                    </div>
+                                                </div>
+                                                <!--single form panel-->
+                                                <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+
+                                                    <div class="multisteps-form__content">
+
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        @*@for (int i = 0; i < Model.GroupList.Count; i++)
+                                                                            {*@
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <div class="custom-controls-stacked">
+
+                                                                                        @*@if (Model.GroupList[i].GroupKey == 1)
+                                                                                            {*@
+                                                                                        @*<div class="table-responsive" id="RawDatas">
+                                                                                                <table id="dataTableExample" class="table table-striped table-bordered text-nowrap w-100 dataTable no-footer">
+                                                                                                    <thead>
+                                                                                                        <tr>
+                                                                                                            <th>First Name</th>
+                                                                                                            <th>Last Name</th>
+                                                                                                            <th>Email</th>
+                                                                                                            <th>City</th>
+                                                                                                            <th>State</th>
+                                                                                                            <th width="5%">&nbsp;</th>
+                                                                                                        </tr>
+                                                                                                    </thead>
+                                                                                                    <tbody>
+                                                                                                        <tr>
+                                                                                                            <td><span class="firstname"></span></td>
+                                                                                                            <td><span class="lastname"></span></td>
+                                                                                                            <td><span class="email"></span></td>
+                                                                                                            <td><span class="city"></span></td>
+                                                                                                            <td><span class="state"></span></td>
+                                                                                                            <td align="center"><a id="viewdata" role="button"><i class="fe fe-eye font18"></i></a></td>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </div>*@
+                                                                                        <div id="divid">
+
+                                                                                        </div>
+                                                                                        @*}*@
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-6">
+                                                                                <div class="form-group">
+                                                                                    <div class="custom-controls-stacked">
+                                                                                        <label class="custom-control custom-checkbox">
+                                                                                            @Html.CheckBoxFor(model => model.GroupList[0].GroupSelected, new { @class = "custom-control-input" })
+                                                                                        </label>
+                                                                                        @*<label class="custom-control custom-checkbox">
+                                                                                                <input type="checkbox" class="custom-control-input" name="example-checkbox4" value="option4">
+                                                                                                <span class="custom-control-label">Group 4</span>
+                                                                                            </label>*@
+
+                                                                                        @*<script>
+                                                                                                $(document).ready(function () {
+                                                                                                    $('.custom-checkbox').find('input').addClass('custom-control-input');
+                                                                                                });
+                                                                                            </script>*@
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div><!-- end of row -->
+
+                                                                    </div><!-- end of card body -->
+                                                                    <div class="card-footer">
+                                                                        <div class="button-row d-flex">
+                                                                            <button class="btn btn-warning js-btn-prev" type="button" title="Prev"><i class="fe fe-chevron-left"></i> Prev</button>
+                                                                            <button class="btn btn-info ml-auto js-btn-next" id="btnGroupNext" type="button" title="Next">Next <i class="fe fe-chevron-right"></i></button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div><!-- end of card  -->
+                                                            </div><!-- end of col -->
+                                                        </div><!-- end of row -->
+                                                    </div>
+                                                </div>
+
+                                                <!--single form panel-->
+                                                <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+
+                                                    <div class="multisteps-form__content">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <div class="row">
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label">
+                                                                                        UserName
+                                                                                        @Html.ValidationMessageFor(model => model.UserName, "*", new { @class = "text-danger" })
+                                                                                    </label>
+                                                                                    @*<input type="text" class="form-control" name="input" disabled placeholder="UserName">*@
+                                                                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "User Name" } })
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label">
+                                                                                        Password
+                                                                                        @Html.ValidationMessageFor(model => model.Password, "*", new { @class = "text-danger" })
+                                                                                    </label>
+                                                                                    @*<input type="text" class="form-control" name="input" placeholder="Password">*@
+                                                                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Password", @type = "password" } })
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label">
+                                                                                        Confirm Password
+                                                                                        @Html.ValidationMessageFor(model => model.ConformPassword, "*", new { @class = "text-danger" })
+                                                                                    </label>
+                                                                                    @*<input type="text" class="form-control" name="input" placeholder="Password">*@
+                                                                                    @Html.EditorFor(model => model.ConformPassword, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Password", @type = "password" } })
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label">
+                                                                                        Photo Upload
+                                                                                    </label>
+                                                                                    <input type="file" class="form-control" name="UploadImage" tabindex="1">
+                                                                                    @*@Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Password", @type = "password" } })*@
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group">
+                                                                                    <label class="form-label">&nbsp;</label>
+                                                                                    <button class="btn btn-primary ml-auto" type="submit" onclick="return validation()" title="Create Account"><i class="fa fa-address-card-o"></i> Create Account</button>
+                                                                                    @*@Html.EditorFor(model => model.GroupId, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", placeholder = "UserName" } })*@
+                                                                                    @Html.HiddenFor(model => model.GroupId)
+                                                                                    @*@Html.HiddenFor(model => model.Status)*@
+                                                                                    @*<input t class="btn btn-primary ml-auto" id="btnsubmit" type="submit" title="Save" value="Save" /><i class="fa fa-loppy-o"></i>*@
+                                                                                </div>
+                                                                            </div>
+                                                                        </div><!-- end of row -->
+                                                                    </div><!-- end of card body -->
+                                                                </div><!-- end of card  -->
+                                                            </div><!-- end of col -->
+                                                        </div><!-- end of row -->
+                                                    </div>
+
+                                                </div>
+                                                <!--single form panel-->
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end of cust-wizard-->
+                    </div><!--end of card body -->
+                </div>
+            </div>
+        </div>
+
+    </div><!--End side app-->
+    @*<!--footer-->
+        <footer class="footer">
+            <div class="container">
+                <div class="row align-items-center flex-row-reverse">
+                    <div class="col-lg-12 col-sm-12   text-center">
+                        Copyright © 2020 Association Bids. All rights reserved.
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- End Footer-->*@
+</div>
+<!-- End app-content-->
+<!-- Back to top -->
+<a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+<link rel="stylesheet" href="../assets/css/cust-wizard.css">
+<script src="../assets/js/cust-wizard.js"></script>
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function ()
+    {
+        $('#loader').show();
+        $('.errormessage').html('');
+        $('#Error').hide();
+
+        $('#loader').hide();
+        LoadSortTableFill();
+        var val = '@ViewBag.ErrorMessage';
+        if (val != "") {
+
+            $('.errormessage').html('Email are Already Exists');
+            $('#Error').show();
+            $('#Email').focus();
+        }
+    });
+
+    function LoadSortTableFill() {
+
+        $.ajax({
+            url: '@Url.Action("GetAllGroup", "ACompanyManagement")',
+            cache: false,
+            data: {
+            },
+            success: function (response)
+            {
+                for (var i = 0; i < response.length; i++) {
+                    addCheckbox(' ' +  response[i].GroupName);
+                }
+            }
+        });
+    }
+
+    function addCheckbox(name) {
+        var container = $('#divid');
+        var inputs = container.find('input');
+        var id = inputs.length + 1;
+
+        //$('<input />', { type: 'checkbox', id: id, value: name, name: 'chgkListItem', 'class': 'chkListItem' }).appendTo(container);
+        $('<input />', { type: 'checkbox', id: id, value: name, name: 'chkListItem', 'class': 'chkListItem'}).appendTo(container);
+
+        $('<label />', { 'for': id, text:name }).appendTo(container);
+        $('</br>').appendTo(container);
+        //$('.'+id).find('input').addClass('custom-control-input');
+    }
+
+    function validateEmail(sEmail) {
+        var filter = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        var expr = /^[a-zA-Z0-9._]+[a-zA-Z0-9]+@@[a-zA-Z0-9]+\.[a-zA-Z]{2,4}$/;
+        if (filter.test(sEmail)) {
+          return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+    $("#btnNext").click(function () {
+        var status = false;
+        //alert("before status = " + status);
+        status = StaffValidation();
+        //alert("after status = " + status);
+        return status;
+    });
+    function StaffValidation()
+    {
+        //alert("State" + ($('#State').val()));
+        $('#loader').show();
+        $('.errormessage').html('');
+
+        if ($('#FirstName').val() == "") {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+            $('#FirstName').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+
+        else if ($('#LastName').val() == "") {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+            $('#LastName').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else if ($('#Email').val() == "") {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+            $('#Email').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else if (validateEmail($('#Email').val())) {
+            $('.errormessage').html('Please Enter Valid Email.');
+            //alert("Please Enter Valid Email.");
+            $('#Error').show();
+            $('#Email').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else if ($('#State').val() == "0") {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+            $('#State').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else {
+
+            $('#Error').hide();
+            return true;
+        }
+
+    }
+    $("#btnGroup").click(function () {
+        var status = false;
+        status = StaffValidation();
+        return status;
+    });
+    $("#btnUser").click(function () {
+        var status = false;
+        if (status == false) {
+            status = StaffValidation();
+        }
+        if (status == true) {
+            status = GroupValidation();
+        }
+        return status;
+    });
+    function validation() {
+        $('#loader').show();
+        $('.errormessage').html('');
+        if ($('#UserName').val() == "") {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+            $('#UserName').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else if ($('#Password').val() == "") {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+            $('#Password').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else if ($('#ConformPassword').val() == "") {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+            $('#ConformPassword').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+        if ($('#Password').val() != $('#ConformPassword').val()) {
+            $('.errormessage').html('Password and Confirm password do not match.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else {
+            $('#Error').hide();
+            GetSelectedCheckBoxes();
+            return true;
+        }
+        $('#loader').hide();
+        //GetSelectedCheckBoxes();
+        return true;
+    }
+
+    function GroupValidation() {
+        GetSelectedCheckBoxes();
+        $('#loader').show();
+        $('.errormessage').html('');
+
+        if ($('#GroupId').val() == "") {
+            $('.errormessage').html('Please Select At least 1 Group.');
+            $('#Error').show();
+            $('#FirstName').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else {
+            $('#Error').hide();
+            return true;
+        }
+    }
+    $("#btnGroupNext").click(function () {
+       
+        var status = false;
+        status = GroupValidation();
+        
+        return status;
+    });
+    function GetSelectedCheckBoxes() {
+        //alert("on Group");
+        var chected = new Array();
+        $("[name='chkListItem']").each(function (index, data) {
+            if (data.checked) {
+                chected.push(data.id);
+            }
+        });
+        //alert("GroupId" + chected);
+        $('#GroupId').val(chected);
+
+        return true;
+    }
+
+
+
+    //$(document).ready(function () {
+    //    $(".advance_search").click(function () {
+    //        $("#advancesearch3").toggle(500);
+    //    });
+    //    $(".overlayclose").click(function () {
+    //        $("#advancesearch3").hide();
+    //    });
+    //});
+</script>
+
+

@@ -1,0 +1,696 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_PropertyManagerLayout.cshtml";
+    string SuccessMessage = Convert.ToString(ViewData["SuccessMessage"]);
+}
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<link href="~/Content/c3.css" rel="stylesheet" />
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+<script src="~/Scripts/c3.min.js"></script>
+<script src="~/Scripts/d3.min.js"></script>
+
+
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app col-lg-12">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+            </ol><!-- End breadcrumb -->
+
+        </div>
+        <!-- End page-header -->
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <p class="alert alert-success alert-dismissible" id="successMessage">
+                @TempData["SuccessMessage"]
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        <div class="row">
+            <div class="col-sm-12 col-lg-6 col-xl-6">
+
+            </div><!-- col end -->
+            <div class="col-sm-12 col-lg-6 col-xl-6">
+                <div class="card overflow-hidden">
+                    <div class="card-header custom-header pb-0">
+                        <div>
+                            <h2 class="card-title">Top action items</h2>
+                        </div>
+                        <div class="card-options" style="display:none;">
+                            @*<label class="custom-switch">
+                            <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">Hello
+                            </label>*@
+                            @*<h3 class="custom-switch">Top action items</h3>*@
+                        </div>
+                    </div>
+                    <div class="card-body" style="padding-top: 0;">
+                        @*<div class="row notibody" style="display:none;">
+                            <p id="noti-p">
+                                <a href="#" id="notilink" style="display:block; width:100%;"><span style="display:block;" id="notitext"></span></a>
+                            </p>
+                        </div>*@
+                        <div class="row notibodyNew" style="width:100% !important;padding-left: 10px!important;">
+                            <p id="noti-pNew" style="width: 80% !important;background: transparent;">
+                                <a href="#" id="notilink" style="display:block; width:100%;">
+                                    <span style="display:block;" id="notitext"></span>
+                                </a>
+                            </p>
+                            <p id="noti-pNew1" style="width:18% !important;background: transparent;cursor: default;">
+                                <a href="#" id="notilink" style="display:block; width:100%;color:white !important;"><span style="" id="notitext"></span></a>
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div><!-- col end -->
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-lg-6 col-xl-6">
+                <div class="card overflow-hidden">
+                    <div class="card-header custom-header pb-0">
+                        <div>
+                            <h2 class="card-title">Bid Requests</h2>
+                            <h6 class="card-subtitle">Overview of this month</h6>
+                        </div>
+                        <div class="card-options">
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <h6 class="text-body text-uppercase font-weight-semibold" style="font-size:12px">Total Amount</h6>
+                                <h2 id="totalamountbid" class="text-primary count mt-0 font-30 mb-0">$0.00</h2>
+                            </div>
+                            <div class="col-4">
+                                <div id="pieChart1" class="w-350 h-200 text-right float-right"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- col end -->
+            <div class="col-sm-12 col-lg-6 col-xl-6">
+                <div class="card overflow-hidden">
+                    <div class="card-header custom-header pb-0">
+                        <div>
+                            <h3 class="card-title">Work Orders</h3>
+                            <h6 class="card-subtitle">Overview of this month</h6>
+                        </div>
+                        <div class="card-options">
+
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <h6 class="text-body text-uppercase font-weight-semibold" style="font-size:12px">Total Amount</h6>
+                                <h2 id="totalamountw" class="text-secondary count mt-0 font-30 mb-0">$0.00</h2>
+                            </div>
+                            <div class="col-4">
+                                <div id="pieChart2" class="w-350 h-200 text-right float-right"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- col end -->
+        </div>
+        <div class="row mt-2 mb-4">
+            <div class="col-xxl-6 col-lg-6 col-md-6">
+                <a href="~/PMBidRequests/PMBidRequestAdd" class="btn btn-primary" style="width:100%"><i class="fa fa-plus"></i> Add Bid Request</a>
+            </div>
+            <div class="col-xxl-6 col-lg-6 col-md-6">
+                <a href="~/PMWorkOrders/PMWorkOrdersAdd" class="btn btn-success" style="width:100%"><i class="fa fa-plus"></i> Add Work Order</a>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="card overflow-hidden d-inline-block">
+                <div class="card-header custom-header pb-0">
+                    <div>
+                        <h3 class="card-title">Projects</h3>
+                        <h6 class="card-subtitle">Overview of this year</h6>
+                    </div>
+                    <div class="card-options">
+                        @*<a href="" class="mr-4 text-default" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+                            <span class="fa fa-ellipsis-v"></span>
+                        </a>*@
+                        @*<ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            <li><a href="#"><i class="si si-plus mr-2"></i>Add</a></li>
+                            <li><a href="#"><i class="si si-trash mr-2"></i>Remove</a></li>
+                            <li><a href="#"><i class="si si-eye mr-2"></i>View</a></li>
+                            <li><a href="#"><i class="si si-settings mr-2"></i>More</a></li>
+                        </ul>*@
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="timeline-chart1" class="h-300"></div>
+                    @*<p class="text-muted">Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example</p>*@
+                    <div class="row">
+                        <div class="col-md-4 mb-5 mb-md-0">
+                            <h6 class="mb-2 text-uppercase">Monthly</h6>
+                            <h3 class="mb-3 font-weight-semibold"><p id="Monthlyp"></p></h3>
+                            <div class="mb-0">
+                                <h5 class="mb-2 d-block text-muted">
+                                    <span class="fs-16">Monthly</span>
+                                    <span class="float-right"><p id="Monthlypr"></p></span>
+                                </h5>
+                                <div class="progress progress-md h-2">
+                                    @*<div class="progress-bar progress-bar-striped progress-bar-animated bg-primary "></div>*@
+                                    <div class="progress-bar progress-bar-success progress-bar-striped active bg-primary " role="progressbar" aria-valuemin="0" aria-valuemax="100" id="progressbarMonthely">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-5 mb-md-0">
+                            <h6 class="mb-2 text-uppercase">Quarterly</h6>
+                            <h3 class="mb-3 font-weight-semibold"><p id="Quarterlyp"></p></h3>
+                            <div class="mb-0">
+                                <h5 class="mb-2 d-block text-muted">
+                                    <span class="fs-16">Quarterly</span>
+                                    <span class="float-right"><p id="Quarterlypr"></p></span>
+                                </h5>
+                                <div class="progress progress-md h-2">
+                                    @*<div class="progress-bar progress-bar-striped progress-bar-animated bg-secondary "></div>*@
+                                    <div class="progress-bar progress-bar-success progress-bar-striped active bg-secondary " role="progressbar" aria-valuemin="0" aria-valuemax="100" id="progressbarQuarter">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 class="mb-2 text-uppercase">Annual</h6>
+                            <h3 class="mb-3 font-weight-semibold"><p id="Annualp"></p></h3>
+                            <div class="mb-0">
+                                <h5 class="mb-2 d-block text-muted">
+                                    <span class="fs-16">Annual</span>
+                                    <span class="float-right"><p id="Annualppr"></p></span>
+                                </h5>
+                                <div class="progress progress-md h-2">
+                                    <div class="progress-bar progress-bar-success progress-bar-striped active bg-warning " role="progressbar" aria-valuemin="0" aria-valuemax="100" id="progressbarAnnual">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+<!-- End app-content-->
+
+
+<script>
+
+    $(document).ready(function () {
+
+        checkPoratl();
+        GetLastFiveNotiNew();
+        function updateProgressMonthely(count1M) {
+            var count2 = parseInt(count1M /count3A*100);
+            progressbarMonthely.style.width = count2 + "%";
+            debugger;
+            if (count2 == "0" || count2.toString() == "NaN") {
+                $("#Monthlypr").html("0.00" + "%");
+            }
+            else {
+                $("#Monthlypr").html(count2 + "%");
+            }
+
+
+
+        }
+        function updateProgressQuarter(count2Q) {
+            var count2 = parseInt(count2Q / count3A*100);
+            progressbarQuarter.style.width = count2 + "%";
+            debugger;
+            if (count2 == "0" || count2.toString() == "NaN") {
+                $("#Quarterlypr").html("0.00" + "%");
+            }
+            else {
+                $("#Quarterlypr").html(count2 + "%");
+            }
+
+
+
+        }
+        function updateProgressAnnual(count3A) {
+            var count2 = parseInt(count3A / count3A*100);
+            progressbarAnnual.style.width = count2 + "%";
+            debugger;
+            if (count2 == "0" || count2.toString() == "NaN") {
+                $("#Annualppr").html("0.00" + "%");
+            }
+            else {
+                $("#Annualppr").html(count2 + "%");
+            }
+
+
+
+        }
+
+
+        function updateProgressRenewed(count1A) {
+            var count2 = parseInt(count1A / 100);
+            progressbarA.style.width = count2 + "%";
+            debugger;
+            if (count2 == NaN) {
+                $("#vactivep").html("0.00") + "%";
+            }
+            else {
+                $("#vactivep").html(count2) + "%";
+            }
+
+
+
+        }
+        function updateProgresscancell(count2R) {
+            var count2 = parseInt(count2R / 100);
+            progressbarR.style.width = count2 + "%";
+            if (count2 == NaN) {
+                $("#v").html("0.00");
+            }
+            else {
+                $("#vRenewedP").html(count2);
+            }
+
+        }
+        function updateProgressactive(count3C) {
+            var count2 = parseInt(count3C / 100);
+            progressbarC.style.width = count2 + "%";
+            if (count2 == NaN) {
+                $("#vcancellP").html("0.00");
+            }
+            else {
+                $("#vcancellP").html(count2);
+            }
+
+        }
+        $.ajax({
+            url: "/Dashboard/BindTotalAmount",
+            data: {},
+            success: function (response) {
+                $("#totalamountbid").html(response[0].TotalAmount);
+                $("#totalamountw").html(response[1].TotalAmount);
+
+            }
+        });
+
+        $.ajax({
+            url: "/Dashboard/ProjectsValue",
+            data: {},
+            success: function (response) {
+                $("#Monthlyp").html('$'+formatNumber(response[0].Monthly,true));
+                $("#Quarterlyp").html('$' + formatNumber(response[0].Quaterly,true));
+                $("#Annualp").html('$' + formatNumber(response[0].Yearly,true));
+                if (response[0].Monthly != "0") {
+                    count1M = parseInt(response[0].Monthly * 100);
+                }
+                else {
+                    count1M = "0";
+
+                }
+                if (response[0].Quaterly != "0") {
+                    count2Q = parseInt(response[0].Quaterly * 100);
+                }
+                else {
+                    count2Q = "0";
+
+                }
+                if (response[0].Yearly != "0") {
+                    count3A = parseInt(response[0].Yearly * 100);
+                }
+                else {
+                    count3A = "0";
+
+                }
+                updateProgressMonthely(count1M);
+                updateProgressQuarter(count2Q);
+                updateProgressAnnual(count3A);
+
+
+            }
+        });
+
+
+        $.ajax({
+            url: "/Dashboard/BindTotalVendors",
+            data: {},
+            success: function (response) {
+                debugger;
+                $("#activendorv").html(response[0].ActiveVendors);
+                $("#activendorRV").html(response[0].RenewedVendors);
+                $("#activendorCV").html(response[0].CancelMembership);
+                count1A = parseInt(response[0].ActiveVendors / response[0].lastyearActiveVendors * 100);
+                count2R = parseInt(response[0].RenewedVendors / response[0].LastYearRenewedVendors * 100);
+                count3C = parseInt(response[0].CancelMembership / response[0].LastYearCancelMembership * 100);
+                debugger;
+                updateProgressRenewed(count1A);
+                updateProgresscancell(count2R);
+                updateProgressactive(count3C);
+
+            }
+        });
+        $.ajax({
+            type: "GET",
+            url: "/Dashboard/PieChart",
+            data: { bType: "B" },
+
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                successFunc(response);
+            },
+        });
+        $.ajax({
+            type: "GET",
+            url: "/Dashboard/PieChart",
+            data: { bType: "W"},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                successFuncW(response);
+            },
+        });
+        function successFunc(jsondata) {
+            debugger;
+            var data = {};
+            var BidValues = [];
+            jsondata.forEach(function (e) {
+                BidValues.push(e.Type);
+                data[e.Type] = e.BidValue;
+            })
+            var chart = c3.generate({
+                bindto: '#pieChart1',
+                data: {
+                    json: [data],
+                    keys: {
+                        value: BidValues,
+                    },
+                    type: 'pie'
+                },
+                color: {
+                    pattern: ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+                },
+            });
+
+            jsondata.forEach(function (e) {
+                BidValues.push(e.Type);
+                data[e.Type] = e.BidValue;
+            })
+            var chart = c3.generate({
+                bindto: '#pieChart1',
+
+                data: {
+                    json: [data],
+                    keys: {
+                        value: BidValues,
+                    },
+                    type: 'pie'
+                },
+                color: {
+                    pattern: ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+                },
+            });
+        }
+        function successFuncW(jsondata) {
+            debugger;
+            var data = {};
+            var BidValues = [];
+            jsondata.forEach(function (e) {
+                BidValues.push(e.Type);
+                data[e.Type] = e.BidValue;
+            })
+            var chart = c3.generate({
+                bindto: '#pieChart2',
+                data: {
+                    json: [data],
+                    keys: {
+                        value: BidValues,
+                    },
+                    type: 'pie'
+                },
+                color: {
+                    pattern: ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+                },
+            });
+
+            jsondata.forEach(function (e) {
+                BidValues.push(e.Type);
+                data[e.Type] = e.BidValue;
+            })
+            var chart = c3.generate({
+                bindto: '#pieChart2',
+
+                data: {
+                    json: [data],
+                    keys: {
+                        value: BidValues,
+                    },
+                    type: 'pie'
+                },
+                color: {
+                    pattern: ['#1f77b4', '#aec7e8', '#ff7f0e', '#ffbb78', '#2ca02c', '#98df8a', '#d62728', '#ff9896', '#9467bd', '#c5b0d5', '#8c564b', '#c49c94', '#e377c2', '#f7b6d2', '#7f7f7f', '#c7c7c7', '#bcbd22', '#dbdb8d', '#17becf', '#9edae5']
+                },
+            });
+
+
+        }
+
+    });
+    var data;
+    var data1 = [];
+    $.ajax({
+        url: "/Dashboard/ProjectsLineChartValue",
+        data: {},
+        success: function (response) {
+            debugger;
+            for (i = 0; i < response.length; i++) {
+                var datum = Date.parse(response[i].dayOfYear);
+                
+                data = [
+                    datum, response[i].projectcount
+                ];
+
+                data1.push(data);
+
+            }
+            sucess(data1);
+        }
+    });
+    function sucess(data1) {
+
+
+        debugger;
+        var options = {
+            annotations: {
+                yaxis: [{
+                    y: 30,
+                    borderColor: '#999',
+                    label: {
+                        show: true,
+                        text: 'Support',
+                        style: {
+                            color: "#fff",
+                            background: '#00E396'
+                        }
+                    }
+
+                }],
+                xaxis: [{
+                    x: new Date('30 Jul 2020').getTime(),
+                    borderColor: '#999',
+                    yAxisIndex: 0,
+                    label: {
+                        show: true,
+                        text: 'Rally',
+                        style: {
+                            color: "#fff",
+                            background: '#775DD0'
+                        }
+                    }
+                }]
+            },
+            chart: {
+                type: 'area',
+                height: 350,
+                width: "100%",
+            },
+
+            dataLabels: {
+                enabled: false
+            },
+            series: [{
+                data: data1
+            }],
+
+            labels: ['Sales'],
+            colors: ['#467fcf'],
+            markers: {
+                size: 0,
+                style: 'hollow',
+            },
+            xaxis: {
+                type: 'datetime',
+                min: new Date('30 Jul 2019').getTime(),
+                tickAmount: 20,
+            }, yaxis: {
+                labels: {
+                    formatter: function (val, index) {
+                        return "$" + val.toFixed(0);
+                    }
+                }
+            },
+            tooltip: {
+                x: {
+                    format: 'dd MMM yyyy'
+                },
+                y: {
+                    formatter: function (y) {
+                        if (typeof y !== "undefined") {
+                            return "$" + y.toFixed(0);
+                        }
+                        return y;
+                    }
+                }
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 0.7,
+                    opacityTo: 0.9,
+                    stops: [0, 100]
+                }
+            },
+
+        }
+        var chart = new ApexCharts(
+            document.querySelector("#timeline-chart1"),
+            options
+        );
+        chart.render();
+
+
+
+    }
+
+      function checkPoratl() {
+
+        $.ajax({
+            url: '@Url.Action("checkPortal", "PMDashboard")',
+            cache: false,
+            data:
+            {
+                PropertyKey: $('#PropertyKey').val()
+            },
+            success: function (response) {
+                debugger;
+
+                if (response == false) {
+                    window.location.href = '@Url.Action("Index", "Login")';
+                }
+
+                else {
+
+                }
+
+            }
+        });
+    }
+
+    function GetLastFiveNotiNew() {
+        $(".notibody p").hide();
+        $.ajax({
+            url: "/ABNotification/GetFiveNotificationsForManagerNew",
+            data: {},
+            success: function (response) {
+                var response = JSON.parse(response);
+                if (response.length > 0) {
+                    debugger;
+                    $(".notibodyNew p:eq(0)").show();
+                    $(".notibodyNew p:eq(1)").show();
+
+                    // $(".notibodyNew div:eq(0)").show();
+
+                    //  $(".notibodyNew p:not(:first)").remove();
+                    for (var i = 0; i < response.length; i++) {
+
+                        var p = $(".notibodyNew p:eq(0)").clone(true);
+                        var p1 = $(".notibodyNew p:eq(1)").clone(true);
+
+                        var link = "/PMDashboard/BidRequestEdit?BidRequestKey=" + response[i].ObjectKey + "&NotificationKey=" + response[i].Id + "&ResponseBy=" + response[i].ByResource;
+
+                        $("#notilink", p).attr("href", link);
+                        $("#notilink", p1).attr("href", link);
+                        var bg = ""
+                        var BidName = $.trim(response[i].BidName);
+                        $("#notitext", p).html(response[i].NotificationText + ' (' + BidName +')');
+                        $("#notitext", p1).html(response[i].NotificationType);
+
+                        bg = "bg-green";
+                        //if (response[i].ModuleKey == 200) {
+                        //    bg = "bg-succes";
+                        //}
+                        //if (response[i].ModuleKey == 300) {
+
+                        //}
+                        //if (response[i].ModuleKey == 301) {
+                        //    bg = "bg-danger";
+                        //}
+                        //if (response[i].ModuleKey == 302) {
+                        //    bg = "bg-warning";
+                        //}
+                        //if (response[i].ModuleKey == 100) {
+                        //    bg = "bg-green";
+                        //}
+                        //if (response[i].ModuleKey == 106) {
+                        //    bg = "bg-orange";
+                        //}
+                        p.addClass(bg);
+                        p1.addClass(bg);
+                        $("a", p).addClass("text-white");
+
+                        $(".notibodyNew").append(p);
+                        $(".notibodyNew").append(p1);
+
+                        p.show();
+
+                    }
+                }
+                $(".notibodyNew p:eq(0)").hide();
+                $(".notibodyNew p:eq(1)").hide();
+                // $(".notibodyNewDiv div:eq(0)").hide();
+            }
+        });
+    }
+</script>
+
+

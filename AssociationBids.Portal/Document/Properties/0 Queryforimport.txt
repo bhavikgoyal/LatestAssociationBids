@@ -1,0 +1,88 @@
+select Count(*) count from Productteams where TeamName = 'TOT'
+
+if((select Count(*) count from Productteams where TeamName = 'TOT') > 0)
+BEGIN
+	insert into Productteams(TeamName,AddedBy,AddedOn)
+	Values ('','','')
+END
+
+select * from Product
+
+if ((select Count(*) count from Product Where ItemNumber = '61132100' ) > 0)
+BEGIN
+	---- Total field 32
+	insert into Product (ItemNumber,isactive,ProductStatus)
+	values('',1,'')
+END
+
+
+select * from Factory
+
+if((select count(*) count from Factory where Name = 'Bestlane')>0)
+BEGIN
+	---- Total field 23
+	insert into Factory(Name)
+	values ('')
+END
+
+select * from Materialcolor
+
+
+if((select COUNT(*) count from MaterialColor where ColorName = 'Navy') > 0)
+BEGIN
+	insert into Materialcolor (ColorName)
+	values('')
+END
+
+
+select * from MaterialModel where ModelName = 'Test Model'
+
+--- Note  = This Field Record Insert in table - SS,ABS,NyloN,SILICON,PP,SAN,TRITAN,TPE,ALUMINUM,ZINCALLOY,GLASS,POM,PVC,
+
+if((select * from MaterialModel where ModelName in('Test Model','')) > 0)
+BEGIN
+	insert into MaterialModel(ModelName)
+	Values ('')
+END
+
+
+
+select * from testsimulant where TestSimulant = '3% Acetic Acid, 10% Ethanol, Rec. Olive Oil'
+
+if ((select count(*) from testsimulant where TestSimulant = '3% Acetic Acid, 10% Ethanol, Rec. Olive Oil') > 0)
+BEGIN
+	---- Total field 9
+	insert into testsimulant (TestSimulant,addedon,isactive)
+	Values ('',GETDATE(),1)
+END
+
+
+select * from components where ComponentName = 'TRITAN' 
+
+if((select COUNT(*) count from components where ComponentName = 'TRITAN') > 0)
+BEGIN
+	---- Total field 33
+	insert into components (Componentname)
+	values ('')
+END
+
+
+select * from ProductCOC where TestName in('HKHL1502009685JL,HKHL1502010271JL') and TestDate = ''
+
+if((select * from ProductCOC where TestName in('HKHL1502009685JL,HKHL1502010271JL') and TestDate = '12/13/2017') > 0)
+BEGIN
+	---- Total field 24
+	insert into Productcoc (TestName,TestDate)	
+	Values ('','')
+
+END
+
+
+
+select * from MaterialSupplier where Name = ''
+
+if((select COUNT(*) from MaterialSupplier where Name = '')>0)
+BEGIN
+	insert into MaterialSupplier (Name)
+	Values ('')
+END

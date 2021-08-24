@@ -1,0 +1,252 @@
+﻿@model AssociationBids.Portal.Model.CompanyModel
+@{
+    ViewBag.Title = " Company Setting Edit";
+    Layout = "~/Views/Shared/_PropertyManagerLayout.cshtml";
+    string Errormessage = Convert.ToString(TempData["Errormessage"]);
+    string SuccessMessage = Convert.ToString(TempData["SuccessMessage"]);
+}
+<script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+<script src="~/JSControllers/Commonfunction.js"></script>
+<h2>ACompanyEdit</h2>
+
+<!-- app-content-->
+<div class="app-content  my-3 my-md-5">
+    <div class="side-app">
+
+        <!-- page-header -->
+        <div class="page-header">
+            <ol class="breadcrumb">
+                <!-- breadcrumb -->
+                <li class="breadcrumb-item"><a href="~/PMDashboard/Dashboard">Home</a></li>
+                <li class="breadcrumb-item">@Html.ActionLink("CompanyDetails", "CompanySetting", "ACompanyManagement", new { @CompanyKey = Convert.ToString(Session["ViewCompanyFromList"]) }, new { })</li>
+                <li class="breadcrumb-item active" aria-current="page">Company Edit</li>
+            </ol><!-- End breadcrumb -->
+
+        </div>
+        <!-- End page-header -->
+
+        <div class="alert alert-danger" id="Error" style="display:none; margin-top: 20px;">
+            <span class="errormessage"></span>
+        </div>
+        @if (!string.IsNullOrEmpty(Errormessage))
+        {
+            <p class="alert alert-success alert-dismissible" id="successMessage">
+                @Errormessage
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        @if (!string.IsNullOrEmpty(SuccessMessage))
+        {
+            <p class="alert alert-success alert-dismissible">
+                @SuccessMessage
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        }
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+
+                    @using (Html.BeginForm("CompanySettingEdit", "ACompanyManagement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+
+                        <div class="card-body">
+                            @*<div class="row">
+                                    <div class="col-md-12">
+                                        <div class="text-right"><a href="@Url.Action("Deletee", "ACompanyManagement" , new { id=Model.CompanyKey })" id="btnDelete" class="btn btn-icon btn-danger"><i class="fe fe-trash"></i> Delete</a></div>
+                                        @Html.HiddenFor(model => model.CompanyKey)
+
+                                    </div>
+                                </div>*@
+                            <hr />
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Name  @Html.ValidationMessageFor(model => model.Name, "*", new { @class = "text-danger" })</label>
+                                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Name" } })
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Legal Name</label>
+                                        @Html.EditorFor(model => model.LegalName, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "LegalName" } })
+                                    </div>
+                                </div><!-- end of col -->
+                            </div>
+
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Address 1 </label>
+                                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Address" } })
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Address 2 </label>
+                                        @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Address2" } })
+                                    </div>
+                                </div><!-- end of col -->
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">City</label>
+                                        @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "City" } })
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">State</label>
+                                        @Html.DropDownList("State", new SelectList(ViewBag.lststate, "Value", "Text"), new { @data_rel = "Choose_one", @class = "form-control", placeholder = "Please Select..." })
+                                    </div>
+                                </div><!-- end of col -->
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="form-label">Zip</label>
+                                        @Html.EditorFor(model => model.Zip, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Zip" } })
+                                    </div>
+                                </div><!-- end of col -->
+                                <hr />
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Work Phone 1</label>
+                                        @Html.EditorFor(model => model.Work, new { htmlAttributes = new { @class = "form-control FormatPhoneNumber", @tabindex = "1", autocomplete = "off", placeholder = "Work" } })
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Work Phone 2</label>
+                                        @Html.EditorFor(model => model.Work2, new { htmlAttributes = new { @class = "form-control FormatPhoneNumber", @tabindex = "1", autocomplete = "off", placeholder = "Work2" } })
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Fax Number</label>
+                                        @Html.EditorFor(model => model.Fax, new { htmlAttributes = new { @class = "form-control ", @tabindex = "1", autocomplete = "off", placeholder = "Fax" } })
+                                    </div>
+                                </div><!-- end of col -->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label">Website</label>
+                                        @Html.EditorFor(model => model.Website, new { htmlAttributes = new { @class = "form-control", @tabindex = "1", autocomplete = "off", placeholder = "Website" } })
+                                    </div>
+                                </div><!-- end of col -->
+                            </div>
+                        </div><!--end of card body -->
+                        <hr />
+
+                        <div class="card-footer">
+
+                            <div class="button-row d-flex">
+                                @Html.HiddenFor(model => model.CompanyKey)
+                                <a href="@Request.UrlReferrer" class="btn btn-default" title="Cancel">Cancel</a>
+                                <button class="btn btn-sm btn-primary ml-auto" id="btnUpdate" type="submit" title="Update"><i class="fa fa-check-circle-o "></i> Update</button>
+                            </div>
+
+
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div> <!--End side app-->
+    <!--footer-->
+    <footer class="footer">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-12 col-sm-12   text-center">
+                    Copyright © 2020 Association Bids. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer-->
+
+</div>
+<!-- End app-content-->
+
+<script>
+    $(document).ready(function () {
+        debugger;
+        $('#loader').show();
+        $('.errormessage').html('');
+        $('#Error').hide();
+        $('#Errormanager').hide();
+        $('#loader').hide();
+
+    });
+    $("#btncancel").click(function () {
+        var a = $("#CompanyKey").val();
+
+        window.location.href = 'companydefaultView?CompanyKey=' + $("#CompanyKey").val();
+
+    });
+
+    $("#btnUpdate").click(function () {
+        debugger;
+        var a = $("#CompanyKey").val();
+        var status = false;
+        return = ManagementCompanyValidation();
+        //if (status == true) {
+        //    window.location.href = 'ACompanyEdit?CompanyKey=' + $("#CompanyKey").val();
+        //}
+        //else {
+        //    return false;
+        //}
+    });
+
+    $("#btnDelete").click(function () {
+        if (confirm('Are you sure you want to delete this record?')) {
+
+            var b = $('#CompanyKey').val();
+            //alert("vendorKey"+b);
+            window.location.href = "Deletee?CompanyKey=" + b;
+            return true;
+        }
+        else {
+            return false;
+        }
+    });
+    function ManagementCompanyValidation() {
+        debugger;
+        $('#Error').hide();
+        $('#loader').show();
+        $('.errormessage').html('');
+
+        if ($('#Name').val() == "") {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+            $('#Name').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else if ($('#State').val() == "0") {
+            $('.errormessage').html('Please Enter Mandatory Fields.');
+            $('#Error').show();
+            $('#State').focus();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else {
+            $('#Error').hide();
+            return true;
+        }
+        return true;
+
+    }
+
+    $(document).ready(function () {
+        debugger;
+        $("#ddlload").hide();
+    });
+</script>
