@@ -190,7 +190,8 @@
                                     <input type="hidden" class="param" name="param" />
 
 
-                                    <a href="~/VendorManager/VendorView?companyKey=@ViewBag.cid" class="btn btn-default" title="Cancel">Cancel</a>
+                                    @*<a href="~/VendorManager/VendorView?companyKey=@ViewBag.cid" class="btn btn-default" title="Cancel">Cancel</a>*@
+                                    <a onclick="history.go(-1);" class="btn btn-default" title="Cancel">Cancel</a>
                                     <button class="btn btn-sm btn-primary ml-auto" id="btnUpdate1" name="btnUpdate" type="submit" title="Update"><i class="fa fa-check-circle-o"></i> Update</button>
                                 </div>
                             </div>
@@ -244,7 +245,8 @@
                                     <input type="hidden" id="param1" name="param" />
 
 
-                                    <a href="~/VendorManager/VendorView?companyKey=@ViewBag.cid" class="btn btn-default" title="Cancel">Cancel</a>
+                                    @*<a href="~/VendorManager/VendorView?companyKey=@ViewBag.cid" class="btn btn-default" title="Cancel">Cancel</a>*@
+                                    <a onclick="history.go(-1);" class="btn btn-default" title="Cancel">Cancel</a>
                                     <button class="btn btn-sm btn-primary ml-auto" id="btnUpdate" name="btnUpdate" type="submit" onclick="return validation()" title="Update"><i class="fa fa-check-circle-o "></i> Update</button>
                                 </div>
 
@@ -275,13 +277,14 @@
 
 
                             <div class="card-footer">
-                                <div class="button-row d-flex"> 
+                                <div class="button-row d-flex">
                                     @Html.HiddenFor(model => model.Vendor.CompanyKey)
                                     @Html.HiddenFor(model => model.Vendor.VendorKey)
                                     <input type="hidden" id="param1" name="param" />
 
 
-                                    <a href="~/VendorManager/VendorView?companyKey=@ViewBag.cid" class="btn btn-default" title="Cancel">Cancel</a>
+                                    @*<a href="~/VendorManager/VendorView?companyKey=@ViewBag.cid" class="btn btn-default" title="Cancel">Cancel</a>*@
+                                    <a onclick="history.go(-1);" class="btn btn-default" title="Cancel">Cancel</a>
                                     <button class="btn btn-info ml-auto js-btn-next" type="button" id="btnnextservice" title="Next" onclick="return validationservice()">Update <i class="fe fe-chevron-right"></i></button>
                                     @*<button class="btn btn-sm btn-primary ml-auto" id="btnUpdate2" name="btnUpdate" type="submit" onclick="return validation()" title="Update"><i class="fa fa-check-circle-o "></i> Update</button>*@
                                 </div>
@@ -337,7 +340,9 @@
                                         <input type="hidden" id="param1" name="param" />
 
 
-                                        <a href="~/VendorManager/VendorView?companyKey=@ViewBag.cid" class="btn btn-default" title="Cancel">Cancel</a>
+                                        @*<a href="~/VendorManager/VendorView?companyKey=@ViewBag.cid" class="btn btn-default" title="Cancel">Cancel</a>*@
+                                        <a onclick="history.go(-1);" class="btn btn-default" title="Cancel">Cancel</a>
+                                        
                                         <button class="btn btn-sm btn-primary ml-auto" id="btnUpdateUser" name="btnUpdate" type="submit" onclick="return validation()" title="Update"><i class="fa fa-check-circle-o "></i> Update</button>
                                     </div>
 

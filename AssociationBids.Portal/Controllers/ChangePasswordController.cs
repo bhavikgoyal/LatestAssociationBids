@@ -119,7 +119,6 @@ namespace AssociationBids.Portal.Controllers
             ChangePasswordModel cc = null;
 
                 cc = _ChangePasswordService.GeAgreementDetails();
-
                Session["Akey"] = cc.AggrementKey;
             if (termact == false)
             {

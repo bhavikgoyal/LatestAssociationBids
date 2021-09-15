@@ -52,6 +52,8 @@ namespace AssociationBids.Portal.Repository.Base.Interface
         VendorManagerModel GetUserPrimaryByCompanyKeyAndResourceKey(int CompanyKey, int ResourceKey);
 
         Int64 VendorManagerInviteVendor(VendorManagerVendorModel item, int ResourceKey);
+        Int64 RegistrationManagerInviteVendor(VendorManagerVendorModel item, int ResourceKey);
+        Int64 RegVendorManagerInviteVendor(VendorManagerVendorModel item, int ResourceKey);
 
         List<VendorManagerVendorModel> VendorManager_GetAllManagementCompany();
 

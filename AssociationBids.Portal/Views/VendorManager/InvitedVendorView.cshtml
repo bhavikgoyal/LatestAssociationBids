@@ -64,85 +64,427 @@
                     @Html.HiddenFor(model => model.Vendor.CompanyKey)
 
                     <div class="card-body">
-                       <div class="form-div">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Company Information</h3>
-                                        <div class="card-options">
-                                            <a onclick=" EditPage('Invite');" class="btn btn-primary ml-auto text-white pull-right" title="Edit and Invite again"><i class="fa fa-pencil"></i> Edit and Invite again</a>
-                                            <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                        <div class="form-div">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Company Information</h3>
+                                            <div class="card-options">
+                                                <a onclick=" EditPage('Invite');" class="btn btn-primary ml-auto text-white pull-right" title="Edit and Invite again"><i class="fa fa-pencil"></i> Edit and Invite again</a>
+                                                <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border-top">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Company Name</label>
+                                                        <p>@Model.Vendor.CompanyName</p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Address 1</label>
+                                                        <p>@Model.Vendor.Address</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Address 2</label>
+                                                        <p>@Model.Vendor.Address2</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">City</label>
+                                                        @Model.Vendor.City
+                                                    </div>
+                                                </div><!-- end of col -->
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">State</label>
+                                                        @Model.Vendor.State
+                                                    </div>
+                                                </div><!-- end of col -->
+
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Zip</label>
+                                                        @Model.Vendor.Zip
+                                                    </div>
+                                                </div><!-- end of col -->
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Contact Person</label>
+                                                        @Model.Resource.FirstName @Model.Resource.LastName
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Phone</label>
+                                                        <p>@Utility.FormatPhoneNumberHelper(Model.Vendor.Work)</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Email</label>
+                                                        @Model.Resource.Email
+                                                    </div>
+                                                </div>
+                                            </div><!-- end of row -->
+
+                                        </div><!-- card body end -->
+                                    </div><!-- card end -->
+                                </div><!-- col end -->
+                            </div><!-- row end -->
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+
+                                        <div class="card-header">
+                                            <h3 class="card-title">Contact Information</h3>
+                                            <div class="card-options">
+                                                <a onclick=" EditPage('contact');" class="btn btn-primary ml-auto text-white pull-right" title="Edit"><i class="fa fa-pencil"></i> Edit</a>
+                                                <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border-top">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Vendor Name</label>
+                                                        @Model.Resource.FirstName @Model.Resource.LastName
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Work Phone 1</label>
+                                                        @Utility.FormatPhoneNumberHelper(Model.Resource.Work)
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Work Phone 2</label>
+                                                        @Utility.FormatPhoneNumberHelper(Model.Resource.Work2)
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Cell Phone</label>
+                                                        @Utility.FormatPhoneNumberHelper(Model.Resource.CellPhone)
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Email</label>
+                                                        @Model.Resource.Email
+                                                    </div>
+                                                </div>
+
+                                            </div><!-- end of row -->
+
+                                        </div><!-- card body end -->
+                                    </div><!-- card end -->
+                                </div><!-- col end -->
+                            </div><!-- row end -->
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Services</h3>
+                                            <div class="card-options">
+                                                @*<a class="btn btn-success ml-auto  pull-right" style="margin-right:2px;color:white;" title="Edit" data-toggle="modal" data-target="#addService"><i class="fa fa-plus"></i></a>*@
+                                                <a onclick=" EditPage('services');" class="btn btn-primary ml-auto text-white pull-right" title="Edit"><i class="fa fa-pencil"></i> Edit</a>
+                                                <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="card-body border-top">
+
+                                            <div class="table-responsive" id="divservc">
+                                                <table id="dataTableExample" class="table table-striped table-bordered w-100 dataTable no-footer">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Title</th>
+                                                            <th width="5%" style="display:none;"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><span class="ser-fl"></span></td>
+                                                            <td align="center" style="display:none;">
+                                                                <a title="Delete" onclick="removeser(this);"><i class="fe fe-trash redtxt font18"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </div><!-- end of table responsive -->
+
+                                        </div><!-- card body end -->
+                                    </div><!-- card end -->
+                                </div><!-- col end -->
+                            </div><!-- row end -->
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Insurance</h3>
+                                            <div class="card-options">
+                                                <a href="/../VendorManager/AddPolicy?CompanyKey=@Model.Vendor.CompanyKey" class="btn btn-primary ml-auto text-white  pull-right" style="display:none;" title="Add Insurance"><i class="fa fa-plus"></i> Add</a>
+
+                                                @*<a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>*@
+                                            </div>
+                                        </div>
+                                        <div class="card-body border-top">
+                                            <div id="RawDatas" class="table-responsive">
+
+                                                <div class="table-responsive" id="divFileUploader1">
+                                                    @*ViewBag.InsuranceDocs*@
+                                                    @if (ViewBag.InsuranceList != null && ViewBag.InsuranceList.Count > 0)
+                                                    {
+                                                        <table id="dataTableExample" class="table table-striped table-bordered w-100 dataTable no-footer">
+                                                            <thead>
+                                                                <tr>
+
+                                                                    <th width="30%" style="cursor: pointer;">
+                                                                        Policy Number
+                                                                    </th>
+                                                                    <th width="20%">Amount</th>
+                                                                    <th width="20%">EXPIRATION</th>
+                                                                    <th width="10%"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+
+                                                                @for (int doc = 0; doc < ViewBag.InsuranceList.Count; doc++)
+                                                                {
+
+                                                                    <tr>
+                                                                        <td><span class="PolicyNumber">@ViewBag.InsuranceList[doc].PolicyNumber</span></td>
+
+                                                                        <td><span class="InsuranceAmount">@Utility.FormatNumberHelper(ViewBag.InsuranceList[doc].InsuranceAmount, true)</span></td>
+                                                                        <td><span class="EndDate"></span>@Convert.ToDateTime(ViewBag.InsuranceList[doc].EndDate).ToString("MM/dd/yyyy")</td>
+                                                                        @*<td>
+                                                        @{ string name = ViewBag.InsuranceDocs[doc].Document.FileName;}
+
+
+                                                        @Html.ActionLink(" " + name, "DownloadFile", "VendorManager", new { DocumentKey = ViewBag.InsuranceDocs[doc].Document.DocumentKey, CompanyKey = Model.Vendor.CompanyKey, InsuranceKey = ViewBag.InsuranceDocs[doc].Insurance.InsuranceKey }, new { @class = "ion-link link text-azure" })
+                                                    </td>*@
+
+
+                                                                        <td class="text-center"><a id="viewdata1" title="View Details" onclick="toggleModal('@ViewBag.InsuranceList[doc].InsuranceKey')"><i class="fe fe-eye font18" style="cursor:pointer;"></i></a></td>
+
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    }
+                                                </div><!-- end of table responsive -->
+                                            </div><!-- end of col -->
                                         </div>
                                     </div>
-                                    <div class="card-body border-top">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label class="form-label">Company Name</label>
-                                                    <p>@Model.Vendor.CompanyName</p>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="viewinsurance" tabindex="-1" role="dialog" aria-labelledby="uploadmodalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="uploadmodalLabel">View Insurance</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Policy Number</label>
+                                                            <span id="policynumber"></span>
+                                                            @*@Model.Vendor.PolicyNumber*@
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Amount</label>
+                                                            <span id="amount"></span>
+                                                            @*@Model.Vendor.InsuranceAmount*@
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Start Date</label>
+                                                            <span id="startdate"></span>
+                                                            @*@Model.Vendor.StartDate*@
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">End Date</label>
+                                                            <span id="enddate"></span>
+                                                            @*@Model.Vendor.EndDate*@
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Renewal Date</label>
+                                                            <span id="renewaldate"></span>
+                                                            @*@Model.Vendor.RenewalDate*@
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body col-md-12">
+                                                        @*border-top*@
+                                                        <div id="RawDatas1" class="table-responsive">
+
+                                                            <div class="table-responsive" id="divFileUploader1">
+                                                                @*@if (ViewBag.InsuranceDocs != null && ViewBag.InsuranceDocs.Count > 0)*@
+                                                                @* { *@
+                                                                <table id="dataTableExample" class="table table-striped table-bordered w-100 dataTable no-footer">
+                                                                    <thead>
+                                                                        <tr>
+
+                                                                            <th width="30%" style="cursor: pointer;">
+                                                                                Document
+                                                                            </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td><a id="alink"><span id="atext"></span></a></td>
+                                                                        </tr>
+                                                                        @*@if (ViewBag.InsuranceDocs[0].Document.DocumentKey > 0)
+                                                    {*@
+                                                                        @*for (int doc = 0; doc < ViewBag.InsuranceDocs.Count; doc++)
+                                                    {*@
+
+                                                                        @*<tr>
+
+                                                    <td>*@
+                                                                        @*@{ string name = ViewBag.InsuranceDocs[doc].Document.FileName;}*@
+
+
+                                                                        @*@Html.ActionLink(" " + name, "DownloadFile", "VendorManager", new { DocumentKey = ViewBag.InsuranceDocs[doc].Document.DocumentKey, CompanyKey = Model.Vendor.CompanyKey, InsuranceKey = ViewBag.InsuranceDocs[doc].Insurance.InsuranceKey }, new { @class = "link" })*@
+                                                                        @*</td>*@
+
+
+                                                                        @*<td class="text-center"><a id="viewdata1" onclick="toggleModal('@ViewBag.InsuranceDocs[doc].Insurance.InsuranceKey')"><i class="fe fe-eye font18"></i></a></td>*@
+
+                                                                        @*</tr>*@
+                                                                        @*}
+                                                    }*@
+                                                                    </tbody>
+                                                                </table>
+                                                                @* } *@
+                                                            </div><!-- end of table responsive -->
+                                                        </div><!-- end of col -->
+                                                    </div>
+                                                </div>
+                                                <hr />
+
+
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if (Model.UserModel != null)
+                            {
+                                <div class="row">
+                                    <div class="col-md-12 grid-margin stretch-card">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">User Account</h3>
+                                                <div class="card-options">
+                                                    @*<a class="btn btn btn-primary pull-right" title="Edit"><i class="fa fa-pencil"></i> Edit</a>*@
+                                                    <a onclick="EditPage('userAccount');" class="btn btn-primary text-white ml-auto  pull-right" title="Edit"><i class="fa fa-pencil"></i> Edit</a>
+
+                                                    <a style="margin-left: 10px;" href="#" class="card-options-collapse mr-2" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
                                                 </div>
                                             </div>
+                                            <div class="card-body border-top">
 
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="form-label">Address 1</label>
-                                                    <p>@Model.Vendor.Address</p>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Username</label>
+
+                                                            <p>@Model.Resource.Email</p>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label class="form-label">New Password</label>
+                                                            <p>
+                                                                @{ char[] str = Model.UserModel.Password.ToCharArray();
+                                                                    <span>
+                                                                        @foreach (var ch in str)
+                                                                        {
+                                                                            <i>*</i>
+                                                                        }
+                                                                    </span>
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Card Number</label>
+                                                            <p>
+                                                                @Model.Resource.MaskedCCNumber
+
+
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="form-label">Address 2</label>
-                                                    <p>@Model.Vendor.Address2</p>
+                                        </div>
+                                    </div>
+                                </div><!-- end of row -->
+                            }
+                            <div class="row">
+                                <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="form-label">Radius </label>
+
+                                                        @Html.DropDownList("Radius", new SelectList(ViewBag.lstRadius, "Value", "Text"), new { @tabindex = "6", @class = "form-control", @onchange = "OnRadiusChanges(this)", @disabled = "disabled" })
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="form-label">Address</label>
+                                                        <p id="vServiceAddress"></p>
+                                                        <p>@Html.DisplayFor(Model => Model.ServiceAddress, new { @class = "form-control" })</p>
+
+                                                    </div>
+                                                </div><!-- end of col -->
+                                                <div class="col-lg-9 col-md-12">
+                                                    <div class="form-group mapIframe">
+                                                        <label class="form-label">Map</label>
+                                                        <div id="map" style="width:100%;height:300px;"></div>
+                                                        @*<iframe id="srcid" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>*@
+                                                        @*<iframe id="srcid" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d93321.45784906122!2d-76.2093204565947!3d43.035212545342986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89d9f39bbf979a0d%3A0xd50ce2d7ad9545!2sSyracuse%2C%20NY%2C%20USA!5e0!3m2!1sen!2sin!4v1583905479861!5m2!1sen!2sin&callback=initMap" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>*@
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="form-label">City</label>
-                                                    @Model.Vendor.City
-                                                </div>
-                                            </div><!-- end of col -->
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="form-label">State</label>
-                                                    @Model.Vendor.State
-                                                </div>
-                                            </div><!-- end of col -->
-
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="form-label">Zip</label>
-                                                    @Model.Vendor.Zip
-                                                </div>
-                                            </div><!-- end of col -->
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="form-label">Contact Person</label>
-                                                    @Model.Resource.FirstName @Model.Resource.LastName
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <label class="form-label">Phone</label>
-                                                    <p>@Utility.FormatPhoneNumberHelper(Model.Vendor.Work2)</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label class="form-label">Email</label>
-                                                    @Model.Resource.Email
-                                                </div>
-                                            </div>
-                                        </div><!-- end of row -->
-
-                                    </div><!-- card body end -->
-                                </div><!-- card end -->
-                            </div><!-- col end -->
-                        </div><!-- row end -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
 
 
-                    </div><!-- end of form-div  -->
+                        </div><!-- end of form-div  -->
 
                     </div><!--end of card body -->
                 </div>
@@ -174,7 +516,8 @@
         SetActiveMenu($("#Inv1"), false);
         bindservice();
         bindDocument();
-        insurancetableFill();
+        Fillvalueview();
+        //insurancetableFill();
 
         $("#ddlload").hide();
         $(".advance_search").click(function () {
@@ -250,8 +593,14 @@
     }
     function EditPage(formname) {
         var a = $("#Vendor_CompanyKey").val();
-        if(formname == 'Invite')
+        if (formname == 'Invite') {
             window.location.href = 'Update_InviteVendor?CompanyKey=' + a;
+        }
+        else
+        {
+            var a = $("#Vendor_CompanyKey").val();
+            window.location.href = 'VendorEdit?CompanyKey=' + a + "&param=" + formname;
+        }
     }
 
     function removeser(me) {
@@ -374,5 +723,228 @@
             }
         });
     }
+    function Fillvalueview() {
+        var valaddress = '@ViewBag.address';
+         var valaddress2 = '@ViewBag.address2';
+         var valCity = '@ViewBag.City';
+        var valZip = '@ViewBag.Zip';
+        //alert(valaddress + ' ' +  valaddress2 + ' ' + valCity+ ' ' + valZip);
+           debugger;
+        $('#ServiceAddress').val(valaddress + ' ' + valaddress2);
+        $('#vServiceAddress').html(valaddress + ' ' + valaddress2);
+        $('#vserviceaddressc').html(valaddress + ' ' + valaddress2);
+        $('#vRadius').html($('#RadiusRadius option:selected').text());
+        $('#vCompanyName').html($('#CompanyName').val());
+        $('#vLegalName').html($('#LegalName').val());
+        $('#vTaxID').html($('#TaxID').val());
+        if ($('#Address2').val() !== "") {
+            $('#vServiceAddress').html(valaddress + ' ' + valaddress2 + ', ' + valCity + ', ' + $('#State option:selected').text() + ' ' + valZip);
+            $('#vserviceaddressc').html(valaddress + ' ' + valaddress2 + ', ' + valCity + ', ' + $('#State option:selected').text() + ' ' + valZip);
+        }
+        else {
 
+            $('#vServiceAddress').html(valaddress + ' ' + valaddress2 + ', ' + valCity + ', ' + $('#State option:selected').text() + ' ' + valZip);
+            $('#vserviceaddressc').html(valaddress + ' ' + valaddress2 + ', ' + valCity + ', ' + $('#State option:selected').text() + ' ' + valZip);
+        }
+        $('#vAddress').html(valaddress);
+        $('#vAddress2').html(valaddress2);
+        $('#vCity').html(valCity);
+        $('#vStateKey').html($('#StateKey').val());
+        $('#vState').html($('#State').val());
+        $('#vZip').html($('#Zip').val());
+        $('#vWork').html($('#Work').val());
+        $('#vWork2').html($('#Work2').val());
+        $('#vWebsite').html($('#Website').val());
+        $('#vFax').html($('#Fax').val());
+        $('#vNameOfCard').html($('#NameOfCard').val());
+        $('#vfirstname').html($('#FirstName').val());
+        $('#vlastname').html($('#LastName').val());
+        $('#vEmail').html($('#EmailId').val());
+
+
+        var policyno = $("#PolicyNumber").val();
+        var files = $("#Insurancefiles")[0].files;
+        //if (files.length > 0 && policyno != '')
+        {
+            $("#policyno").html(policyno);
+            $("#insuranceamount").html($("#InsuranceAmount").val());
+            $("#startdate").html($("#StartDate").val().split(" ")[0] == '1/1/0001' ? '' : $("#StartDate").val());
+            $("#enddate").html($("#EndDate").val().split(" ")[0] == '1/1/0001' ? '' : $("#EndDate").val());
+            $("#renewaldate").html($("#RenewalDate").val().split(" ")[0] == '1/1/0001' ? '' : $("#RenewalDate").val());
+            var docnames = '';
+            for (var i = 0; i < files.length; i++) {
+                docnames += '<p>' + files[i].name + '</p>';
+            }
+            $("#docname").html(docnames);
+            if (policyno != '') {
+                $("#insDetails").show();
+            }
+            else {
+                $("#insDetails").hide();
+            }
+        }
+
+        if ($('#CardNumber').val() !== "") {
+            const id = $('#CardNumber').val();
+            var fourlastchar = id.substr(id.length - 5);
+            $('#vCardNumber').html('XXXX XXXX XXXX ' + fourlastchar);
+        }
+
+        $('#vValidTillMM').html($('#ValidTillMM').val());
+        $('#vValidTillYY').html($('#ValidTillYY').val());
+        $('#vFullValidTill').html($('#ValidTillMM').val() + '/' + $('#ValidTillYY').val());
+        $('#vCVV').html($('#CVV').val());
+        $('#sucesssave').hide();
+        $('#errrorssave').hide();
+
+    }
+    function removeser(me) {
+            debugger;
+            var m = $(me).parent("td").parent("tr").find('.ser-fl').text();
+
+            var a = $("#Vendor_CompanyKey").val();
+            var b = $(me).parent("td").parent("tr").find('.ser-fl').text();
+            var c = $(me).parent("td").parent("tr").find('input[name = "vsk"]').val();
+            var r = confirm("Are you sure to remove service: " + b + "?");
+            if (r) {
+                //var formdata = new FormData();
+                //formdata.append("CompanyKey", a);
+                //formdata.append("VendorServiceKey", c);
+                //window.location.href = "DeleteAsync?CompanyKey=" + a + "&VendorServiceKey=" + c;
+                $.ajax({
+                    type: 'post',
+                    url: '@Url.Action("DeleteAsync", "VendorManager")',
+                    cache: false,
+                    data: {
+                        CompanyKey: a,
+                        VendorServiceKey: c
+                    },
+                    success: function (response) {
+                        bindservice();
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+        }
+
+    function OnRadiusChanges() {
+
+        setTimeout(function () {
+
+            initMap();
+        }, 1000);
+    }
+    function initMap() {
+
+        map = new google.maps.Map(document.getElementById('map'), { zoom: 10 });
+        geocoder = new google.maps.Geocoder();
+        codeAddress(geocoder, map);
+
+    }
+
+    
+        function getDate(datestring) {
+
+            var milli = datestring.replace(/\/Date\((-?\d+)\)\//, '$1');
+            var date1 = new Date(parseInt(milli)).toLocaleDateString();
+            var mon = date1.split('/')[0];
+            var day = date1.split('/')[1];
+            var year = date1.split('/')[2];
+            if (mon.length == 1)
+                mon = "0" + mon;
+            if (day.length == 1)
+                day = "0" + day;
+            return mon + "/" + day + "/" + year;
+    }
+
+    function toggleModal(insuranceKey) {
+        $("#RawDatas1 table tbody tr:eq(0)").hide();
+        var companyKey = $('#Vendor_CompanyKey').val();
+        $.ajax({
+            url: '@Url.Action("GetInsuranceDetails", "VendorManager")',
+            cache: false,
+            data:
+            {
+                CompanyKey: companyKey,
+                InsuranceKey: insuranceKey
+            },
+            success: function (response) {
+                debugger;
+
+                if (response != null && response.length > 0) {
+
+                    $("#policynumber").text(response[0].Insurance.PolicyNumber);
+                    $("#amount").text("$" + formatNumber(response[0].Insurance.InsuranceAmount,true));
+                    $("#startdate").text(response[0].Insurance.StartDates);
+                    $("#enddate").text(response[0].Insurance.EndDates);
+                    $("#renewaldate").text(response[0].Insurance.RenewalDates);
+                    $("#viewinsurance").modal('toggle');
+                    debugger;
+                    $("#RawDatas1 table tbody tr:not(:first)").remove();
+                    if (response.length > 0 && response[0].Document.DocumentKey > 0) {
+                        //$("#RawDatas1 table tbody tr:eq(0)").show();
+                        for (var i = 0; i < response.length; i++) {
+                            var cln = $("#RawDatas1 table tbody tr:eq(0)").clone(true);
+                            $("#atext", cln).html(response[i].Document.FileName);
+
+                            //$("#alink", cln).attr('href', "../Document/Insurance/" + companyKey + "/" + response[i].Insurance.InsuranceKey+"/"+ response[i].Document.FileName);
+
+                            $("#alink", cln).attr('href', "../Document/Insurance/"+response[i].Insurance.InsuranceKey+ response[i].Document.FileName);
+
+
+                            //$(".InsuranceAmount", cln).html(formatNumber(response[0].Insurance.InsuranceAmount,true));
+                            //$(".PolicyNumber", cln).html(response[0].Insurance.PolicyNumber);
+                            //$(".EndDate", cln).html(getDate(response[0].Insurance.EndDate));
+                            $("#RawDatas1 table tbody").append(cln);
+                            cln.show();
+                        }
+                    }
+                    //$("#RawDatas1 table tbody tr:eq(0)").hide();
+                    if (response[0].Document.FileName == "") {
+                        $("#RawDatas1").hide();
+                    } else {
+                        $("#RawDatas1").show();
+                    }
+                }
+            }
+        });
+    }
+
+    function bindservice() {
+            debugger;
+            $.ajax({
+
+                url: '@Url.Action("bindservice", "VendorManager")',
+                cache: false,
+                data:
+                {
+                    CompanyKey: $('#Vendor_CompanyKey').val()
+                },
+                success: function (response) {
+                    debugger;
+                    $("#divservc table tbody tr:not(:first)").remove();
+                    $("#divservc table tbody tr:eq(0)").show();
+                    for (var i = 0; i < response.length; i++) {
+                        var cln = $("#divservc table tbody tr:eq(0)").clone(true);
+                        $(".ser-fl", cln).html(response[i].Title);
+                        $(cln).append("<input type='hidden' name='vsk' value='" + response[i].VendorServiceKey + "'/>");
+                        $("#divservc table").append(cln);
+                    }
+                    $("#divservc table tbody tr:eq(0)").hide();
+                }
+            });
+        }
+    //function EditPage() {
+    //    var a = $("#CompanyKey").val();
+
+    //    window.location.href = 'VendorEdit?CompanyKey=' + $("#CompanyKey").val();
+
+    //}
+    //function EditPage(formname) {
+    //    var a = $("#Vendor_CompanyKey").val();
+    //    window.location.href = 'VendorEdit?CompanyKey=' + a + "&param=" + formname;
+
+    //}
 </script>

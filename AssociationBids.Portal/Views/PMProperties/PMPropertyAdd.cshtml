@@ -216,10 +216,11 @@ i>
                                                                                     </div><!-- end of col -->
                                                                                     <div class="col-md-6">
                                                                                         <div class="form-group">
-                                                                                            <label class="form-label">
-                                                                                                Min. Insurance Amount
-                                                                                                @*@Html.ValidationMessageFor(model => model.MinimumInsuranceAmount, "*", new { @class = "text-danger" })*@
-                                                                                            </label>
+                                                                                          
+                                                                                                <label class="form-label">
+                                                                                                    Min. Insurance Amount
+                                                                                                    @Html.ValidationMessageFor(model => model.MinimumInsuranceAmount, "*", new { @class = "text-danger" })
+                                                                                                </label>
                                                                                             <div class="input-group">
                                                                                                 <div class="input-group-prepend">
                                                                                                     <div class="input-group-text">
@@ -615,6 +616,14 @@ i>
             return false;
 
         }
+        if ($('#MinimumInsuranceAmount').val() == "" || $('#MinimumInsuranceAmount').val() == null || $('#MinimumInsuranceAmount').val() == "$0.00" ) {
+            errormessage = $('.errormessage').html("Please enter mandatory fields.");
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+
+        }
+
         var mySetting = '@System.Configuration.ConfigurationManager.AppSettings["MapCheck"].ToString()';
         if (mySetting == "Active") {
             var lat = $('#Latitude').val();

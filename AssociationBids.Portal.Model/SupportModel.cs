@@ -73,6 +73,8 @@ namespace AssociationBids.Portal.Model
         public string State { get; set; }
         public string Zip { get; set; }
         public string Name { get; set; }
+        public string VendorUsername { get; set; }
+
         public string CellPhone { get; set; }
         public string Email { get; set; }
         public string ContactPerson { get; set; }

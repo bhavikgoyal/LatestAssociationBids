@@ -44,6 +44,7 @@ namespace AssociationBids.Portal.Controllers
             string BidRequestStatus, int Modulekey, string StartDate, string BidDueDate)
         {
             List<SupportModel> lstuser = null;
+           
             DateTime FromDate = new DateTime();
             DateTime ToDate = new DateTime();
             if (StartDate != "")
@@ -57,9 +58,13 @@ namespace AssociationBids.Portal.Controllers
             //Int32 resourcekey = Convert.ToInt32(Session["resourceid"]);
             Int32 resourcekey = 0;
             lstuser = _Supportservice.SearchBidRequest(PageSize, PageIndex, PropertyName, VendorName, CompanyName, Sort, BidStatus, resourcekey, BidRequestStatus, Modulekey, FromDate, ToDate);
-            lstuser.ForEach(f => f.ispriorityrecord = false);
 
-            return Json(lstuser, JsonRequestBehavior.AllowGet);
+
+                lstuser.ForEach(f => f.ispriorityrecord = false);
+
+                return Json(lstuser, JsonRequestBehavior.AllowGet);
+          
+           
 
         }
 

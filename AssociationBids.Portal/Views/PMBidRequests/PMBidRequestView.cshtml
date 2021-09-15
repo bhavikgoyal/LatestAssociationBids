@@ -1451,22 +1451,22 @@
 
         if (popdate < BidResponseDueDate) {
             debugger;
-
-           
                 $("#popupError").html("Date must be greater than or equal to Bid Response Due Date.");
                 $("#popupError").show();
-
                 $(window).scrollTop(0);
-
                 return false;
-            
-
-
-
-            
+          
         }
 
+        if (popdate < dd) {
+            debugger;
+            $("#popupError").html("Date must be greater than or equal to Current Date.");
+            $("#popupError").show();
+            $(window).scrollTop(0);
 
+            return false;
+
+        }
 
 
         var formdata = new FormData();
@@ -1930,6 +1930,7 @@
                     Modulekey: 100
                 },
                 success: function (respo) {
+                    debugger;
                     //alert(respo);
                     if (status == "Acceptp") {
                         //alert("if");
@@ -1941,7 +1942,7 @@
                     {
                         window.location.href = 'PMBidRequestView?BidRequestKey=' + $("#BidRequestKey").val();
                     }
-
+                    $('#global-loader').hide();
                 },
             });
             }

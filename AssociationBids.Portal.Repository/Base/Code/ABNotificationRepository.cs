@@ -22,115 +22,147 @@ namespace AssociationBids.Portal.Repository.Base.Code
             bool status = true;
             try
             {
-               
 
-               
-                int Bvkey = GetBidVendorIdResourceKey(ByResourceKey, ObjectKey);
-                int portal = GetPortalFromResourceKey(ByResourceKey);
-                if (portal == 0)
-                    return false;
-                List<long> resources = new List<long>();
-                if (portal == 3)
-                {
-                    if(ModuleKey == 302 || ModuleKey == 301 || ModuleKey == 300)
+
+   
+                 
+
+
+
+                    int Bvkey = GetBidVendorIdResourceKey(ByResourceKey, ObjectKey);
+                    int portal = GetPortalFromResourceKey(ByResourceKey);
+                    if (portal == 0)
+                        return false;
+                    List<long> resources = new List<long>();
+                    if (portal == 3)
                     {
-                        resources.Add(ForResourceKey);
+                        if (ModuleKey == 302 || ModuleKey == 301 || ModuleKey == 300)
+                        {
+                            resources.Add(ForResourceKey);
+                        }
+                        else
+                        {
+                            resources = GetResourceByNotificationTypeVendor(NotificationType, ModuleKey, ObjectKey);
+                        }
+                    }
+                    else if (portal == 2)
+                    {
+                        resources = GetResourceByNotificationTypePM(NotificationType, ModuleKey, ObjectKey, ForResourceKey);
+                        if (NotificationType == "BidReqMsg" || NotificationType == "BidReqStatusReject" || NotificationType == "BidReqStatusRejByAcceptOther" || NotificationType == "BidReqDate")
+                        {
+                            BidVendorRepository bv = new BidVendorRepository();
+                            var bidVendor = bv.Get(Convert.ToInt32(ObjectKey));
+                            ObjectKey = bidVendor.BidRequestKey;
+
+                        }
+                        if (NotificationType == "BidReqStatusAccept")
+                            ModuleKey = 106;
+                    }
+                    else if (portal == 1)
+                        resources = GetResourceByNotificationTypeAdmin(NotificationType, ModuleKey, ObjectKey);
+
+                    string storedProcedure = "site_ABNotification_InsertSingle";
+                    string storedProcedure1 = "site_PushNotification_Insert";
+                    int NotiKey = 0;
+                    if (Text == "Bid Vendor Status Not Interested" && Bvkey == 0)
+                    {
+
+
                     }
                     else
                     {
-                        resources = GetResourceByNotificationTypeVendor(NotificationType, ModuleKey, ObjectKey);
-                    }
-                }
-                else if (portal == 2)
-                {
-                    resources = GetResourceByNotificationTypePM(NotificationType, ModuleKey, ObjectKey, ForResourceKey);
-                    if (NotificationType == "BidReqMsg" || NotificationType == "BidReqStatusReject" || NotificationType == "BidReqStatusRejByAcceptOther" || NotificationType == "BidReqDate")
-                    {
-                        BidVendorRepository bv = new BidVendorRepository();
-                        var bidVendor = bv.Get(Convert.ToInt32(ObjectKey));
-                        ObjectKey = bidVendor.BidRequestKey;
-                        
-                    }
-                    if (NotificationType == "BidReqStatusAccept")
-                        ModuleKey = 106;
-                }
-                else if (portal == 1)
-                    resources = GetResourceByNotificationTypeAdmin(NotificationType, ModuleKey, ObjectKey);
-
-                string storedProcedure = "site_ABNotification_InsertSingle";
-                string storedProcedure1 = "site_PushNotification_Insert";
-                int NotiKey = 0;
-                if (Text == "Bid Vendor Status Not Interested" && Bvkey == 0)
-                {
-
-
-                }
-                else
-                {
-                    IPushNotificationRepository notificationRepository = new PushNotificationRepository();
-                    using (Database db = new Database(ConnectionString))
-                    {
-                        if (resources != null)
+                        IPushNotificationRepository notificationRepository = new PushNotificationRepository();
+                        using (Database db = new Database(ConnectionString))
                         {
-                            for (int i = 0; i < resources.Count; i++)
+                            if (resources != null)
                             {
-                                using (DBCommandWrapper commandWrapper = db.GetStoredProcCommandWrapper(storedProcedure))
+                                for (int i = 0; i < resources.Count; i++)
+                            {
+                                if (NotificationType  == "BidReqDate" && ForResourceKey != 0)
                                 {
-                                    commandWrapper.AddInputParameter("@NotificationType", SqlDbType.VarChar, NotificationType);
-                                    commandWrapper.AddInputParameter("@ModuleKey", SqlDbType.Int, ModuleKey);
-                                    commandWrapper.AddInputParameter("@ObjectKey", SqlDbType.Int, ObjectKey);
-                                    commandWrapper.AddInputParameter("@ByResource", SqlDbType.Int, ByResourceKey);
-                                    commandWrapper.AddInputParameter("@ForResource", SqlDbType.Int, resources[i]);
-                                    commandWrapper.AddInputParameter("@NotificationText", SqlDbType.NVarChar, Text);
-                                    commandWrapper.AddOutputParameter("@Id", SqlDbType.Int);
-                                    int id = db.ExecuteNonQuery(commandWrapper);
-                                    NotiKey = commandWrapper.GetValueInt("@Id");
-
-
-
-
-                                    //if (id > 0)
-                                    //    status = true;
-                                }
-                                using (DBCommandWrapper commandWrapper = db.GetStoredProcCommandWrapper(storedProcedure1))
-                                {
-                                    commandWrapper.AddInputParameter("@NotificationType", SqlDbType.VarChar, NotificationType);
-                                    commandWrapper.AddInputParameter("@ModuleKey", SqlDbType.Int, ModuleKey);
-                                    commandWrapper.AddInputParameter("@ObjectKey", SqlDbType.Int, ObjectKey);
-                                    commandWrapper.AddInputParameter("@ResourceKey", SqlDbType.Int, ByResourceKey);
-                                    commandWrapper.AddInputParameter("@ForResource", SqlDbType.Int, resources[i]);
-                                    commandWrapper.AddInputParameter("@NotificationBody", SqlDbType.NVarChar, Text);
-                                    commandWrapper.AddInputParameter("@RegistrationToken", SqlDbType.NVarChar, "");
-                                    commandWrapper.AddInputParameter("@NotificationKey", SqlDbType.Int, NotiKey);
-                                    commandWrapper.AddOutputParameter("@PushNotificationId", SqlDbType.Int);
-                                    
-                                    int id = db.ExecuteNonQuery(commandWrapper);
-                                    int pushKey = commandWrapper.GetValueInt("@PushNotificationId");
-                                    if(pushKey > 0)
+                                    using (DBCommandWrapper commandWrapper = db.GetStoredProcCommandWrapper(storedProcedure))
                                     {
-                                        try
-                                        {
-                                            PushResponse p = notificationRepository.SendPushNotificationById(pushKey);
-                                            if (p != null)
-                                            {
-                                                if (p.success == 1)
-                                                    notificationRepository.UpdateStatus(pushKey, p.multicast_id, p.results[0].message_id, "");
-                                                else
-                                                    notificationRepository.UpdateStatus(pushKey, p.multicast_id, "0", p.results[0].error);
-                                            }
-                                        }
-                                        catch { }
+                                        commandWrapper.AddInputParameter("@NotificationType", SqlDbType.VarChar, NotificationType);
+                                        commandWrapper.AddInputParameter("@ModuleKey", SqlDbType.Int, ModuleKey);
+                                        commandWrapper.AddInputParameter("@ObjectKey", SqlDbType.Int, ObjectKey);
+                                        commandWrapper.AddInputParameter("@ByResource", SqlDbType.Int, ByResourceKey);
+                                        commandWrapper.AddInputParameter("@ForResource", SqlDbType.Int, resources[i]);
+                                        commandWrapper.AddInputParameter("@BidVendorKey", SqlDbType.Int, ForResourceKey);
+                                        commandWrapper.AddInputParameter("@NotificationText", SqlDbType.NVarChar, Text);
+                                        commandWrapper.AddOutputParameter("@Id", SqlDbType.Int);
+                                        int id = db.ExecuteNonQuery(commandWrapper);
+                                        NotiKey = commandWrapper.GetValueInt("@Id");
+
+
+
+
+                                        //if (id > 0)
+                                        //    status = true;
                                     }
-                                    //if (id > 0)
-                                    //    status = true;
+
+                                }
+                                else
+                                {
+                                    using (DBCommandWrapper commandWrapper = db.GetStoredProcCommandWrapper(storedProcedure))
+                                    {
+                                        commandWrapper.AddInputParameter("@NotificationType", SqlDbType.VarChar, NotificationType);
+                                        commandWrapper.AddInputParameter("@ModuleKey", SqlDbType.Int, ModuleKey);
+                                        commandWrapper.AddInputParameter("@ObjectKey", SqlDbType.Int, ObjectKey);
+                                        commandWrapper.AddInputParameter("@ByResource", SqlDbType.Int, ByResourceKey);
+                                        commandWrapper.AddInputParameter("@ForResource", SqlDbType.Int, resources[i]);
+                                        commandWrapper.AddInputParameter("@NotificationText", SqlDbType.NVarChar, Text);
+                                        commandWrapper.AddOutputParameter("@Id", SqlDbType.Int);
+                                        int id = db.ExecuteNonQuery(commandWrapper);
+                                        NotiKey = commandWrapper.GetValueInt("@Id");
+
+
+
+
+                                        //if (id > 0)
+                                        //    status = true;
+                                    }
+                                }
+                               
+                                   
+                                    using (DBCommandWrapper commandWrapper = db.GetStoredProcCommandWrapper(storedProcedure1))
+                                    {
+                                        commandWrapper.AddInputParameter("@NotificationType", SqlDbType.VarChar, NotificationType);
+                                        commandWrapper.AddInputParameter("@ModuleKey", SqlDbType.Int, ModuleKey);
+                                        commandWrapper.AddInputParameter("@ObjectKey", SqlDbType.Int, ObjectKey);
+                                        commandWrapper.AddInputParameter("@ResourceKey", SqlDbType.Int, ByResourceKey);
+                                        commandWrapper.AddInputParameter("@ForResource", SqlDbType.Int, resources[i]);
+                                        commandWrapper.AddInputParameter("@NotificationBody", SqlDbType.NVarChar, Text);
+                                        commandWrapper.AddInputParameter("@RegistrationToken", SqlDbType.NVarChar, "");
+                                        commandWrapper.AddInputParameter("@NotificationKey", SqlDbType.Int, NotiKey);
+                                        commandWrapper.AddOutputParameter("@PushNotificationId", SqlDbType.Int);
+
+                                        int id = db.ExecuteNonQuery(commandWrapper);
+                                        int pushKey = commandWrapper.GetValueInt("@PushNotificationId");
+                                        if (pushKey > 0)
+                                        {
+                                            try
+                                            {
+                                                PushResponse p = notificationRepository.SendPushNotificationById(pushKey);
+                                                if (p != null)
+                                                {
+                                                    if (p.success == 1)
+                                                        notificationRepository.UpdateStatus(pushKey, p.multicast_id, p.results[0].message_id, "");
+                                                    else
+                                                        notificationRepository.UpdateStatus(pushKey, p.multicast_id, "0", p.results[0].error);
+                                                }
+                                            }
+                                            catch { }
+                                        }
+                                        //if (id > 0)
+                                        //    status = true;
+                                    }
                                 }
                             }
+
                         }
 
                     }
-
-                }
-
+                
               
             }
             catch (Exception ex)
@@ -141,6 +173,118 @@ namespace AssociationBids.Portal.Repository.Base.Code
             return status;
         }
 
+
+        public bool UpdateStatsVendordash(long NotificationId, string Status, int Objectkey)
+        {
+            bool status = false;
+
+            try
+            {
+                string storedProcedure = "site_ABNotification_UpdateStatusforVendor";
+                using (Database db = new Database(ConnectionString))
+                {
+                    using (DBCommandWrapper commandWrapper = db.GetStoredProcCommandWrapper(storedProcedure))
+                    {
+                        commandWrapper.AddInputParameter("@Id", SqlDbType.Int, NotificationId);
+                        commandWrapper.AddInputParameter("@Status", SqlDbType.VarChar, Status);
+                        commandWrapper.AddInputParameter("@Objectkey", SqlDbType.Int, Objectkey);
+                        commandWrapper.AddOutputParameter("@errorCode", SqlDbType.Int);
+                        db.ExecuteNonQuery(commandWrapper);
+                        if (commandWrapper.GetValueInt("@errorCode") == 0)
+                            status = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                status = false;
+            }
+
+            return status;
+        }
+        public bool InsertNotificationdashborad(string NotificationType, int ModuleKey, long ObjectKey, long ByResourceKey, string Text, long ForResourceKey = 0)
+        {
+            bool status = true;
+            try
+            {
+
+
+                if (NotificationType == "BidReqDate")
+                {
+                    int NotiKey = 0;
+                    string storedProcedure = "site_ABNotification_InsertSingle";
+                    string storedProcedure1 = "site_PushNotification_Insert";
+                    IPushNotificationRepository notificationRepository = new PushNotificationRepository();
+                    using (Database db = new Database(ConnectionString))
+                    {
+
+
+                        using (DBCommandWrapper commandWrapper = db.GetStoredProcCommandWrapper(storedProcedure))
+                        {
+                            commandWrapper.AddInputParameter("@NotificationType", SqlDbType.VarChar, NotificationType);
+                            commandWrapper.AddInputParameter("@ModuleKey", SqlDbType.Int, ModuleKey);
+                            commandWrapper.AddInputParameter("@ObjectKey", SqlDbType.Int, ObjectKey);
+                            commandWrapper.AddInputParameter("@ByResource", SqlDbType.Int, ForResourceKey);
+                            commandWrapper.AddInputParameter("@ForResource", SqlDbType.Int, ByResourceKey);
+                            commandWrapper.AddInputParameter("@NotificationText", SqlDbType.NVarChar, Text);
+                            commandWrapper.AddOutputParameter("@Id", SqlDbType.Int);
+                            int id = db.ExecuteNonQuery(commandWrapper);
+
+                            NotiKey = commandWrapper.GetValueInt("@Id");
+
+
+
+                            //if (id > 0)
+                            //    status = true;
+                        }
+                        using (DBCommandWrapper commandWrapper = db.GetStoredProcCommandWrapper(storedProcedure1))
+                        {
+                            commandWrapper.AddInputParameter("@NotificationType", SqlDbType.VarChar, NotificationType);
+                            commandWrapper.AddInputParameter("@ModuleKey", SqlDbType.Int, ModuleKey);
+                            commandWrapper.AddInputParameter("@ObjectKey", SqlDbType.Int, ObjectKey);
+                            commandWrapper.AddInputParameter("@ResourceKey", SqlDbType.Int, ByResourceKey);
+                            commandWrapper.AddInputParameter("@ForResource", SqlDbType.Int, ByResourceKey);
+                            commandWrapper.AddInputParameter("@NotificationBody", SqlDbType.NVarChar, Text);
+                            commandWrapper.AddInputParameter("@RegistrationToken", SqlDbType.NVarChar, "");
+                            commandWrapper.AddInputParameter("@NotificationKey", SqlDbType.Int, NotiKey);
+                            commandWrapper.AddOutputParameter("@PushNotificationId", SqlDbType.Int);
+
+                            int id = db.ExecuteNonQuery(commandWrapper);
+                            int pushKey = commandWrapper.GetValueInt("@PushNotificationId");
+                            if (pushKey > 0)
+                            {
+                                try
+                                {
+                                    PushResponse p = notificationRepository.SendPushNotificationById(pushKey);
+                                    if (p != null)
+                                    {
+                                        if (p.success == 1)
+                                            notificationRepository.UpdateStatus(pushKey, p.multicast_id, p.results[0].message_id, "");
+                                        else
+                                            notificationRepository.UpdateStatus(pushKey, p.multicast_id, "0", p.results[0].error);
+                                    }
+                                }
+                                catch { }
+                            }
+                            //if (id > 0)
+                            //    status = true;
+                        }
+
+
+
+                    }
+                }
+
+        
+
+            }
+            catch (Exception ex)
+            {
+                status = false;
+            }
+
+            return status;
+        }
         private string GenerateLink(int ModuleKey, long ObjectKey, long ResourceKey, string NotificationType)
         {
             string link = "";
@@ -940,7 +1084,7 @@ namespace AssociationBids.Portal.Repository.Base.Code
             return status;
         }
 
-        public string GetFiveNotificationsForManagerFiveNew(long ResourceKey)
+        public string GetFiveNotificationsForManagerFiveNew(long ResourceKey, int BIDSUBMITDAYS)
         {
             try
             {
@@ -948,6 +1092,7 @@ namespace AssociationBids.Portal.Repository.Base.Code
                 obj_con.addParameter("@ResourceKey", ResourceKey);
                 //obj_con.addParameter("@ResourceKey", ResourceKey);
                 DataTable dt = obj_con.ConvertDatareadertoDataTable(obj_con.ExecuteReader("site_ABNotification_SelectTopFiveNew", CommandType.StoredProcedure));
+              
                 obj_con.CommitTransaction();
                 obj_con.closeConnection();
                 return AssoBidsUtility.ConvertDataTableTojSonString(dt);

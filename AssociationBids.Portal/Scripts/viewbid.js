@@ -78,8 +78,8 @@
                 $("#BrDescription").html(response[0].Description);
 
                 //$("#BrResponseDate").html((response[0].DefaultRespondByDate));
-                $("#BrResponseDate").html((response[0].VendorBidDueDate));
-                $("#BrBidDueDate").html((response[0].BidDueDate));
+                $("#BrResponseDate").html((response[0].VendorResponseDueDate));
+                $("#BrBidDueDate").html((response[0].VendorBidDueDate));
                 //Property Details
                 $("#BrCompanyName").html(response[0].CompanyName);
                 $("#BrPropertyName").html(response[0].Property);

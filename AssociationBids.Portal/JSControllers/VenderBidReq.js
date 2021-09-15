@@ -128,51 +128,7 @@ function UpdateButtonDisplay(Status,isExpired = 'false') {
     $("#btncanpop").click();
 }
 
-function calltoDateExtend() {
-    //$(".tabs-menu1 a[href='#message']").tab('show');
-    //$("#txtMessageBody").focus();
-    $("#global-loader").show();
-    $("#SuccessMsg").html('');
-    $("#SuccessMsg").hide();
-    $("#divsucces").hide();
-    
-    debugger;
-    var BidName = $("#Brtitle").html();
-    var ManagerName = $("#BrContName").html();
-    var ManagerCompanyName = $("#BrContCompany").html();
-    var ManagerEmail = $("#BrContEmail").html();
-    var BidRequestKey = $("#HdnBidRequestKey").html();
 
-    $.ajax({
-        url: '../VenderBidrequest/DateExtension',
-        async: false,
-        cache: false,
-        type: "POST",
-        dataType: "JSON",
-        data: {
-            BidName: BidName,
-            ManagerName: ManagerName,
-            ManagerCompanyName: ManagerCompanyName,
-            ManagerEmail: ManagerEmail,
-            BidRequestKey: BidRequestKey
-        },
-        success: function (result) {
-            debugger;
-            if (result == true) {
-                SendMessageNoti();
-            }
-            else
-            {
-                $("#divalert").show();
-                $("#ErrorMsg").html('Extension Bid Due Date Request already send');
-                $("#global-loader").hide();
-
-                
-            }
-           
-        }
-    });
-};
 function callttoClose() {
     ApceptRejectVender('Not Interested', '2');
 };

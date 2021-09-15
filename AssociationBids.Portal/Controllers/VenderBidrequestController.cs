@@ -15,18 +15,31 @@ namespace AssociationBids.Portal.Controllers
 {
     public class VenderBidrequestController : Controller
     {
+        private IABNotificationService __notification;
+        private readonly AssociationBids.Portal.Service.Base.IBidRequestService _bidRequestservice;
         private readonly IBidRequestService _venderbidrequestservice;
-        public VenderBidrequestController(IBidRequestService registrationService)
+        private readonly AssociationBids.Portal.Service.Base.IAStaffDirectoryService _staffDirectoryservice;
+        public VenderBidrequestController(IABNotificationService notificationService, IBidRequestService registrationService, AssociationBids.Portal.Service.Base.IAStaffDirectoryService staffDirectoryService, AssociationBids.Portal.Service.Base.IBidRequestService bidRequestService)
         {
+            this._staffDirectoryservice = staffDirectoryService;
+            this._bidRequestservice = bidRequestService;
             this._venderbidrequestservice = registrationService;
+            __notification = notificationService;
         }
         // GET: Bidrequest
         public ActionResult Index()
         {
             return View();
         }
-        public ActionResult BidRequests()
+        public ActionResult BidRequests(int BidReuestKey = 0)
         {
+
+            if (BidReuestKey != 0)
+            {
+                int ForResource = Convert.ToInt32(Session["resourceid"]);
+                bool status = __notification.UpdateStatsVendordash(ForResource, "read", BidReuestKey);
+            }
+
             ViewBag.StatusListForDDL = this._venderbidrequestservice.GetStatusListForDDL("", "");
             ViewBag.userid = Convert.ToInt64(Session["userid"]);
             return View();
@@ -265,7 +278,7 @@ namespace AssociationBids.Portal.Controllers
             return Json(newbidstring, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetVenderBidRequestListJsonPriority(Int32 PageSize, Int32 PageIndex, string Sort, string Search, Int64 BidVendorKey, string BidRequestStatus, string BiddueDateFrom, string BiddueDateTo, string ModuleController)
-        {
+         {
             long ResourceKey = Convert.ToInt64(Session["resourceid"]);
             //IList<BidRequestModel> bidRequestModel   =  this._venderbidrequestservice.SearchBidRequestVender(PageSize,  PageIndex,    Search, Sort, BidRequestKey);
             var bidRequestModel = this._venderbidrequestservice.SearchBidRequestVenderjsonPriority(PageSize, PageIndex, Search, Sort, BidVendorKey, Convert.ToInt64(Session["CompanyKey"]), Convert.ToInt64(Session["userid"]), BidRequestStatus, BiddueDateFrom, BiddueDateTo, ModuleController, ResourceKey);
@@ -427,26 +440,72 @@ namespace AssociationBids.Portal.Controllers
             }
         }
 
-        public JsonResult DateExtension(string BidName, string ManagerName, string ManagerCompanyName, string ManagerEmail)
+        public JsonResult DateExtension(string BidName, string ManagerName, string ManagerCompanyName, string ManagerEmail,
+            string Body, string Status, int ObjectKey, Int64 ResourceKey, string ModuleKeyName, string Title, int BidRequestKey, int BidVendorKey
+
+            )
         {
-            long ResourceKey = Convert.ToInt64(Session["resourceid"]);
+            long ResourceKey1 = Convert.ToInt64(Session["resourceid"]);
             string VendorName = Session["username"].ToString();
             IABNotificationService notificationService = new ABNotificationService();
 
-            string bidNotificationModel = notificationService.RequestSendOrNot(ResourceKey, BidName);
+            string bidNotificationModel = notificationService.RequestSendOrNot(ResourceKey1, BidName);
             bool bidStatusModel = false;
             if (bidNotificationModel == "True")
             {
                 bidStatusModel = _venderbidrequestservice.DateExtensionRequest(BidName, ManagerName, ManagerCompanyName, ManagerEmail, VendorName);
             }
+            if (bidStatusModel == true)
+            {
+                int ByResourceKey = Convert.ToInt32(Session["resourceid"]);
+                BidRequestModel staffDirectory = new BidRequestModel();
+                staffDirectory = _bidRequestservice.GetDataBidRequestViewEdit(BidRequestKey);
+                BidRequestModel bid1 = new BidRequestModel();
+                Int32 Comapanykey = Convert.ToInt32(Session["CompanyKey"]);
+                bid1 = _bidRequestservice.getbiddate(staffDirectory.CompanyKey);
+                List<AStaffDirectoryModel> AstaffDirectoryList = null;
+                AStaffDirectoryModel AstaffDirectory = new AStaffDirectoryModel();
+                AstaffDirectoryList = _staffDirectoryservice.GetDataViewEdit(ByResourceKey);
+                Body = Body + " " + AstaffDirectoryList[0].FirstName + AstaffDirectoryList[0].LastName;
+                int portalKey = Convert.ToInt32(Session["portalkey"]);
+                int modulekey = 106;
+                if (ModuleKeyName == "BidRequest")
+                    modulekey = 100;
+
+                IABNotificationService notificationService1 = new ABNotificationService();
+
+                if (portalKey == 3)
+                {
+                    IBidVendorService bid = new BidVendorService();
+                    var vendor = bid.Get(Convert.ToInt32(ObjectKey));
+                    notificationService1.InsertNotification("BidReqDate", modulekey, vendor.BidRequestKey, ByResourceKey, Body, BidVendorKey);
+                }
+                else if (portalKey == 2)
+                {
+                    notificationService1.InsertNotification("BidReqDate", modulekey, ObjectKey, ByResourceKey, Body, BidVendorKey);
+                }
+
+
+            }
+
+
 
             return Json(bidStatusModel, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult SendInsertMessageNoti(string Body, string Status, Int64 ObjectKey, Int64 ResourceKey, string ModuleKeyName, string Title)
+        public JsonResult SendInsertMessageNoti(string Body, string Status, int ObjectKey, Int64 ResourceKey, string ModuleKeyName, string Title, DateTime dateadded, int BidRequestKey,int BidVendorKey)
         {
             //var bidRequestModel = this._venderbidrequestservice.SendInsertMessage(Body, Status, ObjectKey, ResourceKey, ModuleKeyName, Title);
-            long ByResourceKey = Convert.ToInt64(Session["resourceid"]);
+            int ByResourceKey = Convert.ToInt32(Session["resourceid"]);
+            BidRequestModel staffDirectory = new BidRequestModel();
+            staffDirectory = _bidRequestservice.GetDataBidRequestViewEdit(BidRequestKey);
+            BidRequestModel bid1 = new BidRequestModel();
+            Int32 Comapanykey = Convert.ToInt32(Session["CompanyKey"]);
+            bid1 = _bidRequestservice.getbiddate(staffDirectory.CompanyKey);
+            List<AStaffDirectoryModel> AstaffDirectoryList = null;
+            AStaffDirectoryModel AstaffDirectory = new AStaffDirectoryModel();
+            AstaffDirectoryList = _staffDirectoryservice.GetDataViewEdit(ByResourceKey);
+            Body = Body +" " + AstaffDirectoryList[0].FirstName + AstaffDirectoryList[0].LastName;
             int portalKey = Convert.ToInt32(Session["portalkey"]);
             int modulekey = 106;
             if (ModuleKeyName == "BidRequest")
@@ -458,11 +517,11 @@ namespace AssociationBids.Portal.Controllers
             {
                 IBidVendorService bid = new BidVendorService();
                 var vendor = bid.Get(Convert.ToInt32(ObjectKey));
-                notificationService.InsertNotification("BidReqDate", modulekey, vendor.BidRequestKey, ByResourceKey, Body);
+                notificationService.InsertNotification("BidReqDate", modulekey, vendor.BidRequestKey, ByResourceKey, Body, BidVendorKey);
             }
             else if (portalKey == 2)
             {
-                notificationService.InsertNotification("BidReqDate", modulekey, ObjectKey, ByResourceKey, Body);
+                notificationService.InsertNotification("BidReqDate", modulekey, ObjectKey, ByResourceKey, Body, BidVendorKey);
             }
             
             return Json(true, JsonRequestBehavior.AllowGet);

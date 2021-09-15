@@ -33,7 +33,10 @@ namespace AssociationBids.Portal.Service.Base.Code
         {
             return __notificationService.InsertNotification(NotificationType, ModuleKey, ObjectKey, ByResourceKey, Text,ForResourceKey);
         }
-
+        public bool InsertNotificationdashborad(string NotificationType, int ModuleKey, long ObjectKey, long ByResourceKey, string Text, long ForResourceKey = 0)
+        {
+            return __notificationService.InsertNotificationdashborad(NotificationType, ModuleKey, ObjectKey, ByResourceKey, Text, ForResourceKey);
+        }
         public List<ABNotificationModel> GetABNotificationsFive(long ResourceKey)
         {
             return __notificationService.GetABNotificationsFive(ResourceKey);
@@ -71,10 +74,13 @@ namespace AssociationBids.Portal.Service.Base.Code
         {
             return __notificationService.UpdateStatusByObjectKey(ObjectKey, Status, NotiType);
         }
-
-        public string GetFiveNotificationsForManagerFiveNew(long ResourceKey)
+        public bool UpdateStatsVendordash(long NotificationId, string Status, int Objectkey)
         {
-            return __notificationService.GetFiveNotificationsForManagerFiveNew(ResourceKey);
+            return __notificationService.UpdateStatsVendordash(NotificationId, Status, Objectkey);
+        }
+        public string GetFiveNotificationsForManagerFiveNew(long ResourceKey, int BIDSUBMITDAYS)
+        {
+            return __notificationService.GetFiveNotificationsForManagerFiveNew(ResourceKey, BIDSUBMITDAYS);
         }
         public string RequestSendOrNot(long ResourceKey, string BidName)
         {

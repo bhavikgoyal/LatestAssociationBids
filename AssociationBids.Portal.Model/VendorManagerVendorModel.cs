@@ -15,11 +15,15 @@ namespace AssociationBids.Portal.Model
         public int PropertyKey { get; set; }
         public int VendorKey { get; set; }
         public int InsuranceKey { get; set; }
+        public string TaxID { get; set; }
         public string ServiceTitle1 { get; set; }
         public string Password { get; set; }
         public string PropertyTitle1 { get; set; }
         public string CompanyName { get; set; }
         public string LegalName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
         public string Work { get; set; }
         public string Work2 { get; set; }
         public string Fax { get; set; }
@@ -64,6 +68,9 @@ namespace AssociationBids.Portal.Model
         public string ResetExpirationDate { get; set; }
         public int Radius { get; set; }
         //public string FileSize { get; set; }
+
+        public decimal Latitude { get; set; }
+        public decimal Longitude { get; set; }
 
         public int priority { get; set; }
         public long NotificationId { get; set; }

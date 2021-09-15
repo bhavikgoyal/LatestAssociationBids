@@ -236,7 +236,7 @@ namespace AssociationBids.Portal.Controllers
             }
         }
 
-        public ActionResult BidRequestEdit(int BidRequestKey, int NotificationKey, int ResponseBy)
+        public ActionResult BidRequestEdit(int BidRequestKey, int NotificationKey, int ResponseBy,int BidVendorKey)
         {
             long ResourceKey = Convert.ToInt64(Session["resourceid"]);
             //int Portalkey = Convert.ToInt32(Session["Portalkey"]);
@@ -277,11 +277,17 @@ namespace AssociationBids.Portal.Controllers
             ViewBag.lstService = lstServicelist;
             BidRequestModel staffDirectory = new BidRequestModel();
             staffDirectory = _bidRequestservice.GetDataBidRequestViewEdit(BidRequestKey);
+
+       
+
             //lstVendor = _bidRequestservice.SearchVendorByBidRequest(BidRequestKey);
             staffDirectory.ResourceKey = ResponseBy;
-
+            staffDirectory.Bkey = BidVendorKey;
             __notification.UpdateStatus(NotificationKey, "Read");
 
+
+        
+            staffDirectory.BidVendorKey = ResponseBy;
             return View(staffDirectory);
 
         }
@@ -311,9 +317,11 @@ namespace AssociationBids.Portal.Controllers
                 staffDirectory = _bidRequestservice.GetDataBidRequestViewEdit(collection.BidRequestKey);
                 staffDirectory.BidRequestKey = Convert.ToInt32(collection.BidRequestKey);
                 staffDirectory.BidDueDate = Convert.ToDateTime(collection.BidDueDates);
-
+                staffDirectory.ResponseDueDate = Convert.ToDateTime(collection.ResponseDueDates);
                 bool value = false;
-                value = _bidRequestservice.Update(staffDirectory);
+                value = true;
+
+
 
                 if (collection.ModuleKey == 106)
                 {
@@ -321,7 +329,7 @@ namespace AssociationBids.Portal.Controllers
                     {
                         TempData["SuccessMessage"] = "Record has been updated successfully.";
 
-                        return RedirectToAction("Dashboard", "PMDashboard", new { collection.BidRequestKey, collection.NotificationId, collection.ResourceKey });
+                        return RedirectToAction("PMBidRequestView", "PMBidRequests", new { collection.BidRequestKey });
                     }
                     else
                     {
@@ -336,10 +344,12 @@ namespace AssociationBids.Portal.Controllers
                 {
                     VendorModel bidVendorModel = new VendorModel();
                     bidVendorModel = _bidRequestservice.BindVendorDetail(collection.BidRequestKey, collection.ResourceKey, "Yes");
-
+                    Service.Base.Interface.IABNotificationService notificationService = new Service.Base.Code.ABNotificationService();
+                    int ResourceKey = Convert.ToInt32(Session["resourceid"]);
+                    notificationService.InsertNotificationdashborad("BidReqDate", 100, collection.BidRequestKey, collection.ResourceKey, "Bid date extension request has been accepted for bid " + staffDirectory.Title, ResourceKey);
                     string Message = "Record has been updated successfully.";
 
-                    return RedirectToAction("Dashboard", "PMDashboard", new { Message });
+                    return RedirectToAction("PMBidRequestView", "PMBidRequests", new { collection.BidRequestKey });
                 }
                 else
                 {

@@ -11,6 +11,7 @@ using AssociationBids.GlobalUtilities;
 using AssociationBids.Portal.Common;
 using AssociationBids.Portal.Model;
 using AssociationBids.Portal.Repository.Base.Code;
+using AssociationBids.Portal.Repository.Base.Interface;
 using DB_con;
 
 namespace AssociationBids.Portal.Repository.Base
@@ -493,7 +494,7 @@ namespace AssociationBids.Portal.Repository.Base
                     DataColumn col = new DataColumn();
                     col.ColumnName = "isExpired";
                     dt.Columns.Add(col);
-                    var resDate = dt.Rows[0]["VendorBidDueDate"];
+                    var resDate = dt.Rows[0]["VendorResponseDueDate"];
                     if (Convert.ToDateTime(resDate) < Convert.ToDateTime(DateTime.Today.ToString("MM/dd/yyyy")))
                     {
                         dt.Rows[0]["isExpired"] = true;
@@ -597,7 +598,9 @@ namespace AssociationBids.Portal.Repository.Base
                     DataColumn col = new DataColumn();
                     col.ColumnName = "isExpired";
                     dt.Columns.Add(col);
-                    var resDate = dt.Rows[0]["VendorBidDueDate"];
+                    //var resDate = dt.Rows[0]["VendorResponseDueDate"];
+                    var resDate = dt.Rows[0]["VendorRespondDueDate"];
+                    
                     if (Convert.ToDateTime(resDate) < Convert.ToDateTime(DateTime.Today.ToString("MM/dd/yyyy")))
                     {
                         dt.Rows[0]["isExpired"] = true;
@@ -1310,7 +1313,7 @@ namespace AssociationBids.Portal.Repository.Base
             item.DefaultResponseDueDates = dataReader.GetValueText("DefaultRespondByDate");
             item.Descrip = dataReader.GetValueText("Descrip");
             item.BidAmount = dataReader.GetValueDecimal("BidAmount");
-            item.MinimumInsAmount = dataReader.GetValueDecimal("vendorInsAmount");
+            
             //item.BidAmounts = Convert.ToString(string.Format("{0:0.00}", item.BidAmount));
             item.BidAmounts = Common.Utility.FormatNumberHelper(item.BidAmount, true);
             item.BidReqStatus = dataReader.GetValueText("BidVendorStatus");
@@ -2336,7 +2339,7 @@ namespace AssociationBids.Portal.Repository.Base
                 item.LastWorkDate = "";
             }
 
-            item.MinimumInsAmount = dataReader.GetValueDecimal("vendorInsAmount");
+          
             item.VendorKey = dataReader.GetValueInt("CompanyKey");
         }
 
@@ -2769,6 +2772,7 @@ namespace AssociationBids.Portal.Repository.Base
             item.BidDueDates = dataReader.GetValueText("BidDueDates");
             item.BidReqStatus = dataReader.GetValueText("bidstatus");
             item.WCount = dataReader.GetValueInt("WCount");
+            item.CompanyKey = dataReader.GetValueInt("Ckey");
             try
             {
                 item.ModuleKey = dataReader.GetValueInt("ModuleKey");
@@ -3084,6 +3088,7 @@ namespace AssociationBids.Portal.Repository.Base
             bool status = false;
             try
             {
+                DateTime ResponseBidDuedate = Convert.ToDateTime(ResponseDueDate).AddDays(15);
                 string storedProcedure = "site_PMBidRequest_UpdateResponseDueDate";
                 using (Database db = new Database())
                 {
@@ -3092,6 +3097,8 @@ namespace AssociationBids.Portal.Repository.Base
                         commandWrapper.AddInputParameter("@BidVendorKey", SqlDbType.Int, BidVendorKey);
                         commandWrapper.AddInputParameter("@BidRequestKey", SqlDbType.Int, BidRequestKey);
                         commandWrapper.AddInputParameter("@RespondDueDate", SqlDbType.DateTime, Convert.ToDateTime(ResponseDueDate));
+                        commandWrapper.AddInputParameter("@ResponseBidDuedate", SqlDbType.DateTime, Convert.ToDateTime(ResponseBidDuedate));
+                        
                         commandWrapper.AddOutputParameter("@errorCode", SqlDbType.Int);
                         db.ExecuteNonQuery(commandWrapper);
                         if (commandWrapper.GetValueInt("@errorCode") == 0)
@@ -3391,6 +3398,12 @@ namespace AssociationBids.Portal.Repository.Base
             }
             return items;
         }
+
+
+   
+
+
+
 
         public void DateExtensionnMailSend(string BidName, string VendorName, string VendorEmail, string Status)
         {

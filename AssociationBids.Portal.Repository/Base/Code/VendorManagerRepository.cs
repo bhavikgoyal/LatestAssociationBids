@@ -1228,7 +1228,7 @@ namespace AssociationBids.Portal.Repository.Base.Code
                         commandWrapper.AddInputParameter("@Zip", SqlDbType.VarChar, String.IsNullOrEmpty(item.Zip) ? 0 : item.Zip.Length, String.IsNullOrEmpty(item.Zip) ? SqlString.Null : item.Zip);
                         commandWrapper.AddInputParameter("@FirstName", SqlDbType.VarChar, String.IsNullOrEmpty(item.ContactPerson.Split(' ')[0]) ? 0 : item.ContactPerson.Split(' ')[0].Length, String.IsNullOrEmpty(item.ContactPerson.Split(' ')[0]) ? SqlString.Null : item.ContactPerson.Split(' ')[0]);
                         commandWrapper.AddInputParameter("@LastName", SqlDbType.VarChar, String.IsNullOrEmpty(item.ContactPerson.Split(' ')[1]) ? 0 : item.ContactPerson.Split(' ')[1].Length, String.IsNullOrEmpty(item.ContactPerson.Split(' ')[1]) ? SqlString.Null : item.ContactPerson.Split(' ')[1]);
-                        commandWrapper.AddInputParameter("@Work2", SqlDbType.VarChar, String.IsNullOrEmpty(item.Work2) ? 0 : item.Work2.Length, String.IsNullOrEmpty(item.Work2) ? SqlString.Null : item.Work2);
+                        commandWrapper.AddInputParameter("@Work", SqlDbType.VarChar, String.IsNullOrEmpty(item.Work) ? 0 : item.Work.Length, String.IsNullOrEmpty(item.Work) ? SqlString.Null : item.Work);
                         commandWrapper.AddInputParameter("@Email", SqlDbType.VarChar, String.IsNullOrEmpty(item.Email) ? 0 : item.Email.Length, String.IsNullOrEmpty(item.Email) ? SqlString.Null : item.Email);
                         commandWrapper.AddInputParameter("@Fax", SqlDbType.VarChar, String.IsNullOrEmpty(item.Fax) ? 0 : item.Fax.Length, String.IsNullOrEmpty(item.Fax) ? SqlString.Null : item.Fax);
                         commandWrapper.AddInputParameter("@Website", SqlDbType.VarChar, String.IsNullOrEmpty(item.Website) ? 0 : item.Website.Length, String.IsNullOrEmpty(item.Website) ? SqlString.Null : item.Website);
@@ -1261,6 +1261,65 @@ namespace AssociationBids.Portal.Repository.Base.Code
 
             return status;
         }
+
+
+
+        public Int64 RegVendorManagerInviteVendor(VendorManagerVendorModel item, int ResourceKey)
+        {
+            int status = 0;
+            item.Password = System.Configuration.ConfigurationManager.AppSettings["Password"];
+            try
+            {
+                
+                string storedProcedure = "site_VendorManager_InviteVendor_New";
+                using (Database db = new Database(ConnectionString))
+                {
+                    using (DBCommandWrapper commandWrapper = db.GetStoredProcCommandWrapper(storedProcedure))
+                    {
+
+
+                        // add the stored procedure input parameters
+                        commandWrapper.AddInputParameter("@Resource", SqlDbType.Int, ResourceKey);
+                        commandWrapper.AddInputParameter("@CompanyName ", SqlDbType.VarChar, String.IsNullOrEmpty(item.LegalName) ? 0 : item.LegalName.Length, String.IsNullOrEmpty(item.LegalName) ? SqlString.Null : item.LegalName);
+                        commandWrapper.AddInputParameter("@Address", SqlDbType.VarChar, String.IsNullOrEmpty(item.Address) ? 0 : item.Address.Length, String.IsNullOrEmpty(item.Address) ? SqlString.Null : item.Address);
+                        commandWrapper.AddInputParameter("@Address2", SqlDbType.VarChar, String.IsNullOrEmpty(item.Address2) ? 0 : item.Address2.Length, String.IsNullOrEmpty(item.Address2) ? SqlString.Null : item.Address2);
+                        commandWrapper.AddInputParameter("@City", SqlDbType.VarChar, String.IsNullOrEmpty(item.City) ? 0 : item.City.Length, String.IsNullOrEmpty(item.City) ? SqlString.Null : item.City);
+                        commandWrapper.AddInputParameter("@StateKey", SqlDbType.VarChar, String.IsNullOrEmpty(item.State) ? 0 : item.State.Length, String.IsNullOrEmpty(item.State) ? SqlString.Null : item.State);
+                        commandWrapper.AddInputParameter("@Zip", SqlDbType.VarChar, String.IsNullOrEmpty(item.Zip) ? 0 : item.Zip.Length, String.IsNullOrEmpty(item.Zip) ? SqlString.Null : item.Zip);
+                        commandWrapper.AddInputParameter("@FirstName", SqlDbType.VarChar, String.IsNullOrEmpty(item.FirstName) ? 0 : item.FirstName.Length, String.IsNullOrEmpty(item.FirstName) ? SqlString.Null : item.FirstName);
+                        commandWrapper.AddInputParameter("@LastName", SqlDbType.VarChar, String.IsNullOrEmpty(item.LastName) ? 0 : item.LastName.Length, String.IsNullOrEmpty(item.LastName) ? SqlString.Null : item.LastName);
+
+                        commandWrapper.AddInputParameter("@Work2", SqlDbType.VarChar, String.IsNullOrEmpty(item.Work2) ? 0 : item.Work2.Length, String.IsNullOrEmpty(item.Work2) ? SqlString.Null : item.Work2);
+                        commandWrapper.AddInputParameter("@Email", SqlDbType.VarChar, String.IsNullOrEmpty(item.Email) ? 0 : item.Email.Length, String.IsNullOrEmpty(item.Email) ? SqlString.Null : item.Email);
+                        commandWrapper.AddInputParameter("@Fax", SqlDbType.VarChar, String.IsNullOrEmpty(item.Fax) ? 0 : item.Fax.Length, String.IsNullOrEmpty(item.Fax) ? SqlString.Null : item.Fax);
+                        commandWrapper.AddInputParameter("@Website", SqlDbType.VarChar, String.IsNullOrEmpty(item.Website) ? 0 : item.Website.Length, String.IsNullOrEmpty(item.Website) ? SqlString.Null : item.Website);
+
+                        commandWrapper.AddInputParameter("@Password", SqlDbType.VarChar, item.Password);
+                        commandWrapper.AddInputParameter("@Title ", SqlDbType.VarChar, String.IsNullOrEmpty(item.Title) ? 0 : item.Title.Length, String.IsNullOrEmpty(item.Title) ? SqlString.Null : item.Title);
+                        if (item.CompanyKey != 0)
+                        {
+                            commandWrapper.AddInputParameter("@CompanyKey", SqlDbType.Int, item.CompanyKey);
+                        }
+                        commandWrapper.AddInputParameter("@Description", SqlDbType.VarChar, String.IsNullOrEmpty(item.Description) ? 0 : item.Description.Length, String.IsNullOrEmpty(item.Description) ? SqlString.Null : item.Description);
+
+                        commandWrapper.AddOutputParameter("@companyvalue", SqlDbType.Int);
+                        db.ExecuteNonQuery(commandWrapper);
+                        status = commandWrapper.GetValueInt("@companyvalue");
+                        
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // error occured...
+                //throw;
+            }
+
+            return status;
+        }
+
+
 
         public Int64 VendorManager_Update_InviteVendor(VendorManagerVendorModel item)
         {
@@ -1300,7 +1359,7 @@ namespace AssociationBids.Portal.Repository.Base.Code
                         commandWrapper.AddInputParameter("@Zip", SqlDbType.VarChar, String.IsNullOrEmpty(item.Zip) ? 0 : item.Zip.Length, String.IsNullOrEmpty(item.Zip) ? SqlString.Null : item.Zip);
                         commandWrapper.AddInputParameter("@FirstName", SqlDbType.VarChar, String.IsNullOrEmpty(item.ContactPerson.Split(' ')[0]) ? 0 : item.ContactPerson.Split(' ')[0].Length, String.IsNullOrEmpty(item.ContactPerson.Split(' ')[0]) ? SqlString.Null : item.ContactPerson.Split(' ')[0]);
                         commandWrapper.AddInputParameter("@LastName", SqlDbType.VarChar, String.IsNullOrEmpty(item.ContactPerson.Split(' ')[1]) ? 0 : item.ContactPerson.Split(' ')[1].Length, String.IsNullOrEmpty(item.ContactPerson.Split(' ')[1]) ? SqlString.Null : item.ContactPerson.Split(' ')[1]);
-                        commandWrapper.AddInputParameter("@Cellphone", SqlDbType.VarChar, String.IsNullOrEmpty(item.Work2) ? 0 : item.Work2.Length, String.IsNullOrEmpty(item.Work2) ? SqlString.Null : item.Work2);
+                        commandWrapper.AddInputParameter("@Cellphone", SqlDbType.VarChar, String.IsNullOrEmpty(item.Work) ? 0 : item.Work.Length, String.IsNullOrEmpty(item.Work) ? SqlString.Null : item.Work);
                         commandWrapper.AddInputParameter("@Email", SqlDbType.VarChar, String.IsNullOrEmpty(item.Email) ? 0 : item.Email.Length, String.IsNullOrEmpty(item.Email) ? SqlString.Null : item.Email);
 
                         status = db.ExecuteNonQuery(commandWrapper);
@@ -1664,8 +1723,7 @@ namespace AssociationBids.Portal.Repository.Base.Code
                 email.To = fromemail;
                 email.Subject = Subject;
                 email.IsHtml = true;
-              
-
+            
                 email.Body += body;
 
                 //using (SmtpClient client = new SmtpClient())
@@ -1763,6 +1821,7 @@ namespace AssociationBids.Portal.Repository.Base.Code
 
                 msg.From = new MailAddress(System.Configuration.ConfigurationManager.AppSettings["senderemail"]);
                 msg.To.Add(fromemail);
+               
                 msg.Subject = Subject;
                 msg.IsBodyHtml = true;
                 msg.Body += body;
@@ -1808,8 +1867,8 @@ namespace AssociationBids.Portal.Repository.Base.Code
                 {
                     using (DBCommandWrapper commandWrapper = db.GetStoredProcCommandWrapper(storedProcedure))
                     {
-
-                        commandWrapper.AddInputParameter("@LookUpTitle", SqlDbType.NText, "Vendor invitation");
+                        commandWrapper.AddInputParameter("@LookUpTitle", SqlDbType.NText, "Partial Registration");
+                        //commandWrapper.AddInputParameter("@LookUpTitle", SqlDbType.NText, "Vendor invitation");
 
                         using (DBDataReader dataReader = db.ExecuteReader(commandWrapper))
                         {
@@ -2024,7 +2083,7 @@ namespace AssociationBids.Portal.Repository.Base.Code
             item.Work = dataReader.GetValueText("Work");
             item.Title = dataReader.GetValueText("Title");
             item.Favorite = dataReader.GetValueText("favorite");
-            item.ContactPerson = dataReader.GetValueText("vendorname");
+            item.ContactPerson = dataReader.GetValueText("VendorName");
             item.TotalRecords = dataReader.GetValueInt("TotalRecord");
             try
             {
@@ -2531,6 +2590,87 @@ namespace AssociationBids.Portal.Repository.Base.Code
             catch (Exception ex)
             {
                 Common.Error.WriteErrorsToFile(ex.Message);
+            }
+
+            return status;
+        }
+
+        public Int64 RegistrationManagerInviteVendor(VendorManagerVendorModel item, int ResourceKey)
+        {
+            int status = 0;
+            item.Password = System.Configuration.ConfigurationManager.AppSettings["Password"];
+            try
+            {
+                try
+                {
+                    if (item.ContactPerson != null)
+                    {
+                        var a = item.ContactPerson.Split(' ')[1];
+                    }
+                    else
+                    {
+                        item.ContactPerson += " ";
+                    }
+                }
+                catch
+                {
+                    item.ContactPerson += " ";
+                }
+                string storedProcedure = "site_RegistrationManager_InviteVendor_New";
+                using (Database db = new Database(ConnectionString))
+                {
+                    using (DBCommandWrapper commandWrapper = db.GetStoredProcCommandWrapper(storedProcedure))
+                    {
+
+
+                        // add the stored procedure input parameters
+                        commandWrapper.AddInputParameter("@Resource", SqlDbType.Int, ResourceKey);
+                        commandWrapper.AddInputParameter("@LegalName ", SqlDbType.VarChar, String.IsNullOrEmpty(item.LegalName) ? 0 : item.LegalName.Length, String.IsNullOrEmpty(item.LegalName) ? SqlString.Null : item.LegalName);
+                        commandWrapper.AddInputParameter("@TaxID", SqlDbType.VarChar, String.IsNullOrEmpty(item.TaxID) ? 0 : item.TaxID.Length, String.IsNullOrEmpty(item.TaxID) ? SqlString.Null : item.TaxID);
+                        commandWrapper.AddInputParameter("@CompanyName ", SqlDbType.VarChar, String.IsNullOrEmpty(item.CompanyName) ? 0 : item.CompanyName.Length, String.IsNullOrEmpty(item.CompanyName) ? SqlString.Null : item.CompanyName);
+                        commandWrapper.AddInputParameter("@Address", SqlDbType.VarChar, String.IsNullOrEmpty(item.Address) ? 0 : item.Address.Length, String.IsNullOrEmpty(item.Address) ? SqlString.Null : item.Address);
+                        commandWrapper.AddInputParameter("@Address2", SqlDbType.VarChar, String.IsNullOrEmpty(item.Address2) ? 0 : item.Address2.Length, String.IsNullOrEmpty(item.Address2) ? SqlString.Null : item.Address2);
+                        commandWrapper.AddInputParameter("@City", SqlDbType.VarChar, String.IsNullOrEmpty(item.City) ? 0 : item.City.Length, String.IsNullOrEmpty(item.City) ? SqlString.Null : item.City);
+                        commandWrapper.AddInputParameter("@StateKey", SqlDbType.VarChar, String.IsNullOrEmpty(item.State) ? 0 : item.State.Length, String.IsNullOrEmpty(item.State) ? SqlString.Null : item.State);
+                        commandWrapper.AddInputParameter("@Zip", SqlDbType.VarChar, String.IsNullOrEmpty(item.Zip) ? 0 : item.Zip.Length, String.IsNullOrEmpty(item.Zip) ? SqlString.Null : item.Zip);
+                        commandWrapper.AddInputParameter("@FirstName", SqlDbType.VarChar, String.IsNullOrEmpty(item.FirstName) ? 0 : item.FirstName.Length, String.IsNullOrEmpty(item.FirstName) ? SqlString.Null : item.FirstName);
+                        commandWrapper.AddInputParameter("@LastName", SqlDbType.VarChar, String.IsNullOrEmpty(item.LastName) ? 0 : item.LastName.Length, String.IsNullOrEmpty(item.LastName) ? SqlString.Null : item.LastName);
+                        commandWrapper.AddInputParameter("@Work", SqlDbType.VarChar, String.IsNullOrEmpty(item.Work) ? 0 : item.Work.Length, String.IsNullOrEmpty(item.Work) ? SqlString.Null : item.Work);
+                        commandWrapper.AddInputParameter("@Work2", SqlDbType.VarChar, String.IsNullOrEmpty(item.Work2) ? 0 : item.Work2.Length, String.IsNullOrEmpty(item.Work2) ? SqlString.Null : item.Work2);
+                        commandWrapper.AddInputParameter("@Email", SqlDbType.VarChar, String.IsNullOrEmpty(item.Email) ? 0 : item.Email.Length, String.IsNullOrEmpty(item.Email) ? SqlString.Null : item.Email);
+                        commandWrapper.AddInputParameter("@Fax", SqlDbType.VarChar, String.IsNullOrEmpty(item.Fax) ? 0 : item.Fax.Length, String.IsNullOrEmpty(item.Fax) ? SqlString.Null : item.Fax);
+                        commandWrapper.AddInputParameter("@Website", SqlDbType.VarChar, String.IsNullOrEmpty(item.Website) ? 0 : item.Website.Length, String.IsNullOrEmpty(item.Website) ? SqlString.Null : item.Website);
+                        commandWrapper.AddInputParameter("@ServiceTitle1", SqlDbType.VarChar, String.IsNullOrEmpty(item.ServiceTitle1) ? 0 : item.ServiceTitle1.Length, String.IsNullOrEmpty(item.ServiceTitle1) ? SqlString.Null : item.ServiceTitle1);
+
+                        commandWrapper.AddInputParameter("@Password", SqlDbType.VarChar, item.Password);
+                        commandWrapper.AddInputParameter("@Title ", SqlDbType.VarChar, String.IsNullOrEmpty(item.Title) ? 0 : item.Title.Length, String.IsNullOrEmpty(item.Title) ? SqlString.Null : item.Title);
+
+                        commandWrapper.AddInputParameter("@latitude", SqlDbType.Decimal, item.Latitude);
+                        commandWrapper.AddInputParameter("@longitude", SqlDbType.Decimal, item.Longitude);
+                        commandWrapper.AddInputParameter("@RadiusKey", SqlDbType.VarChar, String.IsNullOrEmpty(item.Radius.ToString()) ? 0 : item.Radius.ToString().Length, String.IsNullOrEmpty(item.Radius.ToString()) ? SqlString.Null : item.Radius.ToString());
+
+                        if (item.CompanyKey != 0)
+                        {
+                            commandWrapper.AddInputParameter("@CompanyKey", SqlDbType.Int, item.CompanyKey);
+                        }
+                        commandWrapper.AddInputParameter("@Description", SqlDbType.VarChar, String.IsNullOrEmpty(item.Description) ? 0 : item.Description.Length, String.IsNullOrEmpty(item.Description) ? SqlString.Null : item.Description);
+
+                        commandWrapper.AddOutputParameter("@companyvalue", SqlDbType.Int);
+                        db.ExecuteNonQuery(commandWrapper);
+                        status = commandWrapper.GetValueInt("@companyvalue");
+                        if (status != 0)
+                        {
+
+                            VendorInvetationmailsend(status, item.Email, item.ContactPerson, item.LegalName, "Invite");
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // error occured...
+                //throw;
             }
 
             return status;

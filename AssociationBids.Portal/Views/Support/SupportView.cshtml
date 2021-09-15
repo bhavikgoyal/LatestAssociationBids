@@ -466,8 +466,13 @@
                     $(".companyName", table).html(response[i].CompanyName);
                     $(".StartDate", table).html(response[i].StartDates);
                     $(".sortDescription", table).html(response[i].Description);
-                    
-                    $(".WinFee", table).html(response[i].WinFees);
+
+
+                    if (response[i].Type == "Work Orders")
+                    {
+                        $(".WinFee", table).html(response[i].WinFees);
+                    }
+                   
                     
                     
                     $(".bidRequestStatus", table).html(response[i].BidReqStatus);
@@ -680,7 +685,9 @@
                     $(".sortDescription", table).html(response[i].Description);
                     $(".bidRequestStatus", table).html(response[i].BidReqStatus);
                     
+                    if (response[i].Type == "Work Orders") {
                         $(".WinFee", table).html(response[i].WinFees);
+                    }
                     
                     if (response[i].BidReqStatus == "Accepted" || response[i].BidReqStatus == "Submitted" || response[i].BidReqStatus == "Completed") {
                         //$("#blue", table).css("display", "none");
@@ -1045,7 +1052,9 @@
                     $(".sortDescription", table).html(response[i].Description);
                     $(".bidRequestStatus", table).html(response[i].BidReqStatus);
                     
+                    if (response[i].Type == "Work Orders") {
                         $(".WinFee", table).html(response[i].WinFees);
+                    }
                     
                     if (response[i].BidReqStatus == "Accepted" || response[i].BidReqStatus == "Submitted" || response[i].BidReqStatus == "Completed") {
                         //$("#blue", table).css("display", "none");
@@ -1203,7 +1212,9 @@
                     $(".sortDescription", table).html(response[i].Description);
                     $(".bidRequestStatus", table).html(response[i].BidReqStatus);
                     
+                    if (response[i].Type == "Work Orders") {
                         $(".WinFee", table).html(response[i].WinFees);
+                    }
                     
                     if (response[i].BidReqStatus == "Accepted" || response[i].BidReqStatus == "Submitted" || response[i].BidReqStatus == "Completed") {
                         //$("#blue", table).css("display", "none");

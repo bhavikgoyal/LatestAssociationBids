@@ -11,6 +11,7 @@ namespace AssociationBids.Portal.Repository.Base.Interface
     {
 
         bool InsertNotification(string NotificationType, int ModuleKey, long ObjectKey, long ByResourceKey, string Text,long ForResourceKey = 0);
+        bool InsertNotificationdashborad(string NotificationType, int ModuleKey, long ObjectKey, long ByResourceKey, string Text, long ForResourceKey = 0);
 
         List<ABNotificationModel> GetABNotificationsFive(long ResourceKey);
 
@@ -27,10 +28,10 @@ namespace AssociationBids.Portal.Repository.Base.Interface
         ABNotificationModel GetABNotificationByNotificationId(long ResourceKey, long NotificationId);
 
         bool UpdateStatus(long NotificationId, string Status);
-
+        bool UpdateStatsVendordash(long NotificationId, string Status, int Objectkey);
         bool UpdateStatusByObjectKey(long ObjectKey, string Status, string NotiType);
 
-        string GetFiveNotificationsForManagerFiveNew(long ResourceKey);
+        string GetFiveNotificationsForManagerFiveNew(long ResourceKey, int BIDSUBMITDAYS);
         string RequestSendOrNot(long ResourceKey, string BidName);
 
     }

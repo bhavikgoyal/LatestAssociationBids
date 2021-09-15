@@ -646,15 +646,21 @@
                         var p = $(".notibodyNew p:eq(0)").clone(true);
                         var p1 = $(".notibodyNew p:eq(1)").clone(true);
 
-                        var link = "/PMDashboard/BidRequestEdit?BidRequestKey=" + response[i].ObjectKey + "&NotificationKey=" + response[i].Id + "&ResponseBy=" + response[i].ByResource;
+                        var link = "/PMDashboard/BidRequestEdit?BidRequestKey=" + response[i].ObjectKey + "&NotificationKey=" + response[i].Id + "&ResponseBy=" + response[i].ByResource + "&BidVendorKey=" + response[i].Bkey;
 
                         $("#notilink", p).attr("href", link);
                         $("#notilink", p1).attr("href", link);
                         var bg = ""
                         var BidName = $.trim(response[i].BidName);
-                        $("#notitext", p).html(response[i].NotificationText + ' (' + BidName +')');
-                        $("#notitext", p1).html(response[i].NotificationType);
+                      
+                      
+                        $("#notitext", p).html(response[i].NotificationText + " for bid " + ' (' + BidName + ')');
 
+                        if (response[i].NotificationType == "BidReqDate") {
+                            $("#notitext", p1).html(response[i].BidRespodate);
+
+                        }
+                      
                         bg = "bg-green";
                         //if (response[i].ModuleKey == 200) {
                         //    bg = "bg-succes";

@@ -33,6 +33,7 @@ namespace AssociationBids.Portal.Model
         public DateTime LastModificationTime { get; set; }
         public int BidRequestStatus { get; set; }
         public int WCount { get; set; }
+        public int Bkey { get; set; }
         public string BidReqStatus { get; set; }
         public string Property { get; set; }
         public int NewMessageCount { get; set; }
@@ -49,7 +50,8 @@ namespace AssociationBids.Portal.Model
         public HttpPostedFileBase[] Files { get; set; }
         //
         public string VendorBidDueDate { get; set; }
-        public bool isExpired { get; set; }
+        public string VendorResponseDueDate { get; set; }
+    public bool isExpired { get; set; }
         public bool IsAssigned { get; set; }
 
         public int NoofBids { get; set; }

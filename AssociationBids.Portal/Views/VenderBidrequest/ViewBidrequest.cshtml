@@ -55,7 +55,92 @@
 
     }
 
+    function calltoDateExtend() {
+        //$(".tabs-menu1 a[href='#message']").tab('show');
+        debugger;
+        //$("#txtMessageBody").focus();
+        $("#global-loader").show();
+        $("#SuccessMsg").html('');
+        $("#SuccessMsg").hide();
+        $("#divsucces").hide();
+        $('.loader-wrapper').show();
+        var bodytext = "Bid due date extension request recieved from";
+        var bkey = $('#HdnBidReqKey').val();
+        debugger;
+        var BidName = $("#Brtitle").html();
+        var ManagerName = $("#BrContName").html();
+        var ManagerCompanyName = $("#BrContCompany").html();
+        var ManagerEmail = $("#BrContEmail").html();
+        var BidRequestKey = $('#HdnBidReqKey').val();
+
+        $.ajax({
+            url: '../VenderBidrequest/DateExtension',        
+            cache: false,
+            type: "POST",
+            dataType: "JSON",
+            data: {
+                BidName: BidName,
+                ManagerName: ManagerName,
+                ManagerCompanyName: ManagerCompanyName,
+                ManagerEmail: ManagerEmail,
+                BidRequestKey: BidRequestKey,
+                Body: bodytext, Status: 'New', ObjectKey: $("#HdnObjectKey").val(), ResourceKey: $("#HdnLoginResourceKey").val(), ModuleKeyName: $("#HdnModuleKeyNameMsg").val(), Title: $("#HdnTitle").val(), VendorEmail: $("#HdnVendorEmail").val(), BidRequestKey: bkey, BidVendorKey: $("#HdnObjectKey").val()
+
+            },
+            success: function (result) {
+                debugger;
+                if (result == true) {
+                    $("#SuccessMsg").html("Date Extension Request Sent Successfully.");
+                    $("#divsucces").show();
+                    $("#SuccessMsg").show();
+                    $("#global-loader").hide();
+                    $('.loader-wrapper').hide();
+                }
+
+                    
+                else {
+                    $("#divalert").show();
+                    $("#ErrorMsg").html('Extension Bid Due Date Request already send');
+                    $("#global-loader").hide();
+                    $('.loader-wrapper').hide();
+
+                }
+
+            }
+        });
+    };
+    function SendMessageNoti(date) {
+        debugger;
+
+        $("#global-loader").show();
+        $('.loader-wrapper').show();
+        var bodytext = "Bid due date extension request recieved from";
+        var bkey = $('#HdnBidReqKey').val();
+        if (bodytext !== '') {
+            debugger;
+            $.ajax({
+                url: '../VenderBidrequest/SendInsertMessageNoti',
+                async: true,
+                cache: false,
+                type: "POST",
+                dataType: "JSON",
+                data: {
+                    Body: bodytext, Status: 'New', ObjectKey: $("#HdnObjectKey").val(), ResourceKey: $("#HdnLoginResourceKey").val(), ModuleKeyName: $("#HdnModuleKeyNameMsg").val(), Title: $("#HdnTitle").val(), VendorEmail: $("#HdnVendorEmail").val(), dateadded: date, BidRequestKey: bkey, BidVendorKey: $("#HdnObjectKey").val()
+                },
+                success: function (result) {
+                   
+                    $("#SuccessMsg").html("Date Extension Request Sent Successfully.");
+                    $("#divsucces").show();
+                    $("#SuccessMsg").show();
+                    $("#global-loader").hide();
+                    $('.loader-wrapper').hide();
+                }
+            });
+        }
+    }
+
     function LoadSortTableFill() {
+        debugger;
         $("#global-loader").show();
         $.ajax({
             url: '@Url.Action("GetVenderBidRequestListJson", "VenderBidrequest")',
@@ -72,7 +157,7 @@
                 ModuleController: $("#ModuleControllerhdn").val(),
             },
             success: function (response) {
-                //debugger;
+                debugger;
 
                 response = JSON.parse(response);
                 //alert(response[0].BidRequestKey);
@@ -97,8 +182,8 @@
                 $("#IsAssigned").val(response[0].IsAssigned);
 
                 //$("#BrResponseDate").html((response[0].DefaultRespondByDate));
-                $("#BrResponseDate").html((response[0].VendorBidDueDate));
-                $("#BrBidDueDate").html((response[0].BidDueDate));
+                $("#BrResponseDate").html((response[0].VendorResponseDueDate));
+                $("#BrBidDueDate").html((response[0].VendorBidDueDate));
                 //Property Details
                 $("#BrCompanyName").html(response[0].CompanyName);
                 $("#BrPropertyName").html(response[0].Property);
@@ -820,6 +905,10 @@
 </div>
 <!-- End app-content-->
 <script>
+
+
+
+
     //$("#txtfile1").change(function () {
     //    readURL(this);
     //    uploaddocument();

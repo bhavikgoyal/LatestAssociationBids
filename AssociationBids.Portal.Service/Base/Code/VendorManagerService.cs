@@ -138,7 +138,14 @@ namespace AssociationBids.Portal.Service.Base.Code
         {
             return __vendorservice.VendorManagerInviteVendor(item, ResourceKey);
         }
-
+        public Int64 RegVendorManagerInviteVendor(VendorManagerVendorModel item, int ResourceKey)
+        {
+            return __vendorservice.RegVendorManagerInviteVendor(item, ResourceKey);
+        }
+        public Int64 RegistrationManagerInviteVendor(VendorManagerVendorModel item, int ResourceKey)
+        {
+            return __vendorservice.RegistrationManagerInviteVendor(item, ResourceKey);
+        }
         public List<VendorManagerVendorModel> VendorManager_GetAllManagementCompany()
         {
             return __vendorservice.VendorManager_GetAllManagementCompany();

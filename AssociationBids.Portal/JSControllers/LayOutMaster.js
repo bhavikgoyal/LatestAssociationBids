@@ -36,31 +36,6 @@
     }
 }
 
-function SendMessageNoti() {
-    debugger;
-    var bodytext = "Request Bid Due Date Extension";
-
-    if (bodytext !== '') {
-        debugger;
-        $.ajax({
-            url: '../VenderBidrequest/SendInsertMessageNoti',
-            async: false,
-            cache: false,
-            type: "POST",
-            dataType: "JSON",
-            data: {
-                Body: bodytext, Status: 'New', ObjectKey: $("#HdnObjectKey").val(), ResourceKey: $("#HdnLoginResourceKey").val(), ModuleKeyName: $("#HdnModuleKeyNameMsg").val(), Title: $("#HdnTitle").val(), VendorEmail: $("#HdnVendorEmail").val()
-            },
-            success: function (result) {
-                SuccessMsg
-                $("#SuccessMsg").html("Date Extension Request Sent Successfully.");
-                $("#divsucces").show();
-                $("#SuccessMsg").show();
-                $("#global-loader").hide();
-            }
-        });
-    }
-}
 
 function LoadMessagesList(msgstatus) {
     $("#commentspm").html('');

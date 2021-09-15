@@ -422,6 +422,21 @@ namespace AssociationBids.Portal.Controllers
 
             VendorManagerVendorModel vendor = new VendorManagerVendorModel();
 
+
+            IList<VendorManagerVendorModel> lstservice = null;
+           
+
+            var lstRadiuslist = new List<SelectListItem>()
+            {
+              new SelectListItem{ Value="0",Text="Please Select",Selected=true},
+              new SelectListItem{ Value="1",Text="10 miles"},
+              new SelectListItem{ Value="2",Text="15 miles"},
+              new SelectListItem{ Value="3",Text="20 miles"},
+              new SelectListItem{ Value="4",Text="25 miles"},
+            };
+            ViewBag.lstRadius = lstRadiuslist;
+
+
             vendor = __vendorManagerservice.GetVendorByCompanyKeyForInviteView(CompanyKey);
             resourcem = __vendorManagerservice.GetResourceForInviteVendor(CompanyKey);
             if(vendor != null)
@@ -429,6 +444,23 @@ namespace AssociationBids.Portal.Controllers
             IList<VendorManagerModel> docs = new List<VendorManagerModel>();
             docs = __vendorManagerservice.GetbindDocument(CompanyKey);
 
+            if (vendor != null)
+            {
+
+
+                ViewBag.Address = vendor.Address;
+                //if (vendor.Address2 == null)
+                //{
+                //    vendor.Address2 = "";
+                //}
+                ViewBag.Address2 = vendor.Address2;
+                ViewBag.City = vendor.City;
+                ViewBag.Zip = vendor.Zip;
+                ViewBag.State = vendor.State;
+            }
+
+            List<InsuranceModel> insList = __vendorManagerservice.GetInsuranceByCompanyKey(CompanyKey);
+            ViewBag.InsuranceList = insList;
             ViewBag.InsuranceDocs = docs;
             vm.Vendor = vendor;
             vm.Resource = resourcem;
@@ -438,15 +470,24 @@ namespace AssociationBids.Portal.Controllers
                 if (managerModel.UserModel != null)
                 {
                     vm.UserModel = managerModel.UserModel;
+                    try
+                    {
+                        vm.UserModel.Password = Common.Security.Decrypt(managerModel.UserModel.Password);
+                    }
+                    catch
+                    {
+                        vm.UserModel.Password = "1";
+                    }
                 }
             }
             else
                 vm.Resource = new ResourceModel();
             if (vm.Vendor == null)
                 vm.Vendor = new VendorManagerVendorModel();
-            
+            vm.Radius = resourcem.Radius;
             return View(vm);
-            
+
+
         }
 
         public ActionResult UnapprovedVendorView(int CompanyKey = 0)
@@ -485,6 +526,7 @@ namespace AssociationBids.Portal.Controllers
                 ViewBag.City = vendor.City;
                 ViewBag.Zip = vendor.Zip;
                 ViewBag.State = vendor.State;
+                ViewBag.Radius1 = vendor.Radius;
             }
             IList<VendorManagerModel> docs = new List<VendorManagerModel>();
             docs = __vendorManagerservice.GetbindDocument(CompanyKey);

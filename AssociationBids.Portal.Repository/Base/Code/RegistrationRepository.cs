@@ -219,7 +219,11 @@ namespace AssociationBids.Portal.Repository.Base.Code
                             }
                             mailsendAsyncNew(EmailId, companyname, companyname, LegalName, TaxID, Website, ServiceTitle1, "Vendor");
                             mailsend(companyname, LegalName, TaxID, Website, service, EmailId);
-                            InsertAgreement(ResKey, item.AgreementKey,item.BindAgreementDetails);
+                            if (item.AgreementKey != 0)
+                            {
+                                InsertAgreement(ResKey, item.AgreementKey, item.BindAgreementDetails);
+                            }
+                         
                             if (status1 != 0)
                             {
                                 ChangeVendorStatus(Convert.ToInt32(status1));
@@ -840,6 +844,10 @@ namespace AssociationBids.Portal.Repository.Base.Code
             item.Work = dataReader.GetValueText("Work");
             item.Work2 = dataReader.GetValueText("Work2");
             item.Resourcekey = dataReader.GetValueInt("Resourcekey");
+            item.ServiceTitle1 = dataReader.GetValueText("title");
+
+
+            item.Radius = dataReader.GetValueText("Radius");
 
 
 

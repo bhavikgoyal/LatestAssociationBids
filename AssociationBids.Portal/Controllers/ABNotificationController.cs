@@ -12,10 +12,10 @@ namespace AssociationBids.Portal.Controllers
     public class ABNotificationController : Controller
     {
         public IABNotificationService __notification;
-
+      
         public ABNotificationController()
         {
-
+            
         }
         public ABNotificationController(IABNotificationService notificationService)
         {
@@ -121,12 +121,15 @@ namespace AssociationBids.Portal.Controllers
             var noti = __notification.GetFiveNotificationsForVendorFiveNew(ResourceKey);
 
             return Json(noti, JsonRequestBehavior.AllowGet);
-        }
+        }   
 
         public JsonResult GetFiveNotificationsForManagerNew()
         {
             long ResourceKey = Convert.ToInt64(Session["resourceid"]);
-            var noti = __notification.GetFiveNotificationsForManagerFiveNew(ResourceKey);
+            
+               
+             
+            var noti = __notification.GetFiveNotificationsForManagerFiveNew(ResourceKey, 0);
 
             return Json(noti, JsonRequestBehavior.AllowGet);
         }

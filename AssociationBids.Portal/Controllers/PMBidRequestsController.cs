@@ -563,17 +563,17 @@ namespace AssociationBids.Portal.Controllers
 
                 lstAllVendor = _bidRequestservice.SearchAllVendor(BidRequestKey, SearchVendorName, SearchCompanyName, IsStaredVendor, LastWorkedBefore);
                 //lstAllVendor = _bidRequestservice.SearchAllVendor();
-                BidRequestModel staffDirectory = new BidRequestModel();
-                staffDirectory = _bidRequestservice.GetDataBidRequestViewEdit(BidRequestKey);
-                PropertyModel resources = null;
-                resources = __pMPropertiesService.GetBidDataForProperties(BidRequestKey);
-                foreach (var a in lstAllVendor)
-                {
-                    if (a.MinimumInsAmount < resources.MinimumInsuranceAmount)
-                    {
-                        lstAllVendor.Remove(a);
-                    }
-                }
+                //BidRequestModel staffDirectory = new BidRequestModel();
+                //staffDirectory = _bidRequestservice.GetDataBidRequestViewEdit(BidRequestKey);
+                //PropertyModel resources = null;
+                //resources = __pMPropertiesService.GetBidDataForProperties(BidRequestKey);
+                //foreach (var a in lstAllVendor)
+                //{
+                //    if (a.MinimumInsAmount < resources.MinimumInsuranceAmount)
+                //    {
+                //        lstAllVendor.Remove(a);
+                //    }
+                //}
                 return Json(lstAllVendor);
             }
             catch (Exception ex)
@@ -875,17 +875,17 @@ namespace AssociationBids.Portal.Controllers
             int BidRequestKey = Convert.ToInt32(Request.Form["BidRequestKey"].ToString());
             int modulekey = Convert.ToInt32(Request.Form["Modulekey"].ToString());
             lstVendor = _bidRequestservice.SearchVendorByBidRequest(BidRequestKey, modulekey);
-            BidRequestModel staffDirectory = new BidRequestModel();         
-            staffDirectory = _bidRequestservice.GetDataBidRequestViewEdit(BidRequestKey);
-            PropertyModel resources = null;
-            resources = __pMPropertiesService.GetBidDataForProperties(BidRequestKey);
-            foreach (var a in lstVendor)
-            {
-                if (a.MinimumInsAmount < resources.MinimumInsuranceAmount)
-                {
-                    lstVendor.Remove(a);
-                }
-            }
+            //BidRequestModel staffDirectory = new BidRequestModel();
+            //staffDirectory = _bidRequestservice.GetDataBidRequestViewEdit(BidRequestKey);
+            //PropertyModel resources = null;
+            //resources = __pMPropertiesService.GetBidDataForProperties(BidRequestKey);
+            //foreach (var a in lstVendor)
+            //{
+            //    if (a.MinimumInsAmount < resources.MinimumInsuranceAmount)
+            //    {
+            //        lstVendor.Remove(a);
+            //    }
+            //}
             return Json(lstVendor, JsonRequestBehavior.AllowGet);
         }
 
@@ -1219,17 +1219,12 @@ namespace AssociationBids.Portal.Controllers
             return Json(Status, JsonRequestBehavior.AllowGet);
 
         }
-
-
-
-
-
         public JsonResult UpdateResponseDueDate(string ResponseDueDate, int BidRequestKey, int BidVendorKey)
         {
             var status = _bidRequestservice.UpdateResponseDueDate(ResponseDueDate, BidRequestKey, BidVendorKey);
             if (status)
             {
-                return Json(true, JsonRequestBehavior.AllowGet);
+                return Json(true, JsonRequestBehavior.AllowGet);    
             }
             return Json(false, JsonRequestBehavior.AllowGet);
         }

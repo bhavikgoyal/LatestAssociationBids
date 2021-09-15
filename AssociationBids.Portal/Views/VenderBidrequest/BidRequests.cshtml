@@ -509,6 +509,7 @@
 
 
     function LoadSortTableFill(issort = false) {
+        debugger;
         var k = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
         $("#RawDatas table tbody tr:eq(0)").hide();
 
@@ -718,7 +719,7 @@
                         var ismatch = false;
                         var index = -1;
                         for (var r = 0; r < bidtype.length; r++) {
-                            if (bidtype[r] == 'BidReqStatus' || bidtype[r] == 'BidReqStatusAccept' || bidtype[r] == 'BidReqStatusReject') {
+                            if (bidtype[r] == 'BidReqStatus' || bidtype[r] == 'BidReqStatusAccept' || bidtype[r] == 'BidReqStatusReject' || bidtype[r] == 'BidReqDate') {
                                 ismatch = true;
                                 index = r;
                             }

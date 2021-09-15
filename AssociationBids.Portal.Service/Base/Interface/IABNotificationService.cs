@@ -10,6 +10,7 @@ namespace AssociationBids.Portal.Service.Base.Interface
     public interface IABNotificationService : IBaseService
     {
         bool InsertNotification(string NotificationType, int ModuleKey, long ObjectKey, long ByResourceKey, string Text,long ForResourceKey = 0);
+        bool InsertNotificationdashborad(string NotificationType, int ModuleKey, long ObjectKey, long ByResourceKey, string Text, long ForResourceKey = 0);
 
         List<ABNotificationModel> GetABNotificationsFive(long ResourceKey);
 
@@ -24,10 +25,10 @@ namespace AssociationBids.Portal.Service.Base.Interface
         List<ABNotificationModel> GetABNotificationsModule(long ResourceKey);
 
         ABNotificationModel GetABNotificationByNotificationId(long ResourceKey, long NotificationId);
-
+        bool UpdateStatsVendordash(long NotificationId, string Status, int Objectkey);
         bool UpdateStatus(long NotificationId, string Status);
         bool UpdateStatusByObjectKey(long ObjectKey, string Status, string NotiType);
-        string GetFiveNotificationsForManagerFiveNew(long ResourceKey);
+        string GetFiveNotificationsForManagerFiveNew(long ResourceKey, int BIDSUBMITDAYS);
         string RequestSendOrNot(long ResourceKey, string BidName);
     }
 }

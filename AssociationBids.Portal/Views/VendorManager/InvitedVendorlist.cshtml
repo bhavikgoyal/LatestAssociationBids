@@ -410,7 +410,7 @@
                     for (var i = 0; i < response.length; i++) {
                         var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
                         $(".name", table).html(response[i].LegalName);
-                        $(".work", table).html(response[i].ContactPerson + " - " + formatPhoneNumber(response[i].CellPhone));
+                        $(".work", table).html(response[i].ContactPerson + " - " + formatPhoneNumber(response[i].Work));
                         $(".title", table).html(response[i].Title);
                         $("#viewdata", table).attr('href', '/VendorManager/InvitedVendorView?CompanyKey=' + response[i].CompanyKey);
 
@@ -664,7 +664,7 @@
                     for (var i = 0; i < response.length; i++) {
                         var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
                         $(".name", table).html(response[i].LegalName);
-                        $(".work", table).html(response[i].ContactPerson + " - " + formatPhoneNumber(response[i].CellPhone));
+                        $(".work", table).html(response[i].ContactPerson + " - " + formatPhoneNumber(response[i].Work));
                         $(".title", table).html(response[i].Title);
                         $("#viewdata", table).attr('href', '/VendorManager/InvitedVendorView?CompanyKey=' + response[i].CompanyKey);
 
@@ -794,7 +794,7 @@
                     for (var i = 0; i < response.length; i++) {
                         var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
                         $(".name", table).html(response[i].LegalName);
-                        $(".work", table).html(response[i].ContactPerson + " - " + formatPhoneNumber(response[i].CellPhone));
+                        $(".work", table).html(response[i].ContactPerson + " - " + formatPhoneNumber(response[i].Work));
                         $(".title", table).html(response[i].Title);
                         $("#viewdata", table).attr('href', '/VendorManager/InvitedVendorView?CompanyKey=' + response[i].CompanyKey);
                         $("#RawDatas table").append(table);
@@ -928,7 +928,7 @@
             for (var i = 0; i < response.length; i++) {
                 var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
                 $(".name", table).html(response[i].LegalName);
-                $(".work", table).html(response[i].ContactPerson + " - " + formatPhoneNumber(response[i].CellPhone));
+                $(".work", table).html(response[i].ContactPerson + " - " + formatPhoneNumber(response[i].Work));
                 $(".title", table).html(response[i].Title);
                 $("#viewdata", table).attr('href', '/VendorManager/InvitedVendorView?CompanyKey=' + response[i].CompanyKey);
                 $("#RawDatas table").append(table);

@@ -53,6 +53,9 @@ namespace AssociationBids.Portal.Service.Base.Interface
 
         Int64 VendorManagerInviteVendor(VendorManagerVendorModel item, int ResourceKey);
 
+        Int64 RegistrationManagerInviteVendor(VendorManagerVendorModel item, int ResourceKey);
+        Int64 RegVendorManagerInviteVendor(VendorManagerVendorModel item, int ResourceKey);
+
         List<VendorManagerVendorModel> VendorManager_GetAllManagementCompany();
 
         Int64 VendorManager_Update_InviteVendor(VendorManagerVendorModel item);

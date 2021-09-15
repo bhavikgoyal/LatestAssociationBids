@@ -15,8 +15,10 @@ $(document).ready(function ()
     $("#btnnextagreement").attr("disabled", true);
     $("#btnAccpeted").attr("disabled", true);
     $("#btnnextPricing").attr("disabled", true);
+    $("#btnnextUSerAggr").attr("disabled", true);
     //$('#btnnextPricing').hide();
     $("#btnconfirmtop").attr("disabled", true);
+    $("#btnPricingtop").attr("disabled", true);
     //alert($("#MapCheck").val());
 });
 
@@ -27,7 +29,7 @@ function OnChangeCompany()
 {
     debugger;
 
-    var a = GetURLParameter('CompanyKey');
+    var a = $("#CompanyKey").val();
     $('#Error').hide();
     $.ajax({
 
@@ -85,7 +87,7 @@ function OnChangeEmail()
 
 function Fillvalueview()
 {
- 
+    debugger;
     $('#ServiceAddress').val($('#Address').val() + ' ' + $('#Address2').val());
     $('#vServiceAddress').html($('#Address').val() + ' ' + $('#Address2').val());
     $('#vserviceaddressc').html($('#Address').val() + ' ' + $('#Address2').val());
@@ -127,11 +129,29 @@ function Fillvalueview()
         $("#startdate").html($("#StartDate").val().split(" ")[0] == '1/1/0001' ? '' : $("#StartDate").val());
         $("#enddate").html($("#EndDate").val().split(" ")[0] == '1/1/0001' ? '' : $("#EndDate").val());
         $("#renewaldate").html($("#RenewalDate").val().split(" ")[0] == '1/1/0001' ? '' : $("#RenewalDate").val());
-        var docnames = '';
+        var docnames = $("#InsurancefilesView").val();
+
+        
+
         for (var i = 0; i < files.length; i++) {
-            docnames += '<p>' + files[i].name + '</p>';
+
+            if (docnames.indexOf(files[i].name) != -1) {
+                console.log(files[i].name + " found");
+            }
+            else
+            {
+                docnames += '<p>' + files[i].name + '</p>,';
+            }
+            
         }
-        $("#docname").html(docnames);
+
+        //if ($("#docname").text() != "" && docnames == "") {
+        //}
+        //else
+        //{
+        //    $("#docname").html($("#docname").text() + docnames);
+        //}
+        $("#InsurancefilesView").val(docnames);
         if (policyno != '')
         {
             $("#insDetails").show();
@@ -151,10 +171,29 @@ function Fillvalueview()
     $('#vValidTillMM').html($('#ValidTillMM').val());
     $('#vValidTillYY').html($('#ValidTillYY').val());
     $('#vFullValidTill').html($('#ValidTillMM').val() + '/' + $('#ValidTillYY').val());
+    if ($('#vFullValidTill').html() == "/")
+    {
+        $('#vFullValidTill').html('');
+    }
     $('#vCVV').html($('#CVV').val());
     $('#sucesssave').hide();
     $('#errrorssave').hide();
-    
+
+    $("#ServiceTitle1v").val($("#Service1 option:selected").text());
+    $("#ServiceTitle2v").val($("#Service2 option:selected").text());
+    $("#ServiceTitle3v").val($("#Service3 option:selected").text());
+    var service = "";
+
+    if ($("#ServiceTitle1v").val() != "--- Select Service ---") {
+        service += $("#ServiceTitle1v").val() + "<br>";
+    }
+    if ($("#ServiceTitle2v").val() != "--- Select Service ---") {
+        service += $("#ServiceTitle2v").val() + "<br>";
+    }
+    if ($("#ServiceTitle3v").val() != "--- Select Service ---") {
+        service += $("#ServiceTitle3v").val();
+    }
+    $("#serviceName").html(service);
 }
 
 function onchangePricingbox() {
@@ -185,19 +224,19 @@ function onchangePricingbox() {
 
 function onchangecheckbox()
 {
-
+    
     if ($("#chkagreement").prop("checked") === true)
     {
-        $("#btnconfirmtop").attr("disabled", false);
-        $("#btnnextagreement").attr("disabled", false);
+        $('#btnnextUSerAggr').show();
+        $("#btnnextUSerAggr").attr("disabled", false);
         $(window).scrollTop(0);
         return false;
     }
     else
-    {
+    {   
 
-            $("#btnconfirmtop").attr("disabled", true);
-            $("#btnnextagreement").attr("disabled", true);
+        $('#btnnextUSerAggr').hide();
+        $("#btnnextUSerAggr").attr("disabled", true);
             $(window).scrollTop(0);
             return false;
       
@@ -207,6 +246,21 @@ function onchangecheckbox()
     
 
 }
+
+$("#btnnextUSerAggr").click(function () {
+
+    var value = $("#InsurancefilesView").val();
+    var value1 = value.split(',');
+    value = "";
+    for (var i = 0; i < value1.length;i++)
+    {
+        if (value1[i - 1] != value1[i])
+        {
+            value += value1[i];
+        }
+    }
+    $("#docname").html(value);
+});
 
 $("#btnAccpeted").click(function () {
     var a = "";
@@ -227,8 +281,13 @@ $("#btncompanyinfotop").click(function () {
 });
 $("#btnnextcard").click(function ()
 {
-    $('#sucess').hide();
-    $('#Error').hide();    
+
+   
+        $('#sucess').hide();
+        $('#Error').hide(); 
+     return primarycontectvalidation();
+
+      
 });
 $("#btnnextPricing").click(function () {
     $('#sucess').hide();
@@ -313,13 +372,15 @@ $("#btnverifycard").click(function ()
                 debugger;
                 $('.sucessmessage').html('Card has been verified sucessfully.');
                 $("#btnnextcard").attr("disabled", false);
-                $("#btnAgreementtop").attr("disabled", false);
-                
+                $("#btnPricingtop").attr("disabled", false);
+                //$("#btnAgreementtop").attr("disabled", false);
+                $("#SkipIcc").attr("disabled", true);
                 $('#Error').hide();
                 $('#sucess').show();
                 $(window).scrollTop(0);
                 $('#CardNumber').focus();             
                 $("#global-loader").hide();
+
                 event.preventDefault();
                 return false;
             }
@@ -331,6 +392,7 @@ $("#btnverifycard").click(function ()
                 $(window).scrollTop(0);
                 $('#CardNumber').focus();
                 $("#global-loader").hide();
+                $("#SkipIcc").attr("disabled", false);
                 event.preventDefault();              
                 return false;
 
@@ -373,6 +435,20 @@ $("#btnserviceareatop").click(function () {
     $("#ServiceTitle1v").val($("#Service1 option:selected").text());
     $("#ServiceTitle2v").val($("#Service2 option:selected").text());
     $("#ServiceTitle3v").val($("#Service3 option:selected").text());
+
+    var service = "";
+
+    if ($("#ServiceTitle1v").val() != "--- Select Service ---") {
+        service += $("#ServiceTitle1v").val() + "<br>";
+    }
+    if ($("#ServiceTitle2v").val() != "--- Select Service ---") {
+        service += $("#ServiceTitle2v").val() + "<br>";
+    }
+    if ($("#ServiceTitle3v").val() != "--- Select Service ---") {
+        service += $("#ServiceTitle3v").val();
+    }
+    $("#serviceName").html(service);
+
     setTimeout(function () {
         debugger;
         initMap();
@@ -421,6 +497,22 @@ $("#btnnextservice").click(function () {
     $("#ServiceTitle1v").val($("#Service1 option:selected").text());
     $("#ServiceTitle2v").val($("#Service2 option:selected").text());
     $("#ServiceTitle3v").val($("#Service3 option:selected").text());
+    var service = "";
+
+    if ($("#ServiceTitle1v").val() != "--- Select Service ---")
+    {
+        service += $("#ServiceTitle1v").val() + "<br>";
+    }
+    if ($("#ServiceTitle2v").val() != "--- Select Service ---") {
+        service += $("#ServiceTitle2v").val() + "<br>";
+    }
+    if ($("#ServiceTitle3v").val() != "--- Select Service ---") {
+        service += $("#ServiceTitle3v").val();
+    }
+    $("#serviceName").html(service);
+
+    //$("#serviceName").html($("#ServiceTitle1v").val());
+    
          
     setTimeout(function () {
     
@@ -445,6 +537,7 @@ $("#btnsubmit").click(function ()
 
 $("#btnnextagreement").click(function ()
 {
+    debugger;
     $('#sucess').hide();
     $('#Error').hide();
     $('#sucesssave').hide();
@@ -696,7 +789,7 @@ function validationInsurance() {
             var start = $("#StartDate").val();
             if ($("#EndDate").val() != "") {
                 if ($("#RenewalDate").val() != "") {
-                    if (!isNAN($("#InsuranceAmount").val()) && $("#InsuranceAmount").val() > 0) {
+                    if ($("#InsuranceAmount").val() != "" && $("#InsuranceAmount").val() != null && $("#InsuranceAmount").val() > 0) {
                         return true;
                     }
                     else {
@@ -735,7 +828,7 @@ function validationInsurance() {
 
         }
     }
-
+    debugger;
     if ($("#PolicyNumber").val() == '') {
 
         $('.errormessage').html('Please enter mandatory fields.');

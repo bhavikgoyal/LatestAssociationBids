@@ -1616,7 +1616,7 @@ namespace AssociationBids.Portal.Repository.Base.Code
                 string body = EmailTemplate[0].Body;
                 body = body.Replace("[MemberName]", UserName);
                 body = body.Replace("[ResetPasswordlink]", LinkUrl + "/ChangePassword/ResetPassword?UserKey=" + UserKey);
-                body = body.Replace("[SendDate]", ResetExpirationDate);
+                body = body.Replace("[SendDate]", "");
                 body = body.Replace("[LinkExpiryDate]", ResetExpirationDate);
                 body = body.Replace("[MemberEmail]", fromemail);
                 body = body.Replace("[MemberCompanyName]", CompanyName);
@@ -2260,7 +2260,7 @@ namespace AssociationBids.Portal.Repository.Base.Code
                                 IsDataExist = true;
                                 item = new StaffDirectoryModel();
                                 ResetPassword(dataReader, item);
-                                mailsendAsync(UserKey, item.Email, item.UserName, item.ResetExpirationDate, item.CompanyName,"Reset Password");
+                                mailsendAsync(UserKey, item.Email, item.FirstName + " " + item.LastName, item.ResetExpirationDate, item.CompanyName,"Reset Password");
                             }
                             if (!IsDataExist)
                             {
@@ -2285,8 +2285,11 @@ namespace AssociationBids.Portal.Repository.Base.Code
 
         protected void ResetPassword(DBDataReader dataReader, StaffDirectoryModel item)
         {
+            item.ResetExpirationDate = dataReader.GetValueText("ResetExpirationDate");
             item.Email = dataReader.GetValueText("Email");
-            item.UserName = dataReader.GetValueText("Username");
+            item.CompanyName = dataReader.GetValueText("Name");
+            item.FirstName = dataReader.GetValueText("FirstName");
+            item.LastName = dataReader.GetValueText("LastName");
         }
 
         public bool CheckDuplicatedEmail(string Email)

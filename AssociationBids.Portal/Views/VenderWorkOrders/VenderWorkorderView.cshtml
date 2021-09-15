@@ -95,12 +95,12 @@
                 $("#BrProperty").html(response[0].Property);
 
 
-                if (response[0].VendorBidDueDate !== '01/01/1900') {
+                if (response[0].VendorResponseDueDate !== '01/01/1900') {
                     //$("#BrResponseDate").html(response[0].DefaultRespondByDate);
-                    $("#BrResponseDate").html(response[0].VendorBidDueDate);
+                    $("#BrResponseDate").html(response[0].VendorResponseDueDate);
                 } else { $("#BrResponseDate").html(''); }
-                if (response[0].BidDueDate !== '01/01/1900') {
-                    $("#BrBidDueDate").html(response[0].BidDueDate);
+                if (response[0].VendorBidDueDate !== '01/01/1900') {
+                    $("#BrBidDueDate").html(response[0].VendorBidDueDate);
                 }
                 else { $("#BrBidDueDate").html(''); }
                 //Property Details

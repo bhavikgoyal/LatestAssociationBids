@@ -16,12 +16,15 @@ namespace AssociationBids.Portal.Controllers
     public class RegistrationController : Controller
     {
 
-
+        private IVendorPolicyService _vendorPolicy;
         private readonly IRegistrationService _registrationservice;
-
-        public RegistrationController(IRegistrationService registrationService)
+        private readonly AssociationBids.Portal.Service.Base.Interface.IVendorManagerService __vendorManagerservice;
+        
+        public RegistrationController(IVendorManagerService vendorManagerService, IRegistrationService registrationService, IVendorPolicyService policyService)
         {
             this._registrationservice = registrationService;
+            this.__vendorManagerservice = vendorManagerService;
+            _vendorPolicy = policyService;
         }
 
         // GET: Registration
@@ -154,8 +157,29 @@ namespace AssociationBids.Portal.Controllers
         
         public JsonResult GetVendorDetails(int CompanyKey = 0)
         {
-           
+            int Length = 0;
             var details = _registrationservice.Getvendordetails(CompanyKey);
+            if (details != null)
+            {
+                Length = details.ServiceTitle1.Split(',').Length; 
+            }
+            
+            if (Length == 3)
+            {
+                details.ServiceTitle2 = details.ServiceTitle1.Split(',')[1];
+                details.ServiceTitle3 = details.ServiceTitle1.Split(',')[2];
+                details.ServiceTitle1 = details.ServiceTitle1.Split(',')[0];
+            }
+            else if (Length == 2)
+            {
+                details.ServiceTitle2 = details.ServiceTitle1.Split(',')[1];
+                details.ServiceTitle1 = details.ServiceTitle1.Split(',')[0];
+            }
+            else if(Length == 1)
+            {
+                details.ServiceTitle1 = details.ServiceTitle1.Split(',')[0];
+            }
+            
             return Json(details, JsonRequestBehavior.AllowGet);
         }
 
@@ -239,25 +263,27 @@ namespace AssociationBids.Portal.Controllers
               
                
 
-                    if (registrationModel.CardNumber != null && registrationModel.CardNumber != "")
-                    {
-                        registrationModel.StripeTokenID = Session["StripeTokenId"].ToString();
-                        registrationModel.PMId = Session["PMId"].ToString();
-                    }
+                if (registrationModel.CardNumber != null && registrationModel.CardNumber != "")
+                {
+                    registrationModel.StripeTokenID = Session["StripeTokenId"].ToString();
+                    registrationModel.PMId = Session["PMId"].ToString();
                     value = _registrationservice.Insert(registrationModel);
+
                     if (value != 0)
                     {
                         try
                         {
                             //if (Insurancefiles.Length > 0 && Insurancefiles[0] != null)
                             //{
-                            if (registrationModel.PolicyNumber != null  && registrationModel.PolicyNumber != "")
+                            if (registrationModel.PolicyNumber != null && registrationModel.PolicyNumber != "")
                             {
+                                long ikey = 0;
                                 IVendorManagerService vendorManagerService = new VendorManagerService();
                                 InsuranceModel insurance = new InsuranceModel();
                                 insurance.VendorKey = Convert.ToInt32(value);
                                 insurance.CompanyName = registrationModel.CompanyName;
                                 insurance.PolicyNumber = registrationModel.PolicyNumber;
+                                insurance.InsuranceKey = Convert.ToInt32(registrationModel.InsuranceKey);
                                 insurance.InsuranceAmount = registrationModel.InsuranceAmount;
                                 insurance.StartDate = registrationModel.StartDate;
                                 insurance.EndDate = registrationModel.EndDate;
@@ -276,7 +302,15 @@ namespace AssociationBids.Portal.Controllers
                                 if (insurance.EndDate.Year < 2000)
                                     insurance.EndDate = new DateTime(2001, 01, 01);
 
-                                long ikey = vendorManagerService.VendorManagerAddInsurance(insurance);
+                                if (insurance.InsuranceKey == 0)
+                                {
+                                    ikey = vendorManagerService.VendorManagerAddInsurance(insurance);
+                                }
+                                else
+                                {
+                                    ikey = _vendorPolicy.VendorManagerEditInsurance(insurance);
+                                }
+
                                 if (Insurancefiles != null && ikey != 0)
                                 {
                                     IDocumentService document = new DocumentService();
@@ -305,7 +339,7 @@ namespace AssociationBids.Portal.Controllers
                                 }
 
                             }
-                              
+
                             //}
                         }
                         catch
@@ -327,13 +361,156 @@ namespace AssociationBids.Portal.Controllers
                             Session.Remove("StripeTokenId");
                             Session.Remove("PMId");
                         }
-                        catch {}
+                        catch { }
                         return RedirectToAction("Thankyou");
 
                     }
-               
-             
-               
+
+
+
+
+                }
+                
+
+
+
+                if (registrationModel.CardNumber == null || registrationModel.CardNumber == "")
+                {
+                    Int64 value1 = 0;
+                    int ResourceKey = Convert.ToInt32(Session["resourceid"]);
+                    VendorManagerVendorModel collection = new VendorManagerVendorModel();
+                    collection.LegalName = registrationModel.LegalName;
+                    collection.CompanyName = registrationModel.CompanyName;
+                    collection.TaxID = registrationModel.TaxID;
+                    collection.ServiceTitle1 = registrationModel.ServiceTitle1;
+                    collection.Address = registrationModel.Address;
+                    collection.Address2 = registrationModel.Address2;
+                    collection.City = registrationModel.City;
+                    collection.Zip = registrationModel.Zip;
+                    collection.ContactPerson = registrationModel.FirstName.Trim() + " " + registrationModel.LastName.Trim();
+                    collection.FirstName = registrationModel.FirstName.Trim();
+                    collection.LastName = registrationModel.LastName.Trim();
+                    collection.Work = registrationModel.Work;
+                    collection.Work2 = registrationModel.Work2;
+                    collection.Email = registrationModel.EmailId;
+                    collection.Fax = registrationModel.Fax;
+                    collection.Website = registrationModel.Website;
+                    collection.State = registrationModel.State;
+                    collection.Title = "";
+                    collection.CompanyKey = registrationModel.CompanyKey;
+                    collection.Description = "";
+                    collection.Radius =Convert.ToInt32(registrationModel.Radius);
+                    collection.Latitude = registrationModel.Latitude;
+                    collection.Longitude = registrationModel.Longitude;
+
+                    value1 = __vendorManagerservice.RegistrationManagerInviteVendor(collection, ResourceKey);
+                    //value1 = __vendorManagerservice.VendorManagerInviteVendor(collection, ResourceKey);
+                    if (value1 != 0)
+                    {
+                        try
+                        {
+                            //if (Insurancefiles.Length > 0 && Insurancefiles[0] != null)
+                            //{
+                            if (registrationModel.PolicyNumber != null && registrationModel.PolicyNumber != "")
+                            {
+                                long ikey = 0;
+                                IVendorManagerService vendorManagerService = new VendorManagerService();
+                                InsuranceModel insurance = new InsuranceModel();
+                                insurance.VendorKey = Convert.ToInt32(value1);
+                                insurance.CompanyName = registrationModel.CompanyName;
+                                insurance.InsuranceKey = Convert.ToInt32(registrationModel.InsuranceKey);
+                                insurance.PolicyNumber = registrationModel.PolicyNumber;
+                                insurance.InsuranceAmount = registrationModel.InsuranceAmount;
+                                insurance.StartDate = registrationModel.StartDate;
+                                insurance.EndDate = registrationModel.EndDate;
+                                insurance.RenewalDate = registrationModel.RenewalDate;
+                                insurance.Address = registrationModel.Address;
+                                insurance.Address2 = registrationModel.Address2;
+                                insurance.Work = registrationModel.Work;
+                                insurance.City = registrationModel.City;
+                                insurance.Email = registrationModel.EmailId;
+                                insurance.Fax = registrationModel.Fax;
+                                insurance.State = registrationModel.State;
+                                insurance.Zip = registrationModel.Zip;
+
+                                if (insurance.StartDate.Year < 2000)
+                                    insurance.StartDate = new DateTime(2001, 01, 01);
+                                if (insurance.EndDate.Year < 2000)
+                                    insurance.EndDate = new DateTime(2001, 01, 01);
+                                if (insurance.InsuranceKey == 0)
+                                {
+                                    ikey = vendorManagerService.VendorManagerAddInsurance(insurance);
+                                }
+                                else
+                                {
+                                    ikey = _vendorPolicy.VendorManagerEditInsurance(insurance);
+                                }
+
+                                if (Insurancefiles != null && ikey != 0)
+                                {
+                                    IDocumentService document = new DocumentService();
+                                    foreach (var file in Insurancefiles)
+                                    {
+                                        var module = new ModuleService().GetAll(new ModuleFilterModel());
+                                        var key = module.Where(w => w.Title == "Insurance").FirstOrDefault().ModuleKey;
+                                        DocumentModel dm = new DocumentModel();
+                                        dm.ObjectKey = Convert.ToInt32(ikey);
+                                        dm.ModuleKey = key;
+                                        if (file != null)
+                                        {
+                                            dm.FileName = file.FileName;
+                                            dm.FileSize = file.ContentLength;
+                                            dm.LastModificationTime = DateTime.Now;
+                                            var st = document.Create(dm);
+                                            if (st)
+                                            {
+                                                //Directory.CreateDirectory(Server.MapPath("~/Document/Insurance/" + value + "/" + ikey));
+                                                //file.SaveAs(Server.MapPath("~/Document/Insurance/" + value + "/" + ikey + "/") + file.FileName);
+                                                Directory.CreateDirectory(Server.MapPath("~/Document/Insurance/" + ikey));
+                                                file.SaveAs(Server.MapPath("~/Document/Insurance/" + ikey + file.FileName));
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+                           
+                            //}
+                        }
+                        catch
+                        {
+
+                        }
+                        //if (Insurancefiles != null)
+                        //{
+                        //    string path = Path.Combine(Server.MapPath("~/Document/Insurance/"), value + " " + Insurancefiles.FileName);
+                        //    Insurancefiles.SaveAs(path);
+                        //}
+                        //else if (licensefiles != null)
+                        //{
+                        //    string path = Path.Combine(Server.MapPath("~/Document/license/"), value + " " + licensefiles.FileName);
+                        //    licensefiles.SaveAs(path);
+                        //}
+                        try
+                        {
+                            Session.Remove("StripeTokenId");
+                            Session.Remove("PMId");
+                        }
+                        catch { }
+                        return RedirectToAction("RegiestrationInProcess");
+
+                    }
+
+                }
+
+
+
+
+                   
+                 
+
+
+
             }
             catch (Exception ex)
             {
@@ -390,6 +567,12 @@ namespace AssociationBids.Portal.Controllers
         }
         
         public ActionResult Thankyou()
+        {
+            return View();
+        }
+
+
+        public ActionResult RegiestrationInProcess()
         {
             return View();
         }
@@ -512,6 +695,62 @@ namespace AssociationBids.Portal.Controllers
             }
         }
 
+        public JsonResult GetInsuranceDetails(int CompanyKey)
+        {
+            try
+            {
+                IList<VendorManagerModel> Documentlist = null;
+                //int CompanyKey = Convert.ToInt32(Session["companykey"]);
+                Documentlist = _vendorPolicy.GetbindDocumentByInsuranceKey(CompanyKey, 0);
+                List<System.Web.Mvc.SelectListItem> Documentlistsss = new List<System.Web.Mvc.SelectListItem>();
+                string[] doc = new string[Documentlist.Count];
+                for (int i = 0; i < Documentlist.Count; i++)
+                {
+                    if (Documentlist[i].Document.FileName != "")
+                    {
+                        var Text = Convert.ToString(Documentlist[i].Document.FileName);
+                        string imagelist = "../Document/Insurance/" + "BidRequestKeyTemp " + Documentlist[i].Document.FileName;
+                        if (Documentlist[i].Document.FileName.Contains(Documentlist[i].Insurance.InsuranceKey + " "))
+                            imagelist = "../Document/Insurance/" + Documentlist[i].Document.FileName;
+                        var path = Server.MapPath(imagelist);
+
+                        string input = Documentlist[i].Document.FileName;
+                        string[] values = input.Split('.');
+                        var checkext = values[1];
+
+                        doc[i] = imagelist;
+                    }
+
+                }
+                return Json(Documentlist, JsonRequestBehavior.AllowGet);
+
+            }
+            catch
+            {
+                return Json(null);
+            }
+        }
+        public ActionResult DocumentDelete(int InsuranceKey, string Docname,string CompanyKey)
+        {
+            try
+            {
+                string Directory = Server.MapPath("~/Document/Insurance/");
+                string fileName = Docname;
+                string path = Directory + InsuranceKey + " " + Docname;
+                FileInfo fileInfo = new FileInfo(path);
+                if (fileInfo.Exists)
+                {
+                    fileInfo.Delete();
+                }
+                bool value = false;
+                value = _vendorPolicy.DocumentDelete(InsuranceKey, Docname);
+                return RedirectToAction("Registration", new { CompanyKey });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Registration", new { CompanyKey });
+            }
+        }
 
 
     }

@@ -571,11 +571,12 @@
 
     });
     function LoadBidStatus() {
+        debugger;
         $.ajax({
             url: "/VenderBidRequest/LoadBidStatus",
             data: {},
             success: function (response) {
-
+                debugger;
                 if (response.length > 0) {
                     var acceptstr = '';
                     var rejectstr = '';
@@ -606,7 +607,7 @@
                         if (ab.length > 1)
                             acstr = 'Your Bid Request(s):' + acceptstr + ' are Accepted';
                         $("#dicaccept").show();
-                        $("#noti-accept").append("Congratulations! " + acstr);
+                        $("#noti-accept").append("Congratulations! " + acstr +"<br/>");
                         $("#worklink").attr("href",'/VenderWorkOrders/VenderWorkorder')
                     }
                     if (rejectstr != '') {
@@ -623,13 +624,14 @@
         });
     }
     function GetLastFiveNoti() {
+        
         $(".notibody p").hide();
         $.ajax({
             url: "/ABNotification/GetFiveNotificationsForVendor",
             data: {},
             success: function (response) {
                 if (response.length > 0) {
-                  
+                    
                     $(".notibody p:not(:first)").remove();
                     for (var i = 0; i < response.length; i++) {
                         var p = $(".notibody p:eq(0)").clone(true);
@@ -642,7 +644,7 @@
                         }
                         $("#notilink", p).attr("href", link);
                        
-                        if (response[i].NotificationType == "BidReqStatusReject" || response[i].NotificationType == "BidReqStatusRejByAcceptOther") {
+                        if (response[i].NotificationType == "BidReqStatusReject" || response[i].NotificationType == "BidReqStatusRejByAcceptOther" || response[i].NotificationType == 'BidReqDate' ) {
                             continue;
                         }
                         var bg = ""
@@ -676,6 +678,7 @@
     }
 
     function GetLastFiveNotiNew() {
+        debugger;
         $(".notibody p").hide();
         $.ajax({
             url: "/ABNotification/GetFiveNotificationsForVendorNew",
@@ -692,49 +695,64 @@
                   //  $(".notibodyNew p:not(:first)").remove();
                     for (var i = 0; i < response.length; i++) {
                         if (response[i].Show == '1') {
+
+
+
                             var p = $(".notibodyNew p:eq(0)").clone(true);
                             var p1 = $(".notibodyNew p:eq(1)").clone(true);
-                            var link = response[i].RedirectTo;
 
-                            var spiltlink = response[i].RedirectTo.split("?")
-                            if (response[i].ModuleKey == 106) {
-                                link = "/VenderWorkOrders/VenderWorkorderView?" + spiltlink[1];
+
+                            if (response[i].RedirectTo == "BidReqDate")
+                            {
+                                var acstr = response[i].DisplMessage;
+                                $("#dicaccept").show();
+                                $("#noti-accept").append(acstr+ "<br/>");
+                                $("#worklink").attr("href", '/VenderBidrequest/BidRequests?BidReuestKey=' + response[i].KeyId);
                             }
+                            else {
+                                var link = response[i].RedirectTo;
+
+                                var spiltlink = response[i].RedirectTo.split("?")
+                                if (response[i].ModuleKey == 106) {
+                                    link = "/VenderWorkOrders/VenderWorkorderView?" + spiltlink[1];
+                                }
 
 
-                            $("#notilink", p).attr("href", link);
-                            $("#notilink", p1).attr("href", link);
-                            var bg = ""
-                            $("#notitext", p).html(response[i].DisplMessage);
-                            $("#notitext", p1).html(response[i].Notification);
+                                $("#notilink", p).attr("href", link);
+                                $("#notilink", p1).attr("href", link);
+                                var bg = ""
+                                $("#notitext", p).html(response[i].DisplMessage);
+                                $("#notitext", p1).html(response[i].Notification);
 
-                            bg = "bg-green";
-                            //if (response[i].ModuleKey == 200) {
-                            //    bg = "bg-succes";
-                            //}
-                            //if (response[i].ModuleKey == 300) {
+                                bg = "bg-green";
+                                //if (response[i].ModuleKey == 200) {
+                                //    bg = "bg-succes";
+                                //}
+                                //if (response[i].ModuleKey == 300) {
 
-                            //}
-                            //if (response[i].ModuleKey == 301) {
-                            //    bg = "bg-danger";
-                            //}
-                            //if (response[i].ModuleKey == 302) {
-                            //    bg = "bg-warning";
-                            //}
-                            //if (response[i].ModuleKey == 100) {
-                            //    bg = "bg-green";
-                            //}
-                            //if (response[i].ModuleKey == 106) {
-                            //    bg = "bg-orange";
-                            //}
-                            p.addClass(bg);
-                            p1.addClass(bg);
-                            $("a", p).addClass("text-white");
+                                //}
+                                //if (response[i].ModuleKey == 301) {
+                                //    bg = "bg-danger";
+                                //}
+                                //if (response[i].ModuleKey == 302) {
+                                //    bg = "bg-warning";
+                                //}
+                                //if (response[i].ModuleKey == 100) {
+                                //    bg = "bg-green";
+                                //}
+                                //if (response[i].ModuleKey == 106) {
+                                //    bg = "bg-orange";
+                                //}
+                                p.addClass(bg);
+                                p1.addClass(bg);
+                                $("a", p).addClass("text-white");
 
-                            $(".notibodyNew").append(p);
-                            $(".notibodyNew").append(p1);
+                                $(".notibodyNew").append(p);
+                                $(".notibodyNew").append(p1);
 
-                            p.show();
+                                p.show();
+                            }
+                       
                         }                        
                     }
                 }
