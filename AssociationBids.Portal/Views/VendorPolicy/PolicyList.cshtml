@@ -281,7 +281,7 @@
                     var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
                     $(".policy", table).html(response[i].PolicyNumber);
                     $(".amount", table).html("$" + response[i].InsuranceAmount.toFixed(2));
-                    $(".edate", table).html(getDateNew(response[i].EndDate));
+                    $(".edate", table).html(response[i].EndDates);
                     debugger;
                     if (response[i].priority == '1') {
                         $("#viewdata", table).append('<i class="fa fa-bell faa-ring animated redtxt font18"></i>');
@@ -418,11 +418,13 @@
                     TotalRecs = parseInt(response[0].TotalRecords);
                     $('.spnOfRecs').text(curRecords);
                     $('.spnTotalRecs').text(TotalRecs);
-                    alert(curRecords);
-                    if (curRecords === 0 || curRecords === TotalRecs) {
+                 
+                    if (curRecords === 0 || curRecords === TotalRecs)
+                    {
                         $("#ddlload").hide();
                     }
-                    else {
+                    else
+                    {
                         $("#ddlload").show();
                     }
 
@@ -436,7 +438,7 @@
                     var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
                     $(".policy", table).html(response[i].PolicyNumber);
                     $(".amount", table).html("$" + response[i].InsuranceAmount.toFixed(2));
-                    $(".edate", table).html(getDateNew(response[i].EndDates));
+                    $(".edate", table).html(response[i].EndDates);
                     if (response[i].priority == '1') {
                         $("#viewdata", table).append('<i class="fa fa-bell faa-ring animated redtxt font18"></i>');
                         $("#viewdata", table).attr('onclick', 'openModal(' + response[i].InsuranceKey + ',"' + response[i].NotificationType + '")');
@@ -478,12 +480,12 @@
 
     }
 
-    function updatePaging(TotalRecs) {
+   function updatePaging(TotalRecs) {
             $('ul.pagination').html('');
             var liClone = $('ul.pagination');
      debugger;
-     var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
-            var pageSize = $('#PageSize').val();
+      var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
+            //var pageSize = $('#PageSize').val();
             var NoPage = 1;
             if (parseInt(TotalRecs) > parseInt(pageSize)) {
                 NoPage = parseInt(parseInt(TotalRecs) / parseInt(pageSize));
@@ -500,7 +502,8 @@
             }
 
             var ind = 0;
-            for (var i = 1; i <= NoPage; i++) {
+       for (var i = 1; i <= NoPage; i++) {
+           debugger;
                 if ((parseInt(lp)) < i) {
                     if (parseInt($('#HdnPageIndex').val()) > 5 && $(liClone).find('li.previous').length == 0) {
                         $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')"><a href="#">Previous</a></li>');
@@ -517,10 +520,7 @@
                     ind = ind + 1;
                 }
             }
-
-
-
-    }
+        }
 
     function openModal(insuranceKey,notiType = '') {
         debugger;
@@ -533,7 +533,7 @@
                 InsuranceKey: insuranceKey
             },
             success: function (response) {
-                debugger;   
+                debugger;
                 if (response != null && response.length > 0) {
 
                     $("#InsuranceKey").val(insuranceKey);
@@ -558,7 +558,7 @@
                     }
                     $("#divdoc table tbody tr:not(:first)").remove();
                     //$("#divdoc table tbody tr:eq(0)").show();
-                    
+
                     for (var i = 0; i < response.length; i++) {
                         if (response[i].Document.FileName != "") {
                             var cln = $("#divdoc table tbody tr:eq(0)").clone(true);
@@ -633,7 +633,7 @@
             var table = $("#RawDatas table tbody tr:eq(0)").clone(true);
             $(".policy", table).html(response[i].PolicyNumber);
             $(".amount", table).html("$" +response[i].InsuranceAmount.toFixed(2));
-            $(".edate", table).html(getDateNew(response[i].EndDates));
+            $(".edate", table).html(response[i].EndDates);
             if (response[i].priority == '1') {
                 $("#viewdata", table).append('<i class="fa fa-bell faa-ring animated redtxt font18"></i>');
                 $("#viewdata", table).attr('onclick', 'openModal(' + response[i].InsuranceKey + ',"' + response[i].NotificationType + '")');

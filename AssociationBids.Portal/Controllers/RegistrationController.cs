@@ -30,67 +30,72 @@ namespace AssociationBids.Portal.Controllers
         // GET: Registration
         public ActionResult Registration(int CompanyKey = 0)
         {
-            
+
             RegistrationModel registrationmodel = new RegistrationModel();
+            bool CheckLinkExpired = false;
             try
             {
-                registrationmodel.CompanyKey = CompanyKey;
-                //state
-                IList<RegistrationModel> lstregistration = null;
-                lstregistration = _registrationservice.GetAllState();
-                List<System.Web.Mvc.SelectListItem> lststatelist = new List<System.Web.Mvc.SelectListItem>();
-                System.Web.Mvc.SelectListItem sli2 = new System.Web.Mvc.SelectListItem();
-                sli2.Text = "--Please Select--";
-                sli2.Value = "0";
-                lststatelist.Add(sli2);
-                for (int i = 0; i < lstregistration.Count; i++)
+                CheckLinkExpired = _registrationservice.GetLinkExpiredCheck(CompanyKey);
+                if (CheckLinkExpired == true && CompanyKey != 0)
                 {
-                    System.Web.Mvc.SelectListItem sli = new System.Web.Mvc.SelectListItem();
-                    sli.Text = Convert.ToString(lstregistration[i].State);
-                    sli.Value = Convert.ToString(lstregistration[i].StateKey);
-                    lststatelist.Add(sli);
+                    return RedirectToAction("LinkExpired");
                 }
-                ViewBag.lststate = lststatelist;
-                //Service
-                lstregistration = _registrationservice.GetAllService();
-                List<System.Web.Mvc.SelectListItem> lstservicelist = new List<System.Web.Mvc.SelectListItem>();
-                SelectListItem sServ = new SelectListItem();
-                sServ.Text = "--- Select Service ---";
-                sServ.Value = "0";
-                lstservicelist.Add(sServ);
-                for (int i = 0; i < lstregistration.Count; i++)
+                else
                 {
-                    System.Web.Mvc.SelectListItem sli = new System.Web.Mvc.SelectListItem();
-                    sli.Text = Convert.ToString(lstregistration[i].ServiceTitle1);
-                    sli.Value = Convert.ToString(lstregistration[i].ServiceKey);
-                    lstservicelist.Add(sli);
-                }
-                ViewBag.lstservice = lstservicelist;
-                //Radius
-                var lstRadiuslist = new List<SelectListItem>()
-            {
-              
-              new SelectListItem{ Value="1",Text="10 miles",Selected=true},
-              new SelectListItem{ Value="2",Text="15 miles"},
-              new SelectListItem{ Value="3",Text="20 miles"},
-              new SelectListItem{ Value="4",Text="25 miles"},
-            };
-                ViewBag.lstRadius = lstRadiuslist;
-                return View(registrationmodel);
+                    registrationmodel.CompanyKey = CompanyKey;
+                    //state
+                    IList<RegistrationModel> lstregistration = null;
+                    lstregistration = _registrationservice.GetAllState();
+                    List<System.Web.Mvc.SelectListItem> lststatelist = new List<System.Web.Mvc.SelectListItem>();
+                    System.Web.Mvc.SelectListItem sli2 = new System.Web.Mvc.SelectListItem();
+                    sli2.Text = "--Please Select--";
+                    sli2.Value = "0";
+                    lststatelist.Add(sli2);
+                    for (int i = 0; i < lstregistration.Count; i++)
+                    {
+                        System.Web.Mvc.SelectListItem sli = new System.Web.Mvc.SelectListItem();
+                        sli.Text = Convert.ToString(lstregistration[i].State);
+                        sli.Value = Convert.ToString(lstregistration[i].StateKey);
+                        lststatelist.Add(sli);
+                    }
+                    ViewBag.lststate = lststatelist;
+                    //Service
+                    lstregistration = _registrationservice.GetAllService();
+                    List<System.Web.Mvc.SelectListItem> lstservicelist = new List<System.Web.Mvc.SelectListItem>();
+                    SelectListItem sServ = new SelectListItem();
+                    sServ.Text = "--- Select Service ---";
+                    sServ.Value = "0";
+                    lstservicelist.Add(sServ);
+                    for (int i = 0; i < lstregistration.Count; i++)
+                    {
+                        System.Web.Mvc.SelectListItem sli = new System.Web.Mvc.SelectListItem();
+                        sli.Text = Convert.ToString(lstregistration[i].ServiceTitle1);
+                        sli.Value = Convert.ToString(lstregistration[i].ServiceKey);
+                        lstservicelist.Add(sli);
+                    }
+                    ViewBag.lstservice = lstservicelist;
+                    //Radius
+                    var lstRadiuslist = new List<SelectListItem>()
+                    {
 
+                      new SelectListItem{ Value="1",Text="10 miles",Selected=true},
+                      new SelectListItem{ Value="2",Text="15 miles"},
+                      new SelectListItem{ Value="3",Text="20 miles"},
+                      new SelectListItem{ Value="4",Text="25 miles"},
+                    };
+                    ViewBag.lstRadius = lstRadiuslist;
+                    return View(registrationmodel);
+                }
             }
+
             catch (Exception ex)
             {
                 Common.Error.WriteErrorsToFile(ex.Message.ToString());
                 return View(registrationmodel);
 
             }
-
+        
         }
-
-     
-
-
 
         [HttpGet]
         public ActionResult RegistrationVendor(int CompanyKey)
@@ -309,6 +314,7 @@ namespace AssociationBids.Portal.Controllers
                                 else
                                 {
                                     ikey = _vendorPolicy.VendorManagerEditInsurance(insurance);
+                                    ikey = insurance.InsuranceKey;
                                 }
 
                                 if (Insurancefiles != null && ikey != 0)
@@ -366,8 +372,8 @@ namespace AssociationBids.Portal.Controllers
 
                     }
 
-
-
+                   
+                 
 
                 }
                 
@@ -444,6 +450,7 @@ namespace AssociationBids.Portal.Controllers
                                 else
                                 {
                                     ikey = _vendorPolicy.VendorManagerEditInsurance(insurance);
+                                    ikey = insurance.InsuranceKey;
                                 }
 
                                 if (Insurancefiles != null && ikey != 0)
@@ -573,6 +580,10 @@ namespace AssociationBids.Portal.Controllers
 
 
         public ActionResult RegiestrationInProcess()
+        {
+            return View();
+        }
+        public ActionResult LinkExpired()
         {
             return View();
         }
@@ -730,7 +741,7 @@ namespace AssociationBids.Portal.Controllers
                 return Json(null);
             }
         }
-        public ActionResult DocumentDelete(int InsuranceKey, string Docname,string CompanyKey)
+        public JsonResult DocumentDelete(int InsuranceKey, string Docname,string CompanyKey)
         {
             try
             {
@@ -744,11 +755,11 @@ namespace AssociationBids.Portal.Controllers
                 }
                 bool value = false;
                 value = _vendorPolicy.DocumentDelete(InsuranceKey, Docname);
-                return RedirectToAction("Registration", new { CompanyKey });
+                return Json(true);
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Registration", new { CompanyKey });
+                return Json(false);
             }
         }
 

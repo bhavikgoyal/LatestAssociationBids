@@ -122,7 +122,7 @@
                         </div><!-- end of card body -->
                         <div class="card-footer">
                             <div class="button-row d-flex">
-                                <button class="btn btn-info ml-auto" title="Add Policy"><i class="fa fa-check"></i> Add Policy</button>
+                                <button class="btn btn-info ml-auto" title="Add Policy" onclick="return validationInsuranceNew()"><i class="fa fa-check"></i> Add Policy</button>
                             </div>
                         </div>
                     </div><!-- end of card -->
@@ -159,11 +159,56 @@
         $('.errormessage').html('');
         $('#Error').hide();
     });
+
+    $("#StartDate").change("click", function () {
+        //debugger;
+        var EndDate = new Date($("#EndDate").val());
+        var StartDate = new Date($("#StartDate").val());
+        var RenewalDate = new Date($("#RenewalDate").val());
+        debugger;
+        StartDate.setHours(0, 0, 0, 0)
+
+        if (StartDate == "Invalid Date") {
+
+            $(".errormessage").html("Invalid Date.");
+            $('#Error').show();
+            $("#Insurance_StartDate").val("");
+            $(window).scrollTop(0);
+            return false;
+
+        }
+
+        else if (EndDate < StartDate || RenewalDate < StartDate) {
+            $('.errormessage').html('Start Date must be less then End Date and Renewal Date.');
+
+            $('#Error').show();
+            $("#Insurance_StartDate").val("");
+            $(window).scrollTop(0);
+            //event.preventDefault();
+            return false;
+        }
+
+        $('#Error').hide();
+        return true;
+
+    }
+    );
+
     $("#Insurance_EndDate").change("click", function () {
         debugger;
         var EndDate = new Date($("#Insurance_EndDate").val());
         var StartDate = new Date($("#Insurance_StartDate").val());
 
+        EndDate.setHours(0, 0, 0, 0)
+        if(EndDate == "Invalid Date") {
+
+            $(".errormessage").html("Invalid Date.");
+            $('#Error').show();
+            $("#Insurance_StartDate").val("");
+            $(window).scrollTop(0);
+            return false;
+
+        }
         if (EndDate < StartDate) {
             $('.errormessage').html('End Date must be greater than Start Date.');
             $('#Error').show();
@@ -184,6 +229,18 @@
         var StartDate = new Date($("#Insurance_StartDate").val());
         var EndDate = new Date($("#Insurance_EndDate").val());
         debugger;
+
+        RenewalDate.setHours(0, 0, 0, 0)
+        if (RenewalDate == "Invalid Date") {
+
+            $(".errormessage").html("Invalid Date.");
+            $('#Error').show();
+            $("#Insurance_StartDate").val("");
+            $(window).scrollTop(0);
+            return false;
+
+        }
+
         if (RenewalDate <= StartDate) {
             $('.errormessage').html('Renewal Date must be greater than Start Date and less than or equal to End date.');
             $('#Error').show();
@@ -210,6 +267,11 @@
         var EndDate = new Date($("#Insurance_EndDate").val());
         var StartDate = new Date($("#Insurance_StartDate").val());
         var RenewalDate = new Date($("#Insurance_RenewalDate").val());
+
+        StartDate.setHours(0, 0, 0, 0)
+        EndDate.setHours(0, 0, 0, 0)
+        RenewalDate.setHours(0, 0, 0, 0)
+
         debugger;
         $('#sucess').hide();
         $('#Error').hide();
@@ -253,6 +315,33 @@
             $(window).scrollTop(0);
             return false;
         }
+
+        else if (StartDate == "Invalid Date") {
+
+            $(".errormessage").html("Invalid Date.");
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+
+        }
+        else if (EndDate == "Invalid Date") {
+
+            $(".errormessage").html("Invalid Date.");
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+
+        }
+        else if (RenewalDate == "Invalid Date") {
+
+            $(".errormessage").html("Invalid Date.");
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+
+        }
+
+
         else if ($("#Insurance_StartDate").val().split(" ")[0].split("/")[2] <= '1900') {
             $('.errormessage').html('Please enter valid Start Date.');
             $('#Error').show();

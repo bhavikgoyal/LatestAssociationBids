@@ -64,5 +64,9 @@ namespace AssociationBids.Portal.Service.Base.Code
         {
             return __repository.GeAgreementDetails(companykey);
         }
+        public bool GetLinkExpiredCheck(int companykey)
+        {
+            return __repository.GetLinkExpiredCheck(companykey);
+        }
     }
 }

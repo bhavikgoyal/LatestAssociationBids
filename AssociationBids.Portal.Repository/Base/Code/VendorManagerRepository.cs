@@ -1609,7 +1609,7 @@ namespace AssociationBids.Portal.Repository.Base.Code
                             BidRequestRepository bid = new BidRequestRepository();
                             VendorManager_AprovalEmailList(reader, vendor);
                             //staffdirectory.mailsendAsync(vendor.UserKey, vendor.Email, vendor.UserName, vendor.ResetExpirationDate, vendor.CompanyName, "Vendor Aporval");
-                            email = CreateMailTemplateForVendor(vendor.UserKey, vendor.Email, vendor.UserName, vendor.ResetExpirationDate, vendor.CompanyName, "Vendor Aporval");
+                            email = CreateMailTemplateForVendor(vendor.UserKey, vendor.Email, vendor.Name, vendor.ResetExpirationDate, vendor.CompanyName, "Vendor Aporval");
 
                             EmailModel emailTemplate = new EmailModel();
                             emailTemplate.Body = email.Body;
@@ -1654,6 +1654,7 @@ namespace AssociationBids.Portal.Repository.Base.Code
             item.UserName = reader.GetValueText("UserName");
             item.ResetExpirationDate = reader.GetValueText("ResetExpirationDate");
             item.CompanyName = reader.GetValueText("Name");
+            item.Name = reader.GetValueText("ContactName"); 
         }
 
         public bool VendorManagerMarkDuplicateVendor(int CompanyKey)
@@ -1804,7 +1805,7 @@ namespace AssociationBids.Portal.Repository.Base.Code
                 Repository.Base.Code.PMVendorRepository staffDirectoryRepository = new Repository.Base.Code.PMVendorRepository();
                 IList<Model.EmailTemplateModel> EmailTemplate = null;
                 string LinkUrl = System.Configuration.ConfigurationManager.AppSettings["LinkUrl"];
-                EmailTemplate = GetAll(Status);
+                EmailTemplate = GetAll1(Status);
 
                 string body = EmailTemplate[0].Body;
                 body = body.Replace("[MemberName]", Convert.ToString(UserName.ToString().Trim()));
@@ -1856,8 +1857,99 @@ namespace AssociationBids.Portal.Repository.Base.Code
             {
             }
         }
+        public void VendorInvetationmailsend1(int status, string fromemail, string UserName, string CompanyName, string Status)
+        {
+            try
+            {
+                Repository.Base.Code.PMVendorRepository staffDirectoryRepository = new Repository.Base.Code.PMVendorRepository();
+                IList<Model.EmailTemplateModel> EmailTemplate = null;
+                string LinkUrl = System.Configuration.ConfigurationManager.AppSettings["LinkUrl"];
+                EmailTemplate = GetAll(Status);
 
+                string body = EmailTemplate[0].Body;
+                body = body.Replace("[MemberName]", Convert.ToString(UserName.ToString().Trim()));
+                body = body.Replace("[VendorRegistrationLink]", LinkUrl + "/Registration/Registration?CompanyKey=" + status);
+                body = body.Replace("[CompanyName]", Convert.ToString(CompanyName.ToString().Trim()));
+                body = body.Replace("[ContactPerson]", Convert.ToString(UserName.ToString().Trim()));
+                body = body.Replace("[Email]", Convert.ToString(fromemail.ToString().Trim()));
+
+                string Subject = EmailTemplate[0].EmailSubject;
+                Subject = Subject.Replace("[CompanyName]", Convert.ToString(CompanyName.ToString().Trim()));
+
+                MailMessage msg = new MailMessage();
+                string strBody = string.Empty;
+
+                msg.From = new MailAddress(System.Configuration.ConfigurationManager.AppSettings["senderemail"]);
+                msg.To.Add(fromemail);
+
+                msg.Subject = Subject;
+                msg.IsBodyHtml = true;
+                msg.Body += body;
+                var byresource = Convert.ToInt32(HttpContext.Current.Session["resourceid"]);
+                EmailModel emailTemplate = new EmailModel();
+                emailTemplate.Body = body;
+                emailTemplate.DateAdded = DateTime.Now;
+                emailTemplate.Subject = Subject;
+                emailTemplate.DateSent = DateTime.Now;
+                emailTemplate.EmailStatus = 500;
+                emailTemplate.From = System.Configuration.ConfigurationManager.AppSettings["senderemail"];
+                emailTemplate.To = fromemail;
+                emailTemplate.ObjectKey = status;
+                emailTemplate.ResourceKey = EmailTemplate[0].Superadminkey;
+                emailTemplate.ModuleKey = 705;
+                EmailRepository emaillog = new EmailRepository();
+                bool isinserted = emaillog.Create(emailTemplate);
+                using (SmtpClient client = new SmtpClient())
+                {
+                    client.EnableSsl = false;
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = new NetworkCredential(System.Configuration.ConfigurationManager.AppSettings["smtpUser"], System.Configuration.ConfigurationManager.AppSettings["smtpPass"]);
+                    client.Host = System.Configuration.ConfigurationManager.AppSettings["smtpServer"];
+                    client.Port = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["smtpPort"]);
+                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    client.Send(msg);
+                    emailTemplate.EmailStatus = 502;
+                    emaillog.Update(emailTemplate);
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
         public virtual IList<EmailTemplateModel> GetAll(string Status)
+        {
+            List<EmailTemplateModel> itemList = new List<EmailTemplateModel>();
+            try
+            {
+                string storedProcedure = "site_EmailTemplate_SelectAll";
+                using (Database db = new Database(ConnectionString))
+                {
+                    using (DBCommandWrapper commandWrapper = db.GetStoredProcCommandWrapper(storedProcedure))
+                    {
+                        commandWrapper.AddInputParameter("@LookUpTitle", SqlDbType.NText, "Invite Partial Registration");
+                        //commandWrapper.AddInputParameter("@LookUpTitle", SqlDbType.NText, "Vendor invitation");
+
+                        using (DBDataReader dataReader = db.ExecuteReader(commandWrapper))
+                        {
+                            EmailTemplateModel item = null;
+                            while (dataReader.Read())
+                            {
+                                item = new EmailTemplateModel();
+                                Load(dataReader, item);
+                                itemList.Add(item);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Error.WriteErrorsToFile(ex.Message.ToString());
+            }
+            return itemList;
+        }
+
+        public virtual IList<EmailTemplateModel> GetAll1(string Status)
         {
             List<EmailTemplateModel> itemList = new List<EmailTemplateModel>();
             try
@@ -1889,6 +1981,8 @@ namespace AssociationBids.Portal.Repository.Base.Code
             }
             return itemList;
         }
+
+
 
         public List<InsuranceModel> GetInsuranceByCompanyKey(int CompanyKey)
         {
@@ -1935,7 +2029,9 @@ namespace AssociationBids.Portal.Repository.Base.Code
             item.Title = dataReader.GetValueText("Title");
             item.EmailSubject = dataReader.GetValueText("EmailSubject");
             item.Body = dataReader.GetValueText("Body");
+            item.Superadminkey = dataReader.GetValueInt("superadminkey");
         }
+
 
         public VendorManagerModel GetUserPrimaryByCompanyKeyAndResourceKey(int CompanyKey,int ResourceKey)
         {
@@ -2661,7 +2757,7 @@ namespace AssociationBids.Portal.Repository.Base.Code
                         if (status != 0)
                         {
 
-                            VendorInvetationmailsend(status, item.Email, item.ContactPerson, item.LegalName, "Invite");
+                            VendorInvetationmailsend1(status, item.Email, item.ContactPerson, item.CompanyName, "Invite");
                         }
 
                     }

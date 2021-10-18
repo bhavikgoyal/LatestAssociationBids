@@ -58,17 +58,7 @@ namespace AssociationBids.Portal.Controllers
                     }
                     else if (portalKey == 3)
                     {
-
-                        if (Session["InsauranceKey"] == null || Convert.ToInt32(Session["InsauranceKey"]) == 0)
-                        {
-                            return RedirectToAction("CompleteInsurance", "VDashboard");
-                        }
-                        else
-                        {
                             return RedirectToAction("Index", "VDashboard");
-
-                        }
-                      
                     }
                     else
                     {

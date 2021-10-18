@@ -21,6 +21,8 @@ namespace AssociationBids.Portal.Service.Base.Interface
         RegistrationModel Getvendordetails(int companykey);
         RegistrationModel GeAgreementDetails(int companykey);
 
+        bool GetLinkExpiredCheck(int companykey);
+
     }
 }
 

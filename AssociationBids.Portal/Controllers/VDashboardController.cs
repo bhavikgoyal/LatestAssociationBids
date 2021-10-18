@@ -26,7 +26,11 @@ namespace AssociationBids.Portal.Controllers
         {
             long ResourceKey = Convert.ToInt64(Session["resourceid"]);
             long CompanyKey = Convert.ToInt64(Session["CompanyKey"]);
+
             CheckForExipiryDocuments(ResourceKey, CompanyKey);
+
+
+
             return RedirectToAction("Index", "VenderBidrequest");
         }
 

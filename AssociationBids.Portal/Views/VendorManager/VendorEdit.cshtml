@@ -49,8 +49,8 @@
             <ol class="breadcrumb">
                 <!-- breadcrumb -->
                 <li class="breadcrumb-item"><a href="../Dashboard/Dashboard">Home</a></li>
-                <li class="breadcrumb-item"><a href="~/VendorManager/Index">Vendors</a></li>
-                <li class="breadcrumb-item"><a href="~/VendorManager/VendorView?CompanyKey=@ViewBag.cid">Vendors Detail</a></li>
+                <li class="breadcrumb-item"><a id="VendorList" class="VendorList" >Vendors</a></li>
+                <li class="breadcrumb-item"><a id="VendorView" href="" >Vendors Detail</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Edit Vendor</li>
             </ol><!-- End breadcrumb -->
         </div>
@@ -75,7 +75,6 @@
                         <div class="row">
                             <div class="col-md-12">
 
-                                @*<div class="text-right"><a href="@Url.Action("Delete", 'VendorManager', new { id = Model.Vendor.CompanyKey })" id="btnDelete" class="btn btn-icon btn-danger"><i class="fe fe-trash"></i> Delete</a></div>*@
                                 @Html.HiddenFor(model => model.Vendor.CompanyKey)
                                 @Html.HiddenFor(model => model.Vendor.VendorKey)
                             </div>
@@ -196,7 +195,7 @@
                                 </div>
                             </div>
                         }
-                        @using (Html.BeginForm("VendorEdit", "VendorManager", new { CompanyKey = Model.Vendor.CompanyKey, param = Request.QueryString.Get("param") }, FormMethod.Post, new { id = "contactInfo", onsubmit = "return validation()" }))
+                        @using (Html.BeginForm("VendorEdit", "VendorManager", new { CompanyKey = Model.Vendor.CompanyKey, param = Request.QueryString.Get("param"), values = Request.QueryString.Get("value") }, FormMethod.Post, new { id = "contactInfo", onsubmit = "return validation()" }))
                         {
                             @Html.HiddenFor(model => model.Vendor.CompanyKey, new { id = "CompanyKey" })
                             <div class="row">
@@ -255,7 +254,7 @@
 
 
                         @{ List<AssociationBids.Portal.Model.VendorManagerModel> sList = new List<AssociationBids.Portal.Model.VendorManagerModel>();}
-                        @using (Html.BeginForm("VendorEditForService", "VendorManager", new { CompanyKey = Model.Vendor.CompanyKey, vm = sList }, FormMethod.Post, new { id = "services" }))
+                        @using (Html.BeginForm("VendorEditForService", "VendorManager", new { CompanyKey = Model.Vendor.CompanyKey, vm = sList , values = Request.QueryString.Get("value") }, FormMethod.Post, new { id = "services" }))
                         {
                             @Html.HiddenFor(model => model.Vendor.CompanyKey, new { id = "CompanyKey" })
                             <div class="row">
@@ -310,7 +309,7 @@
                         }
                         @if (Model.UserModel != null)
                         {
-                            using (Html.BeginForm("UserAccountChangePassword", "VendorManager", new { UserKey = ViewBag.uid, CompanyKey = Model.Vendor.CompanyKey }, FormMethod.Post, new { id = "userAccount", onsubmit = "return validationUser()" }))
+                            using (Html.BeginForm("UserAccountChangePassword", "VendorManager", new { UserKey = ViewBag.uid, CompanyKey = Model.Vendor.CompanyKey , values = Request.QueryString.Get("value")}, FormMethod.Post, new { id = "userAccount", onsubmit = "return validationUser()" }))
                             {
                                 @Html.HiddenFor(model => model.Vendor.CompanyKey, new { id = "CompanyKey" })
                                 <div class="row">
@@ -392,6 +391,24 @@
         return "none";
     }
     $(document).ready(function () {
+
+
+
+        var value = GetURLParameter('value');
+        if (String(value) != "" && String(value) != "undefined" && String(value) != null) {
+            $("#VendorView").attr("href", "InvitedVendorView?CompanyKey="+ @ViewBag.cid);
+            $(".VendorList").attr("href", "InvitedVendorsList");
+            $("#VendorView").html("View Invited Vendors");
+            $(".VendorList").html("Invited Vendors");
+            
+
+        }
+        else {
+            $("#VendorView").attr("href", "VendorView?CompanyKey="+ @ViewBag.cid);
+            $(".VendorList").attr("href", "Index");
+            //href=""
+        }
+
         $("#Vend1").closest('li').addClass('active');
         $("#Inv3").addClass('active');
         debugger;
@@ -403,7 +420,7 @@
         $('#services').hide();
         $('#userAccount').hide();
         $(".chosen-select").chosen();
-      
+
         var param = getUrlParameter('param');
         //$('#param').val(param);
         if (param == "contact") {
@@ -442,9 +459,8 @@
 
         Services();
         Fillvalueview();
-      
 
-    
+
 
 
 
@@ -718,8 +734,17 @@
             processData: false,
             data: formData,
             success: function (Response) {
+                debugger;
                 if (Response == true || Response == false) {
-                    window.location.href = 'VendorView?CompanyKey=' + CompanyKey;
+                    var value = GetURLParameter('value');
+                    if (String(value) == "IVendorservices") {
+                        window.location.href = 'InvitedVendorView?CompanyKey=' + CompanyKey;
+                    }
+                    else
+                    {
+                        window.location.href = 'VendorView?CompanyKey=' + CompanyKey;
+                    }
+
                 }
 
                 //$('#global-loader').hide();
@@ -733,6 +758,17 @@
         });
         $('#Error').hide();
         return true;
+    }
+
+    function GetURLParameter(sParam) {
+        var sPageURL = window.location.search.substring(1);
+        var sURLVariables = sPageURL.split('&');
+        for (var i = 0; i < sURLVariables.length; i++) {
+            var sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] == sParam) {
+                return decodeURIComponent(sParameterName[1]);
+            }
+        }
     }
 
     function validationUser() {

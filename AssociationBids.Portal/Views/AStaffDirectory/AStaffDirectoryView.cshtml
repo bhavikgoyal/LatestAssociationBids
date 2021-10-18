@@ -362,7 +362,8 @@
     }
 
      $("#btnResetPassword").click(function () {
-        debugger;
+         debugger;
+         $("#global-loader").show();
          var a = $("#UserKey").val();
 
         $.ajax({
@@ -375,7 +376,11 @@
             {
                 $('.errormessage').html('Reset password link has been sent on your registered Email Address.');
                 $('#Error').show();
+                $("#global-loader").hide();
                 $(window).scrollTop(0);
+            },
+            Error: function (res) {
+                $("#global-loader").hide();
             }
         });
     });

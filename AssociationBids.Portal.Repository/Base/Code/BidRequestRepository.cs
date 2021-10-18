@@ -2206,6 +2206,7 @@ namespace AssociationBids.Portal.Repository.Base
                 body = body.Replace("[Property]", Property.ToString().Trim());
                 body = body.Replace("[Services]", Service.ToString().Trim());
                 body = body.Replace("[BidName]", Title.ToString().Trim());
+                body = body.Replace("[Title]", Title.ToString().Trim());
                 body = body.Replace("[ResponseDueDate]", ResponseDueDates.ToString().Trim());
                 body = body.Replace("[BidDueDate]", BidDueDate.ToString().Trim());
                 body = body.Replace("[VendorName]", VendorName.ToString().Trim());

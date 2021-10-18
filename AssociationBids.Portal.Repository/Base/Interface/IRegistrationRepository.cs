@@ -21,6 +21,7 @@ namespace AssociationBids.Portal.Repository.Base.Interface
         int IsEmailExist(string name,int ResourceKey);
         RegistrationModel Getvendordetails(int companykey);
         RegistrationModel GeAgreementDetails(int companykey);
+        bool GetLinkExpiredCheck(int companykey);
 
     }
 }

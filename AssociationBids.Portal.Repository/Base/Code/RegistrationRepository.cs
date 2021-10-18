@@ -873,5 +873,54 @@ namespace AssociationBids.Portal.Repository.Base.Code
                 Common.Error.WriteErrorsToFile(ex.Message.ToString());
             }
         }
+
+        public virtual bool GetLinkExpiredCheck(int companykey)
+        {
+            RegistrationModel item = null;
+            bool status = false;
+            try
+            {
+
+                string storedProcedure = "site_UserRegistrationLink_CheckLinkExpired";
+                using (Database db = new Database(ConnectionString))
+                {
+                    using (DBCommandWrapper commandWrapper = db.GetStoredProcCommandWrapper(storedProcedure))
+                    {
+
+                        // add the stored procedure input parameters
+                        commandWrapper.AddInputParameter("@CompanyKey", SqlDbType.Int, companykey);
+
+                        // add stored procedure output parameters
+                        commandWrapper.AddOutputParameter("@errorCode", SqlDbType.Int);
+
+                        using (DBDataReader dataReader = db.ExecuteReader(commandWrapper))
+                        {
+                            while (dataReader.Read())
+                            {
+                                item = new RegistrationModel();
+
+                                status=  GetLinkExpiredCheck(dataReader);
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Error.WriteErrorsToFile(ex.Message.ToString());
+            }
+
+            return status;
+        }
+        protected bool  GetLinkExpiredCheck(DBDataReader dataReader)
+        {
+            bool status = false;
+            status = dataReader.GetValueBool("Link_Expiration");
+            
+
+            return status;
+
+        }
     }
 }

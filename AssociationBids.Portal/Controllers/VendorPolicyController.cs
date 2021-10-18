@@ -290,5 +290,62 @@ namespace AssociationBids.Portal.Controllers
                 return Json(null);
             }
         }
+
+        public JsonResult UpdateRegistrationDocUpload()
+        {
+            try
+            {
+                bool value = false;
+                List<BidRequestModel> lstVendor = null;
+                VendorManagerModel bidRequestModel = new VendorManagerModel();
+                if (Request.Form.Count > 0)
+                {
+                    int InsuranceKey = 0;
+                    StringBuilder FileName = new StringBuilder();
+                    StringBuilder FileSize = new StringBuilder();
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {
+                        var file = Request.Files[i];
+                        FileName.Append(Path.GetFileName(file.FileName));
+                        FileName.Append(",");
+                        FileSize.Append(file.ContentLength);
+                        FileSize.Append(",");
+
+                        InsuranceKey = Convert.ToInt32(Request.Form["InsuranceKey"]);
+                        //int modulekey = Convert.ToInt32(Request.Form["Modulekey"]);
+                        var module = new ModuleService().GetAll(new ModuleFilterModel());
+                        var key = module.Where(w => w.Title == "Insurance").FirstOrDefault().ModuleKey;
+                        value = _vendorPolicy.UpdateDocInsert(InsuranceKey, file.FileName, file.ContentLength.ToString(), key);
+                    }
+                    if (Request.Files.Count != 0)
+                    {
+                        FileName.Remove(FileName.Length - 1, 1);
+                        FileSize.Remove(FileSize.Length - 1, 1);
+                    }
+
+                    
+
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {
+                        var file = Request.Files[i];
+                        var fileName = Path.GetFileName(file.FileName);
+                        var path = Path.Combine(Server.MapPath("~/Document/Insurance/"), InsuranceKey + fileName);
+
+                        Directory.CreateDirectory(Server.MapPath("~/Document/Insurance/" + InsuranceKey));
+                        file.SaveAs(Server.MapPath("~/Document/Insurance/" + InsuranceKey + fileName));
+
+
+
+                    }
+
+                    //bidRequestModel.Insurance.InsuranceKey = InsuranceKey;
+                }
+                return Json(0, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(null);
+            }
+        }
     }
 }

@@ -88,7 +88,7 @@
     </style>
 </head>
 <body>
-
+    
     <script src="~/Content/themes/assets/js/vendors/jquery-3.2.1.min.js"></script>
     <!-- app-content-->
     <div class="app-content  my-3 my-md-5">
@@ -99,133 +99,135 @@
             @using (Html.BeginForm("CompleteInsurance", "VDashboard", new { CompanyKey = ViewBag.cid }, FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return validationInsuranceNew()" }))
             {
 
-
-            <div class="modal-content" style="width:50%; margin:auto">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addvendor1" style="font-weight:200;">Add Insurance</h5>
-
+                <div id="global-loader" style="display:none">
+                    <img src="~/Content/themes/assets/images/brand/icon.png" alt="loader">
                 </div>
+                <div class="modal-content" style="width:50%; margin:auto">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addvendor1" style="font-weight:200;">Add Insurance</h5>
+
+                    </div>
 
 
-                <div class="alert alert-danger" id="Error" style="display:block; margin-top: 20px;display:none;">
-                    <strong><span class="errormessage"></span></strong>
-                </div>
-                <div class="alert alert-success" id="sucess" style="display:block; margin-top: 20px;display:none;">
-                    <strong><span class="sucessmessage"></span></strong>
-                </div>
+                    <div class="alert alert-danger" id="Error" style="display:block; margin-top: 20px;display:none;">
+                        <strong><span class="errormessage"></span></strong>
+                    </div>
+                    <div class="alert alert-success" id="sucess" style="display:block; margin-top: 20px;display:none;">
+                        <strong><span class="sucessmessage"></span></strong>
+                    </div>
 
-                <div class="row">
-                    <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
 
 
-                        <div class="card-body">
+                            <div class="card-body">
 
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="expanel expanel-default">
-                                        <div class="expanel-body">
-                                            <div>
-                                                <div class="form-group">
-                                                    <label class="form-label">Policy Number <span class="text-danger">*</span></label>
-                                                    @Html.TextBoxFor(model => model.Insurance.PolicyNumber, new { @class = "form-control", PlaceHolder = "Policy Number" })
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="form-label">Amount <span class="text-danger">*</span></label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <i class="fa fa-dollar tx-16 lh-0 op-6"></i>
-                                                            </div>
-                                                        </div>@Html.TextBoxFor(model => model.Insurance.InsuranceAmount, new { @class = "form-control", PlaceHolder = "Insurance Amount" })
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="expanel expanel-default">
+                                            <div class="expanel-body">
+                                                <div>
+                                                    <div class="form-group">
+                                                        <label class="form-label">Policy Number <span class="text-danger">*</span></label>
+                                                        @Html.TextBoxFor(model => model.Insurance.PolicyNumber, new { @class = "form-control", PlaceHolder = "Policy Number" })
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="form-label">Start Date <span class="text-danger">*</span></label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
-                                                            </div>
-                                                        </div>@Html.TextBoxFor(model => model.Insurance.StartDate, new { @class = "form-control fc-datepicker", placeholder = "MM/DD/YYYY", autocomplete = "off" })
+                                                    <div class="form-group">
+                                                        <label class="form-label">Amount <span class="text-danger">*</span></label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <div class="input-group-text">
+                                                                    <i class="fa fa-dollar tx-16 lh-0 op-6"></i>
+                                                                </div>
+                                                            </div>@Html.TextBoxFor(model => model.Insurance.InsuranceAmount, new { @class = "form-control", PlaceHolder = "Insurance Amount" })
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                    <div class="form-group">
+                                                        <label class="form-label">Start Date <span class="text-danger">*</span></label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <div class="input-group-text">
+                                                                    <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                                                </div>
+                                                            </div>@Html.TextBoxFor(model => model.Insurance.StartDate, new { @class = "form-control fc-datepicker", placeholder = "MM/DD/YYYY", autocomplete = "off" })
+                                                        </div>
+                                                    </div>
 
-                                                <div class="form-group">
-                                                    <label class="form-label">End Date <span class="text-danger">*</span></label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
-                                                            </div>
-                                                        </div>@Html.TextBoxFor(model => model.Insurance.EndDate, new { @class = "form-control fc-datepicker", placeholder = "MM/DD/YYYY", autocomplete = "off" })
+                                                    <div class="form-group">
+                                                        <label class="form-label">End Date <span class="text-danger">*</span></label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <div class="input-group-text">
+                                                                    <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                                                </div>
+                                                            </div>@Html.TextBoxFor(model => model.Insurance.EndDate, new { @class = "form-control fc-datepicker", placeholder = "MM/DD/YYYY", autocomplete = "off" })
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="form-label">Renewal Date <span class="text-danger">*</span></label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
-                                                            </div>
-                                                        </div>@Html.TextBoxFor(model => model.Insurance.RenewalDate, new { @class = "form-control fc-datepicker", placeholder = "MM/DD/YYYY", autocomplete = "off" })
+                                                    <div class="form-group">
+                                                        <label class="form-label">Renewal Date <span class="text-danger">*</span></label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend">
+                                                                <div class="input-group-text">
+                                                                    <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
+                                                                </div>
+                                                            </div>@Html.TextBoxFor(model => model.Insurance.RenewalDate, new { @class = "form-control fc-datepicker", placeholder = "MM/DD/YYYY", autocomplete = "off" })
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="expanel expanel-default">
-                                        <div class="expanel-body">
-                                            <div class="form-group">
-                                                <label class="form-label">Upload New Insurance</label>
-                                                <input type="file" name="files" class="dropify" multiple="multiple" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="expanel expanel-default">
+                                            <div class="expanel-body">
+                                                <div class="form-group">
+                                                    <label class="form-label">Upload New Insurance</label>
+                                                    <input type="file" name="files" class="dropify" multiple="multiple" />
+                                                </div>
+
+
                                             </div>
-
-
                                         </div>
+
                                     </div>
+                                </div>
+
+
+                            </div><!-- end of card body -->
+                            <div class="card-footer">
+                                <div class="button-row d-flex">
 
                                 </div>
+                                <input type="hidden" id="HdnSkip" value="" />
+                                <button class="btn btn-primary ml-auto" title="Enter Later" onclick="Skipthis();"> Enter Later <i class="fa fa-arrow-right"></i></button>
+                                <button class="btn btn-info ml-auto" title="Add Policy"><i class="fa fa-check"></i> Add Policy</button>
                             </div>
 
-
-                        </div><!-- end of card body -->
-                        <div class="card-footer">
-                            <div class="button-row d-flex">
-
-                            </div>
-                            <input type="hidden" id="HdnSkip" value="" />
-                            <button class="btn btn-primary ml-auto" title="Enter Later" onclick="Skipthis();"> Enter Later <i class="fa fa-arrow-right"></i></button>
-                            <button class="btn btn-info ml-auto" title="Add Policy"><i class="fa fa-check"></i> Add Policy</button>
-                        </div>
-
-                    </div><!-- end of col -->
+                        </div><!-- end of col -->
+                    </div>
                 </div>
-            </div>
 
-           
+
             }
 
 
 
 
-                </div><!--End side app-->
-            <!--footer-->
-            <!-- End Footer-->
-        </div>
-                    <!-- End app-content-->
+        </div><!--End side app-->
+        <!--footer-->
+        <!-- End Footer-->
+    </div>
+    <!-- End app-content-->
 
     <script>
                         $(document).ready(function () {
                             $("#AccpectUserTerms").modal("show");
 
-                            $('#loader').show();
+                          
                             $('.errormessage').html('');
                             $('#Error').hide();
 
-                            $('#loader').hide();
+                          
 
                         });
 
@@ -279,7 +281,7 @@
 
                          function Skipthis() {
                              $('#Error').hide();
-                             
+
                              $("#HdnSkip").val('Skip');
                               window.location.href = '@Url.Action("Skipins", "VDashboard")';
                         }
@@ -337,6 +339,8 @@
                         function validationInsuranceNew() {
 
                             debugger;
+                            $('#loader').show();
+                            $('#global-loader').show();
                             var EndDate = new Date($("#Insurance_EndDate").val());
                             var StartDate = new Date($("#Insurance_StartDate").val());
                             var RenewalDate = new Date($("#Insurance_RenewalDate").val());
@@ -357,36 +361,42 @@
                                 if ($("#Insurance_PolicyNumber").val() == '') {
                                     $('.errormessage').html('Please enter mandatory fields.');
                                     $('#Error').show();
+                                    $('#global-loader').hide();
                                     $(window).scrollTop(0);
                                     return false;
                                 }
                                 else if (isNaN($("#Insurance_InsuranceAmount").val()) || $("#Insurance_InsuranceAmount").val() <= 0) {
                                     $('.errormessage').html('Please enter mandatory fields.');
                                     $('#Error').show();
+                                    $('#global-loader').hide();
                                     $(window).scrollTop(0);
                                     return false;
                                 }
                                 else if ($("#Insurance_StartDate").val() == "") {
                                     $('.errormessage').html('Please enter mandatory fields.');
                                     $('#Error').show();
+                                    $('#global-loader').hide();
                                     $(window).scrollTop(0);
                                     return false;
                                 }
                                 else if ($("#Insurance_EndDate").val() == "") {
                                     $('.errormessage').html('Please enter mandatory fields.');
                                     $('#Error').show();
+                                    $('#global-loader').hide();
                                     $(window).scrollTop(0);
                                     return false;
                                 }
                                 else if ($("#Insurance_RenewalDate").val() == "") {
                                     $('.errormessage').html('Please enter mandatory fields.');
                                     $('#Error').show();
+                                    $('#global-loader').hide();
                                     $(window).scrollTop(0);
                                     return false;
                                 }
                                 else if ($("#Insurance_StartDate").val().split(" ")[0].split("/")[2] <= '1900') {
                                     $('.errormessage').html('Please enter valid Start Date.');
                                     $('#Error').show();
+                                    $('#global-loader').hide();
                                     $(window).scrollTop(0);
                                     return false;
                                 }
@@ -394,6 +404,7 @@
                                 else if (EndDate < StartDate) {
                                     $('.errormessage').html('End Date must be greater than Start Date.');
                                     $('#Error').show();
+                                    $('#global-loader').hide();
                                     $(window).scrollTop(0);
                                     return false;
                                 }
@@ -401,6 +412,7 @@
                                 else if (RenewalDate <= StartDate || RenewalDate > EndDate) {
                                     $('.errormessage').html('Renewal Date must be equal or less than End Date.');
                                     $('#Error').show();
+                                    $('#global-loader').hide();
                                     $(window).scrollTop(0);
                                     return false;
                                 }
@@ -410,58 +422,58 @@
                             {
                                 return false;
                             }
-                            
+
                         }
     </script>
-                    <!--Bootstrap.min js-->
-                    <script src="~/Content/themes/assets/plugins/bootstrap/popper.min.js"></script>
-                    <script src="~/Content/themes/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!--Bootstrap.min js-->
+    <script src="~/Content/themes/assets/plugins/bootstrap/popper.min.js"></script>
+    <script src="~/Content/themes/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 
 
-                    <!--Jquery Sparkline js-->
-                    <script src="~/Content/themes/assets/js/vendors/jquery.sparkline.min.js"></script>
-
-
-
-                    <!--Moment js-->
-                    <script src="~/Content/themes/assets/plugins/moment/moment.min.js"></script>
-
-                    <!-- File uploads js -->
-                    <script src="~/Content/themes/assets/plugins/fileuploads/js/dropify.js"></script>
-                    <script src="~/Content/themes/assets/plugins/fileuploads/js/dropify-demo.js"></script>
-
-                    <!--Select2 js -->
-                    <script src="~/Content/themes/assets/plugins/select2/select2.full.min.js"></script>
-                    <script src="~/Content/themes/assets/js/select2.js"></script>
-                    <!-- Daterangepicker js-->
-                    <script src="~/Content/themes/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!--Jquery Sparkline js-->
+    <script src="~/Content/themes/assets/js/vendors/jquery.sparkline.min.js"></script>
 
 
 
+    <!--Moment js-->
+    <script src="~/Content/themes/assets/plugins/moment/moment.min.js"></script>
 
+    <!-- File uploads js -->
+    <script src="~/Content/themes/assets/plugins/fileuploads/js/dropify.js"></script>
+    <script src="~/Content/themes/assets/plugins/fileuploads/js/dropify-demo.js"></script>
 
-
-                    <!-- Custom js-->
-                    <script src="~/Content/themes/assets/js/custom.js"></script>
-                    <link rel="stylesheet" href="../assets/css/cust-wizard.css">
-                    <script src="../assets/js/cust-wizard.js"></script>
-
-                    <script src="~/Content/themes/chosen.jquery.min.js"></script>
-                    <link href="~/Content/themes/chosen.min.css" rel="stylesheet" />
-
-
-                    <!-- Datepicker js -->
-                    <script src="~/Content/themes/assets/plugins/spectrum-date-picker/spectrum.js"></script>
-                    <script src="~/Content/themes/assets/plugins/spectrum-date-picker/jquery-ui.js"></script>
-                    <script src="~/Content/themes/assets/plugins/input-mask/jquery.maskedinput.js"></script>
+    <!--Select2 js -->
+    <script src="~/Content/themes/assets/plugins/select2/select2.full.min.js"></script>
+    <script src="~/Content/themes/assets/js/select2.js"></script>
+    <!-- Daterangepicker js-->
+    <script src="~/Content/themes/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
 
 
 
 
 
-                    <!--Daterangepicker css-->
-                    <link href="~/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
-                    <script src="~/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Custom js-->
+    <script src="~/Content/themes/assets/js/custom.js"></script>
+    <link rel="stylesheet" href="../assets/css/cust-wizard.css">
+    <script src="../assets/js/cust-wizard.js"></script>
+
+    <script src="~/Content/themes/chosen.jquery.min.js"></script>
+    <link href="~/Content/themes/chosen.min.css" rel="stylesheet" />
+
+
+    <!-- Datepicker js -->
+    <script src="~/Content/themes/assets/plugins/spectrum-date-picker/spectrum.js"></script>
+    <script src="~/Content/themes/assets/plugins/spectrum-date-picker/jquery-ui.js"></script>
+    <script src="~/Content/themes/assets/plugins/input-mask/jquery.maskedinput.js"></script>
+
+
+
+
+
+    <!--Daterangepicker css-->
+    <link href="~/assets/plugins/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet" />
+    <script src="~/assets/plugins/bootstrap-daterangepicker/daterangepicker.js"></script>
 
 
 

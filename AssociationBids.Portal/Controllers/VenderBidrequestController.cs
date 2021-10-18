@@ -18,17 +18,30 @@ namespace AssociationBids.Portal.Controllers
         private IABNotificationService __notification;
         private readonly AssociationBids.Portal.Service.Base.IBidRequestService _bidRequestservice;
         private readonly IBidRequestService _venderbidrequestservice;
+        private IVendorPolicyService _vendorPolicy;
         private readonly AssociationBids.Portal.Service.Base.IAStaffDirectoryService _staffDirectoryservice;
-        public VenderBidrequestController(IABNotificationService notificationService, IBidRequestService registrationService, AssociationBids.Portal.Service.Base.IAStaffDirectoryService staffDirectoryService, AssociationBids.Portal.Service.Base.IBidRequestService bidRequestService)
+        public VenderBidrequestController(IABNotificationService notificationService, IBidRequestService registrationService, AssociationBids.Portal.Service.Base.IAStaffDirectoryService staffDirectoryService, IVendorPolicyService policyService, AssociationBids.Portal.Service.Base.IBidRequestService bidRequestService)
         {
             this._staffDirectoryservice = staffDirectoryService;
             this._bidRequestservice = bidRequestService;
             this._venderbidrequestservice = registrationService;
+            _vendorPolicy = policyService;
             __notification = notificationService;
         }
         // GET: Bidrequest
         public ActionResult Index()
-        {
+        {   
+            var c = Session["companykey"];
+            int CompanyKey = Convert.ToInt32(c);
+            List<InsuranceModel> itemList = _vendorPolicy.GetInsurancePaging(CompanyKey, 10, 1, "", "order by PolicyNumber asc");
+            if (itemList.Count == 0)
+            {
+                ViewBag.inskey = 0;
+            }
+            else
+            {
+                ViewBag.inskey = itemList.Count;
+            }
             return View();
         }
         public ActionResult BidRequests(int BidReuestKey = 0)

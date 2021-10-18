@@ -344,6 +344,7 @@
 
     $("#btnResetPassword").click(function () {
         //alert("");
+        $("#global-loader").show();
         $.ajax({
             url: '@Url.Action("ResetPassword", "ACompanyManagement")',
             cache: false,
@@ -354,11 +355,15 @@
             {
                 debugger;
                 $('.errormessage').html('Reset password link has been sent on your registered Email Address.');
+                $("#global-loader").hide();
                 if (response.toString().indexOf('Exception') >= 0) {
                     $('.errormessage').html(response);
                 }
                 $('#Error').show();
                 $(window).scrollTop(0);
+            },
+            Error: function (res) {
+                $("#global-loader").hide();
             }
         });
     });

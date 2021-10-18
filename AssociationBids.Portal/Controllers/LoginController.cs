@@ -102,16 +102,17 @@ namespace AssociationBids.Portal.Controllers
                             }
                             else if (loginResponseModel.Title == "Vendor Portal")
                             {
+                                return RedirectToAction("Index", "VDashboard");
 
-                                if (loginResponseModel.InsauranceKey == null || loginResponseModel.InsauranceKey == 0 )
-                                {
-                                    return RedirectToAction("CompleteInsurance", "VDashboard");
-                                }
-                                else
-                                {
-                                    return RedirectToAction("Index", "VDashboard");
-                                }
-                               
+                                //if (loginResponseModel.InsauranceKey == null || loginResponseModel.InsauranceKey == 0 )
+                                //{
+                                //    return RedirectToAction("Index", "VDashboard");
+                                //}
+                                //else
+                                //{
+                                //    return RedirectToAction("Index", "VDashboard");
+                                //}
+
                             }
                             else
                             {

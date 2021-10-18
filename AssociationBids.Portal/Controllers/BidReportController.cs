@@ -166,22 +166,6 @@ namespace AssociationBids.Portal.Controllers
             int BidRequestKey = Convert.ToInt32(Request.Form["BidRequestKey"].ToString());
             int modulekey = Convert.ToInt32(Request.Form["Modulekey"].ToString());
 
-            //string BidRequestStatus = Request.Form["BidRequestStatus"].ToString();
-            //int PropertyKey = Convert.ToInt32(Request.Form["PropertyKey"].ToString());
-            //string FromDates = Request.Form["FromDate"].ToString();
-            //string ToDates = Request.Form["ToDate"].ToString();
-            //DateTime FromDate = new DateTime();
-            //DateTime ToDate = new DateTime();
-            //if (FromDates != "")
-            //{
-            //    FromDate = Convert.ToDateTime(FromDates);
-            //}
-
-            //if (ToDates != "")
-            //{
-            //    ToDate = Convert.ToDateTime(ToDates);
-            //}
-
             lstVendor = _bidReportservice.SearchVendorByBidRequest(BidRequestKey, modulekey);
             return Json(lstVendor, JsonRequestBehavior.AllowGet);
         }

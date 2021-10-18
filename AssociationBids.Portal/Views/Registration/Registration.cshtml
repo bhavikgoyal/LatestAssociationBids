@@ -75,6 +75,10 @@
 
     <style>
 
+        #divdoc{
+            height: 222px !important;
+            overflow: scroll !important;
+        }
         .validclasssizemm {
             width: 58px !important;
             margin-left: -40px !important;
@@ -559,7 +563,7 @@
                                                                         <div class="form-group">
                                                                             <label class="form-label">Upload Insurance Document </label>
                                                                             @Html.TextBoxFor(model => model.Insurancefiles, "", new { @type = "file", @class = "dropify", @multiple = "multiple" })
-                                                                        <input type="hidden" class="InsurancefilesView" id="InsurancefilesView" value="" />
+                                                                            <input type="hidden" class="InsurancefilesView" id="InsurancefilesView" value="" />
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <div class="col-md-12" id="divdoc1">
@@ -573,7 +577,7 @@
                                                                                                 </th>
                                                                                                 <th width="5%"></th>
                                                                                                 @*
-                                <th width="5%"></th>*@
+                                            <th width="5%"></th>*@
                                                                                             </tr>
                                                                                         </thead>
                                                                                         <tbody>
@@ -582,10 +586,10 @@
                                                                                                     <a target="_blank" href="#" class="upd-fl" style="cursor: pointer;text-decoration:none;"></a>
                                                                                                 </td>
                                                                                                 <td align="center">
-                                                                                                    <a title="Delete" onclick="removeDoc(this);" href="#" data-toggle="modal" data-target="#uploadmodaldelete"><i class="fe fe-trash redtxt font18"></i></a>
+                                                                                                    <a title="Delete" onclick="removeDoc(this);" href="#"><i class="fe fe-trash redtxt font18"></i></a>
                                                                                                 </td>
                                                                                                 @*
-                                <td align="center"><a id="viewdata1" class="badge badge-primary pull-right" data-toggle="modal" data-target="#viewinsurance"><i class="fa fa-certificate"></i> View Insurance</a></td>*@
+                                            <td align="center"><a id="viewdata1" class="badge badge-primary pull-right" data-toggle="modal" data-target="#viewinsurance"><i class="fa fa-certificate"></i> View Insurance</a></td>*@
 
                                                                                             </tr>
                                                                                         </tbody>
@@ -596,70 +600,41 @@
 
                                                                         </div>
 
-                                                                        <div class="modal fade" id="uploadmodaldelete" tabindex="-1" role="dialog" aria-labelledby="uploadmodalLabel" aria-hidden="true">
-                                                                            <div class="modal-dialog" role="document">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title" id="acceptbidrequestLabel">Delete</h5>
-                                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                            <span aria-hidden="true">×</span>
-                                                                                        </button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
 
-                                                                                        <div class="form-popup">
-                                                                                            <div class="row">
-                                                                                                <div class="col-md-12">
-                                                                                                    <div class="custom-controls-stacked">
-                                                                                                        <input type="hidden" class="dockey" id="dockey" value="" />
-                                                                                                        <h5 id="popupmsg" class="modal-title" style="color:black !important;">Are you sure you want to delete this record?</h5>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button id="btncanpop" type="button" class="btn btn-sm btn-info" data-dismiss="modal">Cancel</button>
-                                                                                        <a id="PopCancelByVender" onclick="DeleteDocument();" href="#" class="btn btn-sm btn-default"><i class="fa fa-check-square"></i> Yes</a>
-                                                                                        @* <a href="" class="font18 deleteVendor text-danger deleteVendor" data-toggle="modal" data-target="#deletepopup"><i class="fe fe-trash"></i></a>*@
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
                                                                         @*<div class="form-group">
-            <label class="form-label">Upload License</label>
-            @Html.TextBoxFor(model => model.licensefiles, "", new { @type = "file", @class = "dropify" })
+                        <label class="form-label">Upload License</label>
+                        @Html.TextBoxFor(model => model.licensefiles, "", new { @type = "file", @class = "dropify" })
 
-        </div>*@
+                    </div>*@
                                                                     </div><!-- end of col -->
 
 
                                                                 </div><!-- end of row-->
 
                                                             </div><!-- end of card body -->
-
                                                             <div class="card-footer">
                                                                 <div class="button-row d-flex">
-                                                                    <div style="width: 15%;">
+                                                                    <div style="width: 55%;">
                                                                         <button class="btn btn-warning js-btn-prev" type="button" title="Prev"><i class="fe fe-chevron-left"></i> Prev</button>
                                                                     </div>
-                                                                    <div style="width: 85%;">
-                                                                        <button class="btn btn-primary js-btn-next" style="float: right !important; margin-left: 10px !important;" type="button" id="SkipIdinsurance" title="Enter Later">Enter Later <i class="fe fe-chevron-right"></i></button>
-                                                                        <button class="btn btn-info  js-btn-next" style="float:right !important" type="button" id="btninsurance" onsubmit="return validationInsurance()" title="Next">Next <i class="fe fe-chevron-right"></i></button>
-                                                                    </div>
+                                                                    <div style="width: 45%;">
+                                                                        <button class="btn btn-info ml-auto js-btn-next" style="float:right !important;" type="button" id="btninsurance" onsubmit="return validationInsurance()">Next <i class="fe fe-chevron-right"></i></button>
+                                                                        <button class="btn btn-primary ml-auto js-btn-next" style=" margin-right: 10px !important; float:right" type="button" id="SkipIdinsurance" title="Enter Later">Enter Later <i class="fe fe-chevron-right"></i></button>
 
+                                                                    </div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
+                                                          
 
 
 
 
                                                             @*<div class="card-footer">
-                                    <div class="button-row d-flex">
-                                        <button class="btn btn-warning js-btn-prev" type="button" title="Prev"><i class="fe fe-chevron-left"></i> Prev</button>
-                                        <button class="btn btn-info ml-auto js-btn-next" type="button" id="btninsurance" onsubmit="return validationInsurance()" title="Next">Next <i class="fe fe-chevron-right"></i></button>
-                                    </div>
-                                </div>*@
+            <div class="button-row d-flex">
+                <button class="btn btn-warning js-btn-prev" type="button" title="Prev"><i class="fe fe-chevron-left"></i> Prev</button>
+                <button class="btn btn-info ml-auto js-btn-next" type="button" id="btninsurance" onsubmit="return validationInsurance()" title="Next">Next <i class="fe fe-chevron-right"></i></button>
+            </div>
+        </div>*@
                                                         </div><!-- end of card -->
                                                     </div><!-- end of col -->
                                                 </div><!-- end of row -->
@@ -689,7 +664,7 @@
                                                                     <div class="col-md-6">
                                                                         <div class="form-group">
                                                                             <label class="form-label">Card Number @Html.ValidationMessageFor(model => model.CardNumber, "*", new { @class = "text-danger" })</label>
-                                                                            @Html.EditorFor(model => model.CardNumber, new { htmlAttributes = new { @class = "form-control", @tabindex = "2", autocomplete = "off", placeholder = "Card Number", @maxlength = 19 } })
+                                                                            @Html.EditorFor(model => model.CardNumber, new { htmlAttributes = new { @class = "form-control", @tabindex = "2", autocomplete = "off", placeholder = "Card Number", @maxlength = 19, @onkeyup = "OnChangecard()" } })
                                                                         </div>
                                                                     </div><!-- end of col -->
 
@@ -697,8 +672,8 @@
                                                                         <div class="form-group">
                                                                             <label class="form-label">Valid Till @Html.ValidationMessageFor(model => model.ValidTillMM, "*", new { @class = "text-danger" })</label>
                                                                             @Html.EditorFor(model => model.ValidTillMM, new
-                                                                            {
-                                                                                htmlAttributes = new { @class = "form-control", @tabindex = "3", autocomplete = "off", placeholder = "MM", @maxlength = 2 }
+                                                                       {
+                                                                           htmlAttributes = new { @class = "form-control", @tabindex = "3", autocomplete = "off", placeholder = "MM", @maxlength = 2, @onkeyup = "OnChangecard()" }
 
                                                                        })
 
@@ -709,14 +684,14 @@
                                                                     <div class="col-md-2">
                                                                         <div class="form-group">
                                                                             <label class="form-label">&nbsp; </label>
-                                                                            @Html.EditorFor(model => model.ValidTillYY, new { htmlAttributes = new { @class = "form-control", @tabindex = "4", autocomplete = "off", placeholder = "YY", @maxlength = 2 } })
+                                                                            @Html.EditorFor(model => model.ValidTillYY, new { htmlAttributes = new { @class = "form-control", @tabindex = "4", autocomplete = "off", placeholder = "YY", @maxlength = 2 , @onkeyup = "OnChangecard()" } })
                                                                         </div>
                                                                     </div>
                                                                     <!-- end of col -->
                                                                     <div class="col-md-2">
                                                                         <div class="form-group">
                                                                             <label class="form-label">CVV @Html.ValidationMessageFor(model => model.CVV, "*", new { @class = "text-danger" })</label>
-                                                                            @Html.EditorFor(model => model.CVV, new { htmlAttributes = new { @class = "form-control", @tabindex = "5", autocomplete = "off", placeholder = "CVV", @maxlength = 4 } })
+                                                                            @Html.EditorFor(model => model.CVV, new { htmlAttributes = new { @class = "form-control", @tabindex = "5", autocomplete = "off", placeholder = "CVV", @maxlength = 4 , @onkeyup = "OnChangecard()" } })
 
                                                                         </div>
                                                                     </div><!-- end of col -->
@@ -734,14 +709,17 @@
 
                                                             <div class="card-footer">
                                                                 <div class="button-row d-flex">
-                                                                    <div style="width: 85%;">
+                                                                    <div style="width: 55%;">
                                                                         <button class="btn btn-warning js-btn-prev" type="button" title="Prev"><i class="fe fe-chevron-left"></i> Prev</button>
                                                                     </div>
-                                                                    <button class="btn btn-info ml-auto js-btn-next" type="button" id="btnnextcard" title="Next">Next <i class="fe fe-chevron-right"></i></button>
+                                                                    <div style="width: 45%;">
+                                                                        <button class="btn btn-info ml-auto js-btn-next" type="button" id="btnnextcard" title="Next" style=" float:right">Next <i class="fe fe-chevron-right"></i></button>
+                                                                        <button class="btn btn-primary ml-auto js-btn-next" type="button" style=" margin-right: 10px !important; float:right" id="SkipIcc" title="Enter Later">Enter Later <i class="fe fe-chevron-right"></i></button>
 
-                                                                    <button class="btn btn-primary ml-auto js-btn-next" type="button" id="SkipIcc" title="Enter Later">Enter Later <i class="fe fe-chevron-right"></i></button>
+                                                                    </div>
+
+                                                                    </div>
                                                                 </div>
-                                                            </div>
 
 
 
@@ -777,29 +755,32 @@
                                                                             <thead>
                                                                                 <tr>
                                                                                     @*<th width="15%" onclick="SortingFun('StartAmount');" style="cursor: pointer;">
-                                                            Start Amount <i id="StartAmount" class="fa fa-sort-asc pull-right"></i>
+            Start Amount <i id="StartAmount" class="fa fa-sort-asc pull-right"></i>
 
-                                                        </th>
-                                                        <th width="15%" onclick="SortingFun('EndAmount');" style="cursor: pointer;">
-                                                            End Amount<i id="EndAmount" class="fa fa-sort-asc pull-right"></i>
+        </th>
+        <th width="15%" onclick="SortingFun('EndAmount');" style="cursor: pointer;">
+            End Amount<i id="EndAmount" class="fa fa-sort-asc pull-right"></i>
 
-                                                        </th>*@
-                                                                                    <th width="15%">
-                                                                                        Fee Amounts
+        </th>*@
 
-                                                                                    </th>
+
                                                                                     <th width="15%">
                                                                                         Pricing Type
 
                                                                                     </th>
+                                                                                    <th width="15%">
+                                                                                        Fee Amounts
+
+                                                                                    </th>
+
                                                                                     @*<th width="15%" onclick="SortingFun('Company');" style="cursor: pointer;">
-                                                            Company<i id="Company" class="fa fa-sort-asc pull-right"></i>
+            Company<i id="Company" class="fa fa-sort-asc pull-right"></i>
 
-                                                        </th>*@
+        </th>*@
                                                                                     @*<th width="15%">
-                                                            Sort Order
+            Sort Order
 
-                                                        </th>*@
+        </th>*@
                                                                                     @*<th width="5%">&nbsp;</th>*@
                                                                                 </tr>
                                                                             </thead>
@@ -807,9 +788,10 @@
 
                                                                                 <tr>
                                                                                     @*<td>$<span class="StartAmount"></span></td>
-                                                        <td>$<span class="EndAmount"></span></td>*@
-                                                                                    <td><span class="FeeAmount"></span></td>
+        <td>$<span class="EndAmount"></span></td>*@
                                                                                     <td><span class="PricingType"></span></td>
+                                                                                    <td><span class="FeeAmount"></span></td>
+
                                                                                     @*<td><span class="Company"></span></td>*@
                                                                                     @*<td><span class="SortOrder"></span></td>*@
                                                                                     @*<td align="center"><a id="viewdata" title="View Details" role="button"><i class="fe fe-eye font18"></i></a></td>*@
@@ -825,10 +807,12 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="pull-left">
-                                                                        <input type="checkbox" onchange="shownwxtto();" id="chkPricing" />
+                                                                        <label class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" onchange="shownwxtto();" id="chkPricing" />
                                                                         @*<input type="checkbox" class="custom-control-input" id="chkPricing" name="example-checkbox4" onchange="return onchangePricingbox();" value="option4">*@
                                                                         @*<input type="checkbox" class="custom-control-input" id="chkPricing" name="example-checkbox4" onchange="return onchangePricingbox();" value="option4">*@
-                                                                        <label>I have read and accept the pricing fees</label>
+                                                                        <span class="custom-control-label">I have read and accept the pricing fees</span>
+                                                                        </label>
                                                                     </div>
                                                                 </div><!-- end of row-->
 
@@ -1425,6 +1409,8 @@
                 $("#advancesearch3").toggle(500);
             });
             $(".overlayclose").click(function () {
+              
+
                 $("#advancesearch3").hide();
             });
              var mySetting = '@System.Configuration.ConfigurationManager.AppSettings["MapCheck"].ToString()';
@@ -1433,7 +1419,7 @@
             BindAgreementDetails();
             LoadSortTableFill();
             openModal();
-
+            $("#btnnextcard").attr("disabled", true);
             $("#divdoc1").hide();
             $("#StartDate").val('');
             $("#EndDate").val('');
@@ -1553,11 +1539,56 @@
             });
         }
 
+        $("#StartDate").change("click", function () {
+            //debugger;
+            var EndDate = new Date($("#EndDate").val());
+            var StartDate = new Date($("#StartDate").val());
+            var RenewalDate = new Date($("#RenewalDate").val());
+            debugger;
+            StartDate.setHours(0, 0, 0, 0)
+
+            if (StartDate == "Invalid Date") {
+
+                $(".errormessage").html("Invalid Date.");
+                $('#Error').show();
+                $("#Insurance_StartDate").val("");
+                $(window).scrollTop(0);
+                return false;
+
+            }
+
+            else if (EndDate < StartDate || RenewalDate < StartDate) {
+                $('.errormessage').html('Start Date must be less then End Date and Renewal Date.');
+
+                $('#Error').show();
+                $("#Insurance_StartDate").val("");
+                $(window).scrollTop(0);
+                //event.preventDefault();
+                return false;
+            }
+
+            $('#Error').hide();
+            return true;
+
+        }
+        );
 
         $("#EndDate").change("click", function () {
             //debugger;
             var EndDate = new Date($("#EndDate").val());
             var StartDate = new Date($("#StartDate").val());
+
+            EndDate.setHours(0, 0, 0, 0)
+
+            if (EndDate == "Invalid Date") {
+                debugger;
+                $(".errormessage").html("Invalid Date.");
+                $('#Error').show();
+                $("#Insurance_StartDate").val("");
+                $(window).scrollTop(0);
+                return false;
+
+            }
 
             if (EndDate < StartDate) {
                 $('.errormessage').html('End Date must be greater than Start Date.');
@@ -1577,6 +1608,18 @@
             var RenewalDate = new Date($("#RenewalDate").val());
             var StartDate = new Date($("#StartDate").val());
             var EndDate = new Date($("#EndDate").val());
+
+            RenewalDate.setHours(0, 0, 0, 0)
+
+            if (RenewalDate == "Invalid Date") {
+                debugger;
+                $(".errormessage").html("Invalid Date.");
+                $('#Error').show();
+                $("#Insurance_StartDate").val("");
+                $(window).scrollTop(0);
+                return false;
+
+            }
             //debugger;
             if (RenewalDate <= StartDate) {
                 $('.errormessage').html('Renewal Date must be greater than Start Date and less than or equal to End date.');
@@ -1698,100 +1741,49 @@
         {
             debugger;
             if ($("#NameOfCard").val() != null && $("#NameOfCard").val() != "") {
-                $('.errormessage').html('Please Verify Card Details.');
-                $('#Error').show();
-                $(window).scrollTop(0);
+                $("#NameOfCard").val('');
+                //$('.errormessage').html('Please Verify Card Details.');
+                //$('#Error').show();
+                //$(window).scrollTop(0);
 
-                return false;
+                //return false;
             }
-            else if ($("#CardNumber").val() != null && $("#CardNumber").val() != "") {
-                $('.errormessage').html('Please Verify Card Details.');
-                $('#Error').show();
-                $(window).scrollTop(0);
-                return false;
-            }
-
-            else if ($("#ValidTillMM").val() != null && $("#ValidTillMM").val() != "") {
-                $('.errormessage').html('Please Verify Card Details.');
-                $('#Error').show();
-                $(window).scrollTop(0);
-                return false;
+            if ($("#CardNumber").val() != null && $("#CardNumber").val() != "") {
+                $("#CardNumber").val('');
+                //$('.errormessage').html('Please Verify Card Details.');
+                //$('#Error').show();
+                //$(window).scrollTop(0);
+                //return false;
             }
 
-            else if ($("#ValidTillYY").val() != null && $("#ValidTillYY").val() != "") {
-                $('.errormessage').html('Please Verify Card Details.');
-                $('#Error').show();
-                $(window).scrollTop(0);
-                return false;
+            if ($("#ValidTillMM").val() != null && $("#ValidTillMM").val() != "") {
+                $("#ValidTillMM").val('');
+                //$('.errormessage').html('Please Verify Card Details.');
+                //$('#Error').show();
+                //$(window).scrollTop(0);
+                //return false;
             }
-            else if ($("#CVV").val() != null && $("#CVV").val() != "") {
-                $('.errormessage').html('Please Verify Card Details.');
-                $('#Error').show();
-                $(window).scrollTop(0);
-                return false;
+
+            if ($("#ValidTillYY").val() != null && $("#ValidTillYY").val() != "") {
+                $("#ValidTillYY").val('');
+                //$('.errormessage').html('Please Verify Card Details.');
+                //$('#Error').show();
+                //$(window).scrollTop(0);
+                //return false;
             }
-            else {
-                $('.errormessage').html('Click On Next');
-                $("#btnnextcard").attr("disabled", false);
-                $('#sucess').hide();
-                $('#Error').hide();
-                return true;
+            if ($("#CVV").val() != null && $("#CVV").val() != "") {
+                $("#CVV").val('');
+                //$('.errormessage').html('Please Verify Card Details.');
+                //$('#Error').show();
+                //$(window).scrollTop(0);
+                //return false;
             }
+            return true;
 
 
         });
 
-        function updatePaging(TotalRecs) {
-            //debugger;
-            $('ul.pagination').html('');
-            var liClone = $('ul.pagination');
-            //debugger;
-            var pageSize = '@System.Configuration.ConfigurationManager.AppSettings["PageSize"].ToString()';
-            //var pageSize = $('#PageSize').val();
-            var NoPage = 1;
-            if (parseInt(TotalRecs) > parseInt(pageSize)) {
-                NoPage = parseInt(parseInt(TotalRecs) / parseInt(pageSize));
-                if (parseFloat(parseInt(parseInt(TotalRecs) / parseInt(pageSize))) < parseFloat(parseInt(TotalRecs) / parseInt(pageSize))) {
-                    NoPage = (parseInt(parseInt(TotalRecs) / parseInt(pageSize)) + 1);
-                }
-            }
-
-            var lp = 0;//parseFloat(parseInt($('#HdnPageIndex').val()) / 5);
-            if (parseFloat(parseInt($('#HdnPageIndex').val()) % 5) == 0) {
-                lp = ((parseInt(parseInt($('#HdnPageIndex').val()) / 5) - 1) * 5);
-            } else {
-                lp = parseInt(parseInt($('#HdnPageIndex').val()) / 5) * 5;
-            }
-
-            var ind = 0;
-
-            for (var i = 1; i <= NoPage; i++) {
-
-                if ((parseInt(lp)) < i) {
-                    if (parseInt($('#HdnPageIndex').val()) > 5 && $(liClone).find('li.previous').length == 0) {
-                        $(liClone).append('<li class="paginate_button previous" aria-controls="DataTables_Table_0" tabindex="0" ><a href="#" onclick="LoadPagingSortTableFill(' + "'" + (i - 1) + "'" + ')">Previous</a></li>');
-                    }
-                    if (ind < 5) {
-
-                        if (i == parseInt($('#HdnPageIndex').val())) {
-                            if (NoPage == 1) {
-                                $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current" style="border-top-left-radius: 3px !important;border-bottom-left-radius: 3px!important;border-top-right-radius: 3px!important; border-bottom-right-radius: 3px!important;">' + i + '</a></li>');
-                            }
-                            else {
-                                $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')" class="current">' + i + '</a></li>');
-                            }
-                        } else {
-
-                            $(liClone).append('<li style=""><a href="#" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')">' + i + '</a></li>');
-                        }
-                    } else if ($(liClone).find('li.next').length == 0) {
-
-                        $(liClone).append('<li class="paginate_button next " aria-controls="DataTables_Table_0" tabindex="0" onclick="LoadPagingSortTableFill(' + "'" + i + "'" + ')"><a href="#">Next</a></li>');
-                    }
-                    ind = ind + 1;
-                }
-            }
-        }
+     
 
         function BindVendorDetails() {
 
@@ -1839,11 +1831,11 @@
                             $("#Service3").val(response['ServiceTitle3']);
                         }
                         else { $("#Service3").val(0); }
-                        if (CompanyKey != 0)
-                        {
-                            $("#SkipIcc").hide();
+                        //if (CompanyKey != 0)
+                        //{
+                        //    $("#SkipIcc").hide();
 
-                        }
+                        //}
                     }
                 }
             });
@@ -1906,27 +1898,27 @@
 
 
         }
-        $("#NameOfCard").on('keyup', function () {
-            iSkipIcc();
-        });
-        $("#CardNumber").on('keyup', function () {
-            iSkipIcc();
+        //$("#NameOfCard").on('keyup', function () {
+        //    SkipIcc();
+        //});
+        //$("#CardNumber").on('keyup', function () {
+        //    SkipIcc();
 
-        });
-        $("#ValidTillMM").on('keyup', function () {
-            SkipIcc();
-        });
-        $("#ValidTillYY").on('keyup', function () {
-            SkipIcc();
-        });
-        $("#CVV").on('keyup', function () {
-            SkipIcc();
-        });
+        //});
+        //$("#ValidTillMM").on('keyup', function () {
+        //    SkipIcc();
+        //});
+        //$("#ValidTillYY").on('keyup', function () {
+        //    SkipIcc();
+        //});
+        //$("#CVV").on('keyup', function () {
+        //    SkipIcc();
+        //});
 
         function SkipIdinsurance() {
             if ($('#NameOfCard').val() == "" && $('#CardNumber').val() == "" && $('#ValidTillMM').val() == "" && $('#ValidTillYY').val() == "" && $('#CVV').val() == "") {
                 $("#SkipIcc").attr("disabled", false);
-                $("#btnnextcard").attr("disabled", true);
+                //$("#btnnextcard").attr("disabled", true);
             }
         }
         $("#SkipIdinsurance").click(function () {
@@ -1936,12 +1928,18 @@
             $("#StartDate").val('');
             $("#EndDate").val('');
             $("#RenewalDate").val('');
-            
+
             $(".dropify-clear").click();
-            
+
 
         });
 
+        $("#btnnextcard").click(function () {
+            debugger;
+            Fillvalueview();
+
+
+        });
         function removeaggrement()
         {
             debugger;
@@ -1985,7 +1983,7 @@
 
                         if (response[0].Insurance.InsuranceKey != "")
                         {
-                            
+
                             $("#SkipIdinsurance").hide();
                         }
                         $("#InsuranceKey").val(response[0].Insurance.InsuranceKey);
@@ -2040,10 +2038,10 @@
                                     //$("#docname").html(docnames);
 
                                     var docnames = $("#InsurancefilesView").val();
-                                    
+
                                     docnames += '<p>' + response[i].Document.FileName + '</p>,';
-                                    
-                                    
+
+
                                     $("#InsurancefilesView").val($("#docname").text() + docnames)
                                 }
                             }
@@ -2062,11 +2060,17 @@
         }
         //$("#txtfile1").change(function () {
         $("#Insurancefiles").change(function () {
+            debugger;
+            var companykey = GetURLParameter('CompanyKey');
+            if (GetURLParameter('CompanyKey') != 0 && String(companykey) != "undefined") {
+                if ($("#dockey").val() != "" && $("#dockey").val() != null && $("#dockey").val() != "undefinend") {
 
-            if ($("#dockey").val() != "" && $("#dockey").val() != null && $("#dockey").val() != "undefinend") {
-                readURL(this);
-                uploaddocument();
-                $("#divdoc1").show();
+
+                    readURL(this);
+                    uploaddocument();
+                    $(".dropify-clear").click();
+                    $("#divdoc1").show();
+                }
             }
             else
             {
@@ -2082,9 +2086,9 @@
                 $(".upd-fl", cln).html(input.files[i].name);
 
                 var docnames = $("#InsurancefilesView").val();
-                
+
                 docnames += '<p>' + input.files[i].name + '</p>,';
-                
+
                 $("#InsurancefilesView").val(docnames);
 
 
@@ -2094,26 +2098,99 @@
         }
         function removeDoc(me) {
             debugger;
+            $("#global-loader").show();
+              var b = $(me).parent("td").parent("tr").find('.upd-fl').text();
+               $("#dockey").val(b);
+         
 
-            var b = $(me).parent("td").parent("tr").find('.upd-fl').text();
-            $("#dockey").val(b);
+             if ($(".upd-fl").text() == "")
+             {
+
+                $("#divFileUploader table tbody tr:eq(0)").hide();
+              }
+            else {
+
+                var a = $("#InsuranceKey").val();
+                var b = $("#dockey").val();
+
+                $.ajax({
+                    type: 'POST',
+                    datatype: 'json',
+                    url: '@Url.Action("DocumentDelete", "Registration")',
+                    data:
+                    {
+                        InsuranceKey: a,
+                        Docname: b,
+                        CompanyKey: GetURLParameter('CompanyKey')
+                    },
+                    success: function (respo) {
+                     debugger;
+                if (respo == true) {
+                    $(me).closest("tr").remove();
+                    $("#global-loader").hide();
+                    //window.location.href = 'EditPolicy?InsuranceKey=' + $("#Insurance_InsuranceKey").val();
+                    var docnames = $("#InsurancefilesView").val();
+                    docnames = docnames.replace(b, '');
+                    $("#InsurancefilesView").val(docnames);
+                }
+                else {
+                    $("#global-loader").hide();
+                    //window.location.href = 'EditPolicy?InsuranceKey=' + $("#Insurance_InsuranceKey").val();
+
+                }
+                //window.location.href = 'EditPolicy?InsuranceKey=' + $("#Insurance_InsuranceKey").val();
+            },
+        });
+
+            }
+
+
+
         }
         function DeleteDocument() {
             debugger;
 
-            if ($(".upd-fl").text() == "") {
+            if ($(".upd-fl").text() == "")
+            {
+
                 $("#divFileUploader table tbody tr:eq(0)").hide();
             }
             else {
+
                 var a = $("#InsuranceKey").val();
                 var b = $("#dockey").val();
-                window.location.href = "DocumentDelete?InsuranceKey=" + a + "&Docname=" + b + "&CompanyKey=" + GetURLParameter('CompanyKey');
+
+                $.ajax({
+                    type: 'POST',
+                    datatype: 'json',
+                    url: '@Url.Action("DocumentDelete", "Registration")',
+                    data:
+                    {
+                        InsuranceKey: a,
+                        Docname: b,
+                        CompanyKey: GetURLParameter('CompanyKey')
+                    },
+                 success: function (respo) {
+                if (respo == true) {
+
+                    //window.location.href = 'EditPolicy?InsuranceKey=' + $("#Insurance_InsuranceKey").val();
+
+                }
+                else {
+
+                    //window.location.href = 'EditPolicy?InsuranceKey=' + $("#Insurance_InsuranceKey").val();
+
+                }
+                //window.location.href = 'EditPolicy?InsuranceKey=' + $("#Insurance_InsuranceKey").val();
+            },
+        });
+
             }
         }
 
         function uploaddocument() {
             debugger;
-        var formData = new FormData();
+        //var formData = new FormData();
         $('#loader').show();
         var formData = new FormData();
             var totalFiles = document.getElementById("Insurancefiles").files.length;
@@ -2127,7 +2204,7 @@
         $.ajax({
             type: 'POST',
             datatype: 'json',
-            url: '@Url.Action("UpdateDocUpload", "VendorPolicy")',
+            url: '@Url.Action("UpdateRegistrationDocUpload", "VendorPolicy")',
             data: formData,
             contentType: false,
             processData: false,

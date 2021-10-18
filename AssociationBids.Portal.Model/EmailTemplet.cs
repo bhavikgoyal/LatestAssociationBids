@@ -12,6 +12,7 @@ namespace AssociationBids.Portal.Model
    public  class EmailTemplateModel: BaseModel
     {
         public int EmailTemplateKey { get; set; }
+        public int Superadminkey { get; set; }
         public string  EmailTitle { get; set; }
         public string EmailSubject { get; set; }
 

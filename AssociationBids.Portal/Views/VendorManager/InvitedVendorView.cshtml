@@ -598,8 +598,20 @@
         }
         else
         {
+            var detail = "";
+            if (formname == "contact") {
+                detail = "IVendor";
+            }
+            else if (formname == "services")
+            {
+                detail = "IVendorservices";
+            }
+            else if (formname == "userAccount") {
+                detail = "IuserAccount";
+            }
             var a = $("#Vendor_CompanyKey").val();
-            window.location.href = 'VendorEdit?CompanyKey=' + a + "&param=" + formname;
+            debugger;
+            window.location.href = 'VendorEdit?CompanyKey=' + a + "&param=" + formname + "&value=" + detail;
         }
     }
 

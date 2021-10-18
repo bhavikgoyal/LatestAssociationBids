@@ -98,19 +98,35 @@
                                             </div><!-- end of row -->
                                             <hr />
                                             <div class="row">
+
+
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label class="form-label">
-
-                                                            Response Due Date
-                                                            @Html.ValidationMessageFor(model => model.ResponseDueDates, "*", new { @class = "text-danger" })
-                                                        </label>
-
-                                                        @Html.TextBoxFor(model => model.ResponseDueDates, "{0:MM/dd/yyyy}", new { @class = "form-control fc-datepicker", @tabindex = "5", autocomplete = "off", placeholder = "MM/DD/YYYY" })
-
+                                                        <label class="form-label">ResponseDueDates</label>
+                                                        <p>@Model.ResponseDueDates</p>
                                                     </div>
                                                 </div><!-- end of col -->
+                                                <!--<div class="col-md-4">
+        <div class="form-group">
+            <label class="form-label">
+
+                Response Due Date
+                @Html.ValidationMessageFor(model => model.ResponseDueDates, "*", new { @class = "text-danger" })
+            </label>
+
+            @Html.TextBoxFor(model => model.ResponseDueDates, "{0:MM/dd/yyyy}", new { @class = "form-control fc-datepicker", @tabindex = "5", autocomplete = "off", placeholder = "MM/DD/YYYY", @disabled = "true" })
+
+        </div>
+    </div>-->
+                                                <!-- end of col -->
+
                                                 <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label">BidDueDates</label>
+                                                        <p>@Model.BidDueDates</p>
+                                                    </div>
+                                                </div><!-- end of col -->
+                                                <!--<div class="col-md-4">
                                                     <div class="form-group">
                                                         <label class="form-label">
                                                             Bid Due date
@@ -122,13 +138,13 @@
                                                                     <i class="fa fa-calendar tx-16 lh-0 op-6"></i>
                                                                 </div>
                                                             </div>
-                                                            @Html.TextBoxFor(model => model.BidDueDates, "{0:MM/dd/yyyy}", new { @class = "form-control fc-datepicker", @tabindex = "5", autocomplete = "off", placeholder = "MM/DD/YYYY" })
+                                                            @Html.TextBoxFor(model => model.BidDueDates, "{0:MM/dd/yyyy}", new { @class = "form-control fc-datepicker", @tabindex = "5", autocomplete = "off", placeholder = "MM/DD/YYYY", @disabled = "true" })
                                                             @Html.HiddenFor(model => model.BidRequestKey)
                                                             @Html.HiddenFor(model => model.ResourceKey)
                                                             @Html.HiddenFor(model => model.BidVendorKey)
                                                         </div>
                                                     </div>
-                                                </div><!-- end of col -->
+                                                </div>--><!-- end of col -->
                                             </div>
                                             <hr />
                                             @*<div class="button-row d-flex">

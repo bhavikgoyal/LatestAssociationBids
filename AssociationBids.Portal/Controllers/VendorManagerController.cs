@@ -876,7 +876,7 @@ namespace AssociationBids.Portal.Controllers
         }
 
         [HttpPost]
-        public ActionResult VendorEdit(int CompanyKey, VendorManagerModel collection, string param)
+        public ActionResult VendorEdit(int CompanyKey, VendorManagerModel collection, string param,string values)
         {
             VendorManagerVendorModel vendorv = new VendorManagerVendorModel();
             ResourceModel resource = new ResourceModel();
@@ -943,7 +943,14 @@ namespace AssociationBids.Portal.Controllers
                     TempData["Sucessmessage"] = "Record has been updated successfully.";
                     System.Web.Routing.RouteValueDictionary rvd = new System.Web.Routing.RouteValueDictionary();
                     rvd.Add("CompanyKey", CompanyKey);
-                    return RedirectToAction(returnView, "VendorManager", rvd);
+                    if (values == "IVendor")
+                    {
+                        return RedirectToAction("InvitedVendorView", "VendorManager", rvd);
+                    }
+                    else
+                    {
+                        return RedirectToAction(returnView, "VendorManager", rvd);
+                    }
                 }
                 else
                 {
@@ -959,7 +966,14 @@ namespace AssociationBids.Portal.Controllers
                     System.Web.Routing.RouteValueDictionary rvd = new System.Web.Routing.RouteValueDictionary();
                     rvd.Add("CompanyKey", CompanyKey);
                     rvd.Add("param", param);
-                    return RedirectToAction(returnView, "VendorManager", rvd);
+
+                    if (values == "IVendor")
+                    {
+                        return RedirectToAction("InvitedVendorView", "VendorManager", rvd);
+                    }
+                    else {
+                        return RedirectToAction(returnView, "VendorManager", rvd);
+                    }
 
                 }
 
@@ -1154,7 +1168,7 @@ namespace AssociationBids.Portal.Controllers
             model.Insurance.CellPhone = vm.CellPhone;
             model.Insurance.City = vm.City;
             model.Insurance.CompanyName = vm.CompanyName;
-            model.Insurance.Email = vm.Email;
+            model.Insurance.Email = vm.Email; 
             model.Insurance.Fax = vm.Fax;
             model.Insurance.State = vm.State;
             model.Insurance.Work = vm.Work;
@@ -1269,7 +1283,7 @@ namespace AssociationBids.Portal.Controllers
         //}
 
         [HttpPost]
-        public ActionResult UserAccountChangePassword(int UserKey, int CompanyKey)
+        public ActionResult UserAccountChangePassword(int UserKey, int CompanyKey,string values)
         {
             IUserService userService = new UserService();
             var user = userService.Get(UserKey);
@@ -1288,7 +1302,14 @@ namespace AssociationBids.Portal.Controllers
             }
             System.Web.Routing.RouteValueDictionary rvd = new System.Web.Routing.RouteValueDictionary();
             rvd.Add("CompanyKey", CompanyKey);
-            return RedirectToAction("VendorView", "VendorManager", rvd);
+            if (values == "IuserAccount")
+            {
+                return RedirectToAction("InvitedVendorView", "VendorManager", rvd);
+            }
+            else 
+            {
+                return RedirectToAction("VendorView", "VendorManager", rvd);
+            }
         }
 
         public JsonResult bindservice(int CompanyKey)

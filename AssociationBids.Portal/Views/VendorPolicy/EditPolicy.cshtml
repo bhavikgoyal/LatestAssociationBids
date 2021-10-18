@@ -280,11 +280,57 @@
         var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
         window.open(src, "_blank", strWindowFeatures);
     }
-  
+
+    $("#StartDate").change("click", function () {
+        //debugger;
+        var EndDate = new Date($("#EndDate").val());
+        var StartDate = new Date($("#StartDate").val());
+        var RenewalDate = new Date($("#RenewalDate").val());
+        debugger;
+        StartDate.setHours(0, 0, 0, 0)
+
+        if (StartDate == "Invalid Date") {
+
+            $(".errormessage").html("Invalid Date.");
+            $('#Error').show();
+            $("#Insurance_StartDate").val("");
+            $(window).scrollTop(0);
+            return false;
+
+        }
+
+        else if (EndDate < StartDate || RenewalDate < StartDate) {
+            $('.errormessage').html('Start Date must be less then End Date and Renewal Date.');
+
+            $('#Error').show();
+            $("#Insurance_StartDate").val("");
+            $(window).scrollTop(0);
+            //event.preventDefault();
+            return false;
+        }
+
+        $('#Error').hide();
+        return true;
+
+    }
+    );
+
     $("#Insurance_EndDate").change("click", function () {
         debugger;
         var EndDate = new Date($("#Insurance_EndDate").val());
         var StartDate = new Date($("#Insurance_StartDate").val());
+
+        EndDate.setHours(0, 0, 0, 0)
+
+        if (EndDate == "Invalid Date") {
+
+            $(".errormessage").html("Invalid Date.");
+            $('#Error').show();
+            $("#Insurance_StartDate").val("");
+            $(window).scrollTop(0);
+            return false;
+
+        }
 
         if (EndDate < StartDate) {
             $('.errormessage').html('End Date must be greater than Start Date.');
@@ -306,6 +352,18 @@
         var StartDate = new Date($("#Insurance_StartDate").val());
         var EndDate = new Date($("#Insurance_EndDate").val());
         debugger;
+        RenewalDate.setHours(0, 0, 0, 0)
+
+        if (RenewalDate == "Invalid Date") {
+
+            $(".errormessage").html("Invalid Date.");
+            $('#Error').show();
+            $("#Insurance_StartDate").val("");
+            $(window).scrollTop(0);
+            return false;
+
+        }
+
         if (RenewalDate <= StartDate) {
             $('.errormessage').html('Renewal Date must be greater than Start Date and less than or equal to End date.');
             $('#Error').show();
@@ -383,6 +441,11 @@
         var EndDate = new Date($("#Insurance_EndDate").val());
         var StartDate = new Date($("#Insurance_StartDate").val());
         var RenewalDate = new Date($("#Insurance_RenewalDate").val());
+
+        StartDate.setHours(0, 0, 0, 0)
+        EndDate.setHours(0, 0, 0, 0)
+        RenewalDate.setHours(0, 0, 0, 0)
+
         $('#sucess').hide();
         $('#Error').hide();
         $('#sucessmessage').hide();
@@ -424,6 +487,31 @@
             $(window).scrollTop(0);
             return false;
         }
+        else if (StartDate == "Invalid Date") {
+
+            $(".errormessage").html("Invalid Date.");
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+
+        }
+        else if (EndDate == "Invalid Date") {
+
+            $(".errormessage").html("Invalid Date.");
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+
+        }
+        else if (RenewalDate == "Invalid Date") {
+
+            $(".errormessage").html("Invalid Date.");
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+
+        }
+
         else if ($("#Insurance_StartDate").val().split(" ")[0].split("/")[2] <= '1900') {
             $('.errormessage').html('Please enter valid Start Date.');
             $('#Error').show();

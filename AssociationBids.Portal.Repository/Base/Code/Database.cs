@@ -142,8 +142,12 @@ namespace AssociationBids.Portal.Repository.Base
             try
             {
                 // open the connection
-                OpenConnection();
-                commandWrapper.DBCommand.Connection = __connection;
+                if (__connection != null && __connection.State != ConnectionState.Open)
+                {
+                    OpenConnection();
+
+                }
+                    commandWrapper.DBCommand.Connection = __connection;
                 __dataReader = new DBDataReader(commandWrapper.DBCommand.ExecuteReader());
 
                 return __dataReader;
@@ -153,6 +157,7 @@ namespace AssociationBids.Portal.Repository.Base
                 CloseConnection();
                 throw ex;
             }
+           
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ $(document).ready(function ()
     $('#sucess').hide();
     $('#Error').hide();    
     $(".chosen-select").chosen();
-    $("#btnnextcard").attr("disabled", true);
+    //$("#btnnextcard").attr("disabled", true);
     $("#btnAgreementtop").attr("disabled", true);
     $("#btnnextagreement").attr("disabled", true);
     $("#btnAccpeted").attr("disabled", true);
@@ -23,6 +23,14 @@ $(document).ready(function ()
 });
 
 
+function OnChangecard() {
+    debugger;
+    $('#sucess').hide();
+    $('#Error').hide();
+    $("#btnnextcard").attr("disabled", true);
+    $("#SkipIcc").attr("disabled", false);
+    $("#btnverifycard").attr("disabled", false);
+}
 
 
 function OnChangeCompany()
@@ -279,16 +287,7 @@ $("#btncompany").click(function () {
 $("#btncompanyinfotop").click(function () {
     return primarycontectvalidation();
 });
-$("#btnnextcard").click(function ()
-{
 
-   
-        $('#sucess').hide();
-        $('#Error').hide(); 
-     return primarycontectvalidation();
-
-      
-});
 $("#btnnextPricing").click(function () {
     $('#sucess').hide();
     $('#Error').hide();
@@ -342,66 +341,66 @@ $("#CVV").on("keypress keyup blur", function (event) {
         event.preventDefault();
     }
 });
-$("#btnverifycard").click(function ()
-{
-    
-  
+$("#btnverifycard").click(function () {
+
+    debugger;
     var fname = $('#FirstName').val();
     var lname = $('#LastName').val();
     $("#global-loader").show();
-    if ($('#CardNumber ').val() === "" || $('#ValidTillMM ').val() === "" || $('#ValidTillYY').val() === "" || $('#CVV').val() === "")
-    {
+     if ($('#CardNumber ').val() === "" || $('#ValidTillMM ').val() === "" || $('#ValidTillYY').val() === "" || $('#CVV').val() === "") {
         $('.errormessage').html('Please enter mandatory fields.');
         $('#Error').show();
         $(window).scrollTop(0);
         event.preventDefault();
         $("#global-loader").hide();
         return false;
-    }    
-   
+     }
+
     $.ajax({
 
         url: "/Registration/PaymentVerificationAsync",
-        type: "GET",  
-        data: { Fname: fname, Lname: lname,CardNumber: $('#CardNumber').val(), Month: $('#ValidTillMM').val(), Year: $('#ValidTillYY').val(), CVV: $('#CVV').val(), value: 0, name: $('#CompanyName ').val(), addressline1: $('#Address').val(), addressline2: $('#Address2').val(), zip: $('#Zip').val(), city: $('#City').val(), state: $('#State').val()},
-        success: function (response)
-        {
-            if (response === true)
-            {
-               
+        type: "GET",
+        data: { Fname: fname, Lname: lname, CardNumber: $('#CardNumber').val(), Month: $('#ValidTillMM').val(), Year: $('#ValidTillYY').val(), CVV: $('#CVV').val(), value: 0, name: $('#CompanyName ').val(), addressline1: $('#Address').val(), addressline2: $('#Address2').val(), zip: $('#Zip').val(), city: $('#City').val(), state: $('#State').val() },
+        success: function (response) {
+            if (response === true) {
+
                 debugger;
                 $('.sucessmessage').html('Card has been verified sucessfully.');
                 $("#btnnextcard").attr("disabled", false);
-                $("#btnPricingtop").attr("disabled", false);
-                //$("#btnAgreementtop").attr("disabled", false);
-                $("#SkipIcc").attr("disabled", true);
+                $("#btnAgreementtop").attr("disabled", false);
+                $("#SkipIcc").attr("disabled", true);             
+                $("#btnverifycard").attr("disabled", true);   
                 $('#Error').hide();
                 $('#sucess').show();
                 $(window).scrollTop(0);
-                $('#CardNumber').focus();             
+                $('#CardNumber').focus();
                 $("#global-loader").hide();
-
                 event.preventDefault();
                 return false;
             }
-            if (response === false)
-            {
+            if (response === false) {
                 $('.errormessage').html('Invalid Credit Card number.');
+                $("#btnnextcard").attr("disabled", true);
+                $("#SkipIcc").attr("disabled", false);
+                $("#btnverifycard").attr("disabled", false);   
                 $('#sucess').hide();
                 $('#Error').show();
                 $(window).scrollTop(0);
                 $('#CardNumber').focus();
                 $("#global-loader").hide();
-                $("#SkipIcc").attr("disabled", false);
-                event.preventDefault();              
+                event.preventDefault();
                 return false;
 
             }
-            
+
 
         }
     });
 });
+
+
+
+
 
 $("#btnseviceareatop").click(function ()
 {
@@ -783,6 +782,7 @@ function validationInsurance() {
     $('#sucesssave').hide();
     $('#errrorssave').hide();
     Fillvalueview();
+    var value = false;
     //$("#Insurancefiles")[0].files.length > 0 && 
     if ($("#PolicyNumber").val() != '') {
         if ($("#StartDate").val() != "" && $("#StartDate").val().split(" ")[0].split("/")[2] > '1900') {
@@ -790,31 +790,36 @@ function validationInsurance() {
             if ($("#EndDate").val() != "") {
                 if ($("#RenewalDate").val() != "") {
                     if ($("#InsuranceAmount").val() != "" && $("#InsuranceAmount").val() != null && $("#InsuranceAmount").val() > 0) {
-                        return true;
+                        var valuel = true;
+                        value = valuel;
                     }
                     else {
                         $('.errormessage').html('Please enter mandatory fields.');
                         $('#Error').show();
                         $(window).scrollTop(0);
+                        return false;
                     }
                 }
                 else {
                     $('.errormessage').html('Please enter mandatory fields.');
                     $('#Error').show();
                     $(window).scrollTop(0);
+                    return false;
                 }
             }
             else {
                 $('.errormessage').html('Please enter mandatory fields.');
                 $('#Error').show();
                 $(window).scrollTop(0);
+                return false;
             }
-            return false;
+            //value = false;
         }
         else {
             $('.errormessage').html('Please enter Valid Start Date');
             $('#Error').show();
             $(window).scrollTop(0);
+            return false;
         }
         
     }
@@ -829,67 +834,117 @@ function validationInsurance() {
         }
     }
     debugger;
-    if ($("#PolicyNumber").val() == '') {
+    if (value == true) {
+        var EndDate = new Date($("#EndDate").val());
+        var StartDate = new Date($("#StartDate").val());
+        var RenewalDate = new Date($("#RenewalDate").val());
 
-        $('.errormessage').html('Please enter mandatory fields.');
-        $('#Error').show();
-        $(window).scrollTop(0);
-        return false;
+        StartDate.setHours(0, 0, 0, 0)
+        EndDate.setHours(0, 0, 0, 0)
+        RenewalDate.setHours(0, 0, 0, 0)
+
+        if ($("#PolicyNumber").val() == '') {
+
+            $('.errormessage').html('Please enter mandatory fields.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else if ($("#InsuranceAmount").val() <= 0) {
+
+            $('.errormessage').html('Please enter mandatory fields.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else if ($("#StartDate").val() == "") {
+
+            $('.errormessage').html('Please enter mandatory fields.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else if ($("#EndDate").val() == "") {
+
+            $('.errormessage').html('Please enter mandatory fields.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+        }
+        else if ($("#RenewalDate").val() == "") {
+
+            $('.errormessage').html('Please enter mandatory fields.');
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+        }
+
+        else if (StartDate == "Invalid Date") {
+
+            $(".errormessage").html("Invalid Date.");
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+
+        }
+        else if (EndDate == "Invalid Date") {
+
+            $(".errormessage").html("Invalid Date.");
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+
+        }
+        else if (RenewalDate == "Invalid Date") {
+
+            $(".errormessage").html("Invalid Date.");
+            $('#Error').show();
+            $(window).scrollTop(0);
+            return false;
+
+        }
+        else if (EndDate < StartDate || RenewalDate < StartDate) {
+            $('.errormessage').html('Start Date must be less then End Date and Renewal Date.');
+
+            $('#Error').show();
+            $("#Insurance_StartDate").val("");
+            $(window).scrollTop(0);
+            //event.preventDefault();
+            return false;
+        }
+
+        if (EndDate < StartDate) {
+            $('.errormessage').html('End Date must be greater than Start Date.');
+            $('#Error').show();
+            $("#Insurance_EndDate").val("");
+            $(window).scrollTop(0);
+            //event.preventDefault();
+            return false;
+        }
+
+        if (RenewalDate <= StartDate) {
+            $('.errormessage').html('Renewal Date must be greater than Start Date and less than or equal to End date.');
+            $('#Error').show();
+            $("#Insurance_RenewalDate").val("");
+            $(window).scrollTop(0);
+            //event.preventDefault();
+            return false;
+        }
+        else if (RenewalDate > EndDate) {
+            $('.errormessage').html('Renewal Date must be equal or less than End Date.');
+            $('#Error').show();
+            $("#Insurance_RenewalDate").val("");
+            $(window).scrollTop(0);
+            //event.preventDefault();
+            return false;
+        }
+        //$('.errormessage').html('Please fill all fileds.');
+        //$('#Error').show();
+
+        event.preventDefault();
+        return true;
+
     }
-
-    if ($("#RenewalDate").val() == "") {
-
-        $('.errormessage').html('Please enter mandatory fields.');
-        $('#Error').show();
-        $(window).scrollTop(0);
-        return false;
-    }
-
-          if ($("#StartDate").val() == "")
-
-          {
-
-              $('.errormessage').html('Please enter mandatory fields.');
-              $('#Error').show();
-              $(window).scrollTop(0);
-              return false;
-          }
-
-    if ($("#EndDate").val() == "")
-
-    {
-
-        $('.errormessage').html('Please enter mandatory fields.');
-        $('#Error').show();
-        $(window).scrollTop(0);
-        return false;
-    }
-
-    if ($("#PolicyNumber").val() == '')
-    {
-
-        $('.errormessage').html('Please enter mandatory fields.');
-        $('#Error').show();
-        $(window).scrollTop(0);
-        return false;
-    }
-
-    if ($("#InsuranceAmount").val() <= 0)
-
-    {
-
-        $('.errormessage').html('Please enter mandatory fields.');
-        $('#Error').show();
-        $(window).scrollTop(0);
-        return false;
-    }
-
-    //$('.errormessage').html('Please fill all fileds.');
-    //$('#Error').show();
-   
-    event.preventDefault();
-    return true;
-
 }
 
 
